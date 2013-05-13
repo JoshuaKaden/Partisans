@@ -16,6 +16,39 @@
 		936510A51741578C00F2AD06 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A41741578C00F2AD06 /* Default.png */; };
 		936510A71741578C00F2AD06 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A61741578C00F2AD06 /* Default@2x.png */; };
 		936510A91741578C00F2AD06 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A81741578C00F2AD06 /* Default-568h@2x.png */; };
+		936510BF1741596200F2AD06 /* ILColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510B61741596200F2AD06 /* ILColorPickerView.m */; };
+		936510C01741596200F2AD06 /* ILHuePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510B81741596200F2AD06 /* ILHuePickerView.m */; };
+		936510C11741596200F2AD06 /* ILSaturationBrightnessPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BA1741596200F2AD06 /* ILSaturationBrightnessPickerView.m */; };
+		936510C21741596200F2AD06 /* ILView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BC1741596200F2AD06 /* ILView.m */; };
+		936510C31741596200F2AD06 /* UIColor+GetHSB.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BE1741596200F2AD06 /* UIColor+GetHSB.m */; };
+		936510D01741597500F2AD06 /* JSKCommandMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C51741597500F2AD06 /* JSKCommandMessage.m */; };
+		936510D11741597500F2AD06 /* JSKDataMiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C71741597500F2AD06 /* JSKDataMiner.m */; };
+		936510D21741597500F2AD06 /* JSKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C91741597500F2AD06 /* JSKMenuViewController.m */; };
+		936510D31741597500F2AD06 /* JSKPeerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CB1741597500F2AD06 /* JSKPeerController.m */; };
+		936510D41741597500F2AD06 /* JSKSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CD1741597500F2AD06 /* JSKSystemMessage.m */; };
+		936510D51741597500F2AD06 /* JSKViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CF1741597500F2AD06 /* JSKViewStack.m */; };
+		936510DC1741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */; };
+		936510DD1741598800F2AD06 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510DB1741598800F2AD06 /* Reachability.m */; };
+		936510E3174159C900F2AD06 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E0174159C900F2AD06 /* RootViewController.m */; };
+		936510E4174159C900F2AD06 /* SystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E2174159C900F2AD06 /* SystemMessage.m */; };
+		936510E8174159E800F2AD06 /* DefaultDataMiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E7174159E800F2AD06 /* DefaultDataMiner.m */; };
+		936510EB17415A1000F2AD06 /* MainMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510EA17415A1000F2AD06 /* MainMenuItems.m */; };
+		936510F317415A4E00F2AD06 /* ColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510EE17415A4E00F2AD06 /* ColorPickerViewController.m */; };
+		936510F417415A4E00F2AD06 /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936510EF17415A4E00F2AD06 /* ColorPickerViewController.xib */; };
+		936510F517415A4E00F2AD06 /* SlickEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510F117415A4E00F2AD06 /* SlickEditView.m */; };
+		936510F617415A4E00F2AD06 /* SlickEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936510F217415A4E00F2AD06 /* SlickEditView.xib */; };
+		936510FE17415A9D00F2AD06 /* PlayerPicklistItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */; };
+		936510FF17415A9D00F2AD06 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510FC17415A9D00F2AD06 /* PlayerViewController.m */; };
+		9365110017415A9D00F2AD06 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936510FD17415A9D00F2AD06 /* PlayerViewController.xib */; };
+		9365110B17415B0C00F2AD06 /* CreatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */; };
+		9365110C17415B0C00F2AD06 /* UpdatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */; };
+		9365111117415B2000F2AD06 /* ImageEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110E17415B2000F2AD06 /* ImageEnvoy.m */; };
+		9365111217415B2000F2AD06 /* PlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111017415B2000F2AD06 /* PlayerEnvoy.m */; };
+		9365111417415B4E00F2AD06 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111317415B4E00F2AD06 /* CoreBluetooth.framework */; };
+		9365111617415B5600F2AD06 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111517415B5600F2AD06 /* CoreData.framework */; };
+		9365111817415B6B00F2AD06 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111717415B6B00F2AD06 /* GameKit.framework */; };
+		9365111A17415B7B00F2AD06 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111917415B7B00F2AD06 /* QuartzCore.framework */; };
+		9365111C17415B8600F2AD06 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +65,64 @@
 		936510A41741578C00F2AD06 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		936510A61741578C00F2AD06 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		936510A81741578C00F2AD06 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		936510B51741596200F2AD06 /* ILColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ILColorPickerView.h; path = Classes/Libraries/ILColorPicker/ILColorPickerView.h; sourceTree = "<group>"; };
+		936510B61741596200F2AD06 /* ILColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ILColorPickerView.m; path = Classes/Libraries/ILColorPicker/ILColorPickerView.m; sourceTree = "<group>"; };
+		936510B71741596200F2AD06 /* ILHuePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ILHuePickerView.h; path = Classes/Libraries/ILColorPicker/ILHuePickerView.h; sourceTree = "<group>"; };
+		936510B81741596200F2AD06 /* ILHuePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ILHuePickerView.m; path = Classes/Libraries/ILColorPicker/ILHuePickerView.m; sourceTree = "<group>"; };
+		936510B91741596200F2AD06 /* ILSaturationBrightnessPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ILSaturationBrightnessPickerView.h; path = Classes/Libraries/ILColorPicker/ILSaturationBrightnessPickerView.h; sourceTree = "<group>"; };
+		936510BA1741596200F2AD06 /* ILSaturationBrightnessPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ILSaturationBrightnessPickerView.m; path = Classes/Libraries/ILColorPicker/ILSaturationBrightnessPickerView.m; sourceTree = "<group>"; };
+		936510BB1741596200F2AD06 /* ILView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ILView.h; path = Classes/Libraries/ILColorPicker/ILView.h; sourceTree = "<group>"; };
+		936510BC1741596200F2AD06 /* ILView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ILView.m; path = Classes/Libraries/ILColorPicker/ILView.m; sourceTree = "<group>"; };
+		936510BD1741596200F2AD06 /* UIColor+GetHSB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+GetHSB.h"; path = "Classes/Libraries/ILColorPicker/UIColor+GetHSB.h"; sourceTree = "<group>"; };
+		936510BE1741596200F2AD06 /* UIColor+GetHSB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+GetHSB.m"; path = "Classes/Libraries/ILColorPicker/UIColor+GetHSB.m"; sourceTree = "<group>"; };
+		936510C41741597500F2AD06 /* JSKCommandMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKCommandMessage.h; path = "Classes/Libraries/My Library/JSKCommandMessage.h"; sourceTree = "<group>"; };
+		936510C51741597500F2AD06 /* JSKCommandMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKCommandMessage.m; path = "Classes/Libraries/My Library/JSKCommandMessage.m"; sourceTree = "<group>"; };
+		936510C61741597500F2AD06 /* JSKDataMiner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKDataMiner.h; path = "Classes/Libraries/My Library/JSKDataMiner.h"; sourceTree = "<group>"; };
+		936510C71741597500F2AD06 /* JSKDataMiner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKDataMiner.m; path = "Classes/Libraries/My Library/JSKDataMiner.m"; sourceTree = "<group>"; };
+		936510C81741597500F2AD06 /* JSKMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKMenuViewController.h; path = "Classes/Libraries/My Library/JSKMenuViewController.h"; sourceTree = "<group>"; };
+		936510C91741597500F2AD06 /* JSKMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKMenuViewController.m; path = "Classes/Libraries/My Library/JSKMenuViewController.m"; sourceTree = "<group>"; };
+		936510CA1741597500F2AD06 /* JSKPeerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKPeerController.h; path = "Classes/Libraries/My Library/JSKPeerController.h"; sourceTree = "<group>"; };
+		936510CB1741597500F2AD06 /* JSKPeerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKPeerController.m; path = "Classes/Libraries/My Library/JSKPeerController.m"; sourceTree = "<group>"; };
+		936510CC1741597500F2AD06 /* JSKSystemMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKSystemMessage.h; path = "Classes/Libraries/My Library/JSKSystemMessage.h"; sourceTree = "<group>"; };
+		936510CD1741597500F2AD06 /* JSKSystemMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKSystemMessage.m; path = "Classes/Libraries/My Library/JSKSystemMessage.m"; sourceTree = "<group>"; };
+		936510CE1741597500F2AD06 /* JSKViewStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKViewStack.h; path = "Classes/Libraries/My Library/JSKViewStack.h"; sourceTree = "<group>"; };
+		936510CF1741597500F2AD06 /* JSKViewStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKViewStack.m; path = "Classes/Libraries/My Library/JSKViewStack.m"; sourceTree = "<group>"; };
+		936510D71741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+FetchAdditions.h"; sourceTree = "<group>"; };
+		936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+FetchAdditions.m"; sourceTree = "<group>"; };
+		936510DA1741598800F2AD06 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		936510DB1741598800F2AD06 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		936510DF174159C900F2AD06 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
+		936510E0174159C900F2AD06 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
+		936510E1174159C900F2AD06 /* SystemMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemMessage.h; path = Classes/SystemMessage.h; sourceTree = "<group>"; };
+		936510E2174159C900F2AD06 /* SystemMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SystemMessage.m; path = Classes/SystemMessage.m; sourceTree = "<group>"; };
+		936510E6174159E800F2AD06 /* DefaultDataMiner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DefaultDataMiner.h; path = Classes/DefaultDataMiner.h; sourceTree = "<group>"; };
+		936510E7174159E800F2AD06 /* DefaultDataMiner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DefaultDataMiner.m; path = Classes/DefaultDataMiner.m; sourceTree = "<group>"; };
+		936510E917415A1000F2AD06 /* MainMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenuItems.h; path = Classes/MainMenuItems.h; sourceTree = "<group>"; };
+		936510EA17415A1000F2AD06 /* MainMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenuItems.m; path = Classes/MainMenuItems.m; sourceTree = "<group>"; };
+		936510ED17415A4E00F2AD06 /* ColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorPickerViewController.h; path = Classes/ColorPickerViewController.h; sourceTree = "<group>"; };
+		936510EE17415A4E00F2AD06 /* ColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorPickerViewController.m; path = Classes/ColorPickerViewController.m; sourceTree = "<group>"; };
+		936510EF17415A4E00F2AD06 /* ColorPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColorPickerViewController.xib; path = Classes/ColorPickerViewController.xib; sourceTree = "<group>"; };
+		936510F017415A4E00F2AD06 /* SlickEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlickEditView.h; path = Classes/SlickEditView.h; sourceTree = "<group>"; };
+		936510F117415A4E00F2AD06 /* SlickEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SlickEditView.m; path = Classes/SlickEditView.m; sourceTree = "<group>"; };
+		936510F217415A4E00F2AD06 /* SlickEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SlickEditView.xib; path = Classes/SlickEditView.xib; sourceTree = "<group>"; };
+		936510F917415A9D00F2AD06 /* PlayerPicklistItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerPicklistItems.h; path = Classes/PlayerPicklistItems.h; sourceTree = "<group>"; };
+		936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerPicklistItems.m; path = Classes/PlayerPicklistItems.m; sourceTree = "<group>"; };
+		936510FB17415A9D00F2AD06 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerViewController.h; path = Classes/PlayerViewController.h; sourceTree = "<group>"; };
+		936510FC17415A9D00F2AD06 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerViewController.m; path = Classes/PlayerViewController.m; sourceTree = "<group>"; };
+		936510FD17415A9D00F2AD06 /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerViewController.xib; path = Classes/PlayerViewController.xib; sourceTree = "<group>"; };
+		9365110717415B0C00F2AD06 /* CreatePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreatePlayerOperation.h; path = Classes/CreatePlayerOperation.h; sourceTree = "<group>"; };
+		9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreatePlayerOperation.m; path = Classes/CreatePlayerOperation.m; sourceTree = "<group>"; };
+		9365110917415B0C00F2AD06 /* UpdatePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdatePlayerOperation.h; path = Classes/UpdatePlayerOperation.h; sourceTree = "<group>"; };
+		9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdatePlayerOperation.m; path = Classes/UpdatePlayerOperation.m; sourceTree = "<group>"; };
+		9365110D17415B2000F2AD06 /* ImageEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageEnvoy.h; path = Classes/ImageEnvoy.h; sourceTree = "<group>"; };
+		9365110E17415B2000F2AD06 /* ImageEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageEnvoy.m; path = Classes/ImageEnvoy.m; sourceTree = "<group>"; };
+		9365110F17415B2000F2AD06 /* PlayerEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerEnvoy.h; path = Classes/PlayerEnvoy.h; sourceTree = "<group>"; };
+		9365111017415B2000F2AD06 /* PlayerEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerEnvoy.m; path = Classes/PlayerEnvoy.m; sourceTree = "<group>"; };
+		9365111317415B4E00F2AD06 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		9365111517415B5600F2AD06 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9365111717415B6B00F2AD06 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		9365111917415B7B00F2AD06 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9365111B17415B8600F2AD06 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,9 +130,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9365111C17415B8600F2AD06 /* SystemConfiguration.framework in Frameworks */,
+				9365111A17415B7B00F2AD06 /* QuartzCore.framework in Frameworks */,
+				9365111817415B6B00F2AD06 /* GameKit.framework in Frameworks */,
+				936510971741578C00F2AD06 /* CoreGraphics.framework in Frameworks */,
+				9365111617415B5600F2AD06 /* CoreData.framework in Frameworks */,
+				9365111417415B4E00F2AD06 /* CoreBluetooth.framework in Frameworks */,
 				936510931741578C00F2AD06 /* UIKit.framework in Frameworks */,
 				936510951741578C00F2AD06 /* Foundation.framework in Frameworks */,
-				936510971741578C00F2AD06 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,9 +164,14 @@
 		936510911741578C00F2AD06 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				936510921741578C00F2AD06 /* UIKit.framework */,
-				936510941741578C00F2AD06 /* Foundation.framework */,
+				9365111317415B4E00F2AD06 /* CoreBluetooth.framework */,
+				9365111517415B5600F2AD06 /* CoreData.framework */,
 				936510961741578C00F2AD06 /* CoreGraphics.framework */,
+				936510941741578C00F2AD06 /* Foundation.framework */,
+				9365111717415B6B00F2AD06 /* GameKit.framework */,
+				9365111917415B7B00F2AD06 /* QuartzCore.framework */,
+				9365111B17415B8600F2AD06 /* SystemConfiguration.framework */,
+				936510921741578C00F2AD06 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -78,9 +179,8 @@
 		936510981741578C00F2AD06 /* Partisans */ = {
 			isa = PBXGroup;
 			children = (
-				936510A11741578C00F2AD06 /* AppDelegate.h */,
-				936510A21741578C00F2AD06 /* AppDelegate.m */,
-				936510991741578C00F2AD06 /* Supporting Files */,
+				936510AF1741581600F2AD06 /* Art */,
+				936510B01741581D00F2AD06 /* Classes */,
 			);
 			path = Partisans;
 			sourceTree = "<group>";
@@ -97,6 +197,190 @@
 				936510A81741578C00F2AD06 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		936510AF1741581600F2AD06 /* Art */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Art;
+			sourceTree = "<group>";
+		};
+		936510B01741581D00F2AD06 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				936510EC17415A3300F2AD06 /* Editors & Pickers */,
+				9365110117415AAE00F2AD06 /* Entities */,
+				936510B21741584E00F2AD06 /* Libraries */,
+				936510B11741583200F2AD06 /* Main */,
+				936510F817415A7B00F2AD06 /* Player */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		936510B11741583200F2AD06 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				936510A11741578C00F2AD06 /* AppDelegate.h */,
+				936510A21741578C00F2AD06 /* AppDelegate.m */,
+				936510E5174159D800F2AD06 /* Default Data */,
+				936510E917415A1000F2AD06 /* MainMenuItems.h */,
+				936510EA17415A1000F2AD06 /* MainMenuItems.m */,
+				936510DF174159C900F2AD06 /* RootViewController.h */,
+				936510E0174159C900F2AD06 /* RootViewController.m */,
+				936510991741578C00F2AD06 /* Supporting Files */,
+				936510E1174159C900F2AD06 /* SystemMessage.h */,
+				936510E2174159C900F2AD06 /* SystemMessage.m */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		936510B21741584E00F2AD06 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				936510B41741586400F2AD06 /* ILColorPicker */,
+				936510B31741585600F2AD06 /* My Library */,
+				936510D61741598800F2AD06 /* NSManagedObjectContext+FetchAdditions */,
+				936510D91741598800F2AD06 /* Reachability */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		936510B31741585600F2AD06 /* My Library */ = {
+			isa = PBXGroup;
+			children = (
+				936510C41741597500F2AD06 /* JSKCommandMessage.h */,
+				936510C51741597500F2AD06 /* JSKCommandMessage.m */,
+				936510C61741597500F2AD06 /* JSKDataMiner.h */,
+				936510C71741597500F2AD06 /* JSKDataMiner.m */,
+				936510C81741597500F2AD06 /* JSKMenuViewController.h */,
+				936510C91741597500F2AD06 /* JSKMenuViewController.m */,
+				936510CA1741597500F2AD06 /* JSKPeerController.h */,
+				936510CB1741597500F2AD06 /* JSKPeerController.m */,
+				936510CC1741597500F2AD06 /* JSKSystemMessage.h */,
+				936510CD1741597500F2AD06 /* JSKSystemMessage.m */,
+				936510CE1741597500F2AD06 /* JSKViewStack.h */,
+				936510CF1741597500F2AD06 /* JSKViewStack.m */,
+			);
+			name = "My Library";
+			sourceTree = "<group>";
+		};
+		936510B41741586400F2AD06 /* ILColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				936510B51741596200F2AD06 /* ILColorPickerView.h */,
+				936510B61741596200F2AD06 /* ILColorPickerView.m */,
+				936510B71741596200F2AD06 /* ILHuePickerView.h */,
+				936510B81741596200F2AD06 /* ILHuePickerView.m */,
+				936510B91741596200F2AD06 /* ILSaturationBrightnessPickerView.h */,
+				936510BA1741596200F2AD06 /* ILSaturationBrightnessPickerView.m */,
+				936510BB1741596200F2AD06 /* ILView.h */,
+				936510BC1741596200F2AD06 /* ILView.m */,
+				936510BD1741596200F2AD06 /* UIColor+GetHSB.h */,
+				936510BE1741596200F2AD06 /* UIColor+GetHSB.m */,
+			);
+			name = ILColorPicker;
+			sourceTree = "<group>";
+		};
+		936510D61741598800F2AD06 /* NSManagedObjectContext+FetchAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				936510D71741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.h */,
+				936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */,
+			);
+			name = "NSManagedObjectContext+FetchAdditions";
+			path = "Classes/Libraries/NSManagedObjectContext+FetchAdditions";
+			sourceTree = "<group>";
+		};
+		936510D91741598800F2AD06 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				936510DA1741598800F2AD06 /* Reachability.h */,
+				936510DB1741598800F2AD06 /* Reachability.m */,
+			);
+			name = Reachability;
+			path = Classes/Libraries/Reachability;
+			sourceTree = "<group>";
+		};
+		936510E5174159D800F2AD06 /* Default Data */ = {
+			isa = PBXGroup;
+			children = (
+				936510E6174159E800F2AD06 /* DefaultDataMiner.h */,
+				936510E7174159E800F2AD06 /* DefaultDataMiner.m */,
+			);
+			name = "Default Data";
+			sourceTree = "<group>";
+		};
+		936510EC17415A3300F2AD06 /* Editors & Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				936510ED17415A4E00F2AD06 /* ColorPickerViewController.h */,
+				936510EE17415A4E00F2AD06 /* ColorPickerViewController.m */,
+				936510EF17415A4E00F2AD06 /* ColorPickerViewController.xib */,
+				936510F017415A4E00F2AD06 /* SlickEditView.h */,
+				936510F117415A4E00F2AD06 /* SlickEditView.m */,
+				936510F217415A4E00F2AD06 /* SlickEditView.xib */,
+			);
+			name = "Editors & Pickers";
+			sourceTree = "<group>";
+		};
+		936510F817415A7B00F2AD06 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				936510F917415A9D00F2AD06 /* PlayerPicklistItems.h */,
+				936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */,
+				936510FB17415A9D00F2AD06 /* PlayerViewController.h */,
+				936510FC17415A9D00F2AD06 /* PlayerViewController.m */,
+				936510FD17415A9D00F2AD06 /* PlayerViewController.xib */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		9365110117415AAE00F2AD06 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9365110217415ACE00F2AD06 /* Data Model */,
+				9365110317415AD500F2AD06 /* Envoys */,
+				9365110417415ADA00F2AD06 /* Managed Objects */,
+				9365110517415AE100F2AD06 /* Operations */,
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
+		9365110217415ACE00F2AD06 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Data Model";
+			sourceTree = "<group>";
+		};
+		9365110317415AD500F2AD06 /* Envoys */ = {
+			isa = PBXGroup;
+			children = (
+				9365110D17415B2000F2AD06 /* ImageEnvoy.h */,
+				9365110E17415B2000F2AD06 /* ImageEnvoy.m */,
+				9365110F17415B2000F2AD06 /* PlayerEnvoy.h */,
+				9365111017415B2000F2AD06 /* PlayerEnvoy.m */,
+			);
+			name = Envoys;
+			sourceTree = "<group>";
+		};
+		9365110417415ADA00F2AD06 /* Managed Objects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Managed Objects";
+			sourceTree = "<group>";
+		};
+		9365110517415AE100F2AD06 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				9365110717415B0C00F2AD06 /* CreatePlayerOperation.h */,
+				9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */,
+				9365110917415B0C00F2AD06 /* UpdatePlayerOperation.h */,
+				9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */,
+			);
+			name = Operations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +438,9 @@
 				936510A51741578C00F2AD06 /* Default.png in Resources */,
 				936510A71741578C00F2AD06 /* Default@2x.png in Resources */,
 				936510A91741578C00F2AD06 /* Default-568h@2x.png in Resources */,
+				936510F417415A4E00F2AD06 /* ColorPickerViewController.xib in Resources */,
+				936510F617415A4E00F2AD06 /* SlickEditView.xib in Resources */,
+				9365110017415A9D00F2AD06 /* PlayerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +453,31 @@
 			files = (
 				9365109F1741578C00F2AD06 /* main.m in Sources */,
 				936510A31741578C00F2AD06 /* AppDelegate.m in Sources */,
+				936510BF1741596200F2AD06 /* ILColorPickerView.m in Sources */,
+				936510C01741596200F2AD06 /* ILHuePickerView.m in Sources */,
+				936510C11741596200F2AD06 /* ILSaturationBrightnessPickerView.m in Sources */,
+				936510C21741596200F2AD06 /* ILView.m in Sources */,
+				936510C31741596200F2AD06 /* UIColor+GetHSB.m in Sources */,
+				936510D01741597500F2AD06 /* JSKCommandMessage.m in Sources */,
+				936510D11741597500F2AD06 /* JSKDataMiner.m in Sources */,
+				936510D21741597500F2AD06 /* JSKMenuViewController.m in Sources */,
+				936510D31741597500F2AD06 /* JSKPeerController.m in Sources */,
+				936510D41741597500F2AD06 /* JSKSystemMessage.m in Sources */,
+				936510D51741597500F2AD06 /* JSKViewStack.m in Sources */,
+				936510DC1741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m in Sources */,
+				936510DD1741598800F2AD06 /* Reachability.m in Sources */,
+				936510E3174159C900F2AD06 /* RootViewController.m in Sources */,
+				936510E4174159C900F2AD06 /* SystemMessage.m in Sources */,
+				936510E8174159E800F2AD06 /* DefaultDataMiner.m in Sources */,
+				936510EB17415A1000F2AD06 /* MainMenuItems.m in Sources */,
+				936510F317415A4E00F2AD06 /* ColorPickerViewController.m in Sources */,
+				936510F517415A4E00F2AD06 /* SlickEditView.m in Sources */,
+				936510FE17415A9D00F2AD06 /* PlayerPicklistItems.m in Sources */,
+				936510FF17415A9D00F2AD06 /* PlayerViewController.m in Sources */,
+				9365110B17415B0C00F2AD06 /* CreatePlayerOperation.m in Sources */,
+				9365110C17415B0C00F2AD06 /* UpdatePlayerOperation.m in Sources */,
+				9365111117415B2000F2AD06 /* ImageEnvoy.m in Sources */,
+				9365111217415B2000F2AD06 /* PlayerEnvoy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
