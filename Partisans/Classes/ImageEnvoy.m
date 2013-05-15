@@ -1,6 +1,6 @@
 //
 //  ImageEnvoy.m
-//  QuestPlayer
+//  Partisans
 //
 //  Created by Joshua Kaden on 4/25/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
