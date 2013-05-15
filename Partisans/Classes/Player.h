@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Image;
+@class GamePlayer, Image, Scorecard;
 
 @interface Player : NSManagedObject
 
@@ -22,5 +22,8 @@
 @property (nonatomic, retain) NSString * peerID;
 @property (nonatomic, retain) NSString * playerName;
 @property (nonatomic, retain) Image *picture;
+@property (nonatomic, retain) GamePlayer *gamePlayer;
+@property (nonatomic, retain) Scorecard *partisanScorecard;
+@property (nonatomic, retain) Scorecard *operativeScorecard;
 
 @end

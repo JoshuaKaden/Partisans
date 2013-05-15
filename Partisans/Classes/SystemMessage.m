@@ -22,7 +22,6 @@
 - (void)handleAcknowledgement:(JSKCommandResponse *)commandResponse;
 - (void)handleModifiedDateResponse:(JSKCommandResponse *)response;
 - (void)handleGetInfoResponse:(JSKCommandResponse *)response;
-- (void)handleGetLocationResponse:(JSKCommandResponse *)response;
 
 @end
 
@@ -59,9 +58,6 @@
     {
         case JSKCommandMessageTypeGetInfo:
             [self handleGetInfoResponse:commandResponse];
-            break;
-        case JSKCommandMessageTypeGetLocation:
-            [self handleGetLocationResponse:commandResponse];
             break;
         case JSKCommandMessageTypeGetModifiedDate:
             [self handleModifiedDateResponse:commandResponse];
@@ -137,47 +133,6 @@
     return;
 }
 
-
-- (void)handleGetLocationResponse:(JSKCommandResponse *)response
-{
-//    NSObject *object = response.object;
-//    if ([object isKindOfClass:[HauntEnvoy class]])
-//    {
-//        PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:response.from];
-//        if (!other)
-//        {
-//            // Local copy of that player not found.
-//            // We can safely ignore this message.
-//            // But should have been caught eariler?
-//            return;
-//        }
-//        HauntEnvoy *sighting = (HauntEnvoy *)object;
-//        
-//        BOOL isSameLocation = NO;
-//        BOOL isSameDate = NO;
-//        
-//        HauntEnvoy *lastSighting = [other currentHaunt];
-//        if (sighting.latitude == lastSighting.latitude && sighting.longitude == lastSighting.longitude)
-//        {
-//            isSameLocation = YES;
-//        }
-//        if ([sighting.dateOfVisit isEqualToDate:lastSighting.dateOfVisit])
-//        {
-//            isSameDate = YES;
-//        }
-//        
-//        if (isSameDate && isSameLocation)
-//        {
-//            return;
-//        }
-//        
-//        [other addHaunt:sighting];
-//        UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
-//        NSOperationQueue *queue = [SystemMessage mainQueue];
-//        [queue addOperation:op];
-//        [op release];
-//    }
-}
 
 
 - (void)peerController:(JSKPeerController *)peerController connectedToPeer:(NSString *)peerID

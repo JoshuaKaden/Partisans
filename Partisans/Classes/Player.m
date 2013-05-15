@@ -7,7 +7,9 @@
 //
 
 #import "Player.h"
+#import "GamePlayer.h"
 #import "Image.h"
+#import "Scorecard.h"
 
 
 @implementation Player
@@ -21,5 +23,8 @@
 @dynamic peerID;
 @dynamic playerName;
 @dynamic picture;
+@dynamic gamePlayer;
+@dynamic partisanScorecard;
+@dynamic operativeScorecard;
 
 @end

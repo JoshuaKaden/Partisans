@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Game" syncable="YES">
+    <entity name="Game" representedClassName="Game" syncable="YES">
+        <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="gamePlayers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GamePlayer" inverseName="game" inverseEntity="GamePlayer" syncable="YES"/>
         <relationship name="missions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Mission" inverseName="game" inverseEntity="Mission" syncable="YES"/>
         <relationship name="rounds" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Round" inverseName="game" inverseEntity="Round" syncable="YES"/>
     </entity>
-    <entity name="GamePlayer" syncable="YES">
-        <relationship name="candidateForRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="candidates" inverseEntity="Round" syncable="YES"/>
+    <entity name="GamePlayer" representedClassName="GamePlayer" syncable="YES">
+        <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isOperative" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="candidateForRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="missionCandidates" inverseEntity="Round" syncable="YES"/>
         <relationship name="game" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="gamePlayers" inverseEntity="Game" syncable="YES"/>
         <relationship name="leaderForRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="leader" inverseEntity="Round" syncable="YES"/>
         <relationship name="missions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="teamMembers" inverseEntity="Mission" syncable="YES"/>
-        <relationship name="player" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="gamePlayers" inverseEntity="Player" syncable="YES"/>
+        <relationship name="player" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="gamePlayer" inverseEntity="Player" syncable="YES"/>
         <relationship name="votes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Votes" inverseName="gamePlayer" inverseEntity="Votes" syncable="YES"/>
     </entity>
     <entity name="Image" representedClassName="Image" syncable="YES">
@@ -24,8 +28,9 @@
         <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="player" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="picture" inverseEntity="Player" syncable="YES"/>
     </entity>
-    <entity name="Mission" syncable="YES">
+    <entity name="Mission" representedClassName="Mission" syncable="YES">
         <attribute name="didSucceed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isComplete" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="missionName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="missionNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -43,18 +48,32 @@
         <attribute name="modifiedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="peerID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playerName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="gamePlayers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="player" inverseEntity="GamePlayer" syncable="YES"/>
+        <relationship name="gamePlayer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="player" inverseEntity="GamePlayer" syncable="YES"/>
+        <relationship name="operativeScorecard" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Scorecard" inverseName="operativePlayer" inverseEntity="Scorecard" syncable="YES"/>
+        <relationship name="partisanScorecard" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Scorecard" inverseName="partisanPlayer" inverseEntity="Scorecard" syncable="YES"/>
         <relationship name="picture" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="player" inverseEntity="Image" syncable="YES"/>
     </entity>
-    <entity name="Round" syncable="YES">
+    <entity name="Round" representedClassName="Round" syncable="YES">
+        <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roundNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="candidates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="candidateForRounds" inverseEntity="GamePlayer" syncable="YES"/>
         <relationship name="game" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="rounds" inverseEntity="Game" syncable="YES"/>
         <relationship name="leader" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="leaderForRounds" inverseEntity="GamePlayer" syncable="YES"/>
         <relationship name="mission" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Mission" inverseName="rounds" inverseEntity="Mission" syncable="YES"/>
+        <relationship name="missionCandidates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="candidateForRounds" inverseEntity="GamePlayer" syncable="YES"/>
         <relationship name="votes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Votes" inverseName="round" inverseEntity="Votes" syncable="YES"/>
     </entity>
-    <entity name="Votes" syncable="YES">
+    <entity name="Scorecard" representedClassName="Scorecard" syncable="YES">
+        <attribute name="gamesPlayed" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="gamesWon" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="missionsLed" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="missionsPerformed" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="missionsSabotaged" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="successfulMissionsLed" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="operativePlayer" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="operativeScorecard" inverseEntity="Player" syncable="YES"/>
+        <relationship name="partisanPlayer" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="partisanScorecard" inverseEntity="Player" syncable="YES"/>
+    </entity>
+    <entity name="Votes" representedClassName="Votes" syncable="YES">
+        <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isCast" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isYea" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="gamePlayer" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="votes" inverseEntity="GamePlayer" syncable="YES"/>
@@ -62,11 +81,12 @@
     </entity>
     <elements>
         <element name="Image" positionX="-2043" positionY="-606" width="128" height="165"/>
-        <element name="Player" positionX="-2052" positionY="-1053" width="128" height="195"/>
-        <element name="Game" positionX="-1802" positionY="-1071" width="128" height="105"/>
-        <element name="GamePlayer" positionX="-1863" positionY="-792" width="128" height="135"/>
-        <element name="Mission" positionX="-1062" positionY="-939" width="128" height="165"/>
-        <element name="Round" positionX="-1568" positionY="-909" width="128" height="135"/>
-        <element name="Votes" positionX="-1548" positionY="-645" width="128" height="105"/>
+        <element name="Player" positionX="-2052" positionY="-1053" width="128" height="225"/>
+        <element name="Game" positionX="-1802" positionY="-1071" width="128" height="135"/>
+        <element name="GamePlayer" positionX="-1865" positionY="-792" width="128" height="165"/>
+        <element name="Mission" positionX="-983" positionY="-954" width="128" height="180"/>
+        <element name="Round" positionX="-1532" positionY="-909" width="128" height="150"/>
+        <element name="Votes" positionX="-1703" positionY="-612" width="128" height="120"/>
+        <element name="Scorecard" positionX="-2315" positionY="-930" width="128" height="165"/>
     </elements>
 </model>

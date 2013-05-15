@@ -73,16 +73,16 @@
             label = NSLocalizedString(@"Player", @"Player  --  menu label");
             break;
 
-        case MainMenuRowQuests:
-            label = NSLocalizedString(@"Quests", @"Quests  --  menu label");
+        case MainMenuRowGame:
+            label = NSLocalizedString(@"Game", @"Game  --  menu label");
             break;
                         
-        case MainMenuRowSettings:
-            label = NSLocalizedString(@"Settings", @"Settings  --  menu label");
+        case MainMenuRowScores:
+            label = NSLocalizedString(@"Scores", @"Scores  --  menu label");
             break;
             
-        case MainMenuRowTools:
-            label = NSLocalizedString(@"Tools", @"Tools  --  menu label");
+        case MainMenuRowAccomplishments:
+            label = NSLocalizedString(@"Accomplishments", @"Accomplishments  --  menu label");
             break;
             
         case MainMenuRow_MaxValue:
@@ -108,11 +108,11 @@
             label = [SystemMessage playerEnvoy].playerName;
             break;
 
-        case MainMenuRowQuests:
+        case MainMenuRowGame:
             break;
             
-        case MainMenuRowSettings:
-        case MainMenuRowTools:
+        case MainMenuRowScores:
+        case MainMenuRowAccomplishments:
             break;
             break;
 
@@ -146,9 +146,9 @@
             targetClass = [PlayerViewController class];
             break;
         
-        case MainMenuRowQuests:
-        case MainMenuRowSettings:
-        case MainMenuRowTools:
+        case MainMenuRowGame:
+        case MainMenuRowScores:
+        case MainMenuRowAccomplishments:
             targetClass = [JSKMenuViewController class];
             break;
             
@@ -164,9 +164,9 @@
 {
     switch (indexPath.row)
     {
-        case MainMenuRowPlayer:
-        case MainMenuRowQuests:
-        case MainMenuRowSettings:
+        case MainMenuRowGame:
+        case MainMenuRowScores:
+        case MainMenuRowAccomplishments:
             return nil;
             
 //        case MainMenuRowTools:
@@ -189,7 +189,7 @@
 
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
 {
-    return NSLocalizedString(@"Quest Player", @"Quest Player  --  title");
+    return NSLocalizedString(@"Partisans", @"Partisans  --  title");
 }
 
 
