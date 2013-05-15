@@ -60,6 +60,9 @@
 		93C10BAF174408F300B47095 /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BAE174408F300B47095 /* GamePlayer.m */; };
 		93C10BB2174408F300B47095 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB1174408F300B47095 /* Player.m */; };
 		93C10BB5174408F300B47095 /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB4174408F300B47095 /* Round.m */; };
+		93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
+		93C10BC4174411C500B47095 /* HostGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BC2174411C500B47095 /* HostGameViewController.m */; };
+		93C10BC5174411C500B47095 /* HostGameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C10BC3174411C500B47095 /* HostGameViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +158,11 @@
 		93C10BB1174408F300B47095 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Classes/Player.m; sourceTree = "<group>"; };
 		93C10BB3174408F300B47095 /* Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Round.h; path = Classes/Round.h; sourceTree = "<group>"; };
 		93C10BB4174408F300B47095 /* Round.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Round.m; path = Classes/Round.m; sourceTree = "<group>"; };
+		93C10BB817440C4500B47095 /* PlayGameMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayGameMenuItems.h; path = Classes/PlayGameMenuItems.h; sourceTree = "<group>"; };
+		93C10BB917440C4500B47095 /* PlayGameMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayGameMenuItems.m; path = Classes/PlayGameMenuItems.m; sourceTree = "<group>"; };
+		93C10BC1174411C500B47095 /* HostGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostGameViewController.h; path = Classes/HostGameViewController.h; sourceTree = "<group>"; };
+		93C10BC2174411C500B47095 /* HostGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HostGameViewController.m; path = Classes/HostGameViewController.m; sourceTree = "<group>"; };
+		93C10BC3174411C500B47095 /* HostGameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HostGameViewController.xib; path = Classes/HostGameViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,8 +249,9 @@
 		936510B01741581D00F2AD06 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9365110117415AAE00F2AD06 /* Data Entities */,
 				936510EC17415A3300F2AD06 /* Editors & Pickers */,
-				9365110117415AAE00F2AD06 /* Entities */,
+				93C10BB617440B9300B47095 /* Game */,
 				936510B21741584E00F2AD06 /* Libraries */,
 				936510B11741583200F2AD06 /* Main */,
 				936510F817415A7B00F2AD06 /* Player */,
@@ -370,20 +379,20 @@
 			name = Player;
 			sourceTree = "<group>";
 		};
-		9365110117415AAE00F2AD06 /* Entities */ = {
+		9365110117415AAE00F2AD06 /* Data Entities */ = {
 			isa = PBXGroup;
 			children = (
 				9365110217415ACE00F2AD06 /* Data Model */,
 				9365110317415AD500F2AD06 /* Envoys */,
-				9365110417415ADA00F2AD06 /* Managed Objects */,
 				9365110517415AE100F2AD06 /* Operations */,
 			);
-			name = Entities;
+			name = "Data Entities";
 			sourceTree = "<group>";
 		};
 		9365110217415ACE00F2AD06 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				9365110417415ADA00F2AD06 /* Managed Objects */,
 				93C10B441743A52600B47095 /* Partisans.xcdatamodeld */,
 			);
 			name = "Data Model";
@@ -434,6 +443,18 @@
 				9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */,
 			);
 			name = Operations;
+			sourceTree = "<group>";
+		};
+		93C10BB617440B9300B47095 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				93C10BC1174411C500B47095 /* HostGameViewController.h */,
+				93C10BC2174411C500B47095 /* HostGameViewController.m */,
+				93C10BC3174411C500B47095 /* HostGameViewController.xib */,
+				93C10BB817440C4500B47095 /* PlayGameMenuItems.h */,
+				93C10BB917440C4500B47095 /* PlayGameMenuItems.m */,
+			);
+			name = Game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,6 +515,7 @@
 				936510F417415A4E00F2AD06 /* ColorPickerViewController.xib in Resources */,
 				936510F617415A4E00F2AD06 /* SlickEditView.xib in Resources */,
 				9365110017415A9D00F2AD06 /* PlayerViewController.xib in Resources */,
+				93C10BC5174411C500B47095 /* HostGameViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +564,8 @@
 				93C10BAF174408F300B47095 /* GamePlayer.m in Sources */,
 				93C10BB2174408F300B47095 /* Player.m in Sources */,
 				93C10BB5174408F300B47095 /* Round.m in Sources */,
+				93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */,
+				93C10BC4174411C500B47095 /* HostGameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
