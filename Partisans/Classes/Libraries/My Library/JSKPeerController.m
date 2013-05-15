@@ -80,7 +80,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         self.connectedPeerNames = [NSDictionary dictionary];
     }
     
-    NSString *sessionID = @"ThoroughlyRandomSessionIDForQuestPlayer";
+    NSString *sessionID = @"ThoroughlyRandomSessionIDForPartisans";
     NSString *peerID = self.myPeerID;
     
     GKSession *gkSession = [[GKSession alloc] initWithSessionID:sessionID displayName:peerID sessionMode:GKSessionModePeer];

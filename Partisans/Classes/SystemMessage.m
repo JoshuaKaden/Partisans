@@ -272,6 +272,10 @@
         [sharedInstance setPeerController:peerController];
         [peerController release];
     }
+    if (!peerController.peerID || peerController.peerID.length == 0)
+    {
+        [peerController setPeerID:sharedInstance.playerEnvoy.peerID];
+    }
     return peerController.hasSessionStarted;
 }
 
