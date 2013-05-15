@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSDate * startDate;
 @property (nonatomic, retain) NSString * intramuralID;
 @property (nonatomic, retain) NSDate * endDate;
+@property (nonatomic, retain) NSNumber * numberOfPlayers;
 @property (nonatomic, retain) NSSet *gamePlayers;
 @property (nonatomic, retain) NSSet *missions;
 @property (nonatomic, retain) NSSet *rounds;

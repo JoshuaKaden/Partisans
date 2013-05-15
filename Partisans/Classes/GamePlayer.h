@@ -18,9 +18,9 @@
 @property (nonatomic, retain) Game *game;
 @property (nonatomic, retain) Player *player;
 @property (nonatomic, retain) NSSet *leaderForRounds;
-@property (nonatomic, retain) NSSet *missions;
+@property (nonatomic, retain) NSSet *teamMemberOn;
 @property (nonatomic, retain) NSSet *candidateForRounds;
-@property (nonatomic, retain) NSSet *votes;
+@property (nonatomic, retain) NSSet *missionVotes;
 @end
 
 @interface GamePlayer (CoreDataGeneratedAccessors)
@@ -30,19 +30,19 @@
 - (void)addLeaderForRounds:(NSSet *)values;
 - (void)removeLeaderForRounds:(NSSet *)values;
 
-- (void)addMissionsObject:(Mission *)value;
-- (void)removeMissionsObject:(Mission *)value;
-- (void)addMissions:(NSSet *)values;
-- (void)removeMissions:(NSSet *)values;
+- (void)addTeamMemberOnObject:(Mission *)value;
+- (void)removeTeamMemberOnObject:(Mission *)value;
+- (void)addTeamMemberOn:(NSSet *)values;
+- (void)removeTeamMemberOn:(NSSet *)values;
 
 - (void)addCandidateForRoundsObject:(Round *)value;
 - (void)removeCandidateForRoundsObject:(Round *)value;
 - (void)addCandidateForRounds:(NSSet *)values;
 - (void)removeCandidateForRounds:(NSSet *)values;
 
-- (void)addVotesObject:(Votes *)value;
-- (void)removeVotesObject:(Votes *)value;
-- (void)addVotes:(NSSet *)values;
-- (void)removeVotes:(NSSet *)values;
+- (void)addMissionVotesObject:(Votes *)value;
+- (void)removeMissionVotesObject:(Votes *)value;
+- (void)addMissionVotes:(NSSet *)values;
+- (void)removeMissionVotes:(NSSet *)values;
 
 @end

@@ -21,8 +21,8 @@
 @dynamic game;
 @dynamic player;
 @dynamic leaderForRounds;
-@dynamic missions;
+@dynamic teamMemberOn;
 @dynamic candidateForRounds;
-@dynamic votes;
+@dynamic missionVotes;
 
 @end

@@ -17,6 +17,7 @@
 @dynamic startDate;
 @dynamic intramuralID;
 @dynamic endDate;
+@dynamic numberOfPlayers;
 @dynamic gamePlayers;
 @dynamic missions;
 @dynamic rounds;

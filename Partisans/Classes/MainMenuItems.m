@@ -33,6 +33,11 @@
     [super dealloc];
 }
 
+- (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController
+{
+    return YES;
+}
+
 - (BOOL)menuViewControllerShouldAutoRefresh:(JSKMenuViewController *)menuViewController
 {
     return YES;
