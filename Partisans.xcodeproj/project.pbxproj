@@ -49,6 +49,10 @@
 		9365111817415B6B00F2AD06 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111717415B6B00F2AD06 /* GameKit.framework */; };
 		9365111A17415B7B00F2AD06 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111917415B7B00F2AD06 /* QuartzCore.framework */; };
 		9365111C17415B8600F2AD06 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
+		9365111F17415D0A00F2AD06 /* JSKCommandResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */; };
+		93C10B461743A52600B47095 /* Partisans.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B441743A52600B47095 /* Partisans.xcdatamodeld */; };
+		93C10B4F1743A62B00B47095 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B4E1743A62B00B47095 /* Player.m */; };
+		93C10B521743A62B00B47095 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B511743A62B00B47095 /* Image.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +127,13 @@
 		9365111717415B6B00F2AD06 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		9365111917415B7B00F2AD06 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9365111B17415B8600F2AD06 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9365111D17415D0A00F2AD06 /* JSKCommandResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKCommandResponse.h; path = "Classes/Libraries/My Library/JSKCommandResponse.h"; sourceTree = "<group>"; };
+		9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKCommandResponse.m; path = "Classes/Libraries/My Library/JSKCommandResponse.m"; sourceTree = "<group>"; };
+		93C10B451743A52600B47095 /* Partisans.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Partisans.xcdatamodel; sourceTree = "<group>"; };
+		93C10B4D1743A62B00B47095 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Classes/Player.h; sourceTree = "<group>"; };
+		93C10B4E1743A62B00B47095 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Classes/Player.m; sourceTree = "<group>"; };
+		93C10B501743A62B00B47095 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = Classes/Image.h; sourceTree = "<group>"; };
+		93C10B511743A62B00B47095 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = Classes/Image.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +262,8 @@
 			children = (
 				936510C41741597500F2AD06 /* JSKCommandMessage.h */,
 				936510C51741597500F2AD06 /* JSKCommandMessage.m */,
+				9365111D17415D0A00F2AD06 /* JSKCommandResponse.h */,
+				9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */,
 				936510C61741597500F2AD06 /* JSKDataMiner.h */,
 				936510C71741597500F2AD06 /* JSKDataMiner.m */,
 				936510C81741597500F2AD06 /* JSKMenuViewController.h */,
@@ -350,6 +363,7 @@
 		9365110217415ACE00F2AD06 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				93C10B441743A52600B47095 /* Partisans.xcdatamodeld */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -368,6 +382,10 @@
 		9365110417415ADA00F2AD06 /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
+				93C10B501743A62B00B47095 /* Image.h */,
+				93C10B511743A62B00B47095 /* Image.m */,
+				93C10B4D1743A62B00B47095 /* Player.h */,
+				93C10B4E1743A62B00B47095 /* Player.m */,
 			);
 			name = "Managed Objects";
 			sourceTree = "<group>";
@@ -478,6 +496,10 @@
 				9365110C17415B0C00F2AD06 /* UpdatePlayerOperation.m in Sources */,
 				9365111117415B2000F2AD06 /* ImageEnvoy.m in Sources */,
 				9365111217415B2000F2AD06 /* PlayerEnvoy.m in Sources */,
+				9365111F17415D0A00F2AD06 /* JSKCommandResponse.m in Sources */,
+				93C10B461743A52600B47095 /* Partisans.xcdatamodeld in Sources */,
+				93C10B4F1743A62B00B47095 /* Player.m in Sources */,
+				93C10B521743A62B00B47095 /* Image.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,8 +614,22 @@
 				936510AE1741578C00F2AD06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		93C10B441743A52600B47095 /* Partisans.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				93C10B451743A52600B47095 /* Partisans.xcdatamodel */,
+			);
+			currentVersion = 93C10B451743A52600B47095 /* Partisans.xcdatamodel */;
+			path = Partisans.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 936510871741578B00F2AD06 /* Project object */;
 }

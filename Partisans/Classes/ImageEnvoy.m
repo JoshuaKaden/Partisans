@@ -23,7 +23,7 @@
 @synthesize imageLongitude = m_imageLongitude;
 @synthesize imageSource = m_imageSource;
 
-
+ 
 - (void)dealloc
 {
     [m_managedObjectID release];

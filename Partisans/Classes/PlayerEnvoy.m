@@ -8,7 +8,6 @@
 
 #import "PlayerEnvoy.h"
 
-#import "HauntEnvoy.h"
 #import "Image.h"
 #import "ImageEnvoy.h"
 #import "JSKDataMiner.h"
@@ -271,99 +270,6 @@
 
 
 
-#pragma mark - Sightings (locations)
-
-- (NSArray *)haunts
-{
-    NSManagedObjectID *hauntObjectID = self.managedObjectID;
-    if (hauntObjectID)
-    {
-        NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
-        Player *player = (Player *)[context objectWithID:hauntObjectID];
-        if (!player)
-        {
-            // Something badly wrong in this case.
-            debugLog(@"Problem!!");
-            return nil;
-        }
-        
-        
-        
-        NSSortDescriptor *dateSort = [[NSSortDescriptor alloc] initWithKey:@"dateOfVisit" ascending:NO];
-        NSArray *sorts = [[NSArray alloc] initWithObjects:dateSort, nil];
-        [dateSort release];
-        NSArray *sightings = [player.haunts sortedArrayUsingDescriptors:sorts];
-//        NSArray *sightings = [context fetchObjectArrayForEntityName:@"Haunt" usingSortDescriptors:sorts withPredicateFormat:@"player == %@", player];
-        [sorts release];
-        
-        NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:sightings.count];
-        for (Haunt *haunt in sightings)
-        {
-            HauntEnvoy *envoy = [[HauntEnvoy alloc] initWithManagedObject:haunt];
-            [envoys addObject:envoy];
-            [envoy release];
-        }
-        
-        NSArray *returnValue = [NSArray arrayWithArray:envoys];
-        [envoys release];
-        
-        return returnValue;
-    }
-    
-    return [NSArray array];
-}
-
-- (HauntEnvoy *)currentHaunt
-{
-    HauntEnvoy *lastSighting = nil;
-    
-    // Check the model.
-    NSArray *savedSightings = [self haunts];
-    if (savedSightings.count > 0)
-    {
-        lastSighting = [savedSightings objectAtIndex:0];
-    }
-    
-    // Check for any added.
-    if (self.addedSightings)
-    {
-        for (HauntEnvoy *hauntEnvoy in self.addedSightings)
-        {
-            if (!lastSighting)
-            {
-                lastSighting = hauntEnvoy;
-            }
-            
-            NSComparisonResult result = [hauntEnvoy.dateOfVisit compare:lastSighting.dateOfVisit];
-            switch (result) {
-                case NSOrderedDescending:
-                    // We have an added sighting that is newer than any other so far!
-                    lastSighting = hauntEnvoy;
-                    break;
-                    
-                default:
-                    break;
-            }
-        }
-    }
-    
-    // Done.
-    return lastSighting;
-}
-
-
-- (void)addHaunt:(HauntEnvoy *)hauntEnvoy
-{
-    if (self.addedSightings)
-    {
-        self.addedSightings = [self.addedSightings arrayByAddingObject:hauntEnvoy];
-        return;
-    }
-    
-    self.addedSightings = [NSArray arrayWithObject:hauntEnvoy];
-}
-
-
 #pragma mark - Commits
 
 - (void)deletePlayer
@@ -476,7 +382,6 @@
         {
             Image *picture = (Image *)[context objectWithID:self.picture.managedObjectID];
             model.picture = picture;
-            [model addSavedPicturesObject:picture];
         }
         else
         {
@@ -488,22 +393,7 @@
         model.picture = nil;
     }
     
-    
-    
-    if (self.addedSightings)
-    {
-        for (HauntEnvoy *hauntEnvoy in self.addedSightings)
-        {
-            [hauntEnvoy commitInContext:context];
-            if (hauntEnvoy.managedObjectID)
-            {
-                Haunt *haunt = (Haunt *)[context objectWithID:hauntEnvoy.managedObjectID];
-                [model addHauntsObject:haunt];
-            }
-        }
-        self.addedSightings = nil;
-    }
-    
+
     
     
     // Make sure the envoy knows the new managed object ID, if this is an add.

@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerShouldRefresh";
+
+
 @interface JSKMenuViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -22,6 +25,8 @@
 - (void)createRows:(BOOL)animated;
 - (void)createRowsDelayed:(NSNumber *)animated;
 - (void)resetLocalCounters;
+- (void)shouldRefreshNotificationFired:(NSNotification *)notification;
+- (void)initializeRowCounts;
 
 @end
 
@@ -43,9 +48,12 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [m_menuItems release];
     [m_rowCounts release];
     [m_rightButtonItem release];
+    
     [super dealloc];
 }
 
@@ -107,21 +115,16 @@
     [tableView release];
     
     
-    NSUInteger sectionCount = [self.delegate menuViewControllerNumberOfSections:self];
-    NSMutableArray *rowCounts = [[NSMutableArray alloc] initWithCapacity:sectionCount];
-    self.rowCounts = rowCounts;
-    [rowCounts release];
-    
-    NSUInteger sectionIndex = 0;
-    while (sectionIndex < sectionCount)
-    {
-        NSNumber *number = [NSNumber numberWithUnsignedInt:0];
-        [self.rowCounts addObject:number];
-        sectionIndex++;
-    }
+    [self initializeRowCounts];
     
     [self refresh:YES];
-    //    [self.tableView reloadData];
+    
+    if ([self.delegate respondsToSelector:@selector(menuViewControllerDidLoad:)])
+    {
+        [self.delegate menuViewControllerDidLoad:self];
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldRefreshNotificationFired:) name:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
 
@@ -140,6 +143,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     CGRect frame = self.view.frame;
     frame.origin.x = 0;
     frame.origin.y = 0;
@@ -166,6 +171,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     //    [self refresh:nil];
 }
 
@@ -173,10 +179,48 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
     CGRect frame = self.view.frame;
     frame.origin.x = 0;
     frame.origin.y = 0;
     [self.tableView setFrame:frame];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if ([self.delegate respondsToSelector:@selector(menuViewController:willDisappear:)])
+    {
+        [self.delegate menuViewController:self willDisappear:animated];
+    }
+}
+
+
+
+- (void)initializeRowCounts
+{
+    NSUInteger sectionCount = [self.delegate menuViewControllerNumberOfSections:self];
+    NSMutableArray *rowCounts = [[NSMutableArray alloc] initWithCapacity:sectionCount];
+    self.rowCounts = rowCounts;
+    [rowCounts release];
+    
+    NSUInteger sectionIndex = 0;
+    while (sectionIndex < sectionCount)
+    {
+        NSNumber *number = [NSNumber numberWithUnsignedInt:0];
+        [self.rowCounts addObject:number];
+        sectionIndex++;
+    }
+}
+
+
+
+- (void)shouldRefreshNotificationFired:(NSNotification *)notification
+{
+    [self refreshData:NO];
 }
 
 
@@ -199,7 +243,7 @@
     {
         [self.delegate menuViewControllerInvokedRefresh:self];
     }
-    [self refresh:YES];
+    [self refreshData:YES];
 }
 
 - (void)refresh:(BOOL)animated
@@ -216,6 +260,13 @@
     
     [self removeAllSectionsWithAnimation:UITableViewRowAnimationFade];
     [self createRows:NO];
+}
+
+
+- (void)refreshData:(BOOL)animated
+{
+    [self initializeRowCounts];
+    [self refresh:animated];
 }
 
 

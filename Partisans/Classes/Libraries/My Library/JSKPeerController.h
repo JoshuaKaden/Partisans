@@ -44,6 +44,7 @@ extern const NSUInteger PeerMessageSizeLimit;
 - (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
 - (void)sendCommandResponse:(JSKCommandResponse *)commandResponse;
 - (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType;
+- (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType toPeerIDs:(NSArray *)peerIDs;
 
 - (void)archiveAndSend:(NSObject <NSCoding> *)object to:(NSString *)to;
 - (void)archiveAndBroadcast:(NSObject <NSCoding> *)object;

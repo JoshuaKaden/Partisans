@@ -32,9 +32,9 @@ NSString * const JSKDataMinerDidSaveFailedNotification = @"JSKDataMinerDidSaveFa
 @synthesize persistentStoreCoordinator = m_persistentStoreCoordinator;
 @synthesize importedIDsMap = m_importedIDsMap;
 
-static NSString * const kDataManagerModelName = @"QuestPlayer";
-static NSString * const kDataManagerSQLiteName = @"QuestPlayer.sqlite";
-static NSString * const kDataManagerSQLiteBaseName = @"QuestPlayer";
+static NSString * const kDataManagerModelName = @"Partisans";
+static NSString * const kDataManagerSQLiteName = @"Partisans.sqlite";
+static NSString * const kDataManagerSQLiteBaseName = @"Partisans";
 
 
 + (JSKDataMiner *)sharedInstance {

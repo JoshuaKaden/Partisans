@@ -22,6 +22,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 @property (nonatomic, assign) BOOL isSending;
 @property (readwrite, nonatomic, strong) NSString *myPeerID;
 @property (nonatomic, strong) NSDictionary *connectedPeerNames;
+@property (atomic, assign) BOOL isSlave;
 
 - (BOOL)hasSessionStarted;
 - (void)archiveAndSend:(NSObject <NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID;
@@ -40,6 +41,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 @synthesize delegate = m_delegate;
 @synthesize connectedPeerNames = m_connectedPeerNames;
 @synthesize peerID = m_peerID;
+@synthesize isSlave = m_isSlave;
 
 
 
@@ -126,16 +128,20 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 #pragma mark - Sending
 
 
-
-- (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType {
-    
-    for (NSString *peerID in [self.connectedPeerNames allValues])
-//    for (NSString *peerID in [self.gkSession peersWithConnectionState:GKPeerStateConnected])
+- (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType toPeerIDs:(NSArray *)peerIDs
+{
+    for (NSString *peerID in peerIDs)
     {
         JSKCommandMessage *newCommandMessage = [[JSKCommandMessage alloc] initWithType:commandMessageType to:peerID from:self.peerID];
         [self sendCommandMessage:newCommandMessage];
         [newCommandMessage release];
     }
+}
+
+
+- (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType
+{
+    [self broadcastCommandMessage:commandMessageType toPeerIDs:[self.connectedPeerNames allValues]];
 }
 
 
@@ -189,8 +195,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     
-    debugLog(@"Will send a message of %d bytes to peer %@.", data.length, sessionPeerID);
-    debugLog(@"Sending: %@", object);
+//    debugLog(@"Will send a message of %d bytes to peer %@.", data.length, sessionPeerID);
+//    debugLog(@"Sending: %@", object);
     //    debugLog(@"Sending raw: %@", data);
     
 //    NSArray *sendDataArray = [NSArray arrayWithObject:data];
@@ -414,7 +420,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 //    debugLog(@"Received message of %d bytes from peer %@.", data.length, peer);
     
     NSObject *statement = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    debugLog(@"Received object from peer %@.\nThe object:\n%@", peer, statement);
+//    debugLog(@"Received object from peer %@.\nThe object:\n%@", peer, statement);
     
     //    debugLog(@"Received raw: %@", data);
     
@@ -586,12 +592,22 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 #pragma mark - GKSessionDelegate Methods
 
 
-- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID {
+- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
+{
     //    debugLog(@"Received connection request from: %@",peerID);
+    
+//    if (self.isSlave)
+//    {
+//        return;
+//    }
+    
     NSError *error = nil;
     if (![session acceptConnectionFromPeer:peerID error:&error]) {
         debugLog(@"Problem connecting to peer: %@",peerID);
+        return;
     }
+    
+//    self.isSlave = YES;
 }
 
 

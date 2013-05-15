@@ -12,24 +12,24 @@
 #import "PlayerEnvoy.h"
 #import "PlayerViewController.h"
 #import "SystemMessage.h"
-#import "ToolsMenuItems.h"
+//#import "ToolsMenuItems.h"
 
 
 @interface MainMenuItems ()
 
-@property (nonatomic, strong) ToolsMenuItems *toolsMenuItems;
+//@property (nonatomic, strong) ToolsMenuItems *toolsMenuItems;
 
 @end
 
 
 @implementation MainMenuItems
 
-@synthesize toolsMenuItems = m_toolsMenuItems;
+//@synthesize toolsMenuItems = m_toolsMenuItems;
 
 
 - (void)dealloc
 {
-    [m_toolsMenuItems release];
+//    [m_toolsMenuItems release];
     [super dealloc];
 }
 
@@ -169,14 +169,14 @@
         case MainMenuRowSettings:
             return nil;
             
-        case MainMenuRowTools:
-        {
-            ToolsMenuItems *items = [[ToolsMenuItems alloc] init];
-            self.toolsMenuItems =items;
-            [items release];
-            return self.toolsMenuItems;
-            break;
-        }
+//        case MainMenuRowTools:
+//        {
+//            ToolsMenuItems *items = [[ToolsMenuItems alloc] init];
+//            self.toolsMenuItems =items;
+//            [items release];
+//            return self.toolsMenuItems;
+//            break;
+//        }
             
         case MainMenuRow_MaxValue:
             return nil;

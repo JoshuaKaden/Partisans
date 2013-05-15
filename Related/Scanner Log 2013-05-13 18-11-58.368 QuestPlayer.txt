@@ -1,0 +1,1308 @@
+2013-05-13 18:17:09.141 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 387 bytes to peer 320931493.
+2013-05-13 18:17:09.142 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "";
+}
+2013-05-13 18:17:09.143 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "";
+}
+2013-05-13 18:17:09.145 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 497 bytes to peer 320931493.
+2013-05-13 18:17:09.145 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "";
+    respondingToCommandMessageType = 4;
+    respondingToName = Identification;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:09.314 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "";
+    respondingToCommandMessageType = 4;
+    respondingToName = Identification;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:10.389 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:10.389 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:10.540 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:10.542 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:10.543 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0xa36dea0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:10.561 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:14 +0000\";\n    latitude = \"40.87044059838905\";\n    longitude = \"-73.91728764567625\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:11.389 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:11.390 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:11.497 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "2013-05-13 22:17:14 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:11.499 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:11.499 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:11.520 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.124678 0.12432 0.144351 1\";\n    importedObjectString = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    intramuralID = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"\";\n    modifiedDate = \"2013-05-13 22:17:14 +0000\";\n    peerID = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Image/p1\\\";\\n    intramuralID = \\\"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Image/p1\\\";\\n    managedObjectID = \\\"\\\";\\n}\";\n    playerName = \"Cayce Pollard\";\n}";
+    respondingToCommandMessageType = 1;
+    respondingToName = GetInfo;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:12.389 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:12.389 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:12.416 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:14 +0000\";\n    latitude = \"40.87044059838905\";\n    longitude = \"-73.91728764567625\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:12.518 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:12.520 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:12.520 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0xa1920e0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:14.020 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:14.022 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 320931493.
+2013-05-13 18:17:14.022 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 21:36:11 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:14.388 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:14.388 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:14.446 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:14.509 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:14.511 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:14.511 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0xa1920e0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:16.387 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:16.387 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:16.388 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:16.388 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:16.414 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:16.421 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "2013-05-13 22:17:16 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:16.423 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:16.423 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:16.444 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.124678 0.12432 0.144351 1\";\n    importedObjectString = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    intramuralID = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"\";\n    modifiedDate = \"2013-05-13 22:17:16 +0000\";\n    peerID = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Image/p1\\\";\\n    intramuralID = \\\"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Image/p1\\\";\\n    managedObjectID = \\\"\\\";\\n}\";\n    playerName = \"Cayce Pollard\";\n}";
+    respondingToCommandMessageType = 1;
+    respondingToName = GetInfo;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:16.515 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:16.516 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:16.517 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9482ab0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:18.386 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:18.386 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:18.466 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:18.508 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:18.510 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:18.510 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x94824c0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:18.511 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:18.512 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 320931493.
+2013-05-13 18:17:18.512 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 21:36:11 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:20.385 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:20.385 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:20.512 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:20.515 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:20.517 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:20.517 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9473980 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:21.384 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:21.385 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:21.528 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "2013-05-13 22:17:16 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:22.384 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:22.385 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:22.618 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:22.619 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:22.620 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:22.620 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0xa18da20 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:23.845 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:23.847 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 320931493.
+2013-05-13 18:17:23.847 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 21:36:11 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:24.383 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:24.384 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:24.410 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:24.516 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:24.518 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:24.518 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9482220 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:26.382 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:26.383 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:26.383 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:26.384 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:26.448 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:26.455 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "2013-05-13 22:17:16 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:26.504 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:26.505 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:26.506 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0xa18bf90 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:28.381 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:28.382 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:28.496 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:28.502 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:28.504 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:28.504 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9485360 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:28.505 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:28.506 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 320931493.
+2013-05-13 18:17:28.506 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 21:36:11 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:30.380 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:30.380 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:30.525 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:30.527 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:30.528 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0xa190980 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:30.537 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:31.379 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:31.380 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:31.456 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "2013-05-13 22:17:16 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:32.379 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 320931493.
+2013-05-13 18:17:32.380 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:32.488 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:17:16 +0000\";\n    latitude = \"40.87043856003934\";\n    longitude = \"-73.91728548013835\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:32.502 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:32.504 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 320931493.
+2013-05-13 18:17:32.505 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9455620 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:17:33.671 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 320931493.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:17:33.673 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 320931493.
+2013-05-13 18:17:33.673 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 21:36:11 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:40.749 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 387 bytes to peer 1785212617.
+2013-05-13 18:19:40.750 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "";
+}
+2013-05-13 18:19:40.758 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "";
+}
+2013-05-13 18:19:40.760 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 497 bytes to peer 1785212617.
+2013-05-13 18:19:40.760 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "";
+    respondingToCommandMessageType = 4;
+    respondingToName = Identification;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:40.765 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "";
+    respondingToCommandMessageType = 4;
+    respondingToName = Identification;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:41.609 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:41.611 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 1785212617.
+2013-05-13 18:19:41.611 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9444fa0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:42.622 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:42.623 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:42.624 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:42.626 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 1785212617.
+2013-05-13 18:19:42.626 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 22:17:58 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:42.655 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:42.661 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:42.665 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 4973 bytes to peer 1785212617.
+2013-05-13 18:19:42.665 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 1 0 0.362638 1\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"0xa35d6c0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1>\";\n    modifiedDate = \"2013-05-13 22:17:58 +0000\";\n    peerID = \"x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"\\\";\\n    intramuralID = \\\"x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Image/p1\\\";\\n    managedObjectID = \\\"0xa35b010 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Image/p1>\\\";\\n}\";\n    playerName = \"Morgan the Computer\";\n}";
+    respondingToCommandMessageType = 1;
+    respondingToName = GetInfo;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:43.862 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:43.864 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 1785212617.
+2013-05-13 18:19:43.864 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9444fa0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:44.621 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:44.621 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:44.788 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:45.620 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:45.620 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:45.640 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:45.642 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 1785212617.
+2013-05-13 18:19:45.642 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9444fa0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:45.651 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "2013-05-13 22:19:44 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:45.654 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:45.654 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:45.694 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.124678 0.12432 0.144351 1\";\n    importedObjectString = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    intramuralID = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"\";\n    modifiedDate = \"2013-05-13 22:19:44 +0000\";\n    peerID = \"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Image/p1\\\";\\n    intramuralID = \\\"x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Image/p1\\\";\\n    managedObjectID = \\\"\\\";\\n}\";\n    playerName = \"Cayce Pollard\";\n}";
+    respondingToCommandMessageType = 1;
+    respondingToName = GetInfo;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:46.620 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:46.620 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:46.772 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:47.853 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:47.854 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 1785212617.
+2013-05-13 18:19:47.854 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9444fa0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:47.865 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:47.866 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 1785212617.
+2013-05-13 18:19:47.866 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 22:17:58 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:48.619 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:48.620 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:48.779 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:50.084 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:50.086 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 1785212617.
+2013-05-13 18:19:50.086 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9444fa0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:50.618 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:50.619 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:50.619 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:50.620 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:50.765 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:50.772 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "2013-05-13 22:19:44 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:51.845 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:51.846 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 1785212617.
+2013-05-13 18:19:51.847 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9444fa0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:52.617 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:52.618 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:52.624 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:52.626 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 1785212617.
+2013-05-13 18:19:52.626 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 22:17:58 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:52.725 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:53.993 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:53.994 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 1785212617.
+2013-05-13 18:19:53.995 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9444fa0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:54.616 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:54.617 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:54.758 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:55.616 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:55.616 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:56.615 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:56.615 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:56.761 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:57.680 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:57.682 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 791 bytes to peer 1785212617.
+2013-05-13 18:19:57.682 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 21:36:08 +0000\";\n    latitude = \"37.785834\";\n    longitude = \"-122.406417\";\n    managedObjectID = \"0x9444fa0 <x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Haunt/p1>\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:57.683 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 3;
+    commandMessageTypeName = GetModifiedDate;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}
+2013-05-13 18:19:57.684 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 572 bytes to peer 1785212617.
+2013-05-13 18:19:57.685 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    object = "2013-05-13 22:17:58 +0000";
+    respondingToCommandMessageType = 3;
+    respondingToName = GetModifiedDate;
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:58.613 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 198] Will send a message of 452 bytes to peer 1785212617.
+2013-05-13 18:19:58.614 QuestPlayer[21161:17f03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 199] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 2;
+    commandMessageTypeName = GetLocation;
+    from = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+    to = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+}
+2013-05-13 18:19:58.724 QuestPlayer[21161:17f03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 423] Received object from peer 1785212617.
+The object:
+{
+    Class = JSKCommandResponse;
+    commandResponseType = 0;
+    commandResponseTypeName = Acknowledge;
+    from = "x-coredata://D67BACB6-D561-4552-970E-91A314F00998/Player/p1";
+    object = "{\n    Class = HauntEnvoy;\n    dateSaved = \"2013-05-13 22:19:44 +0000\";\n    latitude = \"40.870471766439\";\n    longitude = \"-73.9173034119012\";\n    managedObjectID = \"\";\n}";
+    respondingToCommandMessageType = 2;
+    respondingToName = GetLocation;
+    to = "x-coredata://FC28C6DA-5A26-4084-9AEA-CA0E2D08C7E1/Player/p1";
+}

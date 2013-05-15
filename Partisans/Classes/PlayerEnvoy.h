@@ -42,10 +42,6 @@
 
 - (id)initWithManagedObject:(Player *)managedObject;
 
-- (NSArray *)haunts;
-- (HauntEnvoy *)currentHaunt;
-- (void)addHaunt:(HauntEnvoy *)hauntEnvoy;
-
 - (void)deletePlayer;
 
 - (void)commit;
