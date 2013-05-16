@@ -76,6 +76,18 @@
 
 
 
+- (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
+{
+    if (![SystemMessage gameEnvoy])
+    {
+        // In this case we assume that the player is starting a new game, as host.
+        GameEnvoy *newEnvoy = [GameEnvoy createGame];
+        [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
+    }
+}
+
+
+
 - (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController labelColorAtIndexPath:(NSIndexPath *)indexPath
 {
     UIColor *returnValue = [UIColor blackColor];
@@ -306,7 +318,7 @@
             }
             break;
         }
-            
+        
         
         case SetupGameMenuSectionAwaitingApproval:
             if (self.awaitingApproval.count > 0)

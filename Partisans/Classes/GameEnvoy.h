@@ -25,11 +25,14 @@
 - (NSArray *)players;
 - (PlayerEnvoy *)host;
 
++ (GameEnvoy *)createGame;
+
 + (GameEnvoy *)envoyFromManagedObject:(Game *)managedObject;
 
 - (id)initWithManagedObject:(Game *)managedObject;
 
 - (void)commit;
+- (void)commitAndSave;
 - (void)commitInContext:(NSManagedObjectContext *)context;
 
 @end

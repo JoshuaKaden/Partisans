@@ -11,9 +11,11 @@
 #import "Game.h"
 #import "GamePlayer.h"
 #import "JSKDataMiner.h"
+#import "Mission.h"
 #import "NSManagedObjectContext+FetchAdditions.h"
 #import "Player.h"
 #import "PlayerEnvoy.h"
+#import "SystemMessage.h"
 
 @implementation GameEnvoy
 
@@ -113,6 +115,38 @@
 }
 
 
+
++ (GameEnvoy *)createGame
+{
+    // Create the game itself.
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Game *newGame = (Game *)[NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:context];
+    newGame.numberOfPlayers = [NSNumber numberWithInt:5];
+    
+    // Add the host.
+    PlayerEnvoy *hostEnvoy = [SystemMessage playerEnvoy];
+    Player *host = (Player *)[context objectWithID:hostEnvoy.managedObjectID];
+    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
+    gamePlayer.player = host;
+    gamePlayer.isHost = [NSNumber numberWithBool:YES];
+    [newGame addGamePlayersObject:gamePlayer];
+    
+    // Add the missions.
+    for (NSUInteger missionIndex = 0; missionIndex < 5; missionIndex++)
+    {
+        Mission *mission = (Mission *)[NSEntityDescription insertNewObjectForEntityForName:@"Mission" inManagedObjectContext:context];
+        mission.missionNumber = [NSNumber numberWithUnsignedInteger:missionIndex + 1];
+        [newGame addMissionsObject:mission];
+    }
+    
+    [JSKDataMiner save];
+    
+    GameEnvoy *returnValue = [GameEnvoy envoyFromManagedObject:newGame];
+    return returnValue;
+}
+
+
+
 - (NSArray *)players
 {
     if (!self.managedObjectID)
@@ -131,9 +165,9 @@
     [sorts release];
     
     NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:players.count];
-    for (Player *player in players)
+    for (GamePlayer *gamePlayer in players)
     {
-        PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:player];
+        PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:gamePlayer.player];
         [envoys addObject:envoy];
         [envoy release];
     }
@@ -172,6 +206,11 @@
     [self commitInContext:nil];
 }
 
+- (void)commitAndSave
+{
+    [self commitInContext:nil];
+    [JSKDataMiner save];
+}
 
 - (void)commitInContext:(NSManagedObjectContext *)context
 {
