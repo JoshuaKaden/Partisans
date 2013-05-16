@@ -9,6 +9,7 @@
 #import "SystemMessage.h"
 
 #import "CreatePlayerOperation.h"
+#import "GameEnvoy.h"
 #import "JSKCommandResponse.h"
 #import "JSKPeerController.h"
 #import "PlayerEnvoy.h"
@@ -31,6 +32,7 @@
 
 @synthesize playerEnvoy = m_playerEnvoy;
 @synthesize peerController = m_peerController;
+@synthesize gameEnvoy = m_gameEnvoy;
 
 
 - (void)dealloc
@@ -39,6 +41,7 @@
     
     [m_playerEnvoy release];
     [m_peerController release];
+    [m_gameEnvoy release];
     [super dealloc];
 }
 
@@ -294,6 +297,10 @@
     return [self sharedInstance].playerEnvoy;
 }
 
++ (GameEnvoy *)gameEnvoy
+{
+    return [self sharedInstance].gameEnvoy;
+}
 
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate
 {

@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class NSManagedObjectID;
 @class Game;
+@class NSManagedObjectID;
+@class PlayerEnvoy;
 
 @interface GameEnvoy : NSObject <NSCoding>
 
@@ -22,6 +23,7 @@
 @property (nonatomic, assign) NSUInteger numberOfPlayers;
 
 - (NSArray *)players;
+- (PlayerEnvoy *)host;
 
 + (GameEnvoy *)envoyFromManagedObject:(Game *)managedObject;
 

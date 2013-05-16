@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * intramuralID;
 @property (nonatomic, retain) NSNumber * isOperative;
+@property (nonatomic, retain) NSNumber * isHost;
 @property (nonatomic, retain) Game *game;
 @property (nonatomic, retain) Player *player;
 @property (nonatomic, retain) NSSet *leaderForRounds;

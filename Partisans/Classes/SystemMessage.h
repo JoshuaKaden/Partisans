@@ -10,14 +10,17 @@
 #import "JSKCommandMessage.h"
 #import "JSKSystemMessage.h"
 
+@class GameEnvoy;
 @class PlayerEnvoy;
 
 @interface SystemMessage : JSKSystemMessage
 
 @property (nonatomic, strong) PlayerEnvoy *playerEnvoy;
+@property (nonatomic, strong) GameEnvoy *gameEnvoy;
 
 + (SystemMessage *)sharedInstance;
 + (PlayerEnvoy *)playerEnvoy;
++ (GameEnvoy *)gameEnvoy;
 + (UIImage*)imageWithImage:(UIImage*)sourceImage scaledToSizeWithSameAspectRatio:(CGSize)targetSize;
 + (NSInteger)secondsBetweenDates:(NSDate *)fromDate toDate:(NSDate *)toDate;
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate;

@@ -21,4 +21,3 @@ typedef enum
 @interface PlayGameMenuItems : NSObject <JSKMenuViewControllerDelegate>
 
 @end
-

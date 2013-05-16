@@ -7,19 +7,23 @@
 //
 
 #import "PlayGameMenuItems.h"
-#import "HostGameViewController.h"
+#import "SetupGameMenuItems.h"
 
 
 @interface PlayGameMenuItems ()
+
+@property (nonatomic, strong) SetupGameMenuItems *setupGameMenuItems;
 
 @end
 
 
 @implementation PlayGameMenuItems
 
+@synthesize setupGameMenuItems = m_setupGameMenuItems;
 
 - (void)dealloc
 {
+    [m_setupGameMenuItems release];
     [super dealloc];
 }
 
@@ -84,7 +88,7 @@
     switch (indexPath.row)
     {
         case PlayGameMenuRowHost:
-            targetClass = [HostGameViewController class];
+            targetClass = [JSKMenuViewController class];
             break;
             
         case PlayGameMenuRowJoin:
@@ -99,29 +103,29 @@
 }
 
 
-//- (id)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerDelegateAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    switch (indexPath.row)
-//    {
-//        case PlayGameMenuRowHost:
-//        {
-//            HostGameMenuItems *items = [[HostGameMenuItems alloc] init];
-//            self.hostGameMenuItems = items;
-//            [items release];
-//            return self.hostGameMenuItems;
-//            break;
-//        }
-//            
-//        case PlayGameMenuRowJoin:
-//            return nil;
-//            
-//        case PlayGameMenuRow_MaxValue:
-//            return nil;
-//            break;
-//    }
-//    
-//    return nil;
-//}
+- (id)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerDelegateAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row)
+    {
+        case PlayGameMenuRowHost:
+        {
+            SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
+            self.setupGameMenuItems = items;
+            [items release];
+            return self.setupGameMenuItems;
+            break;
+        }
+            
+        case PlayGameMenuRowJoin:
+            return nil;
+            
+        case PlayGameMenuRow_MaxValue:
+            return nil;
+            break;
+    }
+    
+    return nil;
+}
 
 
 

@@ -9,7 +9,11 @@
 #import "GameEnvoy.h"
 
 #import "Game.h"
+#import "GamePlayer.h"
 #import "JSKDataMiner.h"
+#import "NSManagedObjectContext+FetchAdditions.h"
+#import "Player.h"
+#import "PlayerEnvoy.h"
 
 @implementation GameEnvoy
 
@@ -111,7 +115,52 @@
 
 - (NSArray *)players
 {
-    return nil;
+    if (!self.managedObjectID)
+    {
+        return nil;
+    }
+    
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    NSSet *playerSet = game.gamePlayers;
+    
+    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"player.playerName" ascending:YES];
+    NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
+    [nameSort release];
+    NSArray *players = [playerSet sortedArrayUsingDescriptors:sorts];
+    [sorts release];
+    
+    NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:players.count];
+    for (Player *player in players)
+    {
+        PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:player];
+        [envoys addObject:envoy];
+        [envoy release];
+    }
+    
+    NSArray *returnValue = [NSArray arrayWithArray:envoys];
+    [envoys release];
+    
+    return returnValue;
+}
+
+
+- (PlayerEnvoy *)host
+{
+    PlayerEnvoy *returnValue = nil;
+    
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    for (GamePlayer *gamePlayer in game.gamePlayers)
+    {
+        if (gamePlayer.isHost)
+        {
+            returnValue = [PlayerEnvoy envoyFromManagedObject:gamePlayer.player];
+            break;
+        }
+    }
+    
+    return returnValue;
 }
 
 

@@ -18,6 +18,7 @@
 
 @dynamic intramuralID;
 @dynamic isOperative;
+@dynamic isHost;
 @dynamic game;
 @dynamic player;
 @dynamic leaderForRounds;
