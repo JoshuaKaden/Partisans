@@ -116,6 +116,30 @@
 
 
 
++ (GameEnvoy *)envoyFromHost:(PlayerEnvoy *)host
+{
+    if (!host.managedObjectID)
+    {
+        return nil;
+    }
+    
+    GameEnvoy *returnValue = nil;
+    
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Player *player = (Player *)[context objectWithID:host.managedObjectID];
+    if (player.gamePlayer)
+    {
+        if (player.gamePlayer.isHost)
+        {
+            Game *game = player.gamePlayer.game;
+            returnValue = [GameEnvoy envoyFromManagedObject:game];
+        }
+    }
+    
+    return returnValue;
+}
+
+
 + (GameEnvoy *)createGame
 {
     // Create the game itself.

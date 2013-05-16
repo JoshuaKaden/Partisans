@@ -16,6 +16,10 @@
 #import "UpdatePlayerOperation.h"
 
 
+NSUInteger const kPartisansMaxPlayers = 10;
+NSUInteger const kPartisansMinPlayers = 5;
+
+
 @interface SystemMessage () <JSKPeerControllerDelegate>
 
 @property (nonatomic, strong) JSKPeerController *peerController;
@@ -299,7 +303,19 @@
 
 + (GameEnvoy *)gameEnvoy
 {
-    return [self sharedInstance].gameEnvoy;
+    GameEnvoy *gameEnvoy = [self sharedInstance].gameEnvoy;
+    if (gameEnvoy)
+    {
+        return gameEnvoy;
+    }
+    // Let's see if there's one attached to the player.
+    PlayerEnvoy *playerEnvoy = [self sharedInstance].playerEnvoy;
+    gameEnvoy = [GameEnvoy envoyFromHost:playerEnvoy];
+    if (gameEnvoy)
+    {
+        [[self sharedInstance] setGameEnvoy:gameEnvoy];
+    }
+    return gameEnvoy;
 }
 
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate

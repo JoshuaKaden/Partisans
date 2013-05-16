@@ -12,6 +12,7 @@
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
 #import "PlayerEnvoy.h"
+#import "ProgressCell.h"
 #import "SystemMessage.h"
 
 
@@ -86,6 +87,66 @@
     }
 }
 
+
+- (UITableViewCell *)menuViewController:(JSKMenuViewController *)menuViewController tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowPlayers)
+    {
+        static NSString * customCellIdentifier = @"ProgressCellIdentifier";
+        
+        ProgressCell *cell = (ProgressCell *)[tableView dequeueReusableCellWithIdentifier:customCellIdentifier];
+        
+        if (!cell) // tableview not associated (registered) with nib file.
+        {
+            UINib *customCellNib = [UINib nibWithNibName:@"ProgressCell" bundle:nil];
+            // Register this nib file with cell identifier.
+            [tableView registerNib: customCellNib forCellReuseIdentifier:customCellIdentifier];
+        }
+        
+        // call dequeueReusableCellWithIdentifier function and now you will get cell object
+        cell = (ProgressCell *)[tableView dequeueReusableCellWithIdentifier:customCellIdentifier];
+
+        NSString *label = NSLocalizedString(@"More players are needed", @"More players are needed  --  label");
+        if (self.players.count == kPartisansMinPlayers - 1)
+        {
+            label = NSLocalizedString(@"One more player is needed", @"One more player is needed  --  label");
+        }
+        else if (self.players.count >= kPartisansMinPlayers)
+        {
+            label = NSLocalizedString(@"Good to go", @"Good to go  --  label");
+        }
+        
+        //NSLocalizedString(@"Players", @"Players  --  label")
+        [cell setProgressLabelText:label];
+        
+        [cell setIsDual:YES];
+        
+        PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+        [cell setProgressTintColor:playerEnvoy.favoriteColor];
+        [cell setDualProgressTintColor:[UIColor lightGrayColor]];
+        
+        double progress = (double)self.players.count / (double)kPartisansMaxPlayers;
+        [cell setProgress:progress animated:YES];
+        
+        double dualProgress = (double)kPartisansMinPlayers / (double)kPartisansMaxPlayers;
+        [cell setDualProgress:dualProgress animated:YES];
+        
+        return (UITableViewCell*)cell;
+    }
+    return nil;
+}
+
+- (float)menuViewController:(JSKMenuViewController *)menuViewController heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowPlayers)
+    {
+        return 70.0f;
+    }
+    else
+    {
+        return 44.0f;
+    }
+}
 
 
 - (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController labelColorAtIndexPath:(NSIndexPath *)indexPath
@@ -207,6 +268,7 @@
     NSString *returnValue = nil;
     switch ((SetupGameMenuSection)section) {
         case SetupGameMenuSectionGame:
+            returnValue = NSLocalizedString(@"Game", @"Game  --  section title");
             break;
         case SetupGameMenuSectionAwaitingApproval:
             if (self.awaitingApproval.count > 0)

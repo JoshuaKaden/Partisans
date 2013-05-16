@@ -63,6 +63,10 @@
 		93C10BDD17443E9900B47095 /* Votes.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BDC17443E9900B47095 /* Votes.m */; };
 		93C10BE017443E9900B47095 /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BDF17443E9900B47095 /* Mission.m */; };
 		93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BE21744515C00B47095 /* DossierMenuItems.m */; };
+		93FECAB1174521A40046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
+		93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
+		93FECAB3174521A40046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
+		93FECAB4174521A40046529A /* ProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAB0174521A40046529A /* ProgressCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +168,12 @@
 		93C10BDF17443E9900B47095 /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Classes/Mission.m; sourceTree = "<group>"; };
 		93C10BE11744515C00B47095 /* DossierMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DossierMenuItems.h; path = Classes/DossierMenuItems.h; sourceTree = "<group>"; };
 		93C10BE21744515C00B47095 /* DossierMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierMenuItems.m; path = Classes/DossierMenuItems.m; sourceTree = "<group>"; };
+		93FECAAB174521A40046529A /* LabelProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelProgressView.h; path = Classes/LabelProgressView.h; sourceTree = "<group>"; };
+		93FECAAC174521A40046529A /* LabelProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelProgressView.m; path = Classes/LabelProgressView.m; sourceTree = "<group>"; };
+		93FECAAD174521A40046529A /* LabelProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LabelProgressView.xib; path = Classes/LabelProgressView.xib; sourceTree = "<group>"; };
+		93FECAAE174521A40046529A /* ProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressCell.h; path = Classes/ProgressCell.h; sourceTree = "<group>"; };
+		93FECAAF174521A40046529A /* ProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressCell.m; path = Classes/ProgressCell.m; sourceTree = "<group>"; };
+		93FECAB0174521A40046529A /* ProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgressCell.xib; path = Classes/ProgressCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,6 +315,12 @@
 				936510CD1741597500F2AD06 /* JSKSystemMessage.m */,
 				936510CE1741597500F2AD06 /* JSKViewStack.h */,
 				936510CF1741597500F2AD06 /* JSKViewStack.m */,
+				93FECAAB174521A40046529A /* LabelProgressView.h */,
+				93FECAAC174521A40046529A /* LabelProgressView.m */,
+				93FECAAD174521A40046529A /* LabelProgressView.xib */,
+				93FECAAE174521A40046529A /* ProgressCell.h */,
+				93FECAAF174521A40046529A /* ProgressCell.m */,
+				93FECAB0174521A40046529A /* ProgressCell.xib */,
 			);
 			name = "My Library";
 			sourceTree = "<group>";
@@ -517,6 +533,8 @@
 				936510F417415A4E00F2AD06 /* ColorPickerViewController.xib in Resources */,
 				936510F617415A4E00F2AD06 /* SlickEditView.xib in Resources */,
 				9365110017415A9D00F2AD06 /* PlayerViewController.xib in Resources */,
+				93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */,
+				93FECAB4174521A40046529A /* ProgressCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +586,8 @@
 				93C10BDD17443E9900B47095 /* Votes.m in Sources */,
 				93C10BE017443E9900B47095 /* Mission.m in Sources */,
 				93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */,
+				93FECAB1174521A40046529A /* LabelProgressView.m in Sources */,
+				93FECAB3174521A40046529A /* ProgressCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

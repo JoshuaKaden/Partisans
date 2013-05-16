@@ -11,13 +11,15 @@
 #import "ImageEnvoy.h"
 #import "PlayerEnvoy.h"
 #import "PlayerViewController.h"
-#import "SystemMessage.h"
 #import "PlayGameMenuItems.h"
+#import "SetupGameMenuItems.h"
+#import "SystemMessage.h"
 
 
 @interface MainMenuItems ()
 
 @property (nonatomic, strong) PlayGameMenuItems *playGameMenuItems;
+@property (nonatomic, strong) SetupGameMenuItems *setupGameMenuItems;
 
 @end
 
@@ -25,11 +27,14 @@
 @implementation MainMenuItems
 
 @synthesize playGameMenuItems = m_playGameMenuItems;
+@synthesize setupGameMenuItems = m_setupGameMenuItems;
 
 
 - (void)dealloc
 {
     [m_playGameMenuItems release];
+    [m_setupGameMenuItems release];
+    
     [super dealloc];
 }
 
@@ -171,10 +176,21 @@
     {
         case MainMenuRowGame:
         {
-            PlayGameMenuItems *items = [[PlayGameMenuItems alloc] init];
-            self.playGameMenuItems = items;
-            [items release];
-            return self.playGameMenuItems;
+            GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+            if (gameEnvoy)
+            {
+                SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
+                self.setupGameMenuItems = items;
+                [items release];
+                return self.setupGameMenuItems;
+            }
+            else
+            {
+                PlayGameMenuItems *items = [[PlayGameMenuItems alloc] init];
+                self.playGameMenuItems = items;
+                [items release];
+                return self.playGameMenuItems;
+            }
             break;
         }
             

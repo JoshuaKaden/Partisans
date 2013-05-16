@@ -13,6 +13,9 @@
 @class GameEnvoy;
 @class PlayerEnvoy;
 
+extern NSUInteger const kPartisansMaxPlayers;
+extern NSUInteger const kPartisansMinPlayers;
+
 @interface SystemMessage : JSKSystemMessage
 
 @property (nonatomic, strong) PlayerEnvoy *playerEnvoy;

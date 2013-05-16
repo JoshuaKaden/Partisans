@@ -26,6 +26,7 @@
 - (PlayerEnvoy *)host;
 
 + (GameEnvoy *)createGame;
++ (GameEnvoy *)envoyFromHost:(PlayerEnvoy *)host;
 
 + (GameEnvoy *)envoyFromManagedObject:(Game *)managedObject;
 
