@@ -88,13 +88,10 @@
     switch (indexPath.row)
     {
         case PlayGameMenuRowHost:
+        case PlayGameMenuRowJoin:
             targetClass = [JSKMenuViewController class];
             break;
-            
-        case PlayGameMenuRowJoin:
-            targetClass = nil;
-            break;
-            
+                        
         case PlayGameMenuRow_MaxValue:
             break;
     }
@@ -108,6 +105,7 @@
     switch (indexPath.row)
     {
         case PlayGameMenuRowHost:
+        case PlayGameMenuRowJoin:
         {
             SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
             self.setupGameMenuItems = items;
@@ -115,10 +113,7 @@
             return self.setupGameMenuItems;
             break;
         }
-            
-        case PlayGameMenuRowJoin:
-            return nil;
-            
+
         case PlayGameMenuRow_MaxValue:
             return nil;
             break;

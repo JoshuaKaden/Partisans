@@ -13,6 +13,8 @@
 @class GameEnvoy;
 @class PlayerEnvoy;
 
+extern NSString * const JSKNotificationPeerCreated;
+extern NSString * const JSKNotificationPeerUpdated;
 extern NSUInteger const kPartisansMaxPlayers;
 extern NSUInteger const kPartisansMinPlayers;
 

@@ -67,6 +67,66 @@
 		93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
 		93FECAB3174521A40046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
 		93FECAB4174521A40046529A /* ProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAB0174521A40046529A /* ProgressCell.xib */; };
+		93FECB17174547840046529A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365109E1741578C00F2AD06 /* main.m */; };
+		93FECB18174547840046529A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510A21741578C00F2AD06 /* AppDelegate.m */; };
+		93FECB19174547840046529A /* ILColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510B61741596200F2AD06 /* ILColorPickerView.m */; };
+		93FECB1A174547840046529A /* ILHuePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510B81741596200F2AD06 /* ILHuePickerView.m */; };
+		93FECB1B174547840046529A /* ILSaturationBrightnessPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BA1741596200F2AD06 /* ILSaturationBrightnessPickerView.m */; };
+		93FECB1C174547840046529A /* ILView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BC1741596200F2AD06 /* ILView.m */; };
+		93FECB1D174547840046529A /* UIColor+GetHSB.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BE1741596200F2AD06 /* UIColor+GetHSB.m */; };
+		93FECB1E174547840046529A /* JSKCommandMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C51741597500F2AD06 /* JSKCommandMessage.m */; };
+		93FECB1F174547840046529A /* JSKDataMiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C71741597500F2AD06 /* JSKDataMiner.m */; };
+		93FECB20174547840046529A /* JSKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C91741597500F2AD06 /* JSKMenuViewController.m */; };
+		93FECB21174547840046529A /* JSKPeerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CB1741597500F2AD06 /* JSKPeerController.m */; };
+		93FECB22174547840046529A /* JSKSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CD1741597500F2AD06 /* JSKSystemMessage.m */; };
+		93FECB23174547840046529A /* JSKViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CF1741597500F2AD06 /* JSKViewStack.m */; };
+		93FECB24174547840046529A /* NSManagedObjectContext+FetchAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */; };
+		93FECB25174547840046529A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510DB1741598800F2AD06 /* Reachability.m */; };
+		93FECB26174547840046529A /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E0174159C900F2AD06 /* RootViewController.m */; };
+		93FECB27174547840046529A /* SystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E2174159C900F2AD06 /* SystemMessage.m */; };
+		93FECB28174547840046529A /* DefaultDataMiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E7174159E800F2AD06 /* DefaultDataMiner.m */; };
+		93FECB29174547840046529A /* MainMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510EA17415A1000F2AD06 /* MainMenuItems.m */; };
+		93FECB2A174547840046529A /* ColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510EE17415A4E00F2AD06 /* ColorPickerViewController.m */; };
+		93FECB2B174547840046529A /* SlickEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510F117415A4E00F2AD06 /* SlickEditView.m */; };
+		93FECB2C174547840046529A /* PlayerPicklistItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */; };
+		93FECB2D174547840046529A /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510FC17415A9D00F2AD06 /* PlayerViewController.m */; };
+		93FECB2E174547840046529A /* CreatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */; };
+		93FECB2F174547840046529A /* UpdatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */; };
+		93FECB30174547840046529A /* ImageEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110E17415B2000F2AD06 /* ImageEnvoy.m */; };
+		93FECB31174547840046529A /* PlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111017415B2000F2AD06 /* PlayerEnvoy.m */; };
+		93FECB32174547840046529A /* JSKCommandResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */; };
+		93FECB33174547840046529A /* Partisans.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B441743A52600B47095 /* Partisans.xcdatamodeld */; };
+		93FECB34174547840046529A /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
+		93FECB35174547840046529A /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
+		93FECB36174547840046529A /* SetupGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BC7174439B300B47095 /* SetupGameMenuItems.m */; };
+		93FECB37174547840046529A /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BCA17443E9900B47095 /* Image.m */; };
+		93FECB38174547840046529A /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BCD17443E9900B47095 /* Game.m */; };
+		93FECB39174547840046529A /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BD017443E9900B47095 /* GamePlayer.m */; };
+		93FECB3A174547840046529A /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BD317443E9900B47095 /* Round.m */; };
+		93FECB3B174547840046529A /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BD617443E9900B47095 /* Scorecard.m */; };
+		93FECB3C174547840046529A /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BD917443E9900B47095 /* Player.m */; };
+		93FECB3D174547840046529A /* Votes.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BDC17443E9900B47095 /* Votes.m */; };
+		93FECB3E174547840046529A /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BDF17443E9900B47095 /* Mission.m */; };
+		93FECB3F174547840046529A /* DossierMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BE21744515C00B47095 /* DossierMenuItems.m */; };
+		93FECB40174547840046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
+		93FECB41174547840046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
+		93FECB43174547840046529A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
+		93FECB44174547840046529A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111917415B7B00F2AD06 /* QuartzCore.framework */; };
+		93FECB45174547840046529A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111717415B6B00F2AD06 /* GameKit.framework */; };
+		93FECB46174547840046529A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510961741578C00F2AD06 /* CoreGraphics.framework */; };
+		93FECB47174547840046529A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111517415B5600F2AD06 /* CoreData.framework */; };
+		93FECB48174547840046529A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111317415B4E00F2AD06 /* CoreBluetooth.framework */; };
+		93FECB49174547840046529A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510921741578C00F2AD06 /* UIKit.framework */; };
+		93FECB4A174547840046529A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510941741578C00F2AD06 /* Foundation.framework */; };
+		93FECB4C174547840046529A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9365109B1741578C00F2AD06 /* InfoPlist.strings */; };
+		93FECB4D174547840046529A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A41741578C00F2AD06 /* Default.png */; };
+		93FECB4E174547840046529A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A61741578C00F2AD06 /* Default@2x.png */; };
+		93FECB4F174547840046529A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A81741578C00F2AD06 /* Default-568h@2x.png */; };
+		93FECB53174547840046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
+		93FECB54174547840046529A /* ProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAB0174521A40046529A /* ProgressCell.xib */; };
+		93FECB5D174548AD0046529A /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB5B174548AD0046529A /* ColorPickerViewController.xib */; };
+		93FECB5E174548AD0046529A /* SlickEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB5C174548AD0046529A /* SlickEditView.xib */; };
+		93FECB61174549D40046529A /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB60174549D40046529A /* PlayerViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -174,6 +234,11 @@
 		93FECAAE174521A40046529A /* ProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressCell.h; path = Classes/ProgressCell.h; sourceTree = "<group>"; };
 		93FECAAF174521A40046529A /* ProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressCell.m; path = Classes/ProgressCell.m; sourceTree = "<group>"; };
 		93FECAB0174521A40046529A /* ProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgressCell.xib; path = Classes/ProgressCell.xib; sourceTree = "<group>"; };
+		93FECB58174547840046529A /* Partisans iOS5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Partisans iOS5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		93FECB59174547850046529A /* Partisans copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Partisans copy-Info.plist"; path = "/Users/jkaden/work/ObjC Apps/Partisans/Partisans copy-Info.plist"; sourceTree = "<absolute>"; };
+		93FECB5B174548AD0046529A /* ColorPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColorPickerViewController.xib; path = Classes/iOS5/ColorPickerViewController.xib; sourceTree = "<group>"; };
+		93FECB5C174548AD0046529A /* SlickEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SlickEditView.xib; path = Classes/iOS5/SlickEditView.xib; sourceTree = "<group>"; };
+		93FECB60174549D40046529A /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerViewController.xib; path = Classes/iOS5/PlayerViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +257,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		93FECB42174547840046529A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93FECB43174547840046529A /* SystemConfiguration.framework in Frameworks */,
+				93FECB44174547840046529A /* QuartzCore.framework in Frameworks */,
+				93FECB45174547840046529A /* GameKit.framework in Frameworks */,
+				93FECB46174547840046529A /* CoreGraphics.framework in Frameworks */,
+				93FECB47174547840046529A /* CoreData.framework in Frameworks */,
+				93FECB48174547840046529A /* CoreBluetooth.framework in Frameworks */,
+				93FECB49174547840046529A /* UIKit.framework in Frameworks */,
+				93FECB4A174547840046529A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -201,6 +281,7 @@
 				936510981741578C00F2AD06 /* Partisans */,
 				936510911741578C00F2AD06 /* Frameworks */,
 				936510901741578C00F2AD06 /* Products */,
+				93FECB59174547850046529A /* Partisans copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -208,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				9365108F1741578C00F2AD06 /* Partisans.app */,
+				93FECB58174547840046529A /* Partisans iOS5.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -377,6 +459,7 @@
 				936510ED17415A4E00F2AD06 /* ColorPickerViewController.h */,
 				936510EE17415A4E00F2AD06 /* ColorPickerViewController.m */,
 				936510EF17415A4E00F2AD06 /* ColorPickerViewController.xib */,
+				93FECB5A174547E60046529A /* iOS5 */,
 				936510F017415A4E00F2AD06 /* SlickEditView.h */,
 				936510F117415A4E00F2AD06 /* SlickEditView.m */,
 				936510F217415A4E00F2AD06 /* SlickEditView.xib */,
@@ -389,6 +472,7 @@
 			children = (
 				93C10BE11744515C00B47095 /* DossierMenuItems.h */,
 				93C10BE21744515C00B47095 /* DossierMenuItems.m */,
+				93FECB5F174549C10046529A /* iOS5 */,
 				936510F917415A9D00F2AD06 /* PlayerPicklistItems.h */,
 				936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */,
 				936510FB17415A9D00F2AD06 /* PlayerViewController.h */,
@@ -475,6 +559,23 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
+		93FECB5A174547E60046529A /* iOS5 */ = {
+			isa = PBXGroup;
+			children = (
+				93FECB5B174548AD0046529A /* ColorPickerViewController.xib */,
+				93FECB5C174548AD0046529A /* SlickEditView.xib */,
+			);
+			name = iOS5;
+			sourceTree = "<group>";
+		};
+		93FECB5F174549C10046529A /* iOS5 */ = {
+			isa = PBXGroup;
+			children = (
+				93FECB60174549D40046529A /* PlayerViewController.xib */,
+			);
+			name = iOS5;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -493,6 +594,23 @@
 			name = Partisans;
 			productName = Partisans;
 			productReference = 9365108F1741578C00F2AD06 /* Partisans.app */;
+			productType = "com.apple.product-type.application";
+		};
+		93FECB15174547840046529A /* Partisans iOS5 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93FECB55174547840046529A /* Build configuration list for PBXNativeTarget "Partisans iOS5" */;
+			buildPhases = (
+				93FECB16174547840046529A /* Sources */,
+				93FECB42174547840046529A /* Frameworks */,
+				93FECB4B174547840046529A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Partisans iOS5";
+			productName = Partisans;
+			productReference = 93FECB58174547840046529A /* Partisans iOS5.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -517,6 +635,7 @@
 			projectRoot = "";
 			targets = (
 				9365108E1741578C00F2AD06 /* Partisans */,
+				93FECB15174547840046529A /* Partisans iOS5 */,
 			);
 		};
 /* End PBXProject section */
@@ -535,6 +654,22 @@
 				9365110017415A9D00F2AD06 /* PlayerViewController.xib in Resources */,
 				93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */,
 				93FECAB4174521A40046529A /* ProgressCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93FECB4B174547840046529A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93FECB4C174547840046529A /* InfoPlist.strings in Resources */,
+				93FECB4D174547840046529A /* Default.png in Resources */,
+				93FECB4E174547840046529A /* Default@2x.png in Resources */,
+				93FECB4F174547840046529A /* Default-568h@2x.png in Resources */,
+				93FECB53174547840046529A /* LabelProgressView.xib in Resources */,
+				93FECB54174547840046529A /* ProgressCell.xib in Resources */,
+				93FECB5D174548AD0046529A /* ColorPickerViewController.xib in Resources */,
+				93FECB5E174548AD0046529A /* SlickEditView.xib in Resources */,
+				93FECB61174549D40046529A /* PlayerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +723,56 @@
 				93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */,
 				93FECAB1174521A40046529A /* LabelProgressView.m in Sources */,
 				93FECAB3174521A40046529A /* ProgressCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93FECB16174547840046529A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93FECB17174547840046529A /* main.m in Sources */,
+				93FECB18174547840046529A /* AppDelegate.m in Sources */,
+				93FECB19174547840046529A /* ILColorPickerView.m in Sources */,
+				93FECB1A174547840046529A /* ILHuePickerView.m in Sources */,
+				93FECB1B174547840046529A /* ILSaturationBrightnessPickerView.m in Sources */,
+				93FECB1C174547840046529A /* ILView.m in Sources */,
+				93FECB1D174547840046529A /* UIColor+GetHSB.m in Sources */,
+				93FECB1E174547840046529A /* JSKCommandMessage.m in Sources */,
+				93FECB1F174547840046529A /* JSKDataMiner.m in Sources */,
+				93FECB20174547840046529A /* JSKMenuViewController.m in Sources */,
+				93FECB21174547840046529A /* JSKPeerController.m in Sources */,
+				93FECB22174547840046529A /* JSKSystemMessage.m in Sources */,
+				93FECB23174547840046529A /* JSKViewStack.m in Sources */,
+				93FECB24174547840046529A /* NSManagedObjectContext+FetchAdditions.m in Sources */,
+				93FECB25174547840046529A /* Reachability.m in Sources */,
+				93FECB26174547840046529A /* RootViewController.m in Sources */,
+				93FECB27174547840046529A /* SystemMessage.m in Sources */,
+				93FECB28174547840046529A /* DefaultDataMiner.m in Sources */,
+				93FECB29174547840046529A /* MainMenuItems.m in Sources */,
+				93FECB2A174547840046529A /* ColorPickerViewController.m in Sources */,
+				93FECB2B174547840046529A /* SlickEditView.m in Sources */,
+				93FECB2C174547840046529A /* PlayerPicklistItems.m in Sources */,
+				93FECB2D174547840046529A /* PlayerViewController.m in Sources */,
+				93FECB2E174547840046529A /* CreatePlayerOperation.m in Sources */,
+				93FECB2F174547840046529A /* UpdatePlayerOperation.m in Sources */,
+				93FECB30174547840046529A /* ImageEnvoy.m in Sources */,
+				93FECB31174547840046529A /* PlayerEnvoy.m in Sources */,
+				93FECB32174547840046529A /* JSKCommandResponse.m in Sources */,
+				93FECB33174547840046529A /* Partisans.xcdatamodeld in Sources */,
+				93FECB34174547840046529A /* GameEnvoy.m in Sources */,
+				93FECB35174547840046529A /* PlayGameMenuItems.m in Sources */,
+				93FECB36174547840046529A /* SetupGameMenuItems.m in Sources */,
+				93FECB37174547840046529A /* Image.m in Sources */,
+				93FECB38174547840046529A /* Game.m in Sources */,
+				93FECB39174547840046529A /* GamePlayer.m in Sources */,
+				93FECB3A174547840046529A /* Round.m in Sources */,
+				93FECB3B174547840046529A /* Scorecard.m in Sources */,
+				93FECB3C174547840046529A /* Player.m in Sources */,
+				93FECB3D174547840046529A /* Votes.m in Sources */,
+				93FECB3E174547840046529A /* Mission.m in Sources */,
+				93FECB3F174547840046529A /* DossierMenuItems.m in Sources */,
+				93FECB40174547840046529A /* LabelProgressView.m in Sources */,
+				93FECB41174547840046529A /* ProgressCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,6 +868,30 @@
 			};
 			name = Release;
 		};
+		93FECB56174547840046529A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
+				INFOPLIST_FILE = "Partisans copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "Partisans iOS5";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		93FECB57174547840046529A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
+				INFOPLIST_FILE = "Partisans copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "Partisans iOS5";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -700,6 +909,15 @@
 			buildConfigurations = (
 				936510AD1741578C00F2AD06 /* Debug */,
 				936510AE1741578C00F2AD06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		93FECB55174547840046529A /* Build configuration list for PBXNativeTarget "Partisans iOS5" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93FECB56174547840046529A /* Debug */,
+				93FECB57174547840046529A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

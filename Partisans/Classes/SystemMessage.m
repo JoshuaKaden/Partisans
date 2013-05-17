@@ -15,6 +15,8 @@
 #import "PlayerEnvoy.h"
 #import "UpdatePlayerOperation.h"
 
+NSString * const JSKNotificationPeerCreated = @"JSKNotificationPeerCreated";
+NSString * const JSKNotificationPeerUpdated= @"JSKNotificationPeerUpdated";
 
 NSUInteger const kPartisansMaxPlayers = 10;
 NSUInteger const kPartisansMinPlayers = 5;
@@ -125,6 +127,11 @@ NSUInteger const kPartisansMinPlayers = 5;
         if (localOther)
         {
             UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
+            [op setCompletionBlock:^(void){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
+                });
+            }];
             NSOperationQueue *queue = [SystemMessage mainQueue];
             [queue addOperation:op];
             [op release];
@@ -132,6 +139,9 @@ NSUInteger const kPartisansMinPlayers = 5;
         }
         
         CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:other];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerCreated object:other.peerID];
+        });
         NSOperationQueue *queue = [SystemMessage mainQueue];
         [queue addOperation:op];
         [op release];

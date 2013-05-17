@@ -316,7 +316,28 @@
                     break;
                     
                 case SetupGameMenuRowStatus:
-                    returnValue = NSLocalizedString(@"Waiting for players...", @"Waiting for players...  --  menu label");
+                    if ([self isPlayerHost])
+                    {
+                        if (self.players.count < kPartisansMinPlayers)
+                        {
+                            returnValue = NSLocalizedString(@"Waiting for players...", @"Waiting for players...  --  menu label");
+                        }
+                        else
+                        {
+                            returnValue = NSLocalizedString(@"Ready to start game.", @"Ready to start game.  --  menu label");
+                        }
+                    }
+                    else
+                    {
+                        if (self.players.count < kPartisansMinPlayers)
+                        {
+                            returnValue = NSLocalizedString(@"Waiting for more players...", @"Waiting for more players...  --  menu label");
+                        }
+                        else
+                        {
+                            returnValue = NSLocalizedString(@"Waiting for host...", @"Waiting for host...  --  menu label");
+                        }
+                    }
                     break;
                     
                 case SetupGameMenuRow_MaxValue:
