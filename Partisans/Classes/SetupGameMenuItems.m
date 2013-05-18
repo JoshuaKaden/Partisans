@@ -32,6 +32,7 @@
 @synthesize awaitingApproval = m_awaitingApproval;
 @synthesize players = m_players;
 @synthesize dossierMenuItems = m_dossierMenuItems;
+@synthesize shouldHost = m_shouldHost;
 
 - (void)dealloc
 {
@@ -81,9 +82,12 @@
 {
     if (![SystemMessage gameEnvoy])
     {
-        // In this case we assume that the player is starting a new game, as host.
-        GameEnvoy *newEnvoy = [GameEnvoy createGame];
-        [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
+        // Should we start a new game, as host?
+        if (self.shouldHost)
+        {
+            GameEnvoy *newEnvoy = [GameEnvoy createGame];
+            [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
+        }
     }
 }
 

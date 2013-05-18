@@ -8,10 +8,14 @@
 
 #import "SystemMessage.h"
 
+#import "AddGamePlayerOperation.h"
+#import "CreateGameOperation.h"
 #import "CreatePlayerOperation.h"
 #import "GameEnvoy.h"
 #import "JSKCommandResponse.h"
+#import "JSKDataMiner.h"
 #import "JSKPeerController.h"
+#import "NSManagedObjectContext+FetchAdditions.h"
 #import "PlayerEnvoy.h"
 #import "UpdatePlayerOperation.h"
 
@@ -21,6 +25,8 @@ NSString * const JSKNotificationPeerUpdated= @"JSKNotificationPeerUpdated";
 NSUInteger const kPartisansMaxPlayers = 10;
 NSUInteger const kPartisansMinPlayers = 5;
 
+NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoinedGame";
+
 
 @interface SystemMessage () <JSKPeerControllerDelegate>
 
@@ -29,6 +35,8 @@ NSUInteger const kPartisansMinPlayers = 5;
 - (void)handleAcknowledgement:(JSKCommandResponse *)commandResponse;
 - (void)handleModifiedDateResponse:(JSKCommandResponse *)response;
 - (void)handleGetInfoResponse:(JSKCommandResponse *)response;
+- (void)handleJoinGameMessage:(JSKCommandMessage *)message;
+- (void)handleJoinGameResponse:(JSKCommandResponse *)response;
 
 @end
 
@@ -54,6 +62,83 @@ NSUInteger const kPartisansMinPlayers = 5;
 
 
 #pragma mark - Peer Controller stuff
+
+
+
+- (void)handleJoinGameResponse:(JSKCommandResponse *)response
+{
+    if (!response.object)
+    {
+        return;
+    }
+    if (![response.object isKindOfClass:[GameEnvoy class]])
+    {
+        return;
+    }
+    
+    // Save the game locally.
+    GameEnvoy *envoy = (GameEnvoy *)response.object;
+    CreateGameOperation *op = [[CreateGameOperation alloc] initWithEnvoy:envoy];
+    [op setCompletionBlock:^(void) {
+        // Once the save is done, update our own gameEnvoy property.
+        NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+        NSArray *games = [context fetchObjectArrayForEntityName:@"Game" withPredicateFormat:@"intramuralID == %@", envoy.intramuralID];
+        if (games.count > 0)
+        {
+            GameEnvoy *updatedEnvoy = [GameEnvoy envoyFromManagedObject:[games objectAtIndex:0]];
+            [self setGameEnvoy:updatedEnvoy];
+            
+            // Also, post a notification that we joined the game.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationJoinedGame object:updatedEnvoy];
+            });
+        }
+    }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
+}
+
+
+- (void)handleJoinGameMessage:(JSKCommandMessage *)message
+{
+    PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:message.from];
+    if (!other)
+    {
+        return;
+    }
+    BOOL proceed = NO;
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+    if (gameEnvoy.host.managedObjectID == [SystemMessage playerEnvoy].managedObjectID)
+    {
+        // We are hosting a game.
+        if (gameEnvoy.players.count < kPartisansMaxPlayers && !gameEnvoy.startDate)
+        {
+            // The game has room and hasn't yet started.
+            // So, let the other player join, and send the game object back!
+            proceed = YES;
+        }
+    }
+    if (!proceed)
+    {
+        return;
+    }
+    
+    // Add this player to the game.
+    AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithEnvoy:other];
+    [op setCompletionBlock:^(void) {
+        // Then, once we've saved, send the game envoy to the new player.
+        JSKCommandResponse *response = [[JSKCommandResponse alloc] initWithType:JSKCommandResponseTypeAcknowledge
+                                                                             to:other.peerID
+                                                                           from:self.playerEnvoy.peerID
+                                                                   respondingTo:JSKCommandMessageTypeJoinGame];
+        [response setObject:gameEnvoy];
+        [self.peerController sendCommandResponse:response];
+    }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
+}
 
 
 - (void)handleAcknowledgement:(JSKCommandResponse *)commandResponse
@@ -96,10 +181,14 @@ NSUInteger const kPartisansMinPlayers = 5;
     // Stored in a custom object perhaps, Operation class or something.
     
     // For now assume the modified date of the peer, which is a player.
-    // We use this date to determine whether to send the player's picture.
+    // We use this date to determine whether to ask for player info.
     
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:response.from];
     if (!other)
+    {
+        return;
+    }
+    if (!modifiedDate || !other.modifiedDate)
     {
         return;
     }
@@ -203,6 +292,9 @@ NSUInteger const kPartisansMinPlayers = 5;
             break;
         case JSKCommandMessageTypeGetModifiedDate:
             responseObject = playerEnvoy.modifiedDate;
+            break;
+        case JSKCommandMessageTypeJoinGame:
+            [self handleJoinGameMessage:commandMessage];
             break;
         default:
             break;

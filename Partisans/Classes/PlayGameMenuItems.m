@@ -7,6 +7,8 @@
 //
 
 #import "PlayGameMenuItems.h"
+
+#import "JoinGameViewController.h"
 #import "SetupGameMenuItems.h"
 
 
@@ -88,8 +90,11 @@
     switch (indexPath.row)
     {
         case PlayGameMenuRowHost:
-        case PlayGameMenuRowJoin:
             targetClass = [JSKMenuViewController class];
+            break;
+            
+        case PlayGameMenuRowJoin:
+            targetClass = [JoinGameViewController class];
             break;
                         
         case PlayGameMenuRow_MaxValue:
@@ -105,14 +110,18 @@
     switch (indexPath.row)
     {
         case PlayGameMenuRowHost:
-        case PlayGameMenuRowJoin:
         {
             SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
+            items.shouldHost = YES;
             self.setupGameMenuItems = items;
             [items release];
             return self.setupGameMenuItems;
             break;
         }
+        
+        case PlayGameMenuRowJoin:
+            return nil;
+            break;
 
         case PlayGameMenuRow_MaxValue:
             return nil;

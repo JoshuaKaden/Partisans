@@ -29,4 +29,6 @@ typedef enum
 
 @interface SetupGameMenuItems : NSObject <JSKMenuViewControllerDelegate>
 
+@property (nonatomic, assign) BOOL shouldHost;
+
 @end

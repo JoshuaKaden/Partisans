@@ -16,6 +16,7 @@ typedef enum
     JSKCommandMessageTypeGetLocation,
     JSKCommandMessageTypeGetModifiedDate,
     JSKCommandMessageTypeIdentification,
+    JSKCommandMessageTypeJoinGame,
     JSKCommandMessageTypePause,
     JSKCommandMessageTypeResume,
     JSKCommandMessageTypeStart,

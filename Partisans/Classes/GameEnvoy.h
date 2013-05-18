@@ -24,6 +24,7 @@
 
 - (NSArray *)players;
 - (PlayerEnvoy *)host;
+- (void)addPlayer:(PlayerEnvoy *)playerEnvoy;
 
 + (GameEnvoy *)createGame;
 + (GameEnvoy *)envoyFromHost:(PlayerEnvoy *)host;

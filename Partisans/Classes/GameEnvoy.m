@@ -10,12 +10,20 @@
 
 #import "Game.h"
 #import "GamePlayer.h"
+#import "GamePlayerEnvoy.h"
 #import "JSKDataMiner.h"
 #import "Mission.h"
 #import "NSManagedObjectContext+FetchAdditions.h"
 #import "Player.h"
 #import "PlayerEnvoy.h"
 #import "SystemMessage.h"
+
+
+@interface GameEnvoy ()
+@property (nonatomic, strong) NSArray *gamePlayerEnvoys;
+- (void)loadGamePlayerEnvoys;
+@end
+
 
 @implementation GameEnvoy
 
@@ -26,6 +34,7 @@
 @synthesize startDate = m_startDate;
 @synthesize endDate = m_endDate;
 @synthesize numberOfPlayers = m_numberOfPlayers;
+@synthesize gamePlayerEnvoys = m_gamePlayerEnvoys;
 
 - (void)dealloc
 {
@@ -35,6 +44,7 @@
     
     [m_startDate release];
     [m_endDate release];
+    [m_gamePlayerEnvoys release];
     
     [super dealloc];
 }
@@ -57,6 +67,8 @@
             self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
             //            self.isNative = YES;
         }
+        
+        [self loadGamePlayerEnvoys];
     }
     
     return self;
@@ -170,6 +182,40 @@
 }
 
 
+- (void)loadGamePlayerEnvoys
+{
+    if (!self.managedObjectID)
+    {
+        return;
+    }
+    
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    if (game.gamePlayers.count == 0)
+    {
+        // This could be a place to catch a badly saved game.
+        return;
+    }
+    
+    NSSet *playerSet = game.gamePlayers;
+    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"player.playerName" ascending:YES];
+    NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
+    [nameSort release];
+    NSArray *gamePlayers = [playerSet sortedArrayUsingDescriptors:sorts];
+    [sorts release];
+    
+    NSMutableArray *envoyList = [[NSMutableArray alloc] initWithCapacity:gamePlayers.count];
+    for (GamePlayer *gamePlayer in gamePlayers)
+    {
+        GamePlayerEnvoy *envoy = [[GamePlayerEnvoy alloc] initWithManagedObject:gamePlayer];
+        [envoyList addObject:envoy];
+        [envoy release];
+    }
+    
+    [self setGamePlayerEnvoys:[NSArray arrayWithArray:envoyList]];
+    [envoyList release];
+}
+
 
 - (NSArray *)players
 {
@@ -222,6 +268,16 @@
 }
 
 
+- (void)addPlayer:(PlayerEnvoy *)playerEnvoy
+{
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
+    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
+    gamePlayer.player = player;
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    [game addGamePlayersObject:gamePlayer];
+}
+
 
 #pragma mark - Commits
 
@@ -260,6 +316,14 @@
     model.endDate = self.endDate;
     model.numberOfPlayers = [NSNumber numberWithUnsignedInteger:self.numberOfPlayers];
     
+    if (self.gamePlayerEnvoys)
+    {
+        for (GamePlayerEnvoy *envoy in self.gamePlayerEnvoys)
+        {
+            [envoy commitInContext:context];
+        }
+    }
+    
     
     // Make sure the envoy knows the new managed object ID, if this is an add.
     if (!self.managedObjectID)
@@ -293,6 +357,7 @@
     [aCoder encodeObject:self.startDate forKey:@"startDate"];
     [aCoder encodeObject:self.endDate forKey:@"endDate"];
     [aCoder encodeInteger:self.numberOfPlayers forKey:@"numberOfPlayers"];
+    [aCoder encodeObject:self.gamePlayerEnvoys forKey:@"gamePlayerEnvoys"];
 }
 
 
@@ -319,6 +384,7 @@
         self.startDate = [aDecoder decodeObjectForKey:@"startDate"];
         self.endDate = [aDecoder decodeObjectForKey:@"endDate"];
         self.numberOfPlayers = [aDecoder decodeIntegerForKey:@"numberOfPlayers"];
+        self.gamePlayerEnvoys = [aDecoder decodeObjectForKey:@"gamePlayerEnvoys"];
     }
     
     return self;

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9303BE5117467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
+		9303BE5217467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
+		9303BE551746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
+		9303BE561746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
 		936510931741578C00F2AD06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510921741578C00F2AD06 /* UIKit.framework */; };
 		936510951741578C00F2AD06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510941741578C00F2AD06 /* Foundation.framework */; };
 		936510971741578C00F2AD06 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510961741578C00F2AD06 /* CoreGraphics.framework */; };
@@ -50,6 +54,12 @@
 		9365111A17415B7B00F2AD06 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111917415B7B00F2AD06 /* QuartzCore.framework */; };
 		9365111C17415B8600F2AD06 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
 		9365111F17415D0A00F2AD06 /* JSKCommandResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */; };
+		937BC0BF1747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
+		937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
+		937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
+		937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
+		938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
+		938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		93C10B461743A52600B47095 /* Partisans.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B441743A52600B47095 /* Partisans.xcdatamodeld */; };
 		93C10B9D1744028300B47095 /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
 		93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
@@ -130,6 +140,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JoinGameViewController.h; path = Classes/JoinGameViewController.h; sourceTree = "<group>"; };
+		9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JoinGameViewController.m; path = Classes/JoinGameViewController.m; sourceTree = "<group>"; };
+		9303BE531746836A0065ADD2 /* GameJoiner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameJoiner.h; path = Classes/GameJoiner.h; sourceTree = "<group>"; };
+		9303BE541746836A0065ADD2 /* GameJoiner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameJoiner.m; path = Classes/GameJoiner.m; sourceTree = "<group>"; };
 		9365108F1741578C00F2AD06 /* Partisans.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Partisans.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		936510921741578C00F2AD06 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		936510941741578C00F2AD06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -203,6 +217,12 @@
 		9365111B17415B8600F2AD06 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9365111D17415D0A00F2AD06 /* JSKCommandResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKCommandResponse.h; path = "Classes/Libraries/My Library/JSKCommandResponse.h"; sourceTree = "<group>"; };
 		9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKCommandResponse.m; path = "Classes/Libraries/My Library/JSKCommandResponse.m"; sourceTree = "<group>"; };
+		937BC0BD1747D2E3003F42D6 /* CreateGameOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateGameOperation.h; path = Classes/CreateGameOperation.h; sourceTree = "<group>"; };
+		937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateGameOperation.m; path = Classes/CreateGameOperation.m; sourceTree = "<group>"; };
+		937BC0C11747D86D003F42D6 /* GamePlayerEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayerEnvoy.h; path = Classes/GamePlayerEnvoy.h; sourceTree = "<group>"; };
+		937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayerEnvoy.m; path = Classes/GamePlayerEnvoy.m; sourceTree = "<group>"; };
+		938429321746C0D30037563D /* AddGamePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddGamePlayerOperation.h; path = Classes/AddGamePlayerOperation.h; sourceTree = "<group>"; };
+		938429331746C0D30037563D /* AddGamePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddGamePlayerOperation.m; path = Classes/AddGamePlayerOperation.m; sourceTree = "<group>"; };
 		93C10B451743A52600B47095 /* Partisans.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Partisans.xcdatamodel; sourceTree = "<group>"; };
 		93C10B9B1744028300B47095 /* GameEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameEnvoy.h; path = Classes/GameEnvoy.h; sourceTree = "<group>"; };
 		93C10B9C1744028300B47095 /* GameEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameEnvoy.m; path = Classes/GameEnvoy.m; sourceTree = "<group>"; };
@@ -506,6 +526,8 @@
 			children = (
 				93C10B9B1744028300B47095 /* GameEnvoy.h */,
 				93C10B9C1744028300B47095 /* GameEnvoy.m */,
+				937BC0C11747D86D003F42D6 /* GamePlayerEnvoy.h */,
+				937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */,
 				9365110D17415B2000F2AD06 /* ImageEnvoy.h */,
 				9365110E17415B2000F2AD06 /* ImageEnvoy.m */,
 				9365110F17415B2000F2AD06 /* PlayerEnvoy.h */,
@@ -540,6 +562,10 @@
 		9365110517415AE100F2AD06 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				938429321746C0D30037563D /* AddGamePlayerOperation.h */,
+				938429331746C0D30037563D /* AddGamePlayerOperation.m */,
+				937BC0BD1747D2E3003F42D6 /* CreateGameOperation.h */,
+				937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */,
 				9365110717415B0C00F2AD06 /* CreatePlayerOperation.h */,
 				9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */,
 				9365110917415B0C00F2AD06 /* UpdatePlayerOperation.h */,
@@ -551,6 +577,10 @@
 		93C10BB617440B9300B47095 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				9303BE531746836A0065ADD2 /* GameJoiner.h */,
+				9303BE541746836A0065ADD2 /* GameJoiner.m */,
+				9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */,
+				9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */,
 				93C10BB817440C4500B47095 /* PlayGameMenuItems.h */,
 				93C10BB917440C4500B47095 /* PlayGameMenuItems.m */,
 				93C10BC6174439B200B47095 /* SetupGameMenuItems.h */,
@@ -723,6 +753,11 @@
 				93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */,
 				93FECAB1174521A40046529A /* LabelProgressView.m in Sources */,
 				93FECAB3174521A40046529A /* ProgressCell.m in Sources */,
+				9303BE5117467CAE0065ADD2 /* JoinGameViewController.m in Sources */,
+				9303BE551746836A0065ADD2 /* GameJoiner.m in Sources */,
+				938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */,
+				937BC0BF1747D2E3003F42D6 /* CreateGameOperation.m in Sources */,
+				937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,6 +808,11 @@
 				93FECB3F174547840046529A /* DossierMenuItems.m in Sources */,
 				93FECB40174547840046529A /* LabelProgressView.m in Sources */,
 				93FECB41174547840046529A /* ProgressCell.m in Sources */,
+				9303BE5217467CAE0065ADD2 /* JoinGameViewController.m in Sources */,
+				9303BE561746836A0065ADD2 /* GameJoiner.m in Sources */,
+				938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */,
+				937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */,
+				937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

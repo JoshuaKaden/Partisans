@@ -108,6 +108,10 @@
             name = @"Identification";
             break;
             
+        case JSKCommandMessageTypeJoinGame:
+            name = @"JoinGame";
+            break;
+            
         case JSKCommandMessageTypePause:
             name = @"Pause";
             break;

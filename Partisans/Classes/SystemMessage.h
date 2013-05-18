@@ -17,6 +17,7 @@ extern NSString * const JSKNotificationPeerCreated;
 extern NSString * const JSKNotificationPeerUpdated;
 extern NSUInteger const kPartisansMaxPlayers;
 extern NSUInteger const kPartisansMinPlayers;
+extern NSString * const kPartisansNotificationJoinedGame;
 
 @interface SystemMessage : JSKSystemMessage
 
