@@ -33,6 +33,8 @@
 
 - (id)initWithManagedObject:(Game *)managedObject;
 
+- (void)deleteGame;
+
 - (void)commit;
 - (void)commitAndSave;
 - (void)commitInContext:(NSManagedObjectContext *)context;

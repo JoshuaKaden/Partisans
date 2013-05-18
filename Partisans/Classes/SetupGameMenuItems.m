@@ -21,8 +21,11 @@
 @property (nonatomic, strong) NSArray *awaitingApproval;
 @property (nonatomic, strong) NSArray *players;
 @property (nonatomic, strong) DossierMenuItems *dossierMenuItems;
+@property (nonatomic, strong) UIAlertView *stopHostingAlertView;
+@property (nonatomic, assign) JSKMenuViewController *menuViewController;
 
 - (BOOL)isPlayerHost;
+- (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 @end
 
@@ -33,12 +36,17 @@
 @synthesize players = m_players;
 @synthesize dossierMenuItems = m_dossierMenuItems;
 @synthesize shouldHost = m_shouldHost;
+@synthesize stopHostingAlertView = m_stopHostingAlertView;
+@synthesize menuViewController = m_menuViewController;
 
 - (void)dealloc
 {
+    [m_stopHostingAlertView setDelegate:nil];
+    
     [m_awaitingApproval release];
     [m_players release];
     [m_dossierMenuItems release];
+    [m_stopHostingAlertView release];
     [super dealloc];
 }
 
@@ -77,6 +85,59 @@
 }
 
 
+#pragma mark - Confirm dialog
+
+- (void)confirmStopHosting
+{
+    if (!self.stopHostingAlertView)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Stop Hosting"
+                                                            message:@"Would you like to stop hosting, thus ending the game?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:
+                                  @"Yes", nil];
+        self.stopHostingAlertView = alertView;
+        [alertView release];
+    }
+    
+    [self.stopHostingAlertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.stopHostingAlertView)
+    {
+        [self handleStopHostingAlertView:alertView clickedButtonAtIndex:(NSInteger)buttonIndex];
+    }
+}
+
+- (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            // Cancel
+            return;
+            break;
+            
+        case 1:
+        {
+            // Yes -- stop hosting and end the game.
+            GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+            [gameEnvoy deleteGame];
+            [[SystemMessage sharedInstance] setGameEnvoy:nil];
+            [self.menuViewController invokePopAnimated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+
+
+#pragma mark - Menu VC delegate methods
 
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
@@ -87,6 +148,19 @@
         {
             GameEnvoy *newEnvoy = [GameEnvoy createGame];
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
+        }
+    }
+}
+
+
+- (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowHost)
+    {
+        if ([self isPlayerHost])
+        {
+            self.menuViewController = menuViewController;
+            [self confirmStopHosting];
         }
     }
 }
@@ -204,7 +278,10 @@
             switch ((SetupGameMenuRow)indexPath.row)
             {
                 case SetupGameMenuRowHost:
-                    returnValue = UITableViewCellAccessoryDisclosureIndicator;
+                    if (![self isPlayerHost])
+                    {
+                        returnValue = UITableViewCellAccessoryDisclosureIndicator;
+                    }
                     break;
                     
                 case SetupGameMenuRowPlayers:
@@ -378,6 +455,18 @@
     return returnValue;
 }
 
+- (NSString *)menuViewController:(JSKMenuViewController *)menuViewController subLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowHost)
+    {
+        if ([self isPlayerHost])
+        {
+            return NSLocalizedString(@"Tap to stop hosting.", @"Tap to stop hosting.  --  sub label text");
+        }
+    }
+    return nil;
+}
+
 
 - (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
 {
@@ -448,7 +537,10 @@
             switch ((SetupGameMenuRow)indexPath.row)
             {
                 case SetupGameMenuRowHost:
-                    returnValue = [JSKMenuViewController class];
+                    if (![self isPlayerHost])
+                    {
+                        returnValue = [JSKMenuViewController class];
+                    }
                     break;
                     
                 case SetupGameMenuRowPlayers:
@@ -494,10 +586,13 @@
             {
                 case SetupGameMenuRowHost:
                 {
-                    DossierMenuItems *items = [[DossierMenuItems alloc] init];
-                    self.dossierMenuItems = items;
-                    [items release];
-                    return self.dossierMenuItems;
+                    if (![self isPlayerHost])
+                    {
+                        DossierMenuItems *items = [[DossierMenuItems alloc] init];
+                        self.dossierMenuItems = items;
+                        [items release];
+                        return self.dossierMenuItems;
+                    }
                     break;
                 }
                     
@@ -510,7 +605,7 @@
             }
             break;
         }
-            
+        
             
         case SetupGameMenuSectionAwaitingApproval:
         case SetupGameMenuSectionPlayers:

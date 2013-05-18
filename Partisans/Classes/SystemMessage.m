@@ -31,6 +31,7 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
 @interface SystemMessage () <JSKPeerControllerDelegate>
 
 @property (nonatomic, strong) JSKPeerController *peerController;
+@property (nonatomic, strong) NSMutableArray *stash;
 
 - (void)handleAcknowledgement:(JSKCommandResponse *)commandResponse;
 - (void)handleModifiedDateResponse:(JSKCommandResponse *)response;
@@ -47,6 +48,7 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
 @synthesize playerEnvoy = m_playerEnvoy;
 @synthesize peerController = m_peerController;
 @synthesize gameEnvoy = m_gameEnvoy;
+@synthesize stash = m_stash;
 
 
 - (void)dealloc
@@ -56,6 +58,8 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
     [m_playerEnvoy release];
     [m_peerController release];
     [m_gameEnvoy release];
+    [m_stash release];
+    
     [super dealloc];
 }
 
@@ -105,6 +109,13 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:message.from];
     if (!other)
     {
+        if (!self.stash)
+        {
+            NSMutableArray *stash = [[NSMutableArray alloc] initWithCapacity:kPartisansMaxPlayers - 1];
+            self.stash = stash;
+            [stash release];
+        }
+        [self.stash addObject:message];
         return;
     }
     BOOL proceed = NO;
@@ -228,9 +239,22 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
         }
         
         CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:other];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerCreated object:other.peerID];
-        });
+        [op setCompletionBlock:^(void){
+            for (JSKCommandMessage *stashedMsg in self.stash)
+            {
+                if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
+                {
+                    if (stashedMsg.from == other.peerID)
+                    {
+                        [self handleJoinGameMessage:stashedMsg];
+                        [self.stash removeObject:stashedMsg];
+                    }
+                }
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerCreated object:other.peerID];
+            });
+        }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
         [queue addOperation:op];
         [op release];

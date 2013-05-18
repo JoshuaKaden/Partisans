@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Game" representedClassName="Game" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
@@ -82,13 +82,13 @@
         <relationship name="round" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Round" inverseName="votes" inverseEntity="Round" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Image" positionX="-2043" positionY="-606" width="128" height="165"/>
-        <element name="Player" positionX="-2052" positionY="-1053" width="128" height="225"/>
         <element name="Game" positionX="-1802" positionY="-1071" width="128" height="150"/>
         <element name="GamePlayer" positionX="-1865" positionY="-651" width="128" height="180"/>
+        <element name="Image" positionX="-2043" positionY="-606" width="128" height="165"/>
         <element name="Mission" positionX="-983" positionY="-954" width="128" height="180"/>
+        <element name="Player" positionX="-2052" positionY="-1053" width="128" height="225"/>
         <element name="Round" positionX="-1532" positionY="-909" width="128" height="150"/>
-        <element name="Votes" positionX="-1559" positionY="-606" width="128" height="120"/>
         <element name="Scorecard" positionX="-2315" positionY="-930" width="128" height="165"/>
+        <element name="Votes" positionX="-1559" positionY="-606" width="128" height="120"/>
     </elements>
 </model>

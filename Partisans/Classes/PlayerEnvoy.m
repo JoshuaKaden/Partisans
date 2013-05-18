@@ -290,6 +290,8 @@
     }
     
     [context deleteObject:player];
+    [self setManagedObjectID:nil];
+    [self setIntramuralID:nil];
     [JSKDataMiner save];
 }
 

@@ -281,6 +281,30 @@
 
 #pragma mark - Commits
 
+- (void)deleteGame
+{
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    if (!self.managedObjectID)
+    {
+        // Bail in this case.
+        // Should not happen however.
+        return;
+    }
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    if (!game)
+    {
+        // Something badly wrong in this case.
+        debugLog(@"Problem!!");
+        return;
+    }
+    
+    [context deleteObject:game];
+    [self setManagedObjectID:nil];
+    [self setIntramuralID:nil];
+    [JSKDataMiner save];
+}
+
+
 - (void)commit
 {
     [self commitInContext:nil];
