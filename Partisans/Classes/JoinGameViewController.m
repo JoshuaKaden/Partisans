@@ -20,6 +20,7 @@
 @property (nonatomic, assign) BOOL isScanning;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, assign) BOOL isFinished;
+@property (nonatomic, strong) GameJoiner *gameJoiner;
 
 - (void)addStatusMessage:(NSString *)message;
 - (void)startScanning;
@@ -38,14 +39,18 @@
 @synthesize isScanning = m_isScanning;
 @synthesize tapGesture = m_tapGesture;
 @synthesize isFinished = m_isFinished;
+@synthesize gameJoiner = m_gameJoiner;
 
 
 #pragma mark - Boilerplate
 
-- (void)dealloc {
+- (void)dealloc
+{
+    [m_gameJoiner setDelegate:nil];
     
     [m_viewStack release];
     [m_tapGesture release];
+    [m_gameJoiner release];
     
     [super dealloc];
 }
@@ -160,11 +165,15 @@
     
     [self.viewStack clearViews];
     
-//    [self.peerImporter scanForExporter];
+    if (!self.gameJoiner)
+    {
+        GameJoiner *gameJoiner = [[GameJoiner alloc] init];
+        [gameJoiner setDelegate:self];
+        self.gameJoiner = gameJoiner;
+        [gameJoiner release];
+    }
     
-    //    [self addStatusMessage:@"Scanning for exporter..."];
-    //    [self addStatusMessage:@"The exporter seems busy."];
-    //    [self addStatusMessage:@"I shall try again."];
+    [self.gameJoiner startScanning];
 }
 
 
@@ -179,7 +188,7 @@
     
     [self toggleColors];
     
-//    [self.peerImporter stopScanning];
+    [self.gameJoiner stopScanning];
 }
 
 

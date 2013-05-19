@@ -37,5 +37,6 @@ extern NSString * const kPartisansNotificationJoinedGame;
 + (void)resetPeerController;
 + (void)broadcastObject:(NSObject <NSCoding> *)object;
 + (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType;
++ (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
 
 @end

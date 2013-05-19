@@ -195,8 +195,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     
-//    debugLog(@"Will send a message of %d bytes to peer %@.", data.length, sessionPeerID);
-//    debugLog(@"Sending: %@", object);
+    debugLog(@"Will send a message of %d bytes to peer %@.", data.length, sessionPeerID);
+    debugLog(@"Sending: %@", object);
     //    debugLog(@"Sending raw: %@", data);
     
 //    NSArray *sendDataArray = [NSArray arrayWithObject:data];
@@ -420,7 +420,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 //    debugLog(@"Received message of %d bytes from peer %@.", data.length, peer);
     
     NSObject *statement = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//    debugLog(@"Received object from peer %@.\nThe object:\n%@", peer, statement);
+    debugLog(@"Received object from peer %@.\nThe object:\n%@", peer, statement);
     
     //    debugLog(@"Received raw: %@", data);
     
@@ -651,9 +651,13 @@ const NSUInteger PeerMessageSizeLimit = 10000;
                 
                 // Once we connect to a peer, we automatically send them our name.
                 // They will appreciate this, as it enables us to address each other, using our own names.
-                JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerName from:self.peerID];
-                [self archiveAndSend:msg toSessionPeerID:peerID];
-                [msg release];
+                NSString *ourPeerID = [self.connectedPeerNames valueForKey:peerID];
+                if (!ourPeerID)
+                {
+                    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerName from:self.peerID];
+                    [self archiveAndSend:msg toSessionPeerID:peerID];
+                    [msg release];
+                }
                 break;
                 
 //                NSDictionary *existingPeerNames = self.connectedPeerNames;

@@ -34,6 +34,7 @@
 
 + (PlayerEnvoy *)envoyFromPeerID:(NSString *)peerID;
 + (PlayerEnvoy *)envoyFromManagedObject:(Player *)managedObject;
++ (PlayerEnvoy *)newEnvoyWithPeerID:(NSString *)peerID;
 
 // An alpha list of players on this device.
 + (NSArray *)nativePlayers;

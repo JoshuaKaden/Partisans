@@ -38,6 +38,7 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
 - (void)handleGetInfoResponse:(JSKCommandResponse *)response;
 - (void)handleJoinGameMessage:(JSKCommandMessage *)message;
 - (void)handleJoinGameResponse:(JSKCommandResponse *)response;
+- (void)handleIdentification:(JSKCommandMessage *)message;
 
 @end
 
@@ -66,6 +67,29 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
 
 
 #pragma mark - Peer Controller stuff
+
+
+- (void)handleIdentification:(JSKCommandMessage *)message
+{
+    PlayerEnvoy *newEnvoy = [PlayerEnvoy newEnvoyWithPeerID:message.from];
+    if (!newEnvoy)
+    {
+        // Problem with the new envoy; most likely another envoy has the specified peer ID already.
+        // Just bail in this case.
+        return;
+    }
+    
+    CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:newEnvoy];
+    [op setCompletionBlock:^(void){
+        // Once we've saved, ask for the player's data.
+        JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:message.from from:self.playerEnvoy.peerID];
+        [self.peerController sendCommandMessage:msg];
+        [msg release];
+    }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
+}
 
 
 
@@ -228,6 +252,17 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
         {
             UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
             [op setCompletionBlock:^(void){
+                for (JSKCommandMessage *stashedMsg in self.stash)
+                {
+                    if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
+                    {
+                        if (stashedMsg.from == other.peerID)
+                        {
+                            [self handleJoinGameMessage:stashedMsg];
+                            [self.stash removeObject:stashedMsg];
+                        }
+                    }
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
                 });
@@ -299,9 +334,15 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:peerID];
     if (!other)
     {
-        // Not sure; unidentified or unmatched player.
-        // Perhaps doesn't matter?
-        // But let's be strict.
+        // Unidentified or unmatched player.
+        // This is actually ok if the command is an Identification.
+        // An Identification message contains the sender's ID.
+        // This is the equivalent of telling someone your name.
+        // Once I save that player's ID, and she saves mine, we can communicate.
+        if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
+        {
+            [self handleIdentification:commandMessage];
+        }
         return;
     }
 
@@ -320,6 +361,15 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
         case JSKCommandMessageTypeJoinGame:
             [self handleJoinGameMessage:commandMessage];
             break;
+        case JSKCommandMessageTypeIdentification:
+        {
+            // If not caught above then we already know about this player.
+            // Let's get their data.
+            JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:commandMessage.from from:self.playerEnvoy.peerID];
+            [self.peerController sendCommandMessage:msg];
+            [msg release];
+            break;
+        }
         default:
             break;
     }
@@ -413,6 +463,16 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
     JSKPeerController *peerController = sharedInstance.peerController;
     
     [peerController broadcastCommandMessageType:commandMessageType];
+}
+
+
++ (void)sendCommandMessage:(JSKCommandMessage *)commandMessage
+{
+    if (![self isPlayerOnline])
+    {
+        return;
+    }
+    [[self sharedInstance].peerController sendCommandMessage:commandMessage];
 }
 
 

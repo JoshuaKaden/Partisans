@@ -150,6 +150,10 @@
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
         }
     }
+    if (![SystemMessage isPlayerOnline])
+    {
+        [SystemMessage putPlayerOnline];
+    }
 }
 
 
