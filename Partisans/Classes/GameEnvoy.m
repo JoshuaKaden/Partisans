@@ -275,6 +275,11 @@
 
 - (PlayerEnvoy *)host
 {
+    if (!self.managedObjectID)
+    {
+        return nil;
+    }
+    
     PlayerEnvoy *returnValue = nil;
     
     NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
@@ -314,6 +319,19 @@
         }
     }
     return NO;
+}
+
+- (void)removePlayer:(PlayerEnvoy *)playerEnvoy
+{
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
+    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"gamePlayer" withPredicateFormat:@"player == %@", player];
+    if (!gamePlayers)
+    {
+        return;
+    }
+    GamePlayer *gamePlayer = [gamePlayers objectAtIndex:0];
+    [context deleteObject:gamePlayer];
 }
 
 
@@ -372,7 +390,7 @@
         model = [NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:context];
     }
     
-    model.intramuralID = self.intramuralID;
+    model.intramuralID = self.intramuralID; 
     
     model.startDate = self.startDate;
     model.endDate = self.endDate;
@@ -382,6 +400,10 @@
     {
         for (GamePlayerEnvoy *envoy in self.gamePlayerEnvoys)
         {
+            if (!envoy.gameID)
+            {
+                [envoy setGameID:self.intramuralID];
+            }
             [envoy commitInContext:context];
         }
     }

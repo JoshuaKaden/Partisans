@@ -17,10 +17,12 @@ typedef enum
     JSKCommandMessageTypeGetModifiedDate,
     JSKCommandMessageTypeIdentification,
     JSKCommandMessageTypeJoinGame,
+    JSKCommandMessageTypeLeaveGame,
     JSKCommandMessageTypePause,
     JSKCommandMessageTypeResume,
     JSKCommandMessageTypeStart,
     JSKCommandMessageTypeStop,
+    JSKCommandMessageTypeUnknown,
     JSKCommandMessageType_maxValue
 } JSKCommandMessageType;
 

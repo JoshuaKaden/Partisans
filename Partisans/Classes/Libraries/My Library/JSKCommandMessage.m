@@ -111,6 +111,10 @@
         case JSKCommandMessageTypeJoinGame:
             name = @"JoinGame";
             break;
+
+        case JSKCommandMessageTypeLeaveGame:
+            name = @"LeaveGame";
+            break;
             
         case JSKCommandMessageTypePause:
             name = @"Pause";
@@ -126,6 +130,10 @@
             
         case JSKCommandMessageTypeStop:
             name = @"Stop";
+            break;
+
+        case JSKCommandMessageTypeUnknown:
+            name = @"Unknown";
             break;
             
         case JSKCommandMessageType_maxValue:

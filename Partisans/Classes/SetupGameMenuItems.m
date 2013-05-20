@@ -22,10 +22,14 @@
 @property (nonatomic, strong) NSArray *players;
 @property (nonatomic, strong) DossierMenuItems *dossierMenuItems;
 @property (nonatomic, strong) UIAlertView *stopHostingAlertView;
+@property (nonatomic, strong) UIAlertView *leaveGameAlertView;
 @property (nonatomic, assign) JSKMenuViewController *menuViewController;
 
 - (BOOL)isPlayerHost;
+- (void)confirmStopHosting;
+- (void)confirmLeaveGame;
 - (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+- (void)handleLeaveGameAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 - (void)gamePlayerAdded:(NSNotification *)notification;
 
 @end
@@ -38,17 +42,21 @@
 @synthesize dossierMenuItems = m_dossierMenuItems;
 @synthesize shouldHost = m_shouldHost;
 @synthesize stopHostingAlertView = m_stopHostingAlertView;
+@synthesize leaveGameAlertView = m_leaveGameAlertView;
 @synthesize menuViewController = m_menuViewController;
 
 - (void)dealloc
 {
     [m_stopHostingAlertView setDelegate:nil];
+    [m_leaveGameAlertView setDelegate:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [m_awaitingApproval release];
     [m_players release];
     [m_dossierMenuItems release];
     [m_stopHostingAlertView release];
+    [m_leaveGameAlertView release];
+    
     [super dealloc];
 }
 
@@ -94,7 +102,20 @@
 }
 
 
-#pragma mark - Confirm dialog
+#pragma mark - Confirm dialogs
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.stopHostingAlertView)
+    {
+        [self handleStopHostingAlertView:alertView clickedButtonAtIndex:(NSInteger)buttonIndex];
+    }
+    if (alertView == self.leaveGameAlertView)
+    {
+        [self handleLeaveGameAlertView:alertView clickedButtonAtIndex:(NSInteger)buttonIndex];
+    }
+}
 
 - (void)confirmStopHosting
 {
@@ -113,12 +134,9 @@
     [self.stopHostingAlertView show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)confirmLeaveGame
 {
-    if (alertView == self.stopHostingAlertView)
-    {
-        [self handleStopHostingAlertView:alertView clickedButtonAtIndex:(NSInteger)buttonIndex];
-    }
+    
 }
 
 - (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -132,9 +150,12 @@
         case 1:
         {
             // Yes -- stop hosting and end the game.
+            [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame];
+            
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             [gameEnvoy deleteGame];
             [[SystemMessage sharedInstance] setGameEnvoy:nil];
+            [SystemMessage putPlayerOffline];
             [self.menuViewController invokePopAnimated:YES];
             break;
         }
@@ -144,6 +165,29 @@
     }
 }
 
+- (void)handleLeaveGameAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            // Cancel
+            return;
+            break;
+            
+        case 1:
+        {
+            // Yes -- leave the game.
+            GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+            [gameEnvoy deleteGame];
+            [[SystemMessage sharedInstance] setGameEnvoy:nil];
+            [SystemMessage putPlayerOffline];
+            [self.menuViewController invokePopAnimated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
 
 
 #pragma mark - Menu VC delegate methods

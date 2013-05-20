@@ -27,7 +27,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 - (BOOL)hasSessionStarted;
 - (void)archiveAndSend:(NSObject <NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID;
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage fromSessionPeerID:(NSString *)sessionPeerID;
-- (void)handleCommandResponse:(JSKCommandResponse *)commandResponse fromSessionPeerID:(NSString *)sessionPeerID;
+- (void)handleCommandResponse:(JSKCommandParcel *)commandResponse fromSessionPeerID:(NSString *)sessionPeerID;
 
 @end
 
@@ -174,7 +174,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 }
 
 
-- (void)sendCommandResponse:(JSKCommandResponse *)commandResponse
+- (void)sendCommandResponse:(JSKCommandParcel *)commandResponse
 {
     if (!commandResponse)
     {
@@ -344,7 +344,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 #pragma mark - PeerDataHandler
 
-- (void)handleCommandResponse:(JSKCommandResponse *)commandResponse fromSessionPeerID:(NSString *)sessionPeerID
+- (void)handleCommandResponse:(JSKCommandParcel *)commandResponse fromSessionPeerID:(NSString *)sessionPeerID
 {
     // The "sessionPeerID" parameter is GameKit's ID.
     // We need to match it to our internal peer ID.
@@ -433,9 +433,9 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         JSKCommandMessage *commandMessage = (JSKCommandMessage *)statement;
         [self handleCommandMessage:commandMessage fromSessionPeerID:peer];
     }
-    else if ([statement isKindOfClass:[JSKCommandResponse class]])
+    else if ([statement isKindOfClass:[JSKCommandParcel class]])
     {
-        JSKCommandResponse *commandResponse = (JSKCommandResponse *)statement;
+        JSKCommandParcel *commandResponse = (JSKCommandParcel *)statement;
         [self handleCommandResponse:commandResponse fromSessionPeerID:peer];
     }
     else
@@ -476,9 +476,9 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 //                JSKCommandMessage *commandMessage = (JSKCommandMessage *)arrayItem;
 //                [self handleCommandMessage:commandMessage fromSessionPeerID:peer];
 //            }
-//            else if ([arrayItem isKindOfClass:[JSKCommandResponse class]])
+//            else if ([arrayItem isKindOfClass:[JSKCommandParcel class]])
 //            {
-//                JSKCommandResponse *commandResponse = (JSKCommandResponse *)arrayItem;
+//                JSKCommandParcel *commandResponse = (JSKCommandParcel *)arrayItem;
 //                [self handleCommandResponse:commandResponse fromSessionPeerID:peer];
 //            }
 //            else

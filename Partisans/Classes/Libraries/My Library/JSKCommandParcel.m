@@ -1,16 +1,16 @@
 //
-//  JSKCommandResponse.m
+//  JSKCommandParcel.m
 //  Partisans
 //
 //  Created by Joshua Kaden on 5/10/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
-#import "JSKCommandResponse.h"
+#import "JSKCommandParcel.h"
 
-@implementation JSKCommandResponse
+@implementation JSKCommandParcel
 
-@synthesize commandResponseType = m_commandResponseType;
+@synthesize commandParcelType = m_commandParcelType;
 @synthesize to = m_to;
 @synthesize from = m_from;
 @synthesize respondingToType = m_respondingToType;
@@ -26,7 +26,25 @@
 
 
 
-- (id)initWithType:(JSKCommandResponseType)commandResponseType
+- (id)initWithType:(JSKCommandParcelType)commandParcelType
+                to:(NSString *)to
+              from:(NSString *)from
+            object:(id<NSCoding>)object
+{
+    self = [super init];
+    if (self)
+    {
+        self.commandParcelType = commandParcelType;
+        self.to = to;
+        self.from = from;
+        self.respondingToType = JSKCommandMessageTypeUnknown;
+        [self setObject:(NSObject <NSCoding> *)object];
+    }
+    return self;
+}
+
+
+- (id)initWithType:(JSKCommandParcelType)commandParcelType
                 to:(NSString *)to
               from:(NSString *)from
       respondingTo:(JSKCommandMessageType)respondingTo
@@ -34,7 +52,7 @@
     self = [super init];
     if (self)
     {
-        self.commandResponseType = commandResponseType;
+        self.commandParcelType = commandParcelType;
         self.to = to;
         self.from = from;
         self.respondingToType = respondingTo;
@@ -57,7 +75,7 @@
         fromString = @"";
     }
     
-    NSString *typeString = self.commandResponseTypeName;
+    NSString *typeString = self.commandParcelTypeName;
     if (!typeString)
     {
         typeString = @"";
@@ -76,9 +94,9 @@
     }
     
     NSDictionary *descDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                              @"JSKCommandResponse", @"Class",
-                              [NSNumber numberWithInt:self.commandResponseType].description, @"commandResponseType",
-                              typeString, @"commandResponseTypeName",
+                              @"JSKCommandParcel", @"Class",
+                              [NSNumber numberWithInt:self.commandParcelType].description, @"commandParcelType",
+                              typeString, @"commandParcelTypeName",
                               fromString, @"from",
                               toString, @"to",
                               [NSNumber numberWithInt:self.respondingToType].description, @"respondingToCommandMessageType",
@@ -88,25 +106,37 @@
 }
 
 
-- (NSString *)commandResponseTypeName
+- (NSString *)commandParcelTypeName
 {
-    return [JSKCommandResponse responseTypeName:self.commandResponseType];
+    return [JSKCommandParcel responseTypeName:self.commandParcelType];
 }
 
 
 
 
-+ (NSString *)responseTypeName:(JSKCommandResponseType)responseType
++ (NSString *)responseTypeName:(JSKCommandParcelType)responseType
 {
     NSString *name = nil;
     
     switch (responseType)
     {
-        case JSKCommandResponseTypeAcknowledge:
-            name = @"Acknowledge";
+        case JSKCommandParcelTypePlayerJoined:
+            name = @"PlayerJoined";
             break;
-                        
-        case JSKCommandResponseType_maxValue:
+
+        case JSKCommandParcelTypePlayerLeft:
+            name = @"PlayerLeft";
+            break;
+
+        case JSKCommandParcelTypeResponse:
+            name = @"Response";
+            break;
+            
+        case JSKCommandParcelTypeUnknown:
+            name = @"Unknown";
+            break;
+            
+        case JSKCommandParcelType_maxValue:
             break;
     }
     
@@ -121,7 +151,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeInt:self.commandResponseType forKey:@"commandResponseType"];
+    [aCoder encodeInt:self.commandParcelType forKey:@"commandParcelType"];
     [aCoder encodeObject:self.to forKey:@"toPeerName"];
     [aCoder encodeObject:self.from forKey:@"replyTo"];
     [aCoder encodeInt:self.respondingToType forKey:@"respondingToType"];
@@ -135,7 +165,7 @@
     
     if (self)
     {
-        self.commandResponseType = [aDecoder decodeIntForKey:@"commandResponseType"];
+        self.commandParcelType = [aDecoder decodeIntForKey:@"commandParcelType"];
         self.to = [aDecoder decodeObjectForKey:@"toPeerName"];
         self.from = [aDecoder decodeObjectForKey:@"replyTo"];
         self.respondingToType = [aDecoder decodeIntForKey:@"respondingToType"];

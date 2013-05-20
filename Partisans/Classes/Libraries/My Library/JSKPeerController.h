@@ -10,7 +10,7 @@
 #import <Gamekit/Gamekit.h>
 
 #import "JSKCommandMessage.h"
-#import "JSKCommandResponse.h"
+#import "JSKCommandParcel.h"
 
 @class JSKPeerController;
 
@@ -20,7 +20,7 @@
 @optional
 - (void)peerController:(JSKPeerController *)peerController connectedToPeer:(NSString *)peerID;
 - (void)peerController:(JSKPeerController *)peerController receivedCommandMessage:(JSKCommandMessage *)commandMessage from:(NSString *)peerID;
-- (void)peerController:(JSKPeerController *)peerController receivedCommandResponse:(JSKCommandResponse *)commandResponse from:(NSString *)peerID;
+- (void)peerController:(JSKPeerController *)peerController receivedCommandResponse:(JSKCommandParcel *)commandResponse from:(NSString *)peerID;
 - (void)peerController:(JSKPeerController *)peerController receivedObject:(NSObject *)object from:(NSString *)peerID;
 - (NSString *)peerNameFromID:(NSString *)peerID;
 - (void)peerControllerQueueHasEmptied:(JSKPeerController *)peerController;
@@ -42,7 +42,7 @@ extern const NSUInteger PeerMessageSizeLimit;
 - (void)stopSession;
 
 - (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
-- (void)sendCommandResponse:(JSKCommandResponse *)commandResponse;
+- (void)sendCommandResponse:(JSKCommandParcel *)commandResponse;
 - (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType;
 - (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType toPeerIDs:(NSArray *)peerIDs;
 

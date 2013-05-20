@@ -1,12 +1,12 @@
 //
-//  AddGamePlayerOperation.m
+//  RemoveGamePlayerOperation.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/17/13.
+//  Created by Joshua Kaden on 5/20/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
-#import "AddGamePlayerOperation.h"
+#import "RemoveGamePlayerOperation.h"
 
 #import "GameEnvoy.h"
 #import "JSKDataMiner.h"
@@ -16,7 +16,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface AddGamePlayerOperation ()
+@interface RemoveGamePlayerOperation ()
 
 - (void)mergeChanges:(NSNotification *)notification;
 
@@ -24,7 +24,7 @@
 
 
 
-@implementation AddGamePlayerOperation
+@implementation RemoveGamePlayerOperation
 
 
 @synthesize envoy = m_envoy;
@@ -67,7 +67,7 @@
     
     // Here is the actual work of the class.
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    [gameEnvoy addPlayer:self.envoy];
+    [gameEnvoy removePlayer:self.envoy];
     
     
     

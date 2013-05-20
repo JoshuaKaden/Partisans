@@ -39,5 +39,6 @@ extern NSString * const kPartisansNotificationGamePlayerAdded;
 + (void)broadcastObject:(NSObject <NSCoding> *)object;
 + (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType;
 + (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
++ (void)sendToHost:(JSKCommandMessageType)commandMessageType;
 
 @end

@@ -53,7 +53,25 @@
 		9365111817415B6B00F2AD06 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111717415B6B00F2AD06 /* GameKit.framework */; };
 		9365111A17415B7B00F2AD06 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111917415B7B00F2AD06 /* QuartzCore.framework */; };
 		9365111C17415B8600F2AD06 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
-		9365111F17415D0A00F2AD06 /* JSKCommandResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */; };
+		9365111F17415D0A00F2AD06 /* JSKCommandParcel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */; };
+		93761EDD174A9A3600DFE1F5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDC174A9A3600DFE1F5 /* Icon.png */; };
+		93761EDF174A9A4000DFE1F5 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDE174A9A4000DFE1F5 /* Icon@2x.png */; };
+		93761EE1174A9A7300DFE1F5 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE0174A9A7300DFE1F5 /* Icon-72.png */; };
+		93761EE3174A9A7700DFE1F5 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE2174A9A7700DFE1F5 /* Icon-72@2x.png */; };
+		93761EE8174A9B1B00DFE1F5 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE4174A9B1B00DFE1F5 /* Icon-Small-50.png */; };
+		93761EE9174A9B1B00DFE1F5 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE4174A9B1B00DFE1F5 /* Icon-Small-50.png */; };
+		93761EEA174A9B1B00DFE1F5 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE5174A9B1B00DFE1F5 /* Icon-Small-50@2x.png */; };
+		93761EEB174A9B1B00DFE1F5 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE5174A9B1B00DFE1F5 /* Icon-Small-50@2x.png */; };
+		93761EEC174A9B1B00DFE1F5 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE6174A9B1B00DFE1F5 /* Icon-Small.png */; };
+		93761EED174A9B1B00DFE1F5 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE6174A9B1B00DFE1F5 /* Icon-Small.png */; };
+		93761EEE174A9B1B00DFE1F5 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE7174A9B1B00DFE1F5 /* Icon-Small@2x.png */; };
+		93761EEF174A9B1B00DFE1F5 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE7174A9B1B00DFE1F5 /* Icon-Small@2x.png */; };
+		93761EF0174A9B2400DFE1F5 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE2174A9A7700DFE1F5 /* Icon-72@2x.png */; };
+		93761EF1174A9B2400DFE1F5 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE0174A9A7300DFE1F5 /* Icon-72.png */; };
+		93761EF2174A9B2400DFE1F5 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDE174A9A4000DFE1F5 /* Icon@2x.png */; };
+		93761EF3174A9B2400DFE1F5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDC174A9A3600DFE1F5 /* Icon.png */; };
+		93761EF6174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93761EF5174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m */; };
+		93761EF7174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93761EF5174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m */; };
 		937BC0BF1747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
 		937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
 		937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
@@ -104,7 +122,7 @@
 		93FECB2F174547840046529A /* UpdatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */; };
 		93FECB30174547840046529A /* ImageEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110E17415B2000F2AD06 /* ImageEnvoy.m */; };
 		93FECB31174547840046529A /* PlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111017415B2000F2AD06 /* PlayerEnvoy.m */; };
-		93FECB32174547840046529A /* JSKCommandResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */; };
+		93FECB32174547840046529A /* JSKCommandParcel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */; };
 		93FECB33174547840046529A /* Partisans.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B441743A52600B47095 /* Partisans.xcdatamodeld */; };
 		93FECB34174547840046529A /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
 		93FECB35174547840046529A /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
@@ -215,8 +233,18 @@
 		9365111717415B6B00F2AD06 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		9365111917415B7B00F2AD06 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9365111B17415B8600F2AD06 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		9365111D17415D0A00F2AD06 /* JSKCommandResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKCommandResponse.h; path = "Classes/Libraries/My Library/JSKCommandResponse.h"; sourceTree = "<group>"; };
-		9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKCommandResponse.m; path = "Classes/Libraries/My Library/JSKCommandResponse.m"; sourceTree = "<group>"; };
+		9365111D17415D0A00F2AD06 /* JSKCommandParcel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKCommandParcel.h; path = "Classes/Libraries/My Library/JSKCommandParcel.h"; sourceTree = "<group>"; };
+		9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKCommandParcel.m; path = "Classes/Libraries/My Library/JSKCommandParcel.m"; sourceTree = "<group>"; };
+		93761EDC174A9A3600DFE1F5 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Arts/Icon.png; sourceTree = "<group>"; };
+		93761EDE174A9A4000DFE1F5 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Arts/Icon@2x.png"; sourceTree = "<group>"; };
+		93761EE0174A9A7300DFE1F5 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Arts/Icon-72.png"; sourceTree = "<group>"; };
+		93761EE2174A9A7700DFE1F5 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "Arts/Icon-72@2x.png"; sourceTree = "<group>"; };
+		93761EE4174A9B1B00DFE1F5 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Arts/Icon-Small-50.png"; sourceTree = "<group>"; };
+		93761EE5174A9B1B00DFE1F5 /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50@2x.png"; path = "Arts/Icon-Small-50@2x.png"; sourceTree = "<group>"; };
+		93761EE6174A9B1B00DFE1F5 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "Arts/Icon-Small.png"; sourceTree = "<group>"; };
+		93761EE7174A9B1B00DFE1F5 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "Arts/Icon-Small@2x.png"; sourceTree = "<group>"; };
+		93761EF4174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoveGamePlayerOperation.h; path = Classes/RemoveGamePlayerOperation.h; sourceTree = "<group>"; };
+		93761EF5174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemoveGamePlayerOperation.m; path = Classes/RemoveGamePlayerOperation.m; sourceTree = "<group>"; };
 		937BC0BD1747D2E3003F42D6 /* CreateGameOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateGameOperation.h; path = Classes/CreateGameOperation.h; sourceTree = "<group>"; };
 		937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateGameOperation.m; path = Classes/CreateGameOperation.m; sourceTree = "<group>"; };
 		937BC0C11747D86D003F42D6 /* GamePlayerEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayerEnvoy.h; path = Classes/GamePlayerEnvoy.h; sourceTree = "<group>"; };
@@ -332,7 +360,7 @@
 		936510981741578C00F2AD06 /* Partisans */ = {
 			isa = PBXGroup;
 			children = (
-				936510AF1741581600F2AD06 /* Art */,
+				936510AF1741581600F2AD06 /* Arts */,
 				936510B01741581D00F2AD06 /* Classes */,
 			);
 			path = Partisans;
@@ -352,11 +380,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		936510AF1741581600F2AD06 /* Art */ = {
+		936510AF1741581600F2AD06 /* Arts */ = {
 			isa = PBXGroup;
 			children = (
+				93761EE0174A9A7300DFE1F5 /* Icon-72.png */,
+				93761EE2174A9A7700DFE1F5 /* Icon-72@2x.png */,
+				93761EE4174A9B1B00DFE1F5 /* Icon-Small-50.png */,
+				93761EE5174A9B1B00DFE1F5 /* Icon-Small-50@2x.png */,
+				93761EE6174A9B1B00DFE1F5 /* Icon-Small.png */,
+				93761EE7174A9B1B00DFE1F5 /* Icon-Small@2x.png */,
+				93761EDC174A9A3600DFE1F5 /* Icon.png */,
+				93761EDE174A9A4000DFE1F5 /* Icon@2x.png */,
 			);
-			name = Art;
+			name = Arts;
 			sourceTree = "<group>";
 		};
 		936510B01741581D00F2AD06 /* Classes */ = {
@@ -405,8 +441,8 @@
 			children = (
 				936510C41741597500F2AD06 /* JSKCommandMessage.h */,
 				936510C51741597500F2AD06 /* JSKCommandMessage.m */,
-				9365111D17415D0A00F2AD06 /* JSKCommandResponse.h */,
-				9365111E17415D0A00F2AD06 /* JSKCommandResponse.m */,
+				9365111D17415D0A00F2AD06 /* JSKCommandParcel.h */,
+				9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */,
 				936510C61741597500F2AD06 /* JSKDataMiner.h */,
 				936510C71741597500F2AD06 /* JSKDataMiner.m */,
 				936510C81741597500F2AD06 /* JSKMenuViewController.h */,
@@ -539,22 +575,22 @@
 		9365110417415ADA00F2AD06 /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
-				93C10BDE17443E9900B47095 /* Mission.h */,
-				93C10BDF17443E9900B47095 /* Mission.m */,
-				93C10BDB17443E9900B47095 /* Votes.h */,
-				93C10BDC17443E9900B47095 /* Votes.m */,
-				93C10BD817443E9900B47095 /* Player.h */,
-				93C10BD917443E9900B47095 /* Player.m */,
-				93C10BD517443E9900B47095 /* Scorecard.h */,
-				93C10BD617443E9900B47095 /* Scorecard.m */,
-				93C10BD217443E9900B47095 /* Round.h */,
-				93C10BD317443E9900B47095 /* Round.m */,
-				93C10BCF17443E9900B47095 /* GamePlayer.h */,
-				93C10BD017443E9900B47095 /* GamePlayer.m */,
 				93C10BCC17443E9900B47095 /* Game.h */,
 				93C10BCD17443E9900B47095 /* Game.m */,
+				93C10BCF17443E9900B47095 /* GamePlayer.h */,
+				93C10BD017443E9900B47095 /* GamePlayer.m */,
 				93C10BC917443E9900B47095 /* Image.h */,
 				93C10BCA17443E9900B47095 /* Image.m */,
+				93C10BDE17443E9900B47095 /* Mission.h */,
+				93C10BDF17443E9900B47095 /* Mission.m */,
+				93C10BD817443E9900B47095 /* Player.h */,
+				93C10BD917443E9900B47095 /* Player.m */,
+				93C10BD217443E9900B47095 /* Round.h */,
+				93C10BD317443E9900B47095 /* Round.m */,
+				93C10BD517443E9900B47095 /* Scorecard.h */,
+				93C10BD617443E9900B47095 /* Scorecard.m */,
+				93C10BDB17443E9900B47095 /* Votes.h */,
+				93C10BDC17443E9900B47095 /* Votes.m */,
 			);
 			name = "Managed Objects";
 			sourceTree = "<group>";
@@ -568,6 +604,8 @@
 				937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */,
 				9365110717415B0C00F2AD06 /* CreatePlayerOperation.h */,
 				9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */,
+				93761EF4174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.h */,
+				93761EF5174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m */,
 				9365110917415B0C00F2AD06 /* UpdatePlayerOperation.h */,
 				9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */,
 			);
@@ -684,6 +722,14 @@
 				9365110017415A9D00F2AD06 /* PlayerViewController.xib in Resources */,
 				93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */,
 				93FECAB4174521A40046529A /* ProgressCell.xib in Resources */,
+				93761EDD174A9A3600DFE1F5 /* Icon.png in Resources */,
+				93761EDF174A9A4000DFE1F5 /* Icon@2x.png in Resources */,
+				93761EE1174A9A7300DFE1F5 /* Icon-72.png in Resources */,
+				93761EE3174A9A7700DFE1F5 /* Icon-72@2x.png in Resources */,
+				93761EE8174A9B1B00DFE1F5 /* Icon-Small-50.png in Resources */,
+				93761EEA174A9B1B00DFE1F5 /* Icon-Small-50@2x.png in Resources */,
+				93761EEC174A9B1B00DFE1F5 /* Icon-Small.png in Resources */,
+				93761EEE174A9B1B00DFE1F5 /* Icon-Small@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,6 +746,14 @@
 				93FECB5D174548AD0046529A /* ColorPickerViewController.xib in Resources */,
 				93FECB5E174548AD0046529A /* SlickEditView.xib in Resources */,
 				93FECB61174549D40046529A /* PlayerViewController.xib in Resources */,
+				93761EE9174A9B1B00DFE1F5 /* Icon-Small-50.png in Resources */,
+				93761EEB174A9B1B00DFE1F5 /* Icon-Small-50@2x.png in Resources */,
+				93761EED174A9B1B00DFE1F5 /* Icon-Small.png in Resources */,
+				93761EEF174A9B1B00DFE1F5 /* Icon-Small@2x.png in Resources */,
+				93761EF0174A9B2400DFE1F5 /* Icon-72@2x.png in Resources */,
+				93761EF1174A9B2400DFE1F5 /* Icon-72.png in Resources */,
+				93761EF2174A9B2400DFE1F5 /* Icon@2x.png in Resources */,
+				93761EF3174A9B2400DFE1F5 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,7 +791,7 @@
 				9365110C17415B0C00F2AD06 /* UpdatePlayerOperation.m in Sources */,
 				9365111117415B2000F2AD06 /* ImageEnvoy.m in Sources */,
 				9365111217415B2000F2AD06 /* PlayerEnvoy.m in Sources */,
-				9365111F17415D0A00F2AD06 /* JSKCommandResponse.m in Sources */,
+				9365111F17415D0A00F2AD06 /* JSKCommandParcel.m in Sources */,
 				93C10B461743A52600B47095 /* Partisans.xcdatamodeld in Sources */,
 				93C10B9D1744028300B47095 /* GameEnvoy.m in Sources */,
 				93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */,
@@ -758,6 +812,7 @@
 				938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */,
 				937BC0BF1747D2E3003F42D6 /* CreateGameOperation.m in Sources */,
 				937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */,
+				93761EF6174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,7 +847,7 @@
 				93FECB2F174547840046529A /* UpdatePlayerOperation.m in Sources */,
 				93FECB30174547840046529A /* ImageEnvoy.m in Sources */,
 				93FECB31174547840046529A /* PlayerEnvoy.m in Sources */,
-				93FECB32174547840046529A /* JSKCommandResponse.m in Sources */,
+				93FECB32174547840046529A /* JSKCommandParcel.m in Sources */,
 				93FECB33174547840046529A /* Partisans.xcdatamodeld in Sources */,
 				93FECB34174547840046529A /* GameEnvoy.m in Sources */,
 				93FECB35174547840046529A /* PlayGameMenuItems.m in Sources */,
@@ -813,6 +868,7 @@
 				938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */,
 				937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */,
 				937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */,
+				93761EF7174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
