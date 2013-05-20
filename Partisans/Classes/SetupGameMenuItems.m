@@ -26,6 +26,7 @@
 
 - (BOOL)isPlayerHost;
 - (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
+- (void)gamePlayerAdded:(NSNotification *)notification;
 
 @end
 
@@ -42,12 +43,20 @@
 - (void)dealloc
 {
     [m_stopHostingAlertView setDelegate:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [m_awaitingApproval release];
     [m_players release];
     [m_dossierMenuItems release];
     [m_stopHostingAlertView release];
     [super dealloc];
+}
+
+
+- (void)gamePlayerAdded:(NSNotification *)notification
+{
+    self.players = nil;
+    [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
 
@@ -154,6 +163,8 @@
     {
         [SystemMessage putPlayerOnline];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gamePlayerAdded:) name:kPartisansNotificationGamePlayerAdded object:nil];
 }
 
 

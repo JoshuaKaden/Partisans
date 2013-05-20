@@ -27,6 +27,7 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 - (void)resetLocalCounters;
 - (void)shouldRefreshNotificationFired:(NSNotification *)notification;
 - (void)initializeRowCounts;
+- (BOOL)isPad;
 
 @end
 
@@ -172,7 +173,20 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //    [self refresh:nil];
+    
+    // On the iPad, if started in landscape, the menu sits at portrait width.
+    // Let's fix that.
+    if ([self isPad])
+    {
+        if (self.tableView.frame.size.width == self.view.frame.size.width)
+        {
+            return;
+        }
+        CGRect frame = self.view.frame;
+        frame.origin.x = 0;
+        frame.origin.y = 0;
+        [self.tableView setFrame:frame];
+    }
 }
 
 
@@ -198,6 +212,15 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     }
 }
 
+
+- (BOOL)isPad
+{
+#ifdef UI_USER_INTERFACE_IDIOM
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+#else
+    return NO;
+#endif
+}
 
 
 - (void)initializeRowCounts

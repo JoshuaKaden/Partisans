@@ -20,12 +20,13 @@
 #import "UpdatePlayerOperation.h"
 
 NSString * const JSKNotificationPeerCreated = @"JSKNotificationPeerCreated";
-NSString * const JSKNotificationPeerUpdated= @"JSKNotificationPeerUpdated";
+NSString * const JSKNotificationPeerUpdated = @"JSKNotificationPeerUpdated";
 
 NSUInteger const kPartisansMaxPlayers = 10;
 NSUInteger const kPartisansMinPlayers = 5;
 
-NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoinedGame";
+NSString * const kPartisansNotificationJoinedGame       = @"kPartisansNotificationJoinedGame";
+NSString * const kPartisansNotificationGamePlayerAdded  = @"kPartisansNotificationGamePlayerAdded";
 
 
 @interface SystemMessage () <JSKPeerControllerDelegate>
@@ -108,19 +109,19 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
     GameEnvoy *envoy = (GameEnvoy *)response.object;
     CreateGameOperation *op = [[CreateGameOperation alloc] initWithEnvoy:envoy];
     [op setCompletionBlock:^(void) {
-        // Once the save is done, update our own gameEnvoy property.
-        NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
-        NSArray *games = [context fetchObjectArrayForEntityName:@"Game" withPredicateFormat:@"intramuralID == %@", envoy.intramuralID];
-        if (games.count > 0)
-        {
-            GameEnvoy *updatedEnvoy = [GameEnvoy envoyFromManagedObject:[games objectAtIndex:0]];
-            [self setGameEnvoy:updatedEnvoy];
-            
-            // Also, post a notification that we joined the game.
-            dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Once the save is done, update our own gameEnvoy property.
+            NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+            NSArray *games = [context fetchObjectArrayForEntityName:@"Game" withPredicateFormat:@"intramuralID == %@", envoy.intramuralID];
+            if (games.count > 0)
+            {
+                GameEnvoy *updatedEnvoy = [GameEnvoy envoyFromManagedObject:[games objectAtIndex:0]];
+                [self setGameEnvoy:updatedEnvoy];
+                
+                // Also, post a notification that we joined the game.
                 [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationJoinedGame object:updatedEnvoy];
-            });
-        }
+            }
+        });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
@@ -154,6 +155,15 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
             proceed = YES;
         }
     }
+    if (proceed)
+    {
+        // Make sure this player isn't already in the game.
+        if ([gameEnvoy isPlayerInGame:other])
+        {
+            proceed = NO;
+        }
+    }
+    
     if (!proceed)
     {
         return;
@@ -167,8 +177,11 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
                                                                              to:other.peerID
                                                                            from:self.playerEnvoy.peerID
                                                                    respondingTo:JSKCommandMessageTypeJoinGame];
+        GameEnvoy *gameEnvoy = [GameEnvoy envoyFromPlayer:other];
         [response setObject:gameEnvoy];
         [self.peerController sendCommandResponse:response];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGamePlayerAdded object:nil];
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
@@ -190,6 +203,9 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
             break;
         case JSKCommandMessageTypeGetModifiedDate:
             [self handleModifiedDateResponse:commandResponse];
+            break;
+        case JSKCommandMessageTypeJoinGame:
+            [self handleJoinGameResponse:commandResponse];
             break;
         default:
             break;
@@ -494,14 +510,23 @@ NSString * const kPartisansNotificationJoinedGame = @"kPartisansNotificationJoin
     {
         return gameEnvoy;
     }
-    // Let's see if there's one attached to the player.
+    // Are we hosting a game?
     PlayerEnvoy *playerEnvoy = [self sharedInstance].playerEnvoy;
     gameEnvoy = [GameEnvoy envoyFromHost:playerEnvoy];
     if (gameEnvoy)
     {
         [[self sharedInstance] setGameEnvoy:gameEnvoy];
+        return gameEnvoy;
     }
-    return gameEnvoy;
+    // Are we playing a game?
+    gameEnvoy = [GameEnvoy envoyFromPlayer:playerEnvoy];
+    if (gameEnvoy)
+    {
+        [[self sharedInstance] setGameEnvoy:gameEnvoy];
+        return gameEnvoy;
+    }
+    
+    return nil;
 }
 
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate

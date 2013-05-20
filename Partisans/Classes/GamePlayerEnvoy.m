@@ -105,7 +105,7 @@
     }
 
     NSDictionary *descDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                              @"GameEnvoy", @"Class",
+                              @"GamePlayerEnvoy", @"Class",
                               intramuralIDString, @"intramuralID",
                               importedObjectString, @"importedObjectString",
                               managedObjectString, @"managedObjectID",

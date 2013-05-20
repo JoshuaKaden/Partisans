@@ -86,7 +86,9 @@
 
 - (void)gameWasJoined:(NSNotification *)notification
 {
-    [self.delegate gameJoinerDidFinish:self];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate gameJoinerDidFinish:self];
+    });
 }
 
 @end

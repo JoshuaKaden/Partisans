@@ -141,7 +141,7 @@
     Player *player = (Player *)[context objectWithID:host.managedObjectID];
     if (player.gamePlayer)
     {
-        if (player.gamePlayer.isHost)
+        if ([player.gamePlayer.isHost boolValue])
         {
             Game *game = player.gamePlayer.game;
             returnValue = [GameEnvoy envoyFromManagedObject:game];
@@ -150,6 +150,30 @@
     
     return returnValue;
 }
+
++ (GameEnvoy *)envoyFromPlayer:(PlayerEnvoy *)playerEnvoy
+{
+    if (!playerEnvoy.managedObjectID)
+    {
+        return nil;
+    }
+    
+    GameEnvoy *returnValue = nil;
+    
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
+    if (player.gamePlayer)
+    {
+        if (![player.gamePlayer.isHost boolValue])
+        {
+            Game *game = player.gamePlayer.game;
+            returnValue = [GameEnvoy envoyFromManagedObject:game];
+        }
+    }
+    
+    return returnValue;
+}
+
 
 
 + (GameEnvoy *)createGame
@@ -276,6 +300,20 @@
     gamePlayer.player = player;
     Game *game = (Game *)[context objectWithID:self.managedObjectID];
     [game addGamePlayersObject:gamePlayer];
+}
+
+- (BOOL)isPlayerInGame:(PlayerEnvoy *)playerEnvoy
+{
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    for (GamePlayer *gamePlayer in game.gamePlayers)
+    {
+        if ([gamePlayer.player.intramuralID isEqualToString:playerEnvoy.intramuralID])
+        {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 
