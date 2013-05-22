@@ -102,7 +102,7 @@
     [playerEnvoy commitAndSave];
     [[SystemMessage sharedInstance] setPlayerEnvoy:playerEnvoy];
     [[SystemMessage sharedInstance] setMyPeerID:playerEnvoy.peerID];
-    [menuViewController invokePopAnimated:YES];
+    [menuViewController invokePop:YES];
 }
 
 - (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath

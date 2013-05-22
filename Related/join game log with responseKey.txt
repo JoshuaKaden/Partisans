@@ -1,0 +1,79 @@
+2013-05-22 12:08:01.271 Partisans[19002:15b03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 359] Will send a message of 407 bytes to peer 1482365192.
+2013-05-22 12:08:01.272 Partisans[19002:15b03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 360] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1";
+    responseKey = "";
+    to = "";
+}
+2013-05-22 12:08:01.293 Partisans[19002:15b03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 635] Received object from peer 1482365192.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1";
+    responseKey = "";
+    to = "";
+}
+2013-05-22 12:08:01.340 Partisans[19002:1aa07] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 359] Will send a message of 514 bytes to peer 1482365192.
+2013-05-22 12:08:01.340 Partisans[19002:1aa07] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 360] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1";
+    responseKey = "CABF7A52-6CF0-44A0-A1E9-70A8F639A3A4";
+    to = "x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1";
+}
+2013-05-22 12:08:01.357 Partisans[19002:15b03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 635] Received object from peer 1482365192.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1";
+    responseKey = "61C51D70-4DF2-42C5-960F-5A77F3D4A391";
+    to = "x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1";
+}
+2013-05-22 12:08:01.359 Partisans[19002:15b03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 359] Will send a message of 4886 bytes to peer 1482365192.
+2013-05-22 12:08:01.368 Partisans[19002:15b03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 360] Sending: {
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 1 0 0.387362 1\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"0x86d7dc0 <x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1>\";\n    modifiedDate = \"2013-05-22 16:07:52 +0000\";\n    peerID = \"x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"\\\";\\n    intramuralID = \\\"\\\";\\n    managedObjectID = \\\"0x94a1e30 <x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Image/p1>\\\";\\n}\";\n    playerName = Morgan;\n}";
+    responseKey = "61C51D70-4DF2-42C5-960F-5A77F3D4A391";
+    to = "x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1";
+}
+2013-05-22 12:08:01.385 Partisans[19002:15b03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 635] Received object from peer 1482365192.
+The object:
+{
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 1 0.353659 0 1\";\n    importedObjectString = \"x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1\";\n    intramuralID = \"x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"\";\n    modifiedDate = \"2013-05-22 16:07:43 +0000\";\n    peerID = \"x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Image/p1\\\";\\n    intramuralID = \\\"\\\";\\n    managedObjectID = \\\"\\\";\\n}\";\n    playerName = Loper;\n}";
+    responseKey = "CABF7A52-6CF0-44A0-A1E9-70A8F639A3A4";
+    to = "x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1";
+}
+2013-05-22 12:08:01.396 Partisans[19002:15b03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 359] Will send a message of 514 bytes to peer 1482365192.
+2013-05-22 12:08:01.396 Partisans[19002:15b03] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 360] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 5;
+    commandMessageTypeName = JoinGame;
+    from = "x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1";
+    responseKey = "124CCF47-D4FE-40B3-B078-DF11056944E7";
+    to = "x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1";
+}
+2013-05-22 12:08:01.536 Partisans[19002:15b03] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 635] Received object from peer 1482365192.
+The object:
+{
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Player/p1";
+    object = "{\n    Class = GameEnvoy;\n    endDate = \"\";\n    importedObjectString = \"x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Game/p1\";\n    intramuralID = \"x-coredata://7386A19E-610E-4B38-8155-E665B552AB9E/Game/p1\";\n    managedObjectID = \"\";\n    numberOfPlayers = 5;\n    startDate = \"\";\n}";
+    responseKey = "124CCF47-D4FE-40B3-B078-DF11056944E7";
+    to = "x-coredata://7C1A84D2-1E85-48D5-88AE-4BD2F2F8FA05/Player/p1";
+}

@@ -167,6 +167,11 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     }
     
     self.hasDataBeenPresented = YES;
+    
+    if ([self.delegate respondsToSelector:@selector(menuViewController:willAppear:)])
+    {
+        [self.delegate menuViewController:self willAppear:animated];
+    }
 }
 
 
@@ -368,11 +373,15 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 }
 
 
-- (void)invokePopAnimated:(BOOL)animated
+- (void)invokePop:(BOOL)animated
 {
     [self.navigationController popViewControllerAnimated:animated];
 }
 
+- (void)invokePush:(BOOL)animated viewController:(UIViewController *)vc
+{
+    [self.navigationController pushViewController:vc animated:animated];
+}
 
 
 #pragma mark - Loading indicator

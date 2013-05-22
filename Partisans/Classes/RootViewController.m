@@ -132,6 +132,10 @@
         return;
     }
     
+    // Room here for...
+    // Mystery code!
+    
+    
     hasCommenced = YES;
 }
 
@@ -148,6 +152,7 @@
         [[SystemMessage sharedInstance] setPlayerEnvoy:playerEnvoy];
     }
     
+    // If this is a new (unsaved) player, jump right to the edit screen.
     if (![SystemMessage playerEnvoy].managedObjectID)
     {
         PlayerViewController *vc = [[PlayerViewController alloc] init];
@@ -158,6 +163,7 @@
         return;
     }
     
+    // Launch the main menu.
     JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
     MainMenuItems *items = [[MainMenuItems alloc] init];
     [vc setMenuItems:items];

@@ -413,7 +413,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 //            debugLog(@"decoded array %@", decodedArray);
             
             
-            [self.gkSession sendData:data toPeers:[NSArray arrayWithObject:peerID] withDataMode:GKSendDataUnreliable error:&sendError];
+            [self.gkSession sendData:data toPeers:[NSArray arrayWithObject:peerID] withDataMode:GKSendDataReliable error:&sendError];
             
             if (sendError) {
                 // Oops, an error.

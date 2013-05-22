@@ -115,6 +115,12 @@
         endDateString = @"";
     }
     
+    NSString *gamePlayerEnvoysString = [self.gamePlayerEnvoys description];
+    if (!gamePlayerEnvoysString)
+    {
+        gamePlayerEnvoysString = @"";
+    }
+    
     NSDictionary *descDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               @"GameEnvoy", @"Class",
                               intramuralIDString, @"intramuralID",
@@ -122,7 +128,8 @@
                               managedObjectString, @"managedObjectID",
                               startDateString, @"startDate",
                               endDateString, @"endDate",
-                              [NSNumber numberWithUnsignedInteger:self.numberOfPlayers].description, @"numberOfPlayers", nil];
+                              [NSNumber numberWithUnsignedInteger:self.numberOfPlayers].description, @"numberOfPlayers",
+                              gamePlayerEnvoysString, @"gamePlayerEnvoys", nil];
     return descDict.description;
 }
 

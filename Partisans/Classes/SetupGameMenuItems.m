@@ -170,7 +170,7 @@
             [gameEnvoy deleteGame];
             [[SystemMessage sharedInstance] setGameEnvoy:nil];
             [SystemMessage putPlayerOffline];
-            [self.menuViewController invokePopAnimated:YES];
+            [self.menuViewController invokePop:YES];
             break;
         }
             
@@ -197,7 +197,7 @@
             [gameEnvoy deleteGame];
             [[SystemMessage sharedInstance] setGameEnvoy:nil];
             [SystemMessage putPlayerOffline];
-            [self.menuViewController invokePopAnimated:YES];
+            [self.menuViewController invokePop:YES];
             break;
         }
             

@@ -35,6 +35,8 @@ extern NSString * const JSKMenuViewControllerShouldRefresh;
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController;
 // View did load.
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController;
+// View will appear.
+- (void)menuViewController:(JSKMenuViewController *)menuViewController willAppear:(BOOL)animated;
 // View will disappear.
 - (void)menuViewController:(JSKMenuViewController *)menuViewController willDisappear:(BOOL)animated;
 
@@ -87,6 +89,8 @@ extern NSString * const JSKMenuViewControllerShouldRefresh;
 - (void)refreshData:(BOOL)animated;
 
 // This provides a way for the delegate (or anyone) to ask this VC to close.
-- (void)invokePopAnimated:(BOOL)animated;
+- (void)invokePop:(BOOL)animated;
+// This provides a way for the delegate (or, indeed, anyone) to ask for a VC to be pushed.
+- (void)invokePush:(BOOL)animated viewController:(UIViewController *)vc;
 
 @end

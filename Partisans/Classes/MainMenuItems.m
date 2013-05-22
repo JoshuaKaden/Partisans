@@ -38,6 +38,22 @@
     [super dealloc];
 }
 
+- (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
+{
+    // Are we in a game?
+    // If so, let's go to the setup screen.
+    if ([SystemMessage gameEnvoy])
+    {
+        JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+        SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
+        [vc setMenuItems:items];
+        [items release];
+        [menuViewController invokePush:YES viewController:vc];
+        [vc release];
+        return;
+    }
+}
+
 - (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController
 {
     return YES;

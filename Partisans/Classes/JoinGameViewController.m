@@ -236,15 +236,16 @@
 - (void)gameJoinerDidFinish:(GameJoiner *)gameJoiner
 {
     [self stopScanning];
+    [self.navigationController popToRootViewControllerAnimated:NO];
     
-    JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
-    SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
-    [vc setDelegate:items];
-    [items release];
-    
-    [self.navigationController popViewControllerAnimated:NO];
-    [self.navigationController pushViewController:vc animated:YES];
-    [vc release];
+//    JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+//    SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
+//    [vc setDelegate:items];
+//    [items release];
+//    
+//    [self.navigationController popViewControllerAnimated:NO];
+//    [self.navigationController pushViewController:vc animated:YES];
+//    [vc release];
 }
 
 //#pragma mark - PeerImporterDelegate
