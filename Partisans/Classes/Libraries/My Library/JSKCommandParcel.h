@@ -7,21 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JSKCommandMessage.h"
 
 typedef enum
 {
-    JSKCommandParcelTypePlayerJoined,
-    JSKCommandParcelTypePlayerLeft,
+    JSKCommandParcelTypeUpdate,
     JSKCommandParcelTypeResponse,
     JSKCommandParcelTypeUnknown,
     JSKCommandParcelType_maxValue
 } JSKCommandParcelType;
 
+
 @interface JSKCommandParcel : NSObject <NSCoding>
 
 @property (nonatomic, assign)   JSKCommandParcelType commandParcelType;
-@property (nonatomic, assign)   JSKCommandMessageType respondingToType;
+@property (nonatomic, strong)   NSString *responseKey;
 @property (readonly, nonatomic) NSString *commandParcelTypeName;
 @property (nonatomic, strong)   NSString *to;
 @property (nonatomic, strong)   NSString *from;
@@ -30,12 +29,13 @@ typedef enum
 - (id)initWithType:(JSKCommandParcelType)commandParcelType
                 to:(NSString *)to
               from:(NSString *)from
-      respondingTo:(JSKCommandMessageType)respondingTo;
+            object:(id<NSCoding>)object;
 
 - (id)initWithType:(JSKCommandParcelType)commandParcelType
                 to:(NSString *)to
               from:(NSString *)from
-            object:(id<NSCoding>)object;
+            object:(id<NSCoding>)object
+       responseKey:(NSString *)responseKey;
 
 + (NSString *)responseTypeName:(JSKCommandParcelType)responseType;
 

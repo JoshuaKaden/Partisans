@@ -37,6 +37,7 @@ typedef enum
 @property (nonatomic, strong) NSString *to;
 @property (nonatomic, strong) NSString *from;
 @property (readonly, nonatomic) NSString *commandMessageTypeName;
+@property (nonatomic, strong) NSString *responseKey;
 
 - (id)initWithType:(JSKCommandMessageType)commandMessageType to:(NSString *)to from:(NSString *)from;
 

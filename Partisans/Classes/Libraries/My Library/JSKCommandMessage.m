@@ -13,11 +13,13 @@
 @synthesize commandMessageType = m_commandMessageType;
 @synthesize to = m_to;
 @synthesize from = m_from;
+@synthesize responseKey = m_responseKey;
 
 - (void)dealloc
 {
     [m_to release];
     [m_from release];
+    [m_responseKey release];
     [super dealloc];
 }
 
@@ -55,13 +57,20 @@
     {
         typeString = @"";
     }
-        
+    
+    NSString *responseKeyString = self.responseKey;
+    if (!responseKeyString)
+    {
+        responseKeyString = @"";
+    }
+    
     NSDictionary *descDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               @"JSKCommandMessage", @"Class",
                               [NSNumber numberWithInt:self.commandMessageType].description, @"commandMessageType",
                               typeString, @"commandMessageTypeName",
                               fromString, @"from",
-                              toString, @"to", nil];
+                              toString, @"to",
+                              responseKeyString, @"responseKey", nil];
     return descDict.description;
 }
 //- (NSString *)description
@@ -154,6 +163,7 @@
     [aCoder encodeInt:self.commandMessageType forKey:@"commandMessageType"];
     [aCoder encodeObject:self.to forKey:@"toPeerName"];
     [aCoder encodeObject:self.from forKey:@"replyTo"];
+    [aCoder encodeObject:self.responseKey forKey:@"responseKey"];
 }
 
 
@@ -166,6 +176,7 @@
         self.commandMessageType = [aDecoder decodeIntForKey:@"commandMessageType"];
         self.to = [aDecoder decodeObjectForKey:@"toPeerName"];
         self.from = [aDecoder decodeObjectForKey:@"replyTo"];
+        self.responseKey = [aDecoder decodeObjectForKey:@"responseKey"];
     }
     
     return self;

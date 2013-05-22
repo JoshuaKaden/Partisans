@@ -30,7 +30,7 @@
 - (void)confirmLeaveGame;
 - (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 - (void)handleLeaveGameAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
-- (void)gamePlayerAdded:(NSNotification *)notification;
+- (void)gameChanged:(NSNotification *)notification;
 
 @end
 
@@ -61,7 +61,7 @@
 }
 
 
-- (void)gamePlayerAdded:(NSNotification *)notification
+- (void)gameChanged:(NSNotification *)notification
 {
     self.players = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
@@ -136,7 +136,19 @@
 
 - (void)confirmLeaveGame
 {
+    if (!self.leaveGameAlertView)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leave Game"
+                                                            message:@"Would you like to leave, thus ending the game?"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:
+                                  @"Yes", nil];
+        self.leaveGameAlertView = alertView;
+        [alertView release];
+    }
     
+    [self.leaveGameAlertView show];
 }
 
 - (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -150,7 +162,9 @@
         case 1:
         {
             // Yes -- stop hosting and end the game.
-            [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame];
+            // When the players get this message they know that the game is over.
+            [SystemMessage broadcastCommandMessage:JSKCommandMessageTypeLeaveGame];
+            
             
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             [gameEnvoy deleteGame];
@@ -176,6 +190,9 @@
         case 1:
         {
             // Yes -- leave the game.
+            // Tell the Host that we're leaving.
+            [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame];
+            
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             [gameEnvoy deleteGame];
             [[SystemMessage sharedInstance] setGameEnvoy:nil];
@@ -208,7 +225,7 @@
         [SystemMessage putPlayerOnline];
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gamePlayerAdded:) name:kPartisansNotificationGamePlayerAdded object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
 }
 
 

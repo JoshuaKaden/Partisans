@@ -68,6 +68,7 @@
     // Here is the actual work of the class.
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     [gameEnvoy addPlayer:self.envoy];
+    [gameEnvoy commitInContext:context];
     
     
     

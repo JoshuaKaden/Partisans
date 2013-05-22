@@ -22,6 +22,7 @@
 
 @property (nonatomic, assign) id <GameJoinerDelegate> delegate;
 @property (readonly) BOOL isScanning;
+@property (readonly) BOOL hasJoinedGame;
 
 - (void)startScanning;
 - (void)stopScanning;

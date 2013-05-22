@@ -23,11 +23,14 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 @property (readwrite, nonatomic, strong) NSString *myPeerID;
 @property (nonatomic, strong) NSDictionary *connectedPeerNames;
 @property (atomic, assign) BOOL isSlave;
+@property (nonatomic, strong) NSDictionary *stash;
+@property (nonatomic, strong) NSDictionary *customStash;
 
 - (BOOL)hasSessionStarted;
 - (void)archiveAndSend:(NSObject <NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID;
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage fromSessionPeerID:(NSString *)sessionPeerID;
-- (void)handleCommandResponse:(JSKCommandParcel *)commandResponse fromSessionPeerID:(NSString *)sessionPeerID;
+- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel fromSessionPeerID:(NSString *)sessionPeerID;
+- (NSString *)buildRandomString;
 
 @end
 
@@ -42,6 +45,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 @synthesize connectedPeerNames = m_connectedPeerNames;
 @synthesize peerID = m_peerID;
 @synthesize isSlave = m_isSlave;
+@synthesize stash = m_stash;
+@synthesize customStash = m_customStash;
 
 
 
@@ -57,6 +62,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     [m_myPeerID release];
     [m_connectedPeerNames release];
     [m_peerID release];
+    [m_stash release];
+    [m_customStash release];
     
     [super dealloc];
 }
@@ -78,6 +85,11 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     if (!self.connectedPeerNames)
     {
         self.connectedPeerNames = [NSDictionary dictionary];
+    }
+    
+    if (!self.stash)
+    {
+        self.stash = [NSDictionary dictionary];
     }
     
     NSString *sessionID = @"ThoroughlyRandomSessionIDForPartisans";
@@ -114,6 +126,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     self.gkSession = nil;
     
     self.connectedPeerNames = nil;
+    self.stash = nil;
+    self.customStash = nil;
 }
 
 
@@ -125,8 +139,114 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 
 
+#pragma mark - Private
+
+- (NSString *)buildRandomString
+{
+    CFUUIDRef udid = CFUUIDCreate(NULL);
+    NSString *udidString = (NSString *) CFUUIDCreateString(NULL, udid);
+    return [NSString stringWithString:udidString];
+//    // Create universally unique identifier (object)
+//    CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
+//    
+//    // Get the string representation of CFUUID object.
+//    NSString *uuidStr = (NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuidObject);
+//    CFRelease(uuidObject);
+//    
+//    NSString *returnValue = [NSString stringWithString:uuidStr];
+//    [uuidStr release];
+//    return returnValue;
+}
+
+#pragma mark - Overrides
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (object == self.queue && [keyPath isEqualToString:@"operations"])
+    {
+        if ([self.queue.operations count] == 0)
+        {
+            // The queue has completed.
+            if ([self.delegate respondsToSelector:@selector(peerControllerQueueHasEmptied:)]) {
+                [self.delegate peerControllerQueueHasEmptied:self];
+            }
+        }
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath
+                             ofObject:object
+                               change:change
+                              context:context];
+    }
+}
+
+
+
 #pragma mark - Sending
 
+
+- (void)sendObject:(NSObject<NSCoding> *)object to:(NSString *)peerID
+{
+    [self sendObject:object to:peerID shouldAwaitResponse:NO];
+}
+
+- (void)sendObject:(NSObject<NSCoding> *)object to:(NSString *)peerID shouldAwaitResponse:(BOOL)shouldAwaitResponse
+{
+    if (!object) {
+        return;
+    }
+    
+    if (shouldAwaitResponse)
+    {
+        // Stash the message so we can associate the reply when it arrives.
+        NSString *responseKey = nil;
+        if ([object respondsToSelector:@selector(responseKey)])
+        {
+            responseKey = [object valueForKey:@"responseKey"];
+        }
+        else
+        {
+            return;
+        }
+        
+        if (!responseKey)
+        {
+            responseKey = [self buildRandomString];
+            [object setValue:responseKey forKey:@"responseKey"];
+        }
+        NSDictionary *stash = self.customStash;
+        if (stash.count == 0)
+        {
+            self.stash = [NSDictionary dictionaryWithObject:object forKey:responseKey];
+        }
+        else
+        {
+            // Not really sure if this logic branch saves me anything.
+            // Or whether it in fact costs me!
+            if ([stash valueForKey:responseKey])
+            {
+                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:stash];
+                [list setValue:object forKey:responseKey];
+                self.stash = [NSDictionary dictionaryWithDictionary:list];
+                [list release];
+            }
+            else
+            {
+                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:stash.count + 1];
+                [list addEntriesFromDictionary:stash];
+                [list setValue:object forKey:responseKey];
+                self.stash = [NSDictionary dictionaryWithDictionary:list];
+                [list release];
+            }
+        }
+    }
+    
+    [self archiveAndSend:object to:peerID];
+}
 
 - (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType toPeerIDs:(NSArray *)peerIDs
 {
@@ -164,24 +284,65 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 //}
 
 
-- (void)sendCommandMessage:(JSKCommandMessage *)commandMessage {
-    
+- (void)sendCommandMessage:(JSKCommandMessage *)commandMessage
+{
+    [self sendCommandMessage:commandMessage shouldAwaitResponse:NO];
+}
+
+- (void)sendCommandMessage:(JSKCommandMessage *)commandMessage shouldAwaitResponse:(BOOL)shouldAwaitResponse
+{
     if (!commandMessage) {
         return;
+    }
+    
+    if (shouldAwaitResponse)
+    {
+        // Stash the message so we can associate the reply when it arrives.
+        NSString *responseKey = commandMessage.responseKey;
+        if (!responseKey)
+        {
+            responseKey = [self buildRandomString];
+            [commandMessage setResponseKey:responseKey];
+        }
+        NSDictionary *stash = self.stash;
+        if (stash.count == 0)
+        {
+            self.stash = [NSDictionary dictionaryWithObject:commandMessage forKey:responseKey];
+        }
+        else
+        {
+            // Not really sure if this logic branch saves me anything.
+            // Or whether it in fact costs me!
+            if ([stash valueForKey:responseKey])
+            {
+                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:stash];
+                [list setValue:commandMessage forKey:responseKey];
+                self.stash = [NSDictionary dictionaryWithDictionary:list];
+                [list release];
+            }
+            else
+            {
+                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:stash.count + 1];
+                [list addEntriesFromDictionary:stash];
+                [list setValue:commandMessage forKey:responseKey];
+                self.stash = [NSDictionary dictionaryWithDictionary:list];
+                [list release];
+            }
+        }
     }
     
     [self archiveAndSend:commandMessage to:commandMessage.to];
 }
 
 
-- (void)sendCommandResponse:(JSKCommandParcel *)commandResponse
+- (void)sendCommandParcel:(JSKCommandParcel *)commandParcel
 {
-    if (!commandResponse)
+    if (!commandParcel)
     {
         return;
     }
     
-    [self archiveAndSend:commandResponse to:commandResponse.to];
+    [self archiveAndSend:commandParcel to:commandParcel.to];
 }
 
 
@@ -344,23 +505,66 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 #pragma mark - PeerDataHandler
 
-- (void)handleCommandResponse:(JSKCommandParcel *)commandResponse fromSessionPeerID:(NSString *)sessionPeerID
+- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel fromSessionPeerID:(NSString *)sessionPeerID
 {
     // The "sessionPeerID" parameter is GameKit's ID.
     // We need to match it to our internal peer ID.
     NSString *peerID = [self.connectedPeerNames valueForKey:sessionPeerID];
-    
-    
-    if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandResponse:from:)])
+    if (!peerID)
     {
-        [self.delegate peerController:self receivedCommandResponse:commandResponse from:peerID];
+        return;
+    }
+    
+    if (commandParcel.responseKey)
+    {
+        // Try to match this response with its waiting message.
+        JSKCommandMessage *msg = [self.stash objectForKey:commandParcel.responseKey];
+        if (msg)
+        {
+            if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:respondingTo:)])
+            {
+                [self.delegate peerController:self receivedCommandParcel:commandParcel respondingTo:msg];
+
+                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:self.stash];
+                [list setValue:nil forKey:commandParcel.responseKey];
+                self.stash = [NSDictionary dictionaryWithDictionary:list];
+                [list release];
+                
+                return;
+            }
+        }
+        else
+        {
+            // Try to match this response with its waiting custom object.
+            NSObject <NSCoding> *object = [self.customStash objectForKey:commandParcel.responseKey];
+            if (object)
+            {
+                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:self.customStash];
+                [list setValue:nil forKey:commandParcel.responseKey];
+                self.customStash = [NSDictionary dictionaryWithDictionary:list];
+                [list release];
+                
+                if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:respondingToObject:)])
+                {
+                    [self.delegate peerController:self receivedCommandParcel:commandParcel respondingToObject:object];
+                    return;
+                }
+            }
+        }
+    }
+
+
+
+    if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:)])
+    {
+        [self.delegate peerController:self receivedCommandParcel:commandParcel];
     }
     else
     {
         // Pass it on up the chain.
         if ([self.delegate respondsToSelector:@selector(peerController:receivedObject:from:)])
         {
-            [self.delegate peerController:self receivedObject:commandResponse from:peerID];
+            [self.delegate peerController:self receivedObject:commandParcel from:commandParcel.from];
         }
     }
 }
@@ -394,15 +598,23 @@ const NSUInteger PeerMessageSizeLimit = 10000;
                 self.connectedPeerNames = [NSDictionary dictionaryWithObjectsAndKeys:peerID, sessionPeerID, nil];
             }
             
+            // At this stage the delegate may want to handle the identification message.
+            // For example, to create a Player record.
+            if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandMessage:)])
+            {
+                [self.delegate peerController:self receivedCommandMessage:commandMessage];
+            }
+            
             if ([self.delegate respondsToSelector:@selector(peerController:connectedToPeer:)]) {
                 [self.delegate peerController:self connectedToPeer:peerID];
             }
         }
+        return;
     }
     
-    if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandMessage:from:)])
+    if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandMessage:)])
     {
-        [self.delegate peerController:self receivedCommandMessage:commandMessage from:peerID];
+        [self.delegate peerController:self receivedCommandMessage:commandMessage];
     }
     else
     {
@@ -419,7 +631,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 {
 //    debugLog(@"Received message of %d bytes from peer %@.", data.length, peer);
     
-    NSObject *statement = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSObject <NSCoding> *statement = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     debugLog(@"Received object from peer %@.\nThe object:\n%@", peer, statement);
     
     //    debugLog(@"Received raw: %@", data);
@@ -435,11 +647,12 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     }
     else if ([statement isKindOfClass:[JSKCommandParcel class]])
     {
-        JSKCommandParcel *commandResponse = (JSKCommandParcel *)statement;
-        [self handleCommandResponse:commandResponse fromSessionPeerID:peer];
+        JSKCommandParcel *commandParcel = (JSKCommandParcel *)statement;
+        [self handleCommandParcel:commandParcel fromSessionPeerID:peer];
     }
     else
     {
+        
         // Pass it on up the chain.
         if ([self.delegate respondsToSelector:@selector(peerController:receivedObject:from:)])
         {
@@ -545,15 +758,16 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         return m_myPeerID;
     }
     
-    // Create universally unique identifier (object)
-    CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
-    
-    // Get the string representation of CFUUID object.
-    NSString *uuidStr = (NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuidObject);
-    CFRelease(uuidObject);
-    
-    [self setMyPeerID:uuidStr];
-    [uuidStr release];
+    [self setMyPeerID:[self buildRandomString]];
+//    // Create universally unique identifier (object)
+//    CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
+//    
+//    // Get the string representation of CFUUID object.
+//    NSString *uuidStr = (NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuidObject);
+//    CFRelease(uuidObject);
+//    
+//    [self setMyPeerID:uuidStr];
+//    [uuidStr release];
     
     [[JSKSystemMessage sharedInstance] setMyPeerID:m_myPeerID];
     // Save the peer ID in user defaults.
@@ -562,30 +776,6 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     
     return m_myPeerID;
 }
-
-
-
-#pragma mark - Private
-
-
-- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
-                         change:(NSDictionary *)change context:(void *)context
-{
-    if (object == self.queue && [keyPath isEqualToString:@"operations"]) {
-        if ([self.queue.operations count] == 0) {
-            
-            // The queue has completed.
-            if ([self.delegate respondsToSelector:@selector(peerControllerQueueHasEmptied:)]) {
-                [self.delegate peerControllerQueueHasEmptied:self];
-            }
-        }
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object
-                               change:change context:context];
-    }
-}
-
 
 
 

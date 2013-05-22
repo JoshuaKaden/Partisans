@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "JSKCommandMessage.h"
+#import "JSKCommandParcel.h"
 #import "JSKSystemMessage.h"
 
 @class GameEnvoy;
@@ -18,7 +20,7 @@ extern NSString * const JSKNotificationPeerUpdated;
 extern NSUInteger const kPartisansMaxPlayers;
 extern NSUInteger const kPartisansMinPlayers;
 extern NSString * const kPartisansNotificationJoinedGame;
-extern NSString * const kPartisansNotificationGamePlayerAdded;
+extern NSString * const kPartisansNotificationGameChanged;
 
 @interface SystemMessage : JSKSystemMessage
 
@@ -39,6 +41,8 @@ extern NSString * const kPartisansNotificationGamePlayerAdded;
 + (void)broadcastObject:(NSObject <NSCoding> *)object;
 + (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType;
 + (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
++ (void)sendCommandMessage:(JSKCommandMessage *)commandMessage shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 + (void)sendToHost:(JSKCommandMessageType)commandMessageType;
++ (void)sendParcelToPlayers:(JSKCommandParcel *)parcel;
 
 @end

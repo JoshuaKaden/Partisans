@@ -19,10 +19,12 @@
 @protocol JSKPeerControllerDelegate <NSObject>
 @optional
 - (void)peerController:(JSKPeerController *)peerController connectedToPeer:(NSString *)peerID;
-- (void)peerController:(JSKPeerController *)peerController receivedCommandMessage:(JSKCommandMessage *)commandMessage from:(NSString *)peerID;
-- (void)peerController:(JSKPeerController *)peerController receivedCommandResponse:(JSKCommandParcel *)commandResponse from:(NSString *)peerID;
-- (void)peerController:(JSKPeerController *)peerController receivedObject:(NSObject *)object from:(NSString *)peerID;
-- (NSString *)peerNameFromID:(NSString *)peerID;
+- (void)peerController:(JSKPeerController *)peerController receivedCommandMessage:(JSKCommandMessage *)commandMessage;
+- (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel;
+- (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingTo:(JSKCommandMessage *)commandMessage;
+- (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingToObject:(NSObject *)respondingToObject;
+- (void)peerController:(JSKPeerController *)peerController receivedObject:(NSObject <NSCoding> *)object from:peerID;
+//- (NSString *)peerNameFromID:(NSString *)peerID;
 - (void)peerControllerQueueHasEmptied:(JSKPeerController *)peerController;
 @end
 
@@ -42,9 +44,15 @@ extern const NSUInteger PeerMessageSizeLimit;
 - (void)stopSession;
 
 - (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
-- (void)sendCommandResponse:(JSKCommandParcel *)commandResponse;
+- (void)sendCommandMessage:(JSKCommandMessage *)commandMessage shouldAwaitResponse:(BOOL)shouldAwaitResponse;
+- (void)sendCommandParcel:(JSKCommandParcel *)commandParcel;
+- (void)sendObject:(NSObject <NSCoding> *)object to:(NSString *)peerID;
+
+// For this to work, please ensure that the supplied "object" has an NSString "responseKey" attribute.
+- (void)sendObject:(NSObject <NSCoding> *)object to:(NSString *)peerID shouldAwaitResponse:(BOOL)shouldAwaitResponse;
+
 - (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType;
-- (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType toPeerIDs:(NSArray *)peerIDs;
+//- (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType toPeerIDs:(NSArray *)peerIDs;
 
 - (void)archiveAndSend:(NSObject <NSCoding> *)object to:(NSString *)to;
 - (void)archiveAndBroadcast:(NSObject <NSCoding> *)object;

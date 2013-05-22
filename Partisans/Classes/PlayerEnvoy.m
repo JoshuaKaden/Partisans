@@ -93,7 +93,7 @@
 
 #pragma mark - Class methods
 
-+ (PlayerEnvoy *)newEnvoyWithPeerID:(NSString *)peerID
++ (PlayerEnvoy *)createEnvoyWithPeerID:(NSString *)peerID
 {
     NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
     NSArray *players = [context fetchObjectArrayForEntityName:@"Player" withPredicateFormat:@"peerID == %@", peerID];
