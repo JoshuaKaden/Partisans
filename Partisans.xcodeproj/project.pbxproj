@@ -11,6 +11,8 @@
 		9303BE5217467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
 		9303BE551746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
 		9303BE561746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
+		93040365174E7D0900ED169F /* ToolsMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93040364174E7D0900ED169F /* ToolsMenuItems.m */; };
+		93040366174E7D0900ED169F /* ToolsMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93040364174E7D0900ED169F /* ToolsMenuItems.m */; };
 		936510931741578C00F2AD06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510921741578C00F2AD06 /* UIKit.framework */; };
 		936510951741578C00F2AD06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510941741578C00F2AD06 /* Foundation.framework */; };
 		936510971741578C00F2AD06 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510961741578C00F2AD06 /* CoreGraphics.framework */; };
@@ -162,6 +164,8 @@
 		9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JoinGameViewController.m; path = Classes/JoinGameViewController.m; sourceTree = "<group>"; };
 		9303BE531746836A0065ADD2 /* GameJoiner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameJoiner.h; path = Classes/GameJoiner.h; sourceTree = "<group>"; };
 		9303BE541746836A0065ADD2 /* GameJoiner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameJoiner.m; path = Classes/GameJoiner.m; sourceTree = "<group>"; };
+		93040363174E7D0900ED169F /* ToolsMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolsMenuItems.h; path = Classes/ToolsMenuItems.h; sourceTree = "<group>"; };
+		93040364174E7D0900ED169F /* ToolsMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToolsMenuItems.m; path = Classes/ToolsMenuItems.m; sourceTree = "<group>"; };
 		9365108F1741578C00F2AD06 /* Partisans.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Partisans.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		936510921741578C00F2AD06 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		936510941741578C00F2AD06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -323,6 +327,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		93040362174E7CF000ED169F /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				93040363174E7D0900ED169F /* ToolsMenuItems.h */,
+				93040364174E7D0900ED169F /* ToolsMenuItems.m */,
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
 		936510861741578B00F2AD06 = {
 			isa = PBXGroup;
 			children = (
@@ -404,6 +417,7 @@
 				936510B21741584E00F2AD06 /* Libraries */,
 				936510B11741583200F2AD06 /* Main */,
 				936510F817415A7B00F2AD06 /* Player */,
+				93040362174E7CF000ED169F /* Tools */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -813,6 +827,7 @@
 				937BC0BF1747D2E3003F42D6 /* CreateGameOperation.m in Sources */,
 				937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */,
 				93761EF6174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */,
+				93040365174E7D0900ED169F /* ToolsMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -869,6 +884,7 @@
 				937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */,
 				937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */,
 				93761EF7174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */,
+				93040366174E7D0900ED169F /* ToolsMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

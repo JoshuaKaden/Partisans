@@ -14,12 +14,14 @@
 #import "PlayGameMenuItems.h"
 #import "SetupGameMenuItems.h"
 #import "SystemMessage.h"
+#import "ToolsMenuItems.h"
 
 
 @interface MainMenuItems ()
 
 @property (nonatomic, strong) PlayGameMenuItems *playGameMenuItems;
 @property (nonatomic, strong) SetupGameMenuItems *setupGameMenuItems;
+@property (nonatomic, strong) ToolsMenuItems *toolsMenuItems;
 
 @end
 
@@ -28,12 +30,14 @@
 
 @synthesize playGameMenuItems = m_playGameMenuItems;
 @synthesize setupGameMenuItems = m_setupGameMenuItems;
+@synthesize toolsMenuItems = m_toolsMenuItems;
 
 
 - (void)dealloc
 {
     [m_playGameMenuItems release];
     [m_setupGameMenuItems release];
+    [m_toolsMenuItems release];
     
     [super dealloc];
 }
@@ -107,8 +111,8 @@
             label = NSLocalizedString(@"Scores", @"Scores  --  menu label");
             break;
             
-        case MainMenuRowAccomplishments:
-            label = NSLocalizedString(@"Accomplishments", @"Accomplishments  --  menu label");
+        case MainMenuRowTools:
+            label = NSLocalizedString(@"Tools", @"Tools  --  menu label");
             break;
             
         case MainMenuRow_MaxValue:
@@ -138,8 +142,9 @@
             break;
             
         case MainMenuRowScores:
-        case MainMenuRowAccomplishments:
             break;
+            
+        case MainMenuRowTools:
             break;
 
         case MainMenuRow_MaxValue:
@@ -174,7 +179,7 @@
         
         case MainMenuRowGame:
         case MainMenuRowScores:
-        case MainMenuRowAccomplishments:
+        case MainMenuRowTools:
             targetClass = [JSKMenuViewController class];
             break;
             
@@ -211,8 +216,17 @@
         }
             
         case MainMenuRowScores:
-        case MainMenuRowAccomplishments:
             return nil;
+            break;
+            
+        case MainMenuRowTools:
+        {
+            ToolsMenuItems *items = [[ToolsMenuItems alloc] init];
+            self.toolsMenuItems = items;
+            [items release];
+            return self.toolsMenuItems;
+            break;
+        }
             
         case MainMenuRow_MaxValue:
             return nil;

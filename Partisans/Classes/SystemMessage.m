@@ -203,7 +203,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 - (void)handleJoinGameMessage:(JSKCommandMessage *)message
 {
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:message.from];
-    if (!other)
+    if (!other.playerName)
     {
         if (!self.stash)
         {
