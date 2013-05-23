@@ -205,13 +205,13 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:message.from];
     if (!other)
     {
-//        if (!self.stash)
-//        {
-//            NSMutableArray *stash = [[NSMutableArray alloc] initWithCapacity:kPartisansMaxPlayers - 1];
-//            self.stash = stash;
-//            [stash release];
-//        }
-//        [self.stash addObject:message];
+        if (!self.stash)
+        {
+            NSMutableArray *stash = [[NSMutableArray alloc] initWithCapacity:kPartisansMaxPlayers - 1];
+            self.stash = stash;
+            [stash release];
+        }
+        [self.stash addObject:message];
         return;
     }
     BOOL proceed = NO;
@@ -349,17 +349,17 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         {
             UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
             [op setCompletionBlock:^(void){
-//                for (JSKCommandMessage *stashedMsg in self.stash)
-//                {
-//                    if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
-//                    {
-//                        if (stashedMsg.from == other.peerID)
-//                        {
-//                            [self handleJoinGameMessage:stashedMsg];
-//                            [self.stash removeObject:stashedMsg];
-//                        }
-//                    }
-//                }
+                for (JSKCommandMessage *stashedMsg in self.stash)
+                {
+                    if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
+                    {
+                        if (stashedMsg.from == other.peerID)
+                        {
+                            [self handleJoinGameMessage:stashedMsg];
+                            [self.stash removeObject:stashedMsg];
+                        }
+                    }
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
                 });
@@ -372,17 +372,17 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         
         CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:other];
         [op setCompletionBlock:^(void){
-//            for (JSKCommandMessage *stashedMsg in self.stash)
-//            {
-//                if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
-//                {
-//                    if (stashedMsg.from == other.peerID)
-//                    {
-//                        [self handleJoinGameMessage:stashedMsg];
-//                        [self.stash removeObject:stashedMsg];
-//                    }
-//                }
-//            }
+            for (JSKCommandMessage *stashedMsg in self.stash)
+            {
+                if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
+                {
+                    if (stashedMsg.from == other.peerID)
+                    {
+                        [self handleJoinGameMessage:stashedMsg];
+                        [self.stash removeObject:stashedMsg];
+                    }
+                }
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerCreated object:other.peerID];
             });

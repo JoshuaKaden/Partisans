@@ -27,8 +27,8 @@
 - (void)addPlayer:(PlayerEnvoy *)playerEnvoy;
 - (BOOL)isPlayerInGame:(PlayerEnvoy *)playerEnvoy;
 - (void)removePlayer:(PlayerEnvoy *)playerEnvoy;
+- (void)addHost:(PlayerEnvoy *)playerEnvoy;
 
-+ (GameEnvoy *)createGame;
 + (GameEnvoy *)envoyFromHost:(PlayerEnvoy *)host;
 + (GameEnvoy *)envoyFromPlayer:(PlayerEnvoy *)player;
 

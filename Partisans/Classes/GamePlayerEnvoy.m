@@ -169,22 +169,6 @@
     }
     
     
-    // Set the game.
-    if (self.gameID)
-    {
-        // Assuming that we're working with a single game, which ought to be the SysMsg's game.
-        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-        if (![self.gameID isEqualToString:gameEnvoy.intramuralID])
-        {
-            // Error state
-            return;
-        }
-        Game *game = (Game *)[context objectWithID:gameEnvoy.managedObjectID];
-        model.game = game;
-    }
-    
-    
-    
     // Make sure the envoy knows the new managed object ID, if this is an add.
     if (!self.managedObjectID)
     {
@@ -194,6 +178,12 @@
         {
             self.managedObjectID = model.objectID;
         }
+    }
+
+    if (!self.intramuralID)
+    {
+        self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
+        model.intramuralID = self.intramuralID;
     }
 }
 

@@ -183,34 +183,50 @@
 
 
 
-+ (GameEnvoy *)createGame
-{
-    // Create the game itself.
-    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
-    Game *newGame = (Game *)[NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:context];
-    newGame.numberOfPlayers = [NSNumber numberWithInt:5];
-    
-    // Add the host.
-    PlayerEnvoy *hostEnvoy = [SystemMessage playerEnvoy];
-    Player *host = (Player *)[context objectWithID:hostEnvoy.managedObjectID];
-    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
-    gamePlayer.player = host;
-    gamePlayer.isHost = [NSNumber numberWithBool:YES];
-    [newGame addGamePlayersObject:gamePlayer];
-    
-    // Add the missions.
-    for (NSUInteger missionIndex = 0; missionIndex < 5; missionIndex++)
-    {
-        Mission *mission = (Mission *)[NSEntityDescription insertNewObjectForEntityForName:@"Mission" inManagedObjectContext:context];
-        mission.missionNumber = [NSNumber numberWithUnsignedInteger:missionIndex + 1];
-        [newGame addMissionsObject:mission];
-    }
-    
-    [JSKDataMiner save];
-    
-    GameEnvoy *returnValue = [GameEnvoy envoyFromManagedObject:newGame];
-    return returnValue;
-}
+//+ (GameEnvoy *)createGame
+//{
+//    return nil;
+//    // This needs to be in an operation, I think.
+//    // Which means a notification key "gameWasCreated", for the caller to observe.
+//    // Since we won't be returning a GameEnvoy, since this is now an asynchornous operation.
+//    
+//    
+//    
+//    // Create the game itself.
+//    GameEnvoy *newGameEnvoy = [[[GameEnvoy alloc] init] autorelease];
+//    newGameEnvoy.numberOfPlayers = kPartisansMinPlayers;
+//    [newGameEnvoy commitAndSave];
+//
+//    [newGameEnvoy addHost:[SystemMessage playerEnvoy]];
+//    
+//    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+//    Game *newGame = (Game *)[context objectWithID:newGameEnvoy.managedObjectID];
+//    
+////    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+////    Game *newGame = (Game *)[NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:context];
+////    newGame.numberOfPlayers = [NSNumber numberWithInt:5];
+////    
+////    // Add the host.
+////    PlayerEnvoy *hostEnvoy = [SystemMessage playerEnvoy];
+////    Player *host = (Player *)[context objectWithID:hostEnvoy.managedObjectID];
+////    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
+////    gamePlayer.player = host;
+////    gamePlayer.isHost = [NSNumber numberWithBool:YES];
+////    [newGame addGamePlayersObject:gamePlayer];
+//    
+//    // Add the missions.
+//    for (NSUInteger missionIndex = 0; missionIndex < 5; missionIndex++)
+//    {
+//        Mission *mission = (Mission *)[NSEntityDescription insertNewObjectForEntityForName:@"Mission" inManagedObjectContext:context];
+//        mission.missionNumber = [NSNumber numberWithUnsignedInteger:missionIndex + 1];
+//        [newGame addMissionsObject:mission];
+//    }
+//    
+//    [JSKDataMiner save];
+//    
+//    GameEnvoy *returnValue = [GameEnvoy envoyFromManagedObject:newGame];
+//    return returnValue;
+//}
 
 
 - (void)loadGamePlayerEnvoys
@@ -293,7 +309,7 @@
     Game *game = (Game *)[context objectWithID:self.managedObjectID];
     for (GamePlayer *gamePlayer in game.gamePlayers)
     {
-        if (gamePlayer.isHost)
+        if ([gamePlayer.isHost boolValue])
         {
             returnValue = [PlayerEnvoy envoyFromManagedObject:gamePlayer.player];
             break;
@@ -303,42 +319,117 @@
     return returnValue;
 }
 
+- (void)addHost:(PlayerEnvoy *)playerEnvoy
+{
+    if ([self isPlayerInGame:playerEnvoy])
+    {
+        return;
+    }
+    if (!self.gamePlayerEnvoys)
+    {
+        self.gamePlayerEnvoys = [NSArray array];
+    }
+    GamePlayerEnvoy *gamePlayerEnvoy = [[GamePlayerEnvoy alloc] init];
+    gamePlayerEnvoy.playerID = playerEnvoy.intramuralID;
+    gamePlayerEnvoy.gameID = self.intramuralID;
+    gamePlayerEnvoy.isHost = YES;
+    NSArray *gamePlayerEnvoys = [self.gamePlayerEnvoys arrayByAddingObject:gamePlayerEnvoy];
+    [self setGamePlayerEnvoys:gamePlayerEnvoys];
+//    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+//    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
+//    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
+//    gamePlayer.player = player;
+//    gamePlayer.isHost = [NSNumber numberWithBool:YES];
+//    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+//    [game addGamePlayersObject:gamePlayer];
+}
+
 
 - (void)addPlayer:(PlayerEnvoy *)playerEnvoy
 {
-    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
-    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
-    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
-    gamePlayer.player = player;
-    Game *game = (Game *)[context objectWithID:self.managedObjectID];
-    [game addGamePlayersObject:gamePlayer];
+    if ([self isPlayerInGame:playerEnvoy])
+    {
+        return;
+    }
+    if (!self.gamePlayerEnvoys)
+    {
+        self.gamePlayerEnvoys = [NSArray array];
+    }
+    GamePlayerEnvoy *gamePlayerEnvoy = [[GamePlayerEnvoy alloc] init];
+    gamePlayerEnvoy.playerID = playerEnvoy.intramuralID;
+    gamePlayerEnvoy.gameID = self.intramuralID;
+    gamePlayerEnvoy.isHost = NO;
+    NSArray *gamePlayerEnvoys = [self.gamePlayerEnvoys arrayByAddingObject:gamePlayerEnvoy];
+    [self setGamePlayerEnvoys:gamePlayerEnvoys];
+//    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+//    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
+//    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
+//    gamePlayer.player = player;
+//    gamePlayer.isHost = [NSNumber numberWithBool:NO];
+//    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+//    [game addGamePlayersObject:gamePlayer];
 }
 
 - (BOOL)isPlayerInGame:(PlayerEnvoy *)playerEnvoy
 {
-    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
-    Game *game = (Game *)[context objectWithID:self.managedObjectID];
-    for (GamePlayer *gamePlayer in game.gamePlayers)
+    BOOL returnValue = NO;
+    for (GamePlayerEnvoy *gamePlayerEnvoy in self.gamePlayerEnvoys)
     {
-        if ([gamePlayer.player.intramuralID isEqualToString:playerEnvoy.intramuralID])
+        if ([gamePlayerEnvoy.playerID isEqualToString:playerEnvoy.intramuralID])
         {
-            return YES;
+            returnValue = YES;
+            break;
         }
     }
-    return NO;
+    return returnValue;
+//    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+//    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+//    for (GamePlayer *gamePlayer in game.gamePlayers)
+//    {
+//        if ([gamePlayer.player.intramuralID isEqualToString:playerEnvoy.intramuralID])
+//        {
+//            return YES;
+//        }
+//    }
+//    return NO;
 }
 
 - (void)removePlayer:(PlayerEnvoy *)playerEnvoy
 {
-    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
-    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
-    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"gamePlayer" withPredicateFormat:@"player == %@", player];
-    if (!gamePlayers)
+    GamePlayerEnvoy *theGamePlayerEnvoyThatWillBeRemoved = nil;
+    for (GamePlayerEnvoy *gamePlayerEnvoy in self.gamePlayerEnvoys)
+    {
+        if ([gamePlayerEnvoy.intramuralID isEqualToString:playerEnvoy.intramuralID])
+        {
+            // But not if we're removing the host!
+            // Can't do that.
+            if (gamePlayerEnvoy.isHost)
+            {
+                return;
+            }
+            theGamePlayerEnvoyThatWillBeRemoved = gamePlayerEnvoy;
+            break;
+        }
+    }
+    
+    if (!theGamePlayerEnvoyThatWillBeRemoved)
     {
         return;
     }
-    GamePlayer *gamePlayer = [gamePlayers objectAtIndex:0];
-    [context deleteObject:gamePlayer];
+    
+    NSMutableArray *gamePlayerEnvoyList = [[NSMutableArray alloc] initWithArray:self.gamePlayerEnvoys];
+    [gamePlayerEnvoyList removeObject:theGamePlayerEnvoyThatWillBeRemoved];
+    self.gamePlayerEnvoys = [NSArray arrayWithArray:gamePlayerEnvoyList];
+    [gamePlayerEnvoyList release];
+//    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+//    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
+//    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"gamePlayer" withPredicateFormat:@"player == %@", player];
+//    if (!gamePlayers)
+//    {
+//        return;
+//    }
+//    GamePlayer *gamePlayer = [gamePlayers objectAtIndex:0];
+//    [context deleteObject:gamePlayer];
 }
 
 
@@ -407,10 +498,26 @@
     {
         for (GamePlayerEnvoy *envoy in self.gamePlayerEnvoys)
         {
-            if (!envoy.gameID)
+            GamePlayer *gamePlayer = nil;
+            if (envoy.managedObjectID)
             {
-                [envoy setGameID:self.intramuralID];
+                gamePlayer = (GamePlayer *)[context objectWithID:envoy.managedObjectID];
             }
+            
+            if (!gamePlayer)
+            {
+                // This will create the GamePlayer row.
+                gamePlayer = [NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
+                // This will associate the new row with the envoy, via the NSManagedObjectID.
+                NSError *error = nil;
+                [context obtainPermanentIDsForObjects:[NSArray arrayWithObject:gamePlayer] error:&error];
+                if (!error)
+                {
+                    envoy.managedObjectID = gamePlayer.objectID;
+                }
+            }
+            [model addGamePlayersObject:gamePlayer];
+            
             [envoy commitInContext:context];
         }
     }
@@ -424,6 +531,24 @@
         if (!error)
         {
             self.managedObjectID = model.objectID;
+        }
+    }
+    
+    // Make sure that intramuralID gets set.
+    // It's not just for peer to peer: it's the glue that
+    // holds it close to its child objects.
+    if (!self.intramuralID)
+    {
+        self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
+        model.intramuralID = self.intramuralID;
+    }
+    
+    for (GamePlayerEnvoy *envoy in self.gamePlayerEnvoys)
+    {
+        if (!envoy.gameID)
+        {
+            [envoy setGameID:self.intramuralID];
+            [envoy commitInContext:context];
         }
     }
 }

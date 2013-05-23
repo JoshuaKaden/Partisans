@@ -165,6 +165,12 @@
             self.managedObjectID = model.objectID;
         }
     }
+    
+    if (!self.intramuralID)
+    {
+        self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
+        model.intramuralID = self.intramuralID;
+    }
 }
 
 

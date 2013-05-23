@@ -195,6 +195,7 @@
             
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             [gameEnvoy deleteGame];
+            [gameEnvoy commitAndSave];
             [[SystemMessage sharedInstance] setGameEnvoy:nil];
             [SystemMessage putPlayerOffline];
             [self.menuViewController invokePop:YES];
@@ -216,7 +217,10 @@
         // Should we start a new game, as host?
         if (self.shouldHost)
         {
-            GameEnvoy *newEnvoy = [GameEnvoy createGame];
+            GameEnvoy *newEnvoy = [[GameEnvoy alloc] init];
+            newEnvoy.numberOfPlayers = kPartisansMinPlayers;
+            [newEnvoy addHost:[SystemMessage playerEnvoy]];
+            [newEnvoy commitAndSave];
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
         }
     }
@@ -237,6 +241,11 @@
         {
             self.menuViewController = menuViewController;
             [self confirmStopHosting];
+        }
+        else
+        {
+            self.menuViewController = menuViewController;
+            [self confirmLeaveGame];
         }
     }
 }
@@ -354,10 +363,10 @@
             switch ((SetupGameMenuRow)indexPath.row)
             {
                 case SetupGameMenuRowHost:
-                    if (![self isPlayerHost])
-                    {
-                        returnValue = UITableViewCellAccessoryDisclosureIndicator;
-                    }
+//                    if (![self isPlayerHost])
+//                    {
+//                        returnValue = UITableViewCellAccessoryDisclosureIndicator;
+//                    }
                     break;
                     
                 case SetupGameMenuRowPlayers:
@@ -465,7 +474,8 @@
                     }
                     else
                     {
-                        returnValue = gameEnvoy.host.playerName;
+                        NSString *prefix = NSLocalizedString(@"Your host is", @"Your host is  --  menu label prefix");
+                        returnValue = [NSString stringWithFormat:@"%@ %@", prefix, gameEnvoy.host.playerName];
                     }
                     break;
                     
@@ -538,6 +548,10 @@
         if ([self isPlayerHost])
         {
             return NSLocalizedString(@"Tap to stop hosting.", @"Tap to stop hosting.  --  sub label text");
+        }
+        else
+        {
+            return NSLocalizedString(@"Tap to leave the game.", @"Tap to leave the game.  --  sub label text");
         }
     }
     return nil;
@@ -613,10 +627,10 @@
             switch ((SetupGameMenuRow)indexPath.row)
             {
                 case SetupGameMenuRowHost:
-                    if (![self isPlayerHost])
-                    {
-                        returnValue = [JSKMenuViewController class];
-                    }
+//                    if (![self isPlayerHost])
+//                    {
+//                        returnValue = [JSKMenuViewController class];
+//                    }
                     break;
                     
                 case SetupGameMenuRowPlayers:
@@ -662,13 +676,13 @@
             {
                 case SetupGameMenuRowHost:
                 {
-                    if (![self isPlayerHost])
-                    {
-                        DossierMenuItems *items = [[DossierMenuItems alloc] init];
-                        self.dossierMenuItems = items;
-                        [items release];
-                        return self.dossierMenuItems;
-                    }
+//                    if (![self isPlayerHost])
+//                    {
+//                        DossierMenuItems *items = [[DossierMenuItems alloc] init];
+//                        self.dossierMenuItems = items;
+//                        [items release];
+//                        return self.dossierMenuItems;
+//                    }
                     break;
                 }
                     
