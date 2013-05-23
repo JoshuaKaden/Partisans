@@ -35,6 +35,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 
 @property (nonatomic, strong) JSKPeerController *peerController;
 @property (nonatomic, strong) NSMutableArray *stash;
+@property (nonatomic, strong) NSMutableArray *peerIDs;
 
 - (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
 - (void)handleModifiedDateResponse:(JSKCommandParcel *)response;
@@ -55,6 +56,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 @synthesize peerController = m_peerController;
 @synthesize gameEnvoy = m_gameEnvoy;
 @synthesize stash = m_stash;
+@synthesize peerIDs = m_peerIDs;
 
 
 - (void)dealloc
@@ -65,6 +67,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     [m_peerController release];
     [m_gameEnvoy release];
     [m_stash release];
+    [m_peerIDs release];
     
     [super dealloc];
 }
@@ -143,6 +146,28 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 
 - (void)handleIdentification:(JSKCommandMessage *)message
 {
+    // All this is to prevent a bunch of empty saves if we keep getting ID messages from the same peer.
+    if (!self.peerIDs)
+    {
+        NSMutableArray *peerIDs = [[NSMutableArray alloc] init];
+        NSArray *nonNatives = [PlayerEnvoy peerPlayers];
+        for (PlayerEnvoy *playerEnvoy in nonNatives)
+        {
+            [peerIDs addObject:playerEnvoy.peerID];
+        }
+        self.peerIDs = peerIDs;
+        [peerIDs release];
+    }
+    for (NSString *peerID in self.peerIDs)
+    {
+        if ([peerID isEqualToString:message.from])
+        {
+            return;
+        }
+    }
+    [self.peerIDs addObject:message.from];
+    
+    
     PlayerEnvoy *newEnvoy = [PlayerEnvoy createEnvoyWithPeerID:message.from];
     if (!newEnvoy)
     {
@@ -353,10 +378,10 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
                 {
                     if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
                     {
-                        if (stashedMsg.from == other.peerID)
+                        if ([stashedMsg.from isEqualToString:other.peerID])
                         {
-                            [self handleJoinGameMessage:stashedMsg];
                             [self.stash removeObject:stashedMsg];
+                            [self handleJoinGameMessage:stashedMsg];
                         }
                     }
                 }
@@ -376,10 +401,10 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
             {
                 if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
                 {
-                    if (stashedMsg.from == other.peerID)
+                    if ([stashedMsg.from isEqualToString:other.peerID])
                     {
-                        [self handleJoinGameMessage:stashedMsg];
                         [self.stash removeObject:stashedMsg];
+                        [self handleJoinGameMessage:stashedMsg];
                     }
                 }
             }

@@ -12,6 +12,7 @@
 #import "JSKSystemMessage.h"
 
 
+const BOOL kJSKPeerControllerIsDebugOn = YES;
 const NSUInteger PeerMessageSizeLimit = 10000;
 
 
@@ -104,7 +105,10 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     self.gkSession = gkSession;
     [gkSession release];
     
-    //    debugLog(@"Initiating p2p session with ID: %@ as peer: %@", sessionID, peerID);
+    if (kJSKPeerControllerIsDebugOn)
+    {
+        debugLog(@"Initiating p2p session with ID: %@ as peer: %@", sessionID, peerID);
+    }
 }
 
 
@@ -356,9 +360,12 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
     
-    debugLog(@"Will send a message of %d bytes to peer %@.", data.length, sessionPeerID);
-    debugLog(@"Sending: %@", object);
-    //    debugLog(@"Sending raw: %@", data);
+    if (kJSKPeerControllerIsDebugOn)
+    {
+        debugLog(@"Will send a message of %d bytes to peer %@.", data.length, sessionPeerID);
+        debugLog(@"Sending: %@", object);
+//        debugLog(@"Sending raw: %@", data);
+    }
     
 //    NSArray *sendDataArray = [NSArray arrayWithObject:data];
     
@@ -805,114 +812,180 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 - (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
 {
     NSString *peerName = [self.connectedPeerNames valueForKey:peerID];
-//    NSString *peerDisplayName = peerID;
-//    NSString *peerDisplayName = [session displayNameForPeer:peerID];
     
-    if (peerID) // && peerName)
+    switch (state)
     {
-        //        debugLog(@"Peer %@ state changed to: %i", peerDisplayName, state);
-        
-        
-        //        NSDictionary *existingPeerNames = nil;
-        //        if (self.connectedPeerNames) {
-        //            existingPeerNames = [NSDictionary dictionaryWithDictionary:self.connectedPeerNames];
-        //        }
-        
-        
-        
-        
-        //        if (!self.connectedPeerNames) {
-        //            NSMutableDictionary *connectedPeerNames = [[NSMutableDictionary alloc] initWithCapacity:10];
-        //            self.connectedPeerNames = connectedPeerNames;
-        //            [connectedPeerNames release];
-        //        }
-        
-        switch (state) {
-                
-                
-            case GKPeerStateAvailable:
-                [session connectToPeer:peerID withTimeout:20];
-                break;
-                
-                
-            case GKPeerStateConnected:
+        case GKPeerStateAvailable:
+            [session connectToPeer:peerID withTimeout:20];
+            break;
+            
+            
+        case GKPeerStateConnected:
+        {
+            if (kJSKPeerControllerIsDebugOn)
             {
-//                debugLog(@"Connected to peer:%@ named:%@", peerID, peerDisplayName);
-                
-                // Once we connect to a peer, we automatically send them our name.
-                // They will appreciate this, as it enables us to address each other, using our own names.
-                NSString *ourPeerID = [self.connectedPeerNames valueForKey:peerID];
-                if (!ourPeerID)
+                debugLog(@"Connected to peer:%@ named:%@", peerID, peerName);
+            }
+            // Once we connect to a peer, we automatically send them our name.
+            // They will appreciate this, as it enables us to address each other, using our own names.
+            NSString *ourPeerID = [self.connectedPeerNames valueForKey:peerID];
+            if (!ourPeerID)
+            {
+                JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerName from:self.peerID];
+                [self archiveAndSend:msg toSessionPeerID:peerID];
+                [msg release];
+            }
+            break;
+        }
+            
+            
+        case GKPeerStateConnecting:
+            if (kJSKPeerControllerIsDebugOn)
+            {
+                debugLog(@"Attempting to connect to peer:%@ named:%@", peerID, peerName);
+            }
+            break;
+            
+            
+        case GKPeerStateDisconnected:
+        {
+            if (kJSKPeerControllerIsDebugOn)
+            {
+                debugLog(@"Disconnected from peer:%@ named:%@", peerID, peerName);
+            }
+            NSDictionary *existingPeerNames = self.connectedPeerNames;
+            if (existingPeerNames)
+            {
+                if ([existingPeerNames valueForKey:peerName])
                 {
-                    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerName from:self.peerID];
-                    [self archiveAndSend:msg toSessionPeerID:peerID];
-                    [msg release];
+                    NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:existingPeerNames.count];
+                    [list addEntriesFromDictionary:existingPeerNames];
+                    [list setValue:nil forKey:peerName];
+                    self.connectedPeerNames = [NSDictionary dictionaryWithDictionary:list];
+                    [list release];
                 }
-                break;
-                
-//                NSDictionary *existingPeerNames = self.connectedPeerNames;
+            }
+            [session connectToPeer:peerID withTimeout:20];
+            break;
+        }
+            
+            
+        case GKPeerStateUnavailable:
+            if (kJSKPeerControllerIsDebugOn)
+            {
+                debugLog(@"Peer is unavailable:%@ named:%@", peerID, peerName);
+            }
+            break;
+    }
+    
+////    NSString *peerDisplayName = peerID;
+////    NSString *peerDisplayName = [session displayNameForPeer:peerID];
+//    
+//    if (peerID) // && peerName)
+//    {
+//        //        debugLog(@"Peer %@ state changed to: %i", peerDisplayName, state);
+//        
+//        
+//        //        NSDictionary *existingPeerNames = nil;
+//        //        if (self.connectedPeerNames) {
+//        //            existingPeerNames = [NSDictionary dictionaryWithDictionary:self.connectedPeerNames];
+//        //        }
+//        
+//        
+//        
+//        
+//        //        if (!self.connectedPeerNames) {
+//        //            NSMutableDictionary *connectedPeerNames = [[NSMutableDictionary alloc] initWithCapacity:10];
+//        //            self.connectedPeerNames = connectedPeerNames;
+//        //            [connectedPeerNames release];
+//        //        }
+//        
+//        switch (state) {
 //                
+//                
+//            case GKPeerStateAvailable:
+//                [session connectToPeer:peerID withTimeout:20];
+//                break;
+//                
+//                
+//            case GKPeerStateConnected:
+//            {
+////                debugLog(@"Connected to peer:%@ named:%@", peerID, peerDisplayName);
+//                
+//                // Once we connect to a peer, we automatically send them our name.
+//                // They will appreciate this, as it enables us to address each other, using our own names.
+//                NSString *ourPeerID = [self.connectedPeerNames valueForKey:peerID];
+//                if (!ourPeerID)
+//                {
+//                    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerName from:self.peerID];
+//                    [self archiveAndSend:msg toSessionPeerID:peerID];
+//                    [msg release];
+//                }
+//                break;
+//                
+////                NSDictionary *existingPeerNames = self.connectedPeerNames;
+////                
+////                if (existingPeerNames)
+////                {
+////                    if (![existingPeerNames valueForKey:peerDisplayName])
+////                    {
+////                        NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:existingPeerNames.count + 1];
+////                        [list addEntriesFromDictionary:existingPeerNames];
+////                        [list setValue:peerID forKey:peerDisplayName];
+////                        self.connectedPeerNames = [NSDictionary dictionaryWithDictionary:list];
+////                        [list release];
+////                    }
+////                }
+////                else
+////                {
+////                    self.connectedPeerNames = [NSDictionary dictionaryWithObjectsAndKeys:peerID, peerDisplayName, nil];
+////                }
+////                
+////                if ([self.delegate respondsToSelector:@selector(peerController:connectedToPeer:)]) {
+////                    [self.delegate peerController:self connectedToPeer:peerDisplayName];
+////                }
+////                break;
+//            }
+//                
+//                
+//            case GKPeerStateConnecting:
+//                //                debugLog(@"Attempting to connect to peer: %@", peerDisplayName);
+//                break;
+//                
+//                
+//            case GKPeerStateDisconnected:
+//            {
+//                //                debugLog(@"Disconnected from peer: %@", peerDisplayName);
+//                NSDictionary *existingPeerNames = self.connectedPeerNames;
 //                if (existingPeerNames)
 //                {
-//                    if (![existingPeerNames valueForKey:peerDisplayName])
+//                    if ([existingPeerNames valueForKey:peerName])
 //                    {
-//                        NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:existingPeerNames.count + 1];
+//                        NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:existingPeerNames.count];
 //                        [list addEntriesFromDictionary:existingPeerNames];
-//                        [list setValue:peerID forKey:peerDisplayName];
+//                        [list setValue:nil forKey:peerName];
 //                        self.connectedPeerNames = [NSDictionary dictionaryWithDictionary:list];
 //                        [list release];
 //                    }
 //                }
-//                else
-//                {
-//                    self.connectedPeerNames = [NSDictionary dictionaryWithObjectsAndKeys:peerID, peerDisplayName, nil];
-//                }
+////                [self.connectedPeerNames setValue:nil forKey:peerName];
 //                
-//                if ([self.delegate respondsToSelector:@selector(peerController:connectedToPeer:)]) {
-//                    [self.delegate peerController:self connectedToPeer:peerDisplayName];
-//                }
+//                // begin storing the message cache to send back to the peer if connectivity is regained
+//                //                debugLog(@"Creating a message cache for peer %@", [session displayNameForPeer:peerID]);
+//                //                [self.messageCache setObject:[NSMutableArray arrayWithCapacity:1] forKey:[session displayNameForPeer:peerID]];
+//                [session connectToPeer:peerID withTimeout:20];
 //                break;
-            }
-                
-                
-            case GKPeerStateConnecting:
-                //                debugLog(@"Attempting to connect to peer: %@", peerDisplayName);
-                break;
-                
-                
-            case GKPeerStateDisconnected:
-            {
-                //                debugLog(@"Disconnected from peer: %@", peerDisplayName);
-                NSDictionary *existingPeerNames = self.connectedPeerNames;
-                if (existingPeerNames)
-                {
-                    if ([existingPeerNames valueForKey:peerName])
-                    {
-                        NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:existingPeerNames.count];
-                        [list addEntriesFromDictionary:existingPeerNames];
-                        [list setValue:nil forKey:peerName];
-                        self.connectedPeerNames = [NSDictionary dictionaryWithDictionary:list];
-                        [list release];
-                    }
-                }
-//                [self.connectedPeerNames setValue:nil forKey:peerName];
-                
-                // begin storing the message cache to send back to the peer if connectivity is regained
-                //                debugLog(@"Creating a message cache for peer %@", [session displayNameForPeer:peerID]);
-                //                [self.messageCache setObject:[NSMutableArray arrayWithCapacity:1] forKey:[session displayNameForPeer:peerID]];
-                [session connectToPeer:peerID withTimeout:20];
-                break;
-            }
-                
-                
-            case GKPeerStateUnavailable:
-                //                debugLog(@"Peer is unavailable: %@", peerDisplayName);
-                break;
-                
-            default:
-                break;
-        }   
-    }
+//            }
+//                
+//                
+//            case GKPeerStateUnavailable:
+//                //                debugLog(@"Peer is unavailable: %@", peerDisplayName);
+//                break;
+//                
+//            default:
+//                break;
+//        }   
+//    }
 }
 
 

@@ -195,7 +195,6 @@
             
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             [gameEnvoy deleteGame];
-            [gameEnvoy commitAndSave];
             [[SystemMessage sharedInstance] setGameEnvoy:nil];
             [SystemMessage putPlayerOffline];
             [self.menuViewController invokePop:YES];

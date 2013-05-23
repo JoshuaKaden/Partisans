@@ -86,6 +86,11 @@
     {
         return;
     }
+    // If there's no player name, then we don't yet have all the player's info.
+    if (!other.playerName)
+    {
+        return;
+    }
     JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeJoinGame to:peerID from:[SystemMessage playerEnvoy].peerID];
     [SystemMessage sendCommandMessage:msg shouldAwaitResponse:YES];
     [msg release];
