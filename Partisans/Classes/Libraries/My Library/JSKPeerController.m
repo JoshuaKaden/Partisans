@@ -32,6 +32,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage fromSessionPeerID:(NSString *)sessionPeerID;
 - (void)handleCommandParcel:(JSKCommandParcel *)commandParcel fromSessionPeerID:(NSString *)sessionPeerID;
 - (NSString *)buildRandomString;
+- (BOOL)isPeerSubordinate:(NSString *)sessionPeerID;
+- (void)sendCommandMessage:(JSKCommandMessage *)msg toSessionPeerID:(NSString *)sessionPeerID shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 
 @end
 
@@ -67,6 +69,44 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     [m_customStash release];
     
     [super dealloc];
+}
+
+- (BOOL)isPeerSubordinate:(NSString *)sessionPeerID
+{
+    if (!self.gkSession)
+    {
+        return NO;
+    }
+    
+    NSString *peerID = self.gkSession.peerID;
+
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *ourNumber = [formatter numberFromString:peerID];
+    NSNumber *theirNumber = [formatter numberFromString:sessionPeerID];
+    [formatter release];
+
+    if (kJSKPeerControllerIsDebugOn)
+    {
+        debugLog(@"ourID:%@ theirID:%@", peerID, sessionPeerID);
+        if ([ourNumber intValue] > [theirNumber intValue])
+        {
+            debugLog(@"They are subordinate");
+        }
+        else
+        {
+            debugLog(@"We are subordinate");
+        }
+    }
+    
+    if ([ourNumber intValue] > [theirNumber intValue])
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 
@@ -339,6 +379,13 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 }
 
 
+- (void)sendCommandMessage:(JSKCommandMessage *)msg toSessionPeerID:(NSString *)sessionPeerID shouldAwaitResponse:(BOOL)shouldAwaitResponse
+{
+    
+}
+
+
+
 - (void)sendCommandParcel:(JSKCommandParcel *)commandParcel
 {
     if (!commandParcel)
@@ -528,6 +575,13 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         JSKCommandMessage *msg = [self.stash objectForKey:commandParcel.responseKey];
         if (msg)
         {
+            // We may want to deal with this ourselves.
+            if (msg.commandMessageType == JSKCommandMessageTypeIdentification)
+            {
+                
+            }
+            
+            // Pass on the message to the delegate.
             if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:respondingTo:)])
             {
                 [self.delegate peerController:self receivedCommandParcel:commandParcel respondingTo:msg];
@@ -605,6 +659,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
                 self.connectedPeerNames = [NSDictionary dictionaryWithObjectsAndKeys:peerID, sessionPeerID, nil];
             }
             
+            //
+            
             // At this stage the delegate may want to handle the identification message.
             // For example, to create a Player record.
             if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandMessage:)])
@@ -612,7 +668,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
                 [self.delegate peerController:self receivedCommandMessage:commandMessage];
             }
             
-            if ([self.delegate respondsToSelector:@selector(peerController:connectedToPeer:)]) {
+            if ([self.delegate respondsToSelector:@selector(peerController:connectedToPeer:)])
+            {
                 [self.delegate peerController:self connectedToPeer:peerID];
             }
         }
@@ -791,7 +848,11 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
 {
-    //    debugLog(@"Received connection request from: %@",peerID);
+    NSString *peerName = [self.connectedPeerNames valueForKey:peerID];
+    if (kJSKPeerControllerIsDebugOn)
+    {
+        debugLog(@"Connection request from peer:%@ named:%@", peerID, peerName);
+    }
     
 //    if (self.isSlave)
 //    {
@@ -816,9 +877,15 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     switch (state)
     {
         case GKPeerStateAvailable:
-            [session connectToPeer:peerID withTimeout:20];
-            break;
-            
+            if ([self isPeerSubordinate:peerID])
+            {
+                if (kJSKPeerControllerIsDebugOn)
+                {
+                    debugLog(@"Connecting to peer:%@ named:%@", peerID, peerName);
+                }
+                [session connectToPeer:peerID withTimeout:20];
+                break;
+            }
             
         case GKPeerStateConnected:
         {
@@ -831,18 +898,19 @@ const NSUInteger PeerMessageSizeLimit = 10000;
             NSString *ourPeerID = [self.connectedPeerNames valueForKey:peerID];
             if (!ourPeerID)
             {
-                JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerName from:self.peerID];
+                JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:nil from:self.peerID];
+//                [self sendCommandMessage:msg toSessionPeerID:peerID shouldAwaitResponse:YES];
                 [self archiveAndSend:msg toSessionPeerID:peerID];
                 [msg release];
             }
             break;
         }
-            
+        
             
         case GKPeerStateConnecting:
             if (kJSKPeerControllerIsDebugOn)
             {
-                debugLog(@"Attempting to connect to peer:%@ named:%@", peerID, peerName);
+                debugLog(@"Connection from:%@ named:%@", peerID, peerName);
             }
             break;
             
@@ -853,19 +921,19 @@ const NSUInteger PeerMessageSizeLimit = 10000;
             {
                 debugLog(@"Disconnected from peer:%@ named:%@", peerID, peerName);
             }
-            NSDictionary *existingPeerNames = self.connectedPeerNames;
-            if (existingPeerNames)
-            {
-                if ([existingPeerNames valueForKey:peerName])
-                {
-                    NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:existingPeerNames.count];
-                    [list addEntriesFromDictionary:existingPeerNames];
-                    [list setValue:nil forKey:peerName];
-                    self.connectedPeerNames = [NSDictionary dictionaryWithDictionary:list];
-                    [list release];
-                }
-            }
-            [session connectToPeer:peerID withTimeout:20];
+//            NSDictionary *existingPeerNames = self.connectedPeerNames;
+//            if (existingPeerNames)
+//            {
+//                if ([existingPeerNames valueForKey:peerName])
+//                {
+//                    NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:existingPeerNames.count];
+//                    [list addEntriesFromDictionary:existingPeerNames];
+//                    [list setValue:nil forKey:peerName];
+//                    self.connectedPeerNames = [NSDictionary dictionaryWithDictionary:list];
+//                    [list release];
+//                }
+//            }
+//            [session connectToPeer:peerID withTimeout:20];
             break;
         }
             
