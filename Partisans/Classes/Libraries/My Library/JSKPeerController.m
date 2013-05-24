@@ -24,8 +24,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 @property (readwrite, nonatomic, strong) NSString *myPeerID;
 @property (nonatomic, strong) NSDictionary *connectedPeerNames;
 @property (atomic, assign) BOOL isSlave;
-@property (nonatomic, strong) NSDictionary *stash;
-@property (nonatomic, strong) NSDictionary *customStash;
+@property (atomic, strong) NSDictionary *stash;
+@property (atomic, strong) NSDictionary *customStash;
 
 - (BOOL)hasSessionStarted;
 - (void)archiveAndSend:(NSObject <NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID;

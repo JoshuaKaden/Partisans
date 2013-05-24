@@ -504,6 +504,19 @@
                 gamePlayer = (GamePlayer *)[context objectWithID:envoy.managedObjectID];
             }
             
+            // Safety net in case the model was created on another thread.
+            if (!gamePlayer)
+            {
+                if (self.intramuralID)
+                {
+                    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.intramuralID];
+                    if (gamePlayers.count > 0)
+                    {
+                        gamePlayer = [gamePlayers objectAtIndex:0];
+                    }
+                }
+            }
+            
             if (!gamePlayer)
             {
                 // This will create the GamePlayer row.

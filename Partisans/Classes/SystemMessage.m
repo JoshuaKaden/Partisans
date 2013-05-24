@@ -33,9 +33,9 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 
 @interface SystemMessage () <JSKPeerControllerDelegate>
 
-@property (nonatomic, strong) JSKPeerController *peerController;
-@property (nonatomic, strong) NSMutableArray *stash;
-@property (nonatomic, strong) NSMutableArray *peerIDs;
+@property (atomic, strong) JSKPeerController *peerController;
+@property (atomic, strong) NSMutableArray *stash;
+@property (atomic, strong) NSMutableArray *peerIDs;
 
 - (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
 - (void)handleModifiedDateResponse:(JSKCommandParcel *)response;
