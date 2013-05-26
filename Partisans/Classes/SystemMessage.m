@@ -18,6 +18,7 @@
 #import "NSManagedObjectContext+FetchAdditions.h"
 #import "PlayerEnvoy.h"
 #import "RemoveGamePlayerOperation.h"
+#import "UpdateGameOperation.h"
 #import "UpdatePlayerOperation.h"
 
 
@@ -45,6 +46,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 - (void)handleIdentification:(JSKCommandMessage *)message;
 - (void)handleLeaveGameMessage:(JSKCommandMessage *)message;
 //- (void)handlePlayerLeftParcel:(JSKCommandParcel *)parcel;
+- (void)handleGameUpdate:(JSKCommandParcel *)parcel;
 
 @end
 
@@ -126,17 +128,9 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     // Remove this player from the game.
     RemoveGamePlayerOperation *op = [[RemoveGamePlayerOperation alloc] initWithEnvoy:other];
     [op setCompletionBlock:^(void) {
-        
-////        [SystemMessage broadcastCommandMessage:jskcom]
-//        // Then, once we've saved, send the game envoy to the new player.
-//        JSKCommandParcel *response = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
-//                                                                             to:other.peerID
-//                                                                           from:self.playerEnvoy.peerID
-//                                                                   respondingTo:JSKCommandMessageTypeJoinGame];
-//        GameEnvoy *gameEnvoy = [GameEnvoy envoyFromPlayer:other];
-//        [response setObject:gameEnvoy];
-//        [self.peerController sendCommandResponse:response];
-//        
+        JSKCommandParcel *gameParcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.playerEnvoy.peerID object:gameEnvoy];
+        [SystemMessage sendParcelToPlayers:gameParcel];
+        [gameParcel release];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
@@ -177,17 +171,60 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     }
     
     CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:newEnvoy];
-    [op setCompletionBlock:^(void){
-        // Once we've saved, ask for the player's data.
-        JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:message.from from:self.playerEnvoy.peerID];
-        [self.peerController sendCommandMessage:msg shouldAwaitResponse:YES];
-        [msg release];
-    }];
+//    [op setCompletionBlock:^(void){
+//        // Once we've saved, ask for the player's data.
+//        JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:message.from from:self.playerEnvoy.peerID];
+//        [self.peerController sendCommandMessage:msg shouldAwaitResponse:YES];
+//        [msg release];
+//    }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
     [op release];
 }
 
+
+- (void)handleGameUpdate:(JSKCommandParcel *)parcel
+{
+    PlayerEnvoy *host = [PlayerEnvoy envoyFromPeerID:parcel.from];
+    if (!host)
+    {
+        return;
+    }
+    if (!parcel.object)
+    {
+        return;
+    }
+    if (![parcel.object isKindOfClass:[GameEnvoy class]])
+    {
+        return;
+    }
+    
+    // Let's make sure the copy we're getting is newer than the one we have currently.
+    GameEnvoy *currentGame = self.gameEnvoy;
+    GameEnvoy *updatedGame = (GameEnvoy *)parcel.object;
+    if (currentGame.modifiedDate && updatedGame.modifiedDate)
+    {
+        NSInteger delta = [SystemMessage secondsBetweenDates:currentGame.modifiedDate toDate:updatedGame.modifiedDate];
+        if (delta <= 0)
+        {
+            return;
+        }
+    }
+    
+    // We only accept game updates from the host.
+    if (![host.peerID isEqualToString:currentGame.host.peerID])
+    {
+        return;
+    }
+    
+    UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:updatedGame];
+    [op setCompletionBlock:^(void){
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+    }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
+}
 
 
 - (void)handleJoinGameResponse:(JSKCommandParcel *)response
@@ -228,7 +265,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 - (void)handleJoinGameMessage:(JSKCommandMessage *)message
 {
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:message.from];
-    if (!other.playerName)
+    if (!other.playerName || other.playerName.length == 0)
     {
         if (!self.stash)
         {
@@ -451,7 +488,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
             break;
             
         case JSKCommandParcelTypeUpdate:
-//            [self handleJoinGameResponse:commandResponse];
+            [self handleGameUpdate:commandParcel];
             break;
             
         case JSKCommandParcelTypeUnknown:
@@ -512,17 +549,17 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 
     PlayerEnvoy *playerEnvoy = self.playerEnvoy;
     JSKCommandMessageType messageType = commandMessage.commandMessageType;
-    JSKCommandParcelType parcelType = JSKCommandParcelTypeUnknown;
+//    JSKCommandParcelType parcelType = JSKCommandParcelTypeUnknown;
     NSObject <NSCoding> *responseObject = nil;
     
     switch (messageType)
     {
         case JSKCommandMessageTypeGetInfo:
-            parcelType = JSKCommandParcelTypeResponse;
+//            parcelType = JSKCommandParcelTypeResponse;
             responseObject = playerEnvoy;
             break;
         case JSKCommandMessageTypeGetModifiedDate:
-            parcelType = JSKCommandParcelTypeResponse;
+//            parcelType = JSKCommandParcelTypeResponse;
             responseObject = playerEnvoy.modifiedDate;
             break;
         case JSKCommandMessageTypeJoinGame:

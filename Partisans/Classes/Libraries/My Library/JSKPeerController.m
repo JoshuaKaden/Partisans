@@ -22,10 +22,11 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 @property (nonatomic, strong) NSOperationQueue *queue;
 @property (nonatomic, assign) BOOL isSending;
 @property (readwrite, nonatomic, strong) NSString *myPeerID;
-@property (nonatomic, strong) NSDictionary *connectedPeerNames;
+@property (nonatomic, strong) NSDictionary *knownPeerNames;
 @property (atomic, assign) BOOL isSlave;
 @property (atomic, strong) NSDictionary *stash;
 @property (atomic, strong) NSDictionary *customStash;
+@property (atomic, strong) NSDictionary *outbox;
 
 - (BOOL)hasSessionStarted;
 - (void)archiveAndSend:(NSObject <NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID;
@@ -34,6 +35,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 - (NSString *)buildRandomString;
 - (BOOL)isPeerSubordinate:(NSString *)sessionPeerID;
 - (void)sendCommandMessage:(JSKCommandMessage *)msg toSessionPeerID:(NSString *)sessionPeerID shouldAwaitResponse:(BOOL)shouldAwaitResponse;
+- (void)saveToOutbox:(NSObject <NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID;
+- (void)clearOutbox:(NSString *)sessionPeerID;
 
 @end
 
@@ -45,11 +48,12 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 @synthesize isSending = m_isSending;
 @synthesize myPeerID = m_myPeerID;
 @synthesize delegate = m_delegate;
-@synthesize connectedPeerNames = m_connectedPeerNames;
+@synthesize knownPeerNames = m_knownPeerNames;
 @synthesize peerID = m_peerID;
 @synthesize isSlave = m_isSlave;
 @synthesize stash = m_stash;
 @synthesize customStash = m_customStash;
+@synthesize outbox = m_outbox;
 
 
 
@@ -63,10 +67,11 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     [m_gkSession release];
     [m_queue release];
     [m_myPeerID release];
-    [m_connectedPeerNames release];
+    [m_knownPeerNames release];
     [m_peerID release];
     [m_stash release];
     [m_customStash release];
+    [m_outbox release];
     
     [super dealloc];
 }
@@ -123,9 +128,9 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 - (void)startSession
 {
-    if (!self.connectedPeerNames)
+    if (!self.knownPeerNames)
     {
-        self.connectedPeerNames = [NSDictionary dictionary];
+        self.knownPeerNames = [NSDictionary dictionary];
     }
     
     if (!self.stash)
@@ -138,9 +143,9 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     
     GKSession *gkSession = [[GKSession alloc] initWithSessionID:sessionID displayName:peerID sessionMode:GKSessionModePeer];
     
-    [gkSession setAvailable:YES];
     [gkSession setDelegate:self];
-    [gkSession setDataReceiveHandler:self withContext:gkSession];
+    [gkSession setDataReceiveHandler:self withContext:nil];
+//    [gkSession setDataReceiveHandler:self withContext:gkSession];
     
     self.gkSession = gkSession;
     [gkSession release];
@@ -149,6 +154,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     {
         debugLog(@"Initiating p2p session with ID: %@ as peer: %@", sessionID, peerID);
     }
+    [self.gkSession setAvailable:YES];
 }
 
 
@@ -169,7 +175,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     self.gkSession.delegate = nil;
     self.gkSession = nil;
     
-    self.connectedPeerNames = nil;
+    self.knownPeerNames = nil;
     self.stash = nil;
     self.customStash = nil;
 }
@@ -189,7 +195,10 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 {
     CFUUIDRef udid = CFUUIDCreate(NULL);
     NSString *udidString = (NSString *) CFUUIDCreateString(NULL, udid);
-    return [NSString stringWithString:udidString];
+    NSString *returnValue = [NSString stringWithString:udidString];
+    [udidString release];
+    CFRelease(udid);
+    return returnValue;
 //    // Create universally unique identifier (object)
 //    CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
 //    
@@ -201,6 +210,54 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 //    [uuidStr release];
 //    return returnValue;
 }
+
+- (void)saveToOutbox:(NSObject<NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID
+{
+    // Save the outgoing object in the outbox.
+    NSDictionary *outbox = self.outbox;
+    if (outbox.count == 0)
+    {
+        self.outbox = [NSDictionary dictionaryWithObject:[NSArray arrayWithObject:object] forKey:sessionPeerID];
+    }
+    else
+    {
+        // Fussy logic here to control the dictionary of arrays.
+        // One array of objects for each intended recipient (sessionPeerID).
+        if ([outbox valueForKey:sessionPeerID])
+        {
+            NSArray *objects = (NSArray *)[outbox valueForKey:sessionPeerID];
+            if (objects.count > 0)
+            {
+                objects = [objects arrayByAddingObject:object];
+            }
+            NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:outbox];
+            [list setValue:objects forKey:sessionPeerID];
+            self.outbox = [NSDictionary dictionaryWithDictionary:list];
+            [list release];
+        }
+        else
+        {
+            NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:outbox.count + 1];
+            [list addEntriesFromDictionary:outbox];
+            [list setValue:[NSArray arrayWithObject:object] forKey:sessionPeerID];
+            self.outbox = [NSDictionary dictionaryWithDictionary:list];
+            [list release];
+        }
+    }
+}
+
+- (void)clearOutbox:(NSString *)sessionPeerID
+{
+    NSMutableDictionary *outboxList = [[NSMutableDictionary alloc] initWithDictionary:self.outbox];
+    if (!outboxList)
+    {
+        return;
+    }
+    [outboxList setValue:nil forKey:sessionPeerID];
+    self.outbox = [NSDictionary dictionaryWithDictionary:outboxList];
+    [outboxList release];
+}
+
 
 #pragma mark - Overrides
 
@@ -305,13 +362,13 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 - (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType
 {
-    [self broadcastCommandMessage:commandMessageType toPeerIDs:[self.connectedPeerNames allValues]];
+    [self broadcastCommandMessage:commandMessageType toPeerIDs:[self.knownPeerNames allValues]];
 }
 
 
 - (void)archiveAndBroadcast:(NSObject <NSCoding> *)object
 {
-    for (NSString *peerID in [self.connectedPeerNames allValues])
+    for (NSString *peerID in [self.knownPeerNames allValues])
 //  for (NSString *peerID in [self.gkSession peersWithConnectionState:GKPeerStateConnected])
     {
         [self archiveAndSend:object to:peerID];
@@ -400,7 +457,32 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 - (void)archiveAndSend:(NSObject <NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID
 {
-    NSString *peerID = sessionPeerID;
+    // If we're connected, go ahead and send.
+    // If we're not connected, put the object in the outbox, and connect.
+    BOOL isConnected = NO;
+    NSArray *connected = [self.gkSession peersWithConnectionState:GKPeerStateConnected];
+    for (NSString *peer in connected)
+    {
+        if ([peer isEqualToString:sessionPeerID])
+        {
+            isConnected = YES;
+            break;
+        }
+    }
+    
+    if (!isConnected)
+    {
+        // Save to outbox.
+        [self saveToOutbox:object toSessionPeerID:sessionPeerID];
+        // Connect.
+        NSString *peerName = [self.knownPeerNames valueForKey:sessionPeerID];
+        if (kJSKPeerControllerIsDebugOn)
+        {
+            debugLog(@"Connecting to peer:%@ named:%@", sessionPeerID, peerName);
+        }
+        [self.gkSession connectToPeer:sessionPeerID withTimeout:20];
+        return;
+    }
     
     // For now just send the data.
     // Worry about big messages later, if needs be.
@@ -467,7 +549,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 //            debugLog(@"decoded array %@", decodedArray);
             
             
-            [self.gkSession sendData:data toPeers:[NSArray arrayWithObject:peerID] withDataMode:GKSendDataReliable error:&sendError];
+            [self.gkSession sendData:data toPeers:[NSArray arrayWithObject:sessionPeerID] withDataMode:GKSendDataReliable error:&sendError];
             
             if (sendError) {
                 // Oops, an error.
@@ -497,10 +579,10 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     // The "to" parameter is our system's Peer ID.
     // We need to match that to an ID that GKSession knows about.
     NSString *peerID = nil;
-    NSArray *peerKeys = [self.connectedPeerNames allKeys];
+    NSArray *peerKeys = [self.knownPeerNames allKeys];
     for (NSString *peerKey in peerKeys)
     {
-        NSString *peerValue = [self.connectedPeerNames valueForKey:peerKey];
+        NSString *peerValue = [self.knownPeerNames valueForKey:peerKey];
         if ([peerValue isEqualToString:to])
         {
             peerID = peerKey;
@@ -563,7 +645,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 {
     // The "sessionPeerID" parameter is GameKit's ID.
     // We need to match it to our internal peer ID.
-    NSString *peerID = [self.connectedPeerNames valueForKey:sessionPeerID];
+    NSString *peerID = [self.knownPeerNames valueForKey:sessionPeerID];
     if (!peerID)
     {
         return;
@@ -634,7 +716,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 {
     // The "sessionPeerID" parameter is GameKit's ID.
     // We need to match it to our internal peer ID.
-    NSString *peerID = [self.connectedPeerNames valueForKey:sessionPeerID];
+    NSString *peerID = [self.knownPeerNames valueForKey:sessionPeerID];
     
     // Special case for Identification messages:
     // Update our dictionary that maps our peer IDs to GameKit's.
@@ -644,22 +726,30 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         {
             peerID = commandMessage.from;
             
-            NSDictionary *existingPeerNames = self.connectedPeerNames;
+            NSDictionary *existingPeerNames = self.knownPeerNames;
             
             if (existingPeerNames)
             {
                 NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:existingPeerNames.count + 1];
                 [list addEntriesFromDictionary:existingPeerNames];
                 [list setValue:peerID forKey:sessionPeerID];
-                self.connectedPeerNames = [NSDictionary dictionaryWithDictionary:list];
+                self.knownPeerNames = [NSDictionary dictionaryWithDictionary:list];
                 [list release];
             }
             else
             {
-                self.connectedPeerNames = [NSDictionary dictionaryWithObjectsAndKeys:peerID, sessionPeerID, nil];
+                self.knownPeerNames = [NSDictionary dictionaryWithObjectsAndKeys:peerID, sessionPeerID, nil];
             }
             
-            //
+            
+            // If this peer is subordinate, let's send back our ID.
+            if ([self isPeerSubordinate:sessionPeerID])
+            {
+                JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerID from:self.peerID];
+                [self sendCommandMessage:msg];
+                [msg release];
+            }
+            
             
             // At this stage the delegate may want to handle the identification message.
             // For example, to create a Player record.
@@ -722,7 +812,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         {
             // The "peer" parameter is GameKit's ID.
             // We need to match it to our internal peer ID.
-            NSString *peerID = [self.connectedPeerNames valueForKey:peer];
+            NSString *peerID = [self.knownPeerNames valueForKey:peer];
             //                    NSString *peerID = [self.gkSession displayNameForPeer:peer];
             [self.delegate peerController:self receivedObject:statement from:peerID];
         }
@@ -822,7 +912,9 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         return m_myPeerID;
     }
     
-    [self setMyPeerID:[self buildRandomString]];
+    NSString *myPeerID = [self buildRandomString];
+    self.myPeerID = myPeerID;
+//    [self setMyPeerID:[self buildRandomString]];
 //    // Create universally unique identifier (object)
 //    CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
 //    
@@ -848,7 +940,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
 {
-    NSString *peerName = [self.connectedPeerNames valueForKey:peerID];
+    NSString *peerName = [self.knownPeerNames valueForKey:peerID];
     if (kJSKPeerControllerIsDebugOn)
     {
         debugLog(@"Connection request from peer:%@ named:%@", peerID, peerName);
@@ -872,41 +964,85 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 - (void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
 {
-    NSString *peerName = [self.connectedPeerNames valueForKey:peerID];
+    NSString *peerName = [self.knownPeerNames valueForKey:peerID];
     
     switch (state)
     {
         case GKPeerStateAvailable:
+            if (kJSKPeerControllerIsDebugOn)
+            {
+                debugLog(@"Peer is available:%@ named:%@", peerID, peerName);
+            }
+            
+            // If we see a superior peer, we automatically send them our name.
+            // They will appreciate this, as it enables us to address each other, using our own names.
+            // In other words, it is the beginning of our protocol.
+            if (![self isPeerSubordinate:peerID])
+            {
+                NSString *ourPeerID = [self.knownPeerNames valueForKey:peerID];
+                if (!ourPeerID)
+                {
+                    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:nil from:self.peerID];
+                    [self archiveAndSend:msg toSessionPeerID:peerID];
+                    [msg release];
+                }
+            }
+//            if ([self isPeerSubordinate:peerID])
+//            {
+//                if (kJSKPeerControllerIsDebugOn)
+//                {
+//                    debugLog(@"Connecting to peer:%@ named:%@", peerID, peerName);
+//                }
+//                [session connectToPeer:peerID withTimeout:20];
+//            }
+            break;
+            
+        case GKPeerStateConnected:
+        {
             if ([self isPeerSubordinate:peerID])
             {
                 if (kJSKPeerControllerIsDebugOn)
                 {
-                    debugLog(@"Connecting to peer:%@ named:%@", peerID, peerName);
+                    debugLog(@"Connected to subordinate peer:%@ named:%@", peerID, peerName);
                 }
-                [session connectToPeer:peerID withTimeout:20];
-                break;
+            }
+            else
+            {
+                if (kJSKPeerControllerIsDebugOn)
+                {
+                    debugLog(@"Connected to superior peer:%@ named:%@", peerID, peerName);
+                }
+//                // Once we connect to a superior peer, we automatically send them our name.
+//                // They will appreciate this, as it enables us to address each other, using our own names.
+//                NSString *ourPeerID = [self.connectedPeerNames valueForKey:peerID];
+//                if (!ourPeerID)
+//                {
+//                    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:nil from:self.peerID];
+//                    [self archiveAndSend:msg toSessionPeerID:peerID];
+//                    [msg release];
+//                }
             }
             
-        case GKPeerStateConnected:
-        {
-            if (kJSKPeerControllerIsDebugOn)
+            NSArray *outboxObjects = [self.outbox valueForKey:peerID];
+            if (outboxObjects)
             {
-                debugLog(@"Connected to peer:%@ named:%@", peerID, peerName);
+                // Clear out the outbox.
+                [self clearOutbox:peerID];
+                // Loop through and send the outboxed objects.
+                for (NSObject <NSCoding> *object in outboxObjects)
+                {
+                    if (kJSKPeerControllerIsDebugOn)
+                    {
+                        debugLog(@"Preparing to send outboxed object to %@", peerID);
+                    }
+                    [self archiveAndSend:object toSessionPeerID:peerID];
+                }
             }
-            // Once we connect to a peer, we automatically send them our name.
-            // They will appreciate this, as it enables us to address each other, using our own names.
-            NSString *ourPeerID = [self.connectedPeerNames valueForKey:peerID];
-            if (!ourPeerID)
-            {
-                JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:nil from:self.peerID];
-//                [self sendCommandMessage:msg toSessionPeerID:peerID shouldAwaitResponse:YES];
-                [self archiveAndSend:msg toSessionPeerID:peerID];
-                [msg release];
-            }
+            
             break;
         }
         
-            
+        
         case GKPeerStateConnecting:
             if (kJSKPeerControllerIsDebugOn)
             {

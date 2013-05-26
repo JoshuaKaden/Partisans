@@ -2,7 +2,7 @@
 //  Player.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/15/13.
+//  Created by Joshua Kaden on 5/25/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -22,9 +22,9 @@
 @dynamic modifiedDate;
 @dynamic peerID;
 @dynamic playerName;
-@dynamic picture;
 @dynamic gamePlayer;
-@dynamic partisanScorecard;
 @dynamic operativeScorecard;
+@dynamic partisanScorecard;
+@dynamic picture;
 
 @end

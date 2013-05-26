@@ -2,7 +2,7 @@
 //  Votes.h
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/15/13.
+//  Created by Joshua Kaden on 5/25/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -13,10 +13,10 @@
 
 @interface Votes : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * isYea;
-@property (nonatomic, retain) NSNumber * isCast;
 @property (nonatomic, retain) NSString * intramuralID;
-@property (nonatomic, retain) Round *round;
+@property (nonatomic, retain) NSNumber * isCast;
+@property (nonatomic, retain) NSNumber * isYea;
 @property (nonatomic, retain) GamePlayer *gamePlayer;
+@property (nonatomic, retain) Round *round;
 
 @end

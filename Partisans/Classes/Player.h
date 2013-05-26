@@ -2,7 +2,7 @@
 //  Player.h
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/15/13.
+//  Created by Joshua Kaden on 5/25/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -21,9 +21,9 @@
 @property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSString * peerID;
 @property (nonatomic, retain) NSString * playerName;
-@property (nonatomic, retain) Image *picture;
 @property (nonatomic, retain) GamePlayer *gamePlayer;
-@property (nonatomic, retain) Scorecard *partisanScorecard;
 @property (nonatomic, retain) Scorecard *operativeScorecard;
+@property (nonatomic, retain) Scorecard *partisanScorecard;
+@property (nonatomic, retain) Image *picture;
 
 @end

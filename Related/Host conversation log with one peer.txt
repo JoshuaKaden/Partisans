@@ -1,0 +1,131 @@
+2013-05-25 15:39:07.732 [38061:707] BTM: attaching to BTServer
+2013-05-25 15:39:07.748 [38061:707] -[startSession] [Line 150] Initiating p2p session with ID: ThoroughlyRandomSessionIDForPartisans as peer: AA31DA1A-318B-4820-A68B-FF4ACA4931C8
+2013-05-25 15:39:16.994 [38061:707] -[isPeerSubordinate:] [Line 91] ourID:2054612607 theirID:431315448
+2013-05-25 15:39:16.996 [38061:707] -[isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 15:39:16.997 [38061:707] -[session:peer:didChangeState:] [Line 892] Connecting to peer:431315448 named:(null)
+2013-05-25 15:39:17.188 [38061:707] -[isPeerSubordinate:] [Line 91] ourID:2054612607 theirID:431315448
+2013-05-25 15:39:17.191 [38061:707] -[isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 15:39:17.193 [38061:707] -[session:peer:didChangeState:] [Line 904] Connected to subordinate peer:431315448 named:(null)
+2013-05-25 15:39:17.220 [38061:707] -[receiveData:fromPeer:inSession:context:] [Line 707] Received object from peer 431315448.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+    responseKey = "";
+    to = "";
+}
+2013-05-25 15:39:17.226 [38061:707] -[isPeerSubordinate:] [Line 91] ourID:2054612607 theirID:431315448
+2013-05-25 15:39:17.228 [38061:707] -[isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 15:39:17.230 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 472 bytes to peer 431315448.
+2013-05-25 15:39:17.231 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+    responseKey = "";
+    to = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+}
+2013-05-25 15:39:17.243 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 514 bytes to peer 431315448.
+2013-05-25 15:39:17.244 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+    responseKey = "71D6F8FD-CC4C-4D7F-96E3-31B064336DCB";
+    to = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+}
+2013-05-25 15:39:17.302 [38061:707] -[receiveData:fromPeer:inSession:context:] [Line 707] Received object from peer 431315448.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+    responseKey = "299C6DB4-9722-41C1-844E-C8321925603A";
+    to = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+}
+2013-05-25 15:39:17.328 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 6927 bytes to peer 431315448.
+2013-05-25 15:39:17.332 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.438011 0.881057 0.176211 1\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"0x28f330 <x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1>\";\n    modifiedDate = \"2013-05-25 19:13:36 +0000\";\n    peerID = \"x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"\\\";\\n    intramuralID = \\\"x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Image/p1\\\";\\n    managedObjectID = \\\"0x2932c0 <x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Image/p1>\\\";\\n}\";\n    playerName = Chicklet;\n}";
+    responseKey = "299C6DB4-9722-41C1-844E-C8321925603A";
+    to = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+}
+2013-05-25 15:39:17.376 [38061:707] -[receiveData:fromPeer:inSession:context:] [Line 707] Received object from peer 431315448.
+The object:
+{
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.71072 0.792291 0.823789 1\";\n    importedObjectString = \"x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1\";\n    intramuralID = \"x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"\";\n    modifiedDate = \"2013-05-25 19:12:39 +0000\";\n    peerID = \"x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Image/p1\\\";\\n    intramuralID = \\\"x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Image/p1\\\";\\n    managedObjectID = \\\"\\\";\\n}\";\n    playerName = Zippo;\n}";
+    responseKey = "71D6F8FD-CC4C-4D7F-96E3-31B064336DCB";
+    to = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+}
+2013-05-25 15:39:17.537 [38061:707] -[receiveData:fromPeer:inSession:context:] [Line 707] Received object from peer 431315448.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 5;
+    commandMessageTypeName = JoinGame;
+    from = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+    responseKey = "1D0AA59A-E0F4-49E7-BBE5-ED958E4F6130";
+    to = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+}
+2013-05-25 15:39:17.637 [38061:4907] -[archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 1208 bytes to peer 431315448.
+2013-05-25 15:39:17.641 [38061:4907] -[archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+    object = "{\n    Class = GameEnvoy;\n    endDate = \"\";\n    gamePlayerEnvoys = \"(\\n    \\\"{\\\\n    Class = GamePlayerEnvoy;\\\\n    gameID = \\\\\\\"x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Game/p2\\\\\\\";\\\\n    importedObjectString = \\\\\\\"\\\\\\\";\\\\n    intramuralID = \\\\\\\"\\\\\\\";\\\\n    isHost = 1;\\\\n    isOperative = 0;\\\\n    managedObjectID = \\\\\\\"\\\\\\\";\\\\n    playerID = \\\\\\\"x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1\\\\\\\";\\\\n}\\\",\\n    \\\"{\\\\n    Class = GamePlayerEnvoy;\\\\n    gameID = \\\\\\\"x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Game/p2\\\\\\\";\\\\n    importedObjectString = \\\\\\\"\\\\\\\";\\\\n    intramuralID = \\\\\\\"\\\\\\\";\\\\n    isHost = 0;\\\\n    isOperative = 0;\\\\n    managedObjectID = \\\\\\\"\\\\\\\";\\\\n    playerID = \\\\\\\"x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1\\\\\\\";\\\\n}\\\"\\n)\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Game/p2\";\n    managedObjectID = \"0x2d8190 <x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Game/p2>\";\n    modifiedDate = \"2013-05-25 19:39:17 +0000\";\n    numberOfPlayers = 5;\n    startDate = \"\";\n}";
+    responseKey = "1D0AA59A-E0F4-49E7-BBE5-ED958E4F6130";
+    to = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+}
+2013-05-25 15:39:17.930 [38061:707] -[session:peer:didChangeState:] [Line 939] Disconnected from peer:431315448 named:x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1
+2013-05-25 15:39:17.942 [38061:707] -[isPeerSubordinate:] [Line 91] ourID:2054612607 theirID:431315448
+2013-05-25 15:39:17.943 [38061:707] -[isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 15:39:17.944 [38061:707] -[session:peer:didChangeState:] [Line 892] Connecting to peer:431315448 named:x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1
+2013-05-25 15:39:19.228 [38061:707] -[session:peer:didChangeState:] [Line 961] Peer is unavailable:431315448 named:x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1
+2013-05-25 15:39:19.237 [38061:707] -[isPeerSubordinate:] [Line 91] ourID:2054612607 theirID:1518764440
+2013-05-25 15:39:19.238 [38061:707] -[isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 15:39:19.239 [38061:707] -[session:peer:didChangeState:] [Line 892] Connecting to peer:1518764440 named:(null)
+2013-05-25 15:39:19.455 [38061:707] -[isPeerSubordinate:] [Line 91] ourID:2054612607 theirID:1518764440
+2013-05-25 15:39:19.458 [38061:707] -[isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 15:39:19.461 [38061:707] -[session:peer:didChangeState:] [Line 904] Connected to subordinate peer:1518764440 named:(null)
+2013-05-25 15:39:19.486 [38061:707] -[receiveData:fromPeer:inSession:context:] [Line 707] Received object from peer 1518764440.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+    responseKey = "";
+    to = "";
+}
+2013-05-25 15:39:19.492 [38061:707] -[isPeerSubordinate:] [Line 91] ourID:2054612607 theirID:1518764440
+2013-05-25 15:39:19.494 [38061:707] -[isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 15:39:19.497 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 472 bytes to peer 431315448.
+2013-05-25 15:39:19.498 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+    responseKey = "";
+    to = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+}
+2013-05-25 15:39:19.506 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 514 bytes to peer 431315448.
+2013-05-25 15:39:19.507 [38061:707] -[archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://EEFB773B-6558-40D2-8F96-6FE6D2F071AC/Player/p1";
+    responseKey = "CBF9B594-B30D-49E6-B0C8-83BB1F11CF6B";
+    to = "x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1";
+}
+2013-05-25 15:39:44.715 [38061:707] -[session:peer:didChangeState:] [Line 939] Disconnected from peer:1518764440 named:x-coredata://5D9D9D10-BAE1-40F4-9FC1-CEE48040A1BF/Player/p1

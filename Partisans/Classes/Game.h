@@ -2,7 +2,7 @@
 //  Game.h
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/15/13.
+//  Created by Joshua Kaden on 5/25/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -13,10 +13,11 @@
 
 @interface Game : NSManagedObject
 
-@property (nonatomic, retain) NSDate * startDate;
-@property (nonatomic, retain) NSString * intramuralID;
 @property (nonatomic, retain) NSDate * endDate;
+@property (nonatomic, retain) NSString * intramuralID;
 @property (nonatomic, retain) NSNumber * numberOfPlayers;
+@property (nonatomic, retain) NSDate * startDate;
+@property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSSet *gamePlayers;
 @property (nonatomic, retain) NSSet *missions;
 @property (nonatomic, retain) NSSet *rounds;

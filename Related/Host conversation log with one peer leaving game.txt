@@ -1,0 +1,168 @@
+2013-05-25 12:49:37.794 Partisans iOS5[37882:707] BTM: attaching to BTServer
+2013-05-25 12:49:38.009 Partisans iOS5[37882:707] -[JSKPeerController startSession] [Line 150] Initiating p2p session with ID: ThoroughlyRandomSessionIDForPartisans as peer: 1CC1DAD8-A9E8-4E96-BEA9-6ABDE1A4C965
+2013-05-25 12:49:43.166 Partisans iOS5[37882:707] -[JSKPeerController isPeerSubordinate:] [Line 91] ourID:1594218532 theirID:664883970
+2013-05-25 12:49:43.168 Partisans iOS5[37882:707] -[JSKPeerController isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 12:49:43.169 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 884] Connecting to peer:664883970 named:(null)
+2013-05-25 12:49:43.479 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 894] Connected to peer:664883970 named:(null)
+2013-05-25 12:49:43.486 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 407 bytes to peer 664883970.
+2013-05-25 12:49:43.489 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+    responseKey = "";
+    to = "";
+}
+2013-05-25 12:49:43.510 Partisans iOS5[37882:707] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 699] Received object from peer 664883970.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+    responseKey = "";
+    to = "";
+}
+2013-05-25 12:49:43.579 Partisans iOS5[37882:3a17] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 514 bytes to peer 664883970.
+2013-05-25 12:49:43.582 Partisans iOS5[37882:3a17] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+    responseKey = "D231F121-7E4A-4DF9-BC0A-7F1F28D05CE2";
+    to = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+}
+2013-05-25 12:49:43.720 Partisans iOS5[37882:707] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 699] Received object from peer 664883970.
+The object:
+{
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.767487 0.789272 0.854626 1\";\n    importedObjectString = \"x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1\";\n    intramuralID = \"x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"\";\n    modifiedDate = \"2013-05-25 16:49:16 +0000\";\n    peerID = \"x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Image/p1\\\";\\n    intramuralID = \\\"x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Image/p1\\\";\\n    managedObjectID = \\\"\\\";\\n}\";\n    playerName = Zippo;\n}";
+    responseKey = "D231F121-7E4A-4DF9-BC0A-7F1F28D05CE2";
+    to = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+}
+2013-05-25 12:49:43.734 Partisans iOS5[37882:707] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 699] Received object from peer 664883970.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+    responseKey = "BC047E79-2E32-4156-B880-47518D56CA3B";
+    to = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+}
+2013-05-25 12:49:43.759 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 4615 bytes to peer 664883970.
+2013-05-25 12:49:43.765 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.257942 0.832599 0.114278 1\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"0x1eabf0 <x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1>\";\n    modifiedDate = \"2013-05-25 16:48:53 +0000\";\n    peerID = \"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"\\\";\\n    intramuralID = \\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Image/p1\\\";\\n    managedObjectID = \\\"0x1e9a20 <x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Image/p1>\\\";\\n}\";\n    playerName = Chicklet;\n}";
+    responseKey = "BC047E79-2E32-4156-B880-47518D56CA3B";
+    to = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+}
+2013-05-25 12:49:43.943 Partisans iOS5[37882:707] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 699] Received object from peer 664883970.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 5;
+    commandMessageTypeName = JoinGame;
+    from = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+    responseKey = "F612BC24-0AE3-4EE5-9713-32959257A586";
+    to = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+}
+2013-05-25 12:49:44.046 Partisans iOS5[37882:3a17] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 1143 bytes to peer 664883970.
+2013-05-25 12:49:44.051 Partisans iOS5[37882:3a17] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+    object = "{\n    Class = GameEnvoy;\n    endDate = \"\";\n    gamePlayerEnvoys = \"(\\n    \\\"{\\\\n    Class = GamePlayerEnvoy;\\\\n    gameID = \\\\\\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Game/p1\\\\\\\";\\\\n    importedObjectString = \\\\\\\"\\\\\\\";\\\\n    intramuralID = \\\\\\\"\\\\\\\";\\\\n    isHost = 1;\\\\n    isOperative = 0;\\\\n    managedObjectID = \\\\\\\"\\\\\\\";\\\\n    playerID = \\\\\\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1\\\\\\\";\\\\n}\\\",\\n    \\\"{\\\\n    Class = GamePlayerEnvoy;\\\\n    gameID = \\\\\\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Game/p1\\\\\\\";\\\\n    importedObjectString = \\\\\\\"\\\\\\\";\\\\n    intramuralID = \\\\\\\"\\\\\\\";\\\\n    isHost = 0;\\\\n    isOperative = 0;\\\\n    managedObjectID = \\\\\\\"\\\\\\\";\\\\n    playerID = \\\\\\\"x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1\\\\\\\";\\\\n}\\\"\\n)\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Game/p1\";\n    managedObjectID = \"0x114970 <x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Game/p1>\";\n    modifiedDate = \"2013-05-25 16:49:43 +0000\";\n    numberOfPlayers = 5;\n    startDate = \"\";\n}";
+    responseKey = "F612BC24-0AE3-4EE5-9713-32959257A586";
+    to = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+}
+2013-05-25 12:49:44.321 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 922] Disconnected from peer:664883970 named:x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1
+2013-05-25 12:49:44.329 Partisans iOS5[37882:707] -[JSKPeerController isPeerSubordinate:] [Line 91] ourID:1594218532 theirID:664883970
+2013-05-25 12:49:44.330 Partisans iOS5[37882:707] -[JSKPeerController isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 12:49:44.331 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 884] Connecting to peer:664883970 named:x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1
+2013-05-25 12:49:45.673 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 944] Peer is unavailable:664883970 named:x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1
+2013-05-25 12:49:45.682 Partisans iOS5[37882:707] -[JSKPeerController isPeerSubordinate:] [Line 91] ourID:1594218532 theirID:31021277
+2013-05-25 12:49:45.683 Partisans iOS5[37882:707] -[JSKPeerController isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 12:49:45.684 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 884] Connecting to peer:31021277 named:(null)
+2013-05-25 12:49:45.916 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 894] Connected to peer:31021277 named:(null)
+2013-05-25 12:49:45.922 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 407 bytes to peer 31021277.
+2013-05-25 12:49:45.925 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+    responseKey = "";
+    to = "";
+}
+2013-05-25 12:49:45.964 Partisans iOS5[37882:707] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 699] Received object from peer 31021277.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+    responseKey = "";
+    to = "";
+}
+2013-05-25 12:49:45.975 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 514 bytes to peer 664883970.
+2013-05-25 12:49:45.976 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+    responseKey = "C4167B48-ED18-40EA-84B7-20EF407027A8";
+    to = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+}
+2013-05-25 12:49:45.981 Partisans iOS5[37882:707] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 699] Received object from peer 31021277.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+    responseKey = "EC38B8D5-1492-4316-AB50-67FCBCCEC48F";
+    to = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+}
+2013-05-25 12:49:46.001 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 4615 bytes to peer 664883970.
+2013-05-25 12:49:46.003 Partisans iOS5[37882:707] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = Response;
+    from = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.257942 0.832599 0.114278 1\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"0x1eabf0 <x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1>\";\n    modifiedDate = \"2013-05-25 16:48:53 +0000\";\n    peerID = \"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"\\\";\\n    intramuralID = \\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Image/p1\\\";\\n    managedObjectID = \\\"0x1e9a20 <x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Image/p1>\\\";\\n}\";\n    playerName = Chicklet;\n}";
+    responseKey = "EC38B8D5-1492-4316-AB50-67FCBCCEC48F";
+    to = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+}
+2013-05-25 12:50:03.309 Partisans iOS5[37882:707] -[JSKPeerController receiveData:fromPeer:inSession:context:] [Line 699] Received object from peer 31021277.
+The object:
+{
+    Class = JSKCommandMessage;
+    commandMessageType = 6;
+    commandMessageTypeName = LeaveGame;
+    from = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+    responseKey = "";
+    to = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+}
+2013-05-25 12:50:03.335 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 922] Disconnected from peer:31021277 named:x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1
+2013-05-25 12:50:03.344 Partisans iOS5[37882:707] -[JSKPeerController isPeerSubordinate:] [Line 91] ourID:1594218532 theirID:31021277
+2013-05-25 12:50:03.346 Partisans iOS5[37882:707] -[JSKPeerController isPeerSubordinate:] [Line 94] They are subordinate
+2013-05-25 12:50:03.347 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 884] Connecting to peer:31021277 named:x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1
+2013-05-25 12:50:03.365 Partisans iOS5[37882:3a1f] -[JSKPeerController archiveAndSend:to:] [Line 526] Unable to find a peer ID for the name x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1
+2013-05-25 12:50:03.372 Partisans iOS5[37882:3a1f] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 412] Will send a message of 1389 bytes to peer 664883970.
+2013-05-25 12:50:03.377 Partisans iOS5[37882:3a1f] -[JSKPeerController archiveAndSend:toSessionPeerID:] [Line 413] Sending: {
+    Class = JSKCommandParcel;
+    commandParcelType = 0;
+    commandParcelTypeName = Update;
+    from = "x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1";
+    object = "{\n    Class = GameEnvoy;\n    endDate = \"\";\n    gamePlayerEnvoys = \"(\\n    \\\"{\\\\n    Class = GamePlayerEnvoy;\\\\n    gameID = \\\\\\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Game/p1\\\\\\\";\\\\n    importedObjectString = \\\\\\\"\\\\\\\";\\\\n    intramuralID = \\\\\\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/GamePlayer/p1\\\\\\\";\\\\n    isHost = 1;\\\\n    isOperative = 0;\\\\n    managedObjectID = \\\\\\\"0x122d70 <x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/GamePlayer/p1>\\\\\\\";\\\\n    playerID = \\\\\\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Player/p1\\\\\\\";\\\\n}\\\",\\n    \\\"{\\\\n    Class = GamePlayerEnvoy;\\\\n    gameID = \\\\\\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Game/p1\\\\\\\";\\\\n    importedObjectString = \\\\\\\"\\\\\\\";\\\\n    intramuralID = \\\\\\\"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/GamePlayer/p2\\\\\\\";\\\\n    isHost = 0;\\\\n    isOperative = 0;\\\\n    managedObjectID = \\\\\\\"0x11aca0 <x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/GamePlayer/p2>\\\\\\\";\\\\n    playerID = \\\\\\\"x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1\\\\\\\";\\\\n}\\\"\\n)\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Game/p1\";\n    managedObjectID = \"0x1e99c0 <x-coredata://22A5FC9D-53D4-4ED7-9242-C9AFADD391D3/Game/p1>\";\n    modifiedDate = \"2013-05-25 16:49:43 +0000\";\n    numberOfPlayers = 5;\n    startDate = \"\";\n}";
+    responseKey = "";
+    to = "x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1";
+}
+2013-05-25 12:50:04.851 Partisans iOS5[37882:707] -[JSKPeerController session:peer:didChangeState:] [Line 944] Peer is unavailable:31021277 named:x-coredata://22F1C95F-E55A-4DEE-B9C0-507BA8F95665/Player/p1

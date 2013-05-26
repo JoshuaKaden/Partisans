@@ -3,6 +3,7 @@
     <entity name="Game" representedClassName="Game" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="numberOfPlayers" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="gamePlayers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GamePlayer" inverseName="game" inverseEntity="GamePlayer" syncable="YES"/>
@@ -82,7 +83,7 @@
         <relationship name="round" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Round" inverseName="votes" inverseEntity="Round" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Game" positionX="-1802" positionY="-1071" width="128" height="150"/>
+        <element name="Game" positionX="-1802" positionY="-1071" width="128" height="165"/>
         <element name="GamePlayer" positionX="-1865" positionY="-651" width="128" height="180"/>
         <element name="Image" positionX="-2043" positionY="-606" width="128" height="165"/>
         <element name="Mission" positionX="-983" positionY="-954" width="128" height="180"/>

@@ -2,7 +2,7 @@
 //  Votes.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/15/13.
+//  Created by Joshua Kaden on 5/25/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -13,10 +13,10 @@
 
 @implementation Votes
 
-@dynamic isYea;
-@dynamic isCast;
 @dynamic intramuralID;
-@dynamic round;
+@dynamic isCast;
+@dynamic isYea;
 @dynamic gamePlayer;
+@dynamic round;
 
 @end

@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *endDate;
 @property (nonatomic, assign) NSUInteger numberOfPlayers;
+@property (nonatomic, strong) NSDate *modifiedDate;
 
 - (NSArray *)players;
 - (PlayerEnvoy *)host;

@@ -2,7 +2,7 @@
 //  Mission.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/15/13.
+//  Created by Joshua Kaden on 5/25/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -14,14 +14,14 @@
 
 @implementation Mission
 
-@dynamic missionNumber;
 @dynamic didSucceed;
-@dynamic isComplete;
-@dynamic teamCount;
-@dynamic missionName;
 @dynamic intramuralID;
+@dynamic isComplete;
+@dynamic missionName;
+@dynamic missionNumber;
+@dynamic teamCount;
 @dynamic game;
-@dynamic teamMembers;
 @dynamic rounds;
+@dynamic teamMembers;
 
 @end

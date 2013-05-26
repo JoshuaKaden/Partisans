@@ -2,7 +2,7 @@
 //  Round.h
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/15/13.
+//  Created by Joshua Kaden on 5/25/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -13,8 +13,8 @@
 
 @interface Round : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * roundNumber;
 @property (nonatomic, retain) NSString * intramuralID;
+@property (nonatomic, retain) NSNumber * roundNumber;
 @property (nonatomic, retain) Game *game;
 @property (nonatomic, retain) GamePlayer *leader;
 @property (nonatomic, retain) Mission *mission;

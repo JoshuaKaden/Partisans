@@ -35,6 +35,7 @@
 @synthesize endDate = m_endDate;
 @synthesize numberOfPlayers = m_numberOfPlayers;
 @synthesize gamePlayerEnvoys = m_gamePlayerEnvoys;
+@synthesize modifiedDate = m_modifiedDate;
 
 - (void)dealloc
 {
@@ -45,6 +46,7 @@
     [m_startDate release];
     [m_endDate release];
     [m_gamePlayerEnvoys release];
+    [m_modifiedDate release];
     
     [super dealloc];
 }
@@ -67,6 +69,8 @@
             self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
             //            self.isNative = YES;
         }
+        
+        self.modifiedDate = managedObject.modifiedDate;
         
         [self loadGamePlayerEnvoys];
     }
@@ -121,6 +125,12 @@
         gamePlayerEnvoysString = @"";
     }
     
+    NSString *modifiedDateString = self.modifiedDate.description;
+    if (!modifiedDateString)
+    {
+        modifiedDateString = @"";
+    }
+    
     NSDictionary *descDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               @"GameEnvoy", @"Class",
                               intramuralIDString, @"intramuralID",
@@ -129,7 +139,8 @@
                               startDateString, @"startDate",
                               endDateString, @"endDate",
                               [NSNumber numberWithUnsignedInteger:self.numberOfPlayers].description, @"numberOfPlayers",
-                              gamePlayerEnvoysString, @"gamePlayerEnvoys", nil];
+                              gamePlayerEnvoysString, @"gamePlayerEnvoys",
+                              modifiedDateString, @"modifiedDate", nil];
     return descDict.description;
 }
 
@@ -334,6 +345,7 @@
     gamePlayerEnvoy.gameID = self.intramuralID;
     gamePlayerEnvoy.isHost = YES;
     NSArray *gamePlayerEnvoys = [self.gamePlayerEnvoys arrayByAddingObject:gamePlayerEnvoy];
+    [gamePlayerEnvoy release];
     [self setGamePlayerEnvoys:gamePlayerEnvoys];
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
 //    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
@@ -360,6 +372,7 @@
     gamePlayerEnvoy.gameID = self.intramuralID;
     gamePlayerEnvoy.isHost = NO;
     NSArray *gamePlayerEnvoys = [self.gamePlayerEnvoys arrayByAddingObject:gamePlayerEnvoy];
+    [gamePlayerEnvoy release];
     [self setGamePlayerEnvoys:gamePlayerEnvoys];
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
 //    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
@@ -488,11 +501,30 @@
         model = [NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:context];
     }
     
+    
+    if (model.modifiedDate && self.modifiedDate)
+    {
+        NSDate *oldDate = model.modifiedDate;
+        NSDate *newDate = self.modifiedDate;
+        NSInteger seconds = [SystemMessage secondsBetweenDates:oldDate toDate:newDate];
+        if (seconds == 0)
+        {
+            self.modifiedDate = [NSDate date];
+        }
+    }
+    
+    if (!self.modifiedDate)
+    {
+        self.modifiedDate = [NSDate date];
+    }
+    
+    
     model.intramuralID = self.intramuralID; 
     
     model.startDate = self.startDate;
     model.endDate = self.endDate;
     model.numberOfPlayers = [NSNumber numberWithUnsignedInteger:self.numberOfPlayers];
+    model.modifiedDate = self.modifiedDate;
     
     if (self.gamePlayerEnvoys)
     {

@@ -141,8 +141,6 @@ static NSString * const kDataManagerSQLiteBaseName = @"Partisans";
 
 
 
-
-
 - (NSURL *)databaseURL {
     
 	NSString *libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];

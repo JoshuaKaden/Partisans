@@ -221,6 +221,7 @@
             [newEnvoy addHost:[SystemMessage playerEnvoy]];
             [newEnvoy commitAndSave];
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
+            [newEnvoy release];
         }
     }
     if (![SystemMessage isPlayerOnline])
