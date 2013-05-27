@@ -42,6 +42,7 @@ extern NSString * const kPartisansNotificationGameChanged;
 + (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType;
 + (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
 + (void)sendCommandMessage:(JSKCommandMessage *)commandMessage shouldAwaitResponse:(BOOL)shouldAwaitResponse;
++ (void)sendCommandParcel:(JSKCommandParcel *)parcel shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 + (void)sendToHost:(JSKCommandMessageType)commandMessageType;
 + (void)sendParcelToPlayers:(JSKCommandParcel *)parcel;
 

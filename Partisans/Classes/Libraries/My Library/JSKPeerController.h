@@ -21,8 +21,7 @@
 - (void)peerController:(JSKPeerController *)peerController connectedToPeer:(NSString *)peerID;
 - (void)peerController:(JSKPeerController *)peerController receivedCommandMessage:(JSKCommandMessage *)commandMessage;
 - (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel;
-- (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingTo:(JSKCommandMessage *)commandMessage;
-- (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingToObject:(NSObject *)respondingToObject;
+- (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingTo:(NSObject <NSCoding> *)inResponseTo;
 - (void)peerController:(JSKPeerController *)peerController receivedObject:(NSObject <NSCoding> *)object from:peerID;
 //- (NSString *)peerNameFromID:(NSString *)peerID;
 - (void)peerControllerQueueHasEmptied:(JSKPeerController *)peerController;
@@ -46,6 +45,7 @@ extern const NSUInteger PeerMessageSizeLimit;
 - (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
 - (void)sendCommandMessage:(JSKCommandMessage *)commandMessage shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 - (void)sendCommandParcel:(JSKCommandParcel *)commandParcel;
+- (void)sendCommandParcel:(JSKCommandParcel *)commandParcel shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 - (void)sendObject:(NSObject <NSCoding> *)object to:(NSString *)peerID;
 
 // For this to work, please ensure that the supplied "object" has an NSString "responseKey" attribute.

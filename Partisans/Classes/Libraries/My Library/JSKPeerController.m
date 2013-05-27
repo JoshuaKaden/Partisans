@@ -453,6 +453,50 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     [self archiveAndSend:commandParcel to:commandParcel.to];
 }
 
+- (void)sendCommandParcel:(JSKCommandParcel *)commandParcel shouldAwaitResponse:(BOOL)shouldAwaitResponse
+{
+    if (!commandParcel) {
+        return;
+    }
+    
+    if (shouldAwaitResponse)
+    {
+        // Stash the message so we can associate the reply when it arrives.
+        NSString *responseKey = commandParcel.responseKey;
+        if (!responseKey)
+        {
+            responseKey = [self buildRandomString];
+            [commandParcel setResponseKey:responseKey];
+        }
+        NSDictionary *stash = self.stash;
+        if (stash.count == 0)
+        {
+            self.stash = [NSDictionary dictionaryWithObject:commandParcel forKey:responseKey];
+        }
+        else
+        {
+            // Not really sure if this logic branch saves me anything.
+            // Or whether it in fact costs me!
+            if ([stash valueForKey:responseKey])
+            {
+                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:stash];
+                [list setValue:commandParcel forKey:responseKey];
+                self.stash = [NSDictionary dictionaryWithDictionary:list];
+                [list release];
+            }
+            else
+            {
+                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithCapacity:stash.count + 1];
+                [list addEntriesFromDictionary:stash];
+                [list setValue:commandParcel forKey:responseKey];
+                self.stash = [NSDictionary dictionaryWithDictionary:list];
+                [list release];
+            }
+        }
+    }
+    
+    [self archiveAndSend:commandParcel to:commandParcel.to];
+}
 
 
 - (void)archiveAndSend:(NSObject <NSCoding> *)object toSessionPeerID:(NSString *)sessionPeerID
@@ -654,45 +698,44 @@ const NSUInteger PeerMessageSizeLimit = 10000;
     if (commandParcel.responseKey)
     {
         // Try to match this response with its waiting message.
+        NSObject <NSCoding> *object = nil;
+        BOOL isCustom = NO;
         JSKCommandMessage *msg = [self.stash objectForKey:commandParcel.responseKey];
-        if (msg)
+        if (!msg)
         {
-            // We may want to deal with this ourselves.
-            if (msg.commandMessageType == JSKCommandMessageTypeIdentification)
-            {
-                
-            }
-            
-            // Pass on the message to the delegate.
-            if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:respondingTo:)])
-            {
-                [self.delegate peerController:self receivedCommandParcel:commandParcel respondingTo:msg];
+            // Try the custom object stash.
+            object = [self.customStash objectForKey:commandParcel.responseKey];
+        }
+        if (object)
+        {
+            isCustom = YES;
+        }
+        else
+        {
+            object = msg;
+        }
+        // Pass on the parcel to the delegate.
+        if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:respondingTo:)])
+        {
+            [self.delegate peerController:self receivedCommandParcel:commandParcel respondingTo:object];
 
+            // Stash management.
+            if (isCustom)
+            {
+                NSMutableDictionary *customList = [[NSMutableDictionary alloc] initWithDictionary:self.customStash];
+                [customList setValue:nil forKey:commandParcel.responseKey];
+                self.customStash = [NSDictionary dictionaryWithDictionary:customList];
+                [customList release];
+            }
+            else
+            {
                 NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:self.stash];
                 [list setValue:nil forKey:commandParcel.responseKey];
                 self.stash = [NSDictionary dictionaryWithDictionary:list];
                 [list release];
-                
-                return;
             }
-        }
-        else
-        {
-            // Try to match this response with its waiting custom object.
-            NSObject <NSCoding> *object = [self.customStash objectForKey:commandParcel.responseKey];
-            if (object)
-            {
-                NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:self.customStash];
-                [list setValue:nil forKey:commandParcel.responseKey];
-                self.customStash = [NSDictionary dictionaryWithDictionary:list];
-                [list release];
-                
-                if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:respondingToObject:)])
-                {
-                    [self.delegate peerController:self receivedCommandParcel:commandParcel respondingToObject:object];
-                    return;
-                }
-            }
+            
+            return;
         }
     }
 
@@ -749,19 +792,21 @@ const NSUInteger PeerMessageSizeLimit = 10000;
                 [self sendCommandMessage:msg];
                 [msg release];
             }
-            
-            
-            // At this stage the delegate may want to handle the identification message.
-            // For example, to create a Player record.
-            if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandMessage:)])
+            else
             {
-                [self.delegate peerController:self receivedCommandMessage:commandMessage];
+                // At this stage the delegate may want to handle the identification message.
+                // For example, to create a Player record.
+                // This is because the subordinate always sends the first ID message.
+                // Therefore the ID message that we just received in response to our ID message.
+                if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandMessage:)])
+                {
+                    [self.delegate peerController:self receivedCommandMessage:commandMessage];
+                }
             }
-            
-            if ([self.delegate respondsToSelector:@selector(peerController:connectedToPeer:)])
-            {
-                [self.delegate peerController:self connectedToPeer:peerID];
-            }
+//            if ([self.delegate respondsToSelector:@selector(peerController:connectedToPeer:)])
+//            {
+//                [self.delegate peerController:self connectedToPeer:peerID];
+//            }
         }
         return;
     }
