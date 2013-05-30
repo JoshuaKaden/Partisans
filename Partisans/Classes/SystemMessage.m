@@ -314,18 +314,17 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     // Add this player to the game.
     AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithEnvoy:other];
     [op setCompletionBlock:^(void) {
-        // Then, once we've saved, send the game envoy to the new player.
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+        // Then, once we've saved, send the game envoy to all players. All players need to know!
         // Reload it just to be sure.
         GameEnvoy *gameEnvoy = [GameEnvoy envoyFromPlayer:other];
         JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
-                                                                       to:other.peerID
+                                                                       to:nil
                                                                      from:self.playerEnvoy.peerID
                                                                    object:gameEnvoy
                                                               responseKey:message.responseKey];
-        [self.peerController sendCommandParcel:parcel];
+        [SystemMessage sendParcelToPlayers:parcel];
         [parcel release];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
@@ -558,7 +557,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
             }
             else if ([commandParcel.object isKindOfClass:[PlayerEnvoy class]])
             {
-                [self handleGetInfoResponse:commandParcel];
+                [self handlePlayerUpdate:commandParcel];
             }
             break;
             
@@ -812,8 +811,12 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     GameEnvoy *gameEnvoy = [self gameEnvoy];
     for (PlayerEnvoy *playerEnvoy in gameEnvoy.players)
     {
-        [parcel setTo:playerEnvoy.peerID];
-        [peerController sendCommandParcel:parcel];
+        // Don't send to ourselves.
+        if (![playerEnvoy.peerID isEqualToString:[self playerEnvoy].peerID])
+        {
+            [parcel setTo:playerEnvoy.peerID];
+            [peerController sendCommandParcel:parcel];
+        }
     }
 }
 

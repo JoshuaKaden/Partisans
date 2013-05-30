@@ -136,17 +136,24 @@
 
 - (void)confirmLeaveGame
 {
-    if (!self.leaveGameAlertView)
+    if (self.leaveGameAlertView)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leave Game"
-                                                            message:@"Would you like to leave, thus ending the game?"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Cancel"
-                                                  otherButtonTitles:
-                                  @"Yes", nil];
-        self.leaveGameAlertView = alertView;
-        [alertView release];
+        self.leaveGameAlertView.delegate = nil;
+        self.leaveGameAlertView = nil;
     }
+    NSString *message = NSLocalizedString(@"Would you like to leave the game?", @"Would you like to leave the game?  --  alert message");
+    if ([SystemMessage gameEnvoy].startDate)
+    {
+        message = NSLocalizedString(@"Would you like to leave the game? This will end the game.", @"Would you like to leave the game? This will end the game.  --  alert message");
+    }
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leave Game"
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:
+                              @"Yes", nil];
+    self.leaveGameAlertView = alertView;
+    [alertView release];
     
     [self.leaveGameAlertView show];
 }

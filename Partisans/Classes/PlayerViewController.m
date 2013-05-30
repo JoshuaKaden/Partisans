@@ -9,7 +9,9 @@
 #import "PlayerViewController.h"
 
 #import "ColorPickerViewController.h"
+#import "GameEnvoy.h"
 #import "ImageEnvoy.h"
+#import "JSKCommandParcel.h"
 #import "JSKMenuViewController.h"
 #import "PlayerEnvoy.h"
 #import "PlayerPicklistItems.h"
@@ -536,6 +538,18 @@
     
     [self.playerEnvoy commitAndSave];
     [self enterViewMode];
+    
+    // If in a game, let the other players know about this change.
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+    if (gameEnvoy)
+    {
+        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate
+                                                                       to:nil
+                                                                     from:self.playerEnvoy.peerID
+                                                                   object:self.playerEnvoy];
+        [SystemMessage sendParcelToPlayers:parcel];
+        [parcel release];
+    }
 }
 
 

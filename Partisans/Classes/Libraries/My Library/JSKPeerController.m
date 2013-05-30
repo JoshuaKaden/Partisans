@@ -714,8 +714,9 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         {
             object = msg;
         }
+        
         // Pass on the parcel to the delegate.
-        if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:respondingTo:)])
+        if (object && [self.delegate respondsToSelector:@selector(peerController:receivedCommandParcel:respondingTo:)])
         {
             [self.delegate peerController:self receivedCommandParcel:commandParcel respondingTo:object];
 

@@ -20,6 +20,7 @@
 @property (readwrite) BOOL hasJoinedGame;
 
 - (void)peerWasUpdated:(NSNotification *)notification;
+- (void)peerWasCreated:(NSNotification *)notification;
 - (void)gameWasJoined:(NSNotification *)notification;
 
 @end
@@ -56,6 +57,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerWasUpdated:) name:JSKNotificationPeerUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerWasCreated:) name:JSKNotificationPeerCreated object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameWasJoined:) name:kPartisansNotificationJoinedGame object:nil];
     
     NSString *message = NSLocalizedString(@"Scanning for a game...", @"Scanning for a game...  -  status message");
@@ -94,6 +96,11 @@
     JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeJoinGame to:peerID from:[SystemMessage playerEnvoy].peerID];
     [SystemMessage sendCommandMessage:msg shouldAwaitResponse:YES];
     [msg release];
+}
+
+- (void)peerWasCreated:(NSNotification *)notification
+{
+    [self peerWasUpdated:notification];
 }
 
 - (void)gameWasJoined:(NSNotification *)notification
