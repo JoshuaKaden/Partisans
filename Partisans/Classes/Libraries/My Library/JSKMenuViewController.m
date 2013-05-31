@@ -248,7 +248,9 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 
 - (void)shouldRefreshNotificationFired:(NSNotification *)notification
 {
-    [self refreshData:NO];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshData:NO];
+    });
 }
 
 

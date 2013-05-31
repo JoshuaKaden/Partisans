@@ -49,6 +49,8 @@
 
 - (void)startScanning
 {
+    [SystemMessage sharedInstance].isLookingForGame = YES;
+    
     if (![SystemMessage isPlayerOnline])
     {
         [SystemMessage putPlayerOnline];
@@ -56,8 +58,8 @@
 //    [SystemMessage broadcastCommandMessage:JSKCommandMessageTypeJoinGame];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerWasUpdated:) name:JSKNotificationPeerUpdated object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerWasCreated:) name:JSKNotificationPeerCreated object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerWasUpdated:) name:JSKNotificationPeerUpdated object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerWasCreated:) name:JSKNotificationPeerCreated object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameWasJoined:) name:kPartisansNotificationJoinedGame object:nil];
     
     NSString *message = NSLocalizedString(@"Scanning for a game...", @"Scanning for a game...  -  status message");
@@ -66,6 +68,8 @@
 
 - (void)stopScanning
 {
+    [SystemMessage sharedInstance].isLookingForGame = NO;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [SystemMessage putPlayerOffline];
     
@@ -75,32 +79,32 @@
 
 - (void)peerWasUpdated:(NSNotification *)notification
 {
-    if (self.hasJoinedGame)
-    {
-        return;
-    }
-    // The idea here is that once we've exchanged pleasantries with a peer,
-    // we ask to join a game if that peer happens to be hosting.
-    NSString *peerID = (NSString *)notification.object;
-    PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:peerID];
-    // Paranoia check
-    if (!other)
-    {
-        return;
-    }
-    // If there's no player name, then we don't yet have all the player's info.
-    if (!other.playerName)
-    {
-        return;
-    }
-    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeJoinGame to:peerID from:[SystemMessage playerEnvoy].peerID];
-    [SystemMessage sendCommandMessage:msg shouldAwaitResponse:YES];
-    [msg release];
+//    if (self.hasJoinedGame)
+//    {
+//        return;
+//    }
+//    // The idea here is that once we've exchanged pleasantries with a peer,
+//    // we ask to join a game if that peer happens to be hosting.
+//    NSString *peerID = (NSString *)notification.object;
+//    PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:peerID];
+//    // Paranoia check
+//    if (!other)
+//    {
+//        return;
+//    }
+//    // If there's no player name, then we don't yet have all the player's info.
+//    if (!other.playerName)
+//    {
+//        return;
+//    }
+//    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeJoinGame to:peerID from:[SystemMessage playerEnvoy].peerID];
+//    [SystemMessage sendCommandMessage:msg shouldAwaitResponse:YES];
+//    [msg release];
 }
 
 - (void)peerWasCreated:(NSNotification *)notification
 {
-    [self peerWasUpdated:notification];
+//    [self peerWasUpdated:notification];
 }
 
 - (void)gameWasJoined:(NSNotification *)notification

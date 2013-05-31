@@ -18,11 +18,11 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 @interface JSKPeerController ()
 
-@property (nonatomic, strong) GKSession *gkSession;
-@property (nonatomic, strong) NSOperationQueue *queue;
-@property (nonatomic, assign) BOOL isSending;
+@property (atomic, strong) GKSession *gkSession;
+@property (atomic, strong) NSOperationQueue *queue;
+@property (atomic, assign) BOOL isSending;
 @property (readwrite, nonatomic, strong) NSString *myPeerID;
-@property (nonatomic, strong) NSDictionary *knownPeerNames;
+@property (atomic, strong) NSDictionary *knownPeerNames;
 @property (atomic, assign) BOOL isSlave;
 @property (atomic, strong) NSDictionary *stash;
 @property (atomic, strong) NSDictionary *customStash;
@@ -128,6 +128,13 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 - (void)startSession
 {
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue setName:@"com.chadfordsoftware.peerControllerQueue"];
+    [queue setMaxConcurrentOperationCount:1];
+    [queue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
+    self.queue = queue;
+    [queue release];
+    
     if (!self.knownPeerNames)
     {
         self.knownPeerNames = [NSDictionary dictionary];
@@ -784,30 +791,26 @@ const NSUInteger PeerMessageSizeLimit = 10000;
             {
                 self.knownPeerNames = [NSDictionary dictionaryWithObjectsAndKeys:peerID, sessionPeerID, nil];
             }
+        }
+        
             
-            
-            // If this peer is subordinate, let's send back our ID.
-            if ([self isPeerSubordinate:sessionPeerID])
+        // If this peer is subordinate, let's send back our ID.
+        if ([self isPeerSubordinate:sessionPeerID])
+        {
+            JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerID from:self.peerID];
+            [self sendCommandMessage:msg];
+            [msg release];
+        }
+        else
+        {
+            // At this stage the delegate may want to handle the identification message.
+            // For example, to create a Player record.
+            // This is because the subordinate always sends the first ID message.
+            // Therefore the ID message that we just received in response to our ID message.
+            if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandMessage:)])
             {
-                JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerID from:self.peerID];
-                [self sendCommandMessage:msg];
-                [msg release];
+                [self.delegate peerController:self receivedCommandMessage:commandMessage];
             }
-            else
-            {
-                // At this stage the delegate may want to handle the identification message.
-                // For example, to create a Player record.
-                // This is because the subordinate always sends the first ID message.
-                // Therefore the ID message that we just received in response to our ID message.
-                if ([self.delegate respondsToSelector:@selector(peerController:receivedCommandMessage:)])
-                {
-                    [self.delegate peerController:self receivedCommandMessage:commandMessage];
-                }
-            }
-//            if ([self.delegate respondsToSelector:@selector(peerController:connectedToPeer:)])
-//            {
-//                [self.delegate peerController:self connectedToPeer:peerID];
-//            }
         }
         return;
     }
@@ -929,21 +932,21 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 
 
 
-- (NSOperationQueue *)queue {
-    
-    if (m_queue) {
-        return m_queue;
-    }
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue setName:@"com.sweetheartsoftware.peerControllerQueue"];
-    [queue setMaxConcurrentOperationCount:1];
-    [queue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
-    self.queue = queue;
-    [queue release];
-    
-    return m_queue;
-}
+//- (NSOperationQueue *)queue {
+//    
+//    if (m_queue) {
+//        return m_queue;
+//    }
+//    
+//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+//    [queue setName:@"com.chadfordsoftware.peerControllerQueue"];
+//    [queue setMaxConcurrentOperationCount:1];
+//    [queue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
+//    self.queue = queue;
+//    [queue release];
+//    
+//    return m_queue;
+//}
 
 
 - (NSString *)myPeerID {

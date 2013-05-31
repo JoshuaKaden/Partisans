@@ -49,6 +49,9 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 //- (void)handlePlayerLeftParcel:(JSKCommandParcel *)parcel;
 - (void)handleGameUpdate:(JSKCommandParcel *)parcel;
 - (void)handlePlayerUpdate:(JSKCommandParcel *)parcel;
+- (void)handleJoinGameStash:(NSString *)fromPeerID;
+- (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey;
+- (void)askToJoinGame:(NSString *)toPeerID;
 
 @end
 
@@ -61,6 +64,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 @synthesize gameEnvoy = m_gameEnvoy;
 @synthesize stash = m_stash;
 @synthesize peerIDs = m_peerIDs;
+@synthesize isLookingForGame = m_isLookingForGame;
 
 
 - (void)dealloc
@@ -133,7 +137,9 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         JSKCommandParcel *gameParcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.playerEnvoy.peerID object:gameEnvoy];
         [SystemMessage sendParcelToPlayers:gameParcel];
         [gameParcel release];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+        });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
@@ -247,6 +253,8 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         return;
     }
     
+    self.isLookingForGame = NO;
+    
     // Save the game locally.
     GameEnvoy *envoy = (GameEnvoy *)response.object;
     CreateGameOperation *op = [[CreateGameOperation alloc] initWithEnvoy:envoy];
@@ -274,7 +282,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 - (void)handleJoinGameMessage:(JSKCommandMessage *)message
 {
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:message.from];
-    if (!other.playerName || other.playerName.length == 0)
+    if (!other || !other.playerName || other.playerName.length == 0)
     {
         if (!self.stash)
         {
@@ -285,9 +293,15 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         [self.stash addObject:message];
         return;
     }
+    [self addPlayerToGame:other responseKey:message.responseKey];
+}
+
+
+- (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey
+{
     BOOL proceed = NO;
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    if (gameEnvoy.host.managedObjectID == [SystemMessage playerEnvoy].managedObjectID)
+    if ([SystemMessage isHost])
     {
         // We are hosting a game.
         if (gameEnvoy.players.count < kPartisansMaxPlayers && !gameEnvoy.startDate)
@@ -300,7 +314,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     if (proceed)
     {
         // Make sure this player isn't already in the game.
-        if ([gameEnvoy isPlayerInGame:other])
+        if ([gameEnvoy isPlayerInGame:playerEnvoy])
         {
             proceed = NO;
         }
@@ -312,17 +326,17 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     }
     
     // Add this player to the game.
-    AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithEnvoy:other];
+    AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithEnvoy:playerEnvoy];
     [op setCompletionBlock:^(void) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         // Then, once we've saved, send the game envoy to all players. All players need to know!
         // Reload it just to be sure.
-        GameEnvoy *gameEnvoy = [GameEnvoy envoyFromPlayer:other];
+        GameEnvoy *gameEnvoy = [GameEnvoy envoyFromPlayer:playerEnvoy];
         JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
                                                                        to:nil
                                                                      from:self.playerEnvoy.peerID
                                                                    object:gameEnvoy
-                                                              responseKey:message.responseKey];
+                                                              responseKey:responseKey];
         [SystemMessage sendParcelToPlayers:parcel];
         [parcel release];
     }];
@@ -427,6 +441,22 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         {
             UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
             [op setCompletionBlock:^(void){
+                // Send them our info back, to be polite.
+                JSKCommandParcel *response = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
+                                                                                 to:parcel.from
+                                                                               from:self.playerEnvoy.peerID
+                                                                             object:self.playerEnvoy
+                                                                        responseKey:parcel.responseKey];
+                [SystemMessage sendCommandParcel:response shouldAwaitResponse:NO];
+                [response release];
+                if (self.isLookingForGame)
+                {
+                    [self askToJoinGame:other.peerID];
+                }
+                else
+                {
+                    [self handleJoinGameStash:other.peerID];
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
                 });
@@ -447,6 +477,14 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
                                                                     responseKey:parcel.responseKey];
             [SystemMessage sendCommandParcel:response shouldAwaitResponse:NO];
             [response release];
+            if (self.isLookingForGame)
+            {
+                [self askToJoinGame:other.peerID];
+            }
+            else
+            {
+                [self handleJoinGameStash:other.peerID];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerCreated object:other.peerID];
             });
@@ -474,16 +512,13 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         {
             UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
             [op setCompletionBlock:^(void){
-                for (JSKCommandMessage *stashedMsg in self.stash)
+                if (self.isLookingForGame)
                 {
-                    if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
-                    {
-                        if ([stashedMsg.from isEqualToString:other.peerID])
-                        {
-                            [self.stash removeObject:stashedMsg];
-                            [self handleJoinGameMessage:stashedMsg];
-                        }
-                    }
+                    [self askToJoinGame:other.peerID];
+                }
+                else
+                {
+                    [self handleJoinGameStash:other.peerID];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
@@ -497,16 +532,13 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         
         CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:other];
         [op setCompletionBlock:^(void){
-            for (JSKCommandMessage *stashedMsg in self.stash)
+            if (self.isLookingForGame)
             {
-                if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
-                {
-                    if ([stashedMsg.from isEqualToString:other.peerID])
-                    {
-                        [self.stash removeObject:stashedMsg];
-                        [self handleJoinGameMessage:stashedMsg];
-                    }
-                }
+                [self askToJoinGame:other.peerID];
+            }
+            else
+            {
+                [self handleJoinGameStash:other.peerID];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerCreated object:other.peerID];
@@ -520,6 +552,48 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     return;
 }
 
+
+- (void)askToJoinGame:(NSString *)toPeerID
+{
+    if (!self.isLookingForGame)
+    {
+        return;
+    }
+    if ([SystemMessage isHost])
+    {
+        return;
+    }
+    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeJoinGame to:toPeerID from:[SystemMessage playerEnvoy].peerID];
+    [SystemMessage sendCommandMessage:msg shouldAwaitResponse:YES];
+    [msg release];
+}
+
+
+- (void)handleJoinGameStash:(NSString *)fromPeerID
+{
+    if (![SystemMessage isHost])
+    {
+        return;
+    }
+//    BOOL shouldAddPlayer = YES;
+    for (JSKCommandMessage *stashedMsg in self.stash)
+    {
+        if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
+        {
+            if ([stashedMsg.from isEqualToString:fromPeerID])
+            {
+                [self.stash removeObject:stashedMsg];
+                [self handleJoinGameMessage:stashedMsg];
+//                shouldAddPlayer = NO;
+                break;
+            }
+        }
+    }
+//    if (shouldAddPlayer)
+//    {
+//        [self addPlayerToGame:[PlayerEnvoy envoyFromPeerID:fromPeerID] responseKey:nil];
+//    }
+}
 
 
 - (void)peerController:(JSKPeerController *)peerController connectedToPeer:(NSString *)peerID
@@ -612,19 +686,39 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 {
     NSString *peerID = commandMessage.from;
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:peerID];
+    // An Identification message contains the sender's ID.
+    // This is the equivalent of telling someone your name.
+    // Once I save that player's ID, and she saves mine, we can communicate.
+    if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
+    {
+        [self handleIdentification:commandMessage];
+        return;
+    }
+    
+    if (commandMessage.commandMessageType == JSKCommandMessageTypeJoinGame)
+    {
+        [self handleJoinGameMessage:commandMessage];
+    }
+    
     if (!other)
     {
         // Unidentified or unmatched player.
-        // This is actually ok if the command is an Identification.
-        // An Identification message contains the sender's ID.
-        // This is the equivalent of telling someone your name.
-        // Once I save that player's ID, and she saves mine, we can communicate.
-        if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
-        {
-            [self handleIdentification:commandMessage];
-        }
+        debugLog(@"Message from unknown peer %@", commandMessage);
         return;
     }
+//    if (!other)
+//    {
+//        // Unidentified or unmatched player.
+//        // This is actually ok if the command is an Identification.
+//        // An Identification message contains the sender's ID.
+//        // This is the equivalent of telling someone your name.
+//        // Once I save that player's ID, and she saves mine, we can communicate.
+//        if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
+//        {
+//            [self handleIdentification:commandMessage];
+//        }
+//        return;
+//    }
 
     PlayerEnvoy *playerEnvoy = self.playerEnvoy;
     JSKCommandMessageType messageType = commandMessage.commandMessageType;
@@ -683,6 +777,25 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 
 
 #pragma mark - Class methods
+
++ (BOOL)isHost
+{
+    GameEnvoy *gameEnvoy = [self gameEnvoy];
+    if (!gameEnvoy)
+    {
+        return NO;
+    }
+    PlayerEnvoy *playerEnvoy = [self playerEnvoy];
+    PlayerEnvoy *host = [gameEnvoy host];
+    if ([playerEnvoy.intramuralID isEqualToString:host.intramuralID])
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
 
 + (BOOL)isPlayerOnline
 {

@@ -26,6 +26,7 @@ extern NSString * const kPartisansNotificationGameChanged;
 
 @property (nonatomic, strong) PlayerEnvoy *playerEnvoy;
 @property (nonatomic, strong) GameEnvoy *gameEnvoy;
+@property (nonatomic, assign) BOOL isLookingForGame;
 
 + (SystemMessage *)sharedInstance;
 + (PlayerEnvoy *)playerEnvoy;
@@ -45,5 +46,6 @@ extern NSString * const kPartisansNotificationGameChanged;
 + (void)sendCommandParcel:(JSKCommandParcel *)parcel shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 + (void)sendToHost:(JSKCommandMessageType)commandMessageType;
 + (void)sendParcelToPlayers:(JSKCommandParcel *)parcel;
++ (BOOL)isHost;
 
 @end
