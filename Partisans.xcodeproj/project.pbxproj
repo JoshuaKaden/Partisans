@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9300C7D8175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */; };
+		9300C7D9175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */; };
 		9303BE5117467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
 		9303BE5217467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
 		9303BE551746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
@@ -162,6 +164,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9300C7D6175BFCA00047AA15 /* GameTesterMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameTesterMenuItems.h; path = Classes/GameTesterMenuItems.h; sourceTree = "<group>"; };
+		9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameTesterMenuItems.m; path = Classes/GameTesterMenuItems.m; sourceTree = "<group>"; };
 		9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JoinGameViewController.h; path = Classes/JoinGameViewController.h; sourceTree = "<group>"; };
 		9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JoinGameViewController.m; path = Classes/JoinGameViewController.m; sourceTree = "<group>"; };
 		9303BE531746836A0065ADD2 /* GameJoiner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameJoiner.h; path = Classes/GameJoiner.h; sourceTree = "<group>"; };
@@ -334,6 +338,8 @@
 		93040362174E7CF000ED169F /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				9300C7D6175BFCA00047AA15 /* GameTesterMenuItems.h */,
+				9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */,
 				93040363174E7D0900ED169F /* ToolsMenuItems.h */,
 				93040364174E7D0900ED169F /* ToolsMenuItems.m */,
 			);
@@ -835,6 +841,7 @@
 				93C4430117511D28000DEC63 /* Player.m in Sources */,
 				93C4430517511D28000DEC63 /* Round.m in Sources */,
 				93C4430917511D28000DEC63 /* Mission.m in Sources */,
+				9300C7D8175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,6 +900,7 @@
 				93C4430217511D28000DEC63 /* Player.m in Sources */,
 				93C4430617511D28000DEC63 /* Round.m in Sources */,
 				93C4430A17511D28000DEC63 /* Mission.m in Sources */,
+				9300C7D9175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

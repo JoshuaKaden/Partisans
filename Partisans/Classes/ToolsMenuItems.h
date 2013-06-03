@@ -13,6 +13,7 @@
 typedef enum
 {
     ToolsMenuRowClearRemoteData,
+    ToolsMenuRowGameTester,
     ToolsMenuRow_MaxValue
 } ToolsMenuRow;
 

@@ -168,6 +168,11 @@
     [self updateNameLabels];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -218,9 +223,16 @@
     [self.changeFaveColorButton setHidden:YES];
     [self.changeNameButton setHidden:YES];
     [self.changePictureButton setHidden:YES];
-    [self.deleteButton setHidden:YES];
     [self.saveButton setHidden:YES];
-    [self.switchPlayersButton setHidden:NO];
+    [self.deleteButton setHidden:YES];
+    if (![SystemMessage gameEnvoy])
+    {
+        [self.switchPlayersButton setHidden:NO];
+    }
+    else
+    {
+        [self.switchPlayersButton setHidden:YES];
+    }
 }
 
 - (void)enterSaveMode
@@ -593,7 +605,14 @@
     [self.changeFaveColorButton setHidden:NO];
     [self.changeNameButton setHidden:NO];
     [self.changePictureButton setHidden:NO];
-    [self.deleteButton setHidden:NO];
+    if (![SystemMessage gameEnvoy])
+    {
+        [self.deleteButton setHidden:NO];
+    }
+    else
+    {
+        [self.deleteButton setHidden:YES];
+    }
     [self.saveButton setHidden:YES];
     [self.switchPlayersButton setHidden:YES];
 }
@@ -610,7 +629,14 @@
     [self.changePictureButton setHidden:YES];
     [self.deleteButton setHidden:YES];
     [self.saveButton setHidden:YES];
-    [self.switchPlayersButton setHidden:NO];
+    if (![SystemMessage gameEnvoy])
+    {
+        [self.switchPlayersButton setHidden:NO];
+    }
+    else
+    {
+        [self.switchPlayersButton setHidden:YES];
+    }
     
     [self updateNameLabels];
 }

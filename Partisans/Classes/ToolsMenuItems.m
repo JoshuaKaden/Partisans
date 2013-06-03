@@ -7,11 +7,23 @@
 //
 
 #import "ToolsMenuItems.h"
+#import "GameTesterMenuItems.h"
+
+
+@interface ToolsMenuItems()
+
+@property (nonatomic, strong) GameTesterMenuItems *gameTesterMenuItems;
+
+@end
+
 
 @implementation ToolsMenuItems
 
+@synthesize gameTesterMenuItems = m_gameTesterMenuItems;
+
 - (void)dealloc
 {
+    [m_gameTesterMenuItems release];
     [super dealloc];
 }
 
@@ -55,6 +67,10 @@
             label = NSLocalizedString(@"Clear Remote Data", @"Clear Remote Data  --  menu label");
             break;
 
+        case ToolsMenuRowGameTester:
+            label = NSLocalizedString(@"Game Setup Tester", @"Game Setup Tester  --  menu label");
+            break;
+            
         case ToolsMenuRow_MaxValue:
             break;
     }
@@ -72,6 +88,10 @@
     {
         case ToolsMenuRowClearRemoteData:
             break;
+            
+        case ToolsMenuRowGameTester:
+            targetClass = [JSKMenuViewController class];
+            break;
 
         case ToolsMenuRow_MaxValue:
             break;
@@ -80,6 +100,28 @@
     return targetClass;
 }
 
+
+- (id)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerDelegateAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row)
+    {
+        case ToolsMenuRowClearRemoteData:
+            break;
+            
+        case ToolsMenuRowGameTester:
+        {
+            GameTesterMenuItems *items = [[GameTesterMenuItems alloc] init];
+            self.gameTesterMenuItems = items;
+            [items release];
+            return self.gameTesterMenuItems;
+            break;
+        }
+            
+        case ToolsMenuRow_MaxValue:
+            break;
+    }
+    return nil;
+}
 
 
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController

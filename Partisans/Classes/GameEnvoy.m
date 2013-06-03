@@ -367,6 +367,21 @@
     {
         self.gamePlayerEnvoys = [NSArray array];
     }
+    
+    BOOL matchFound = NO;
+    for (PlayerEnvoy *existingPlayer in self.gamePlayerEnvoys)
+    {
+        if ([existingPlayer.intramuralID isEqualToString:playerEnvoy.intramuralID])
+        {
+            matchFound = YES;
+            break;
+        }
+    }
+    if (matchFound)
+    {
+        return;
+    }
+    
     GamePlayerEnvoy *gamePlayerEnvoy = [[GamePlayerEnvoy alloc] init];
     gamePlayerEnvoy.playerID = playerEnvoy.intramuralID;
     gamePlayerEnvoy.gameID = self.intramuralID;
@@ -412,7 +427,7 @@
     GamePlayerEnvoy *theGamePlayerEnvoyThatWillBeRemoved = nil;
     for (GamePlayerEnvoy *gamePlayerEnvoy in self.gamePlayerEnvoys)
     {
-        if ([gamePlayerEnvoy.intramuralID isEqualToString:playerEnvoy.intramuralID])
+        if ([gamePlayerEnvoy.playerID isEqualToString:playerEnvoy.intramuralID])
         {
             // But not if we're removing the host!
             // Can't do that.
@@ -528,23 +543,34 @@
     
     if (self.gamePlayerEnvoys)
     {
+        for (GamePlayer *gamePlayer in model.gamePlayers)
+        {
+            if (![gamePlayer.isHost boolValue])
+            {
+                [context deleteObject:gamePlayer];
+            }
+        }
+        
         for (GamePlayerEnvoy *envoy in self.gamePlayerEnvoys)
         {
             GamePlayer *gamePlayer = nil;
-            if (envoy.managedObjectID)
+            if (envoy.isHost)
             {
-                gamePlayer = (GamePlayer *)[context objectWithID:envoy.managedObjectID];
-            }
-            
-            // Safety net in case the model was created on another thread.
-            if (!gamePlayer)
-            {
-                if (self.intramuralID)
+                if (envoy.managedObjectID)
                 {
-                    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.intramuralID];
-                    if (gamePlayers.count > 0)
+                    gamePlayer = (GamePlayer *)[context objectWithID:envoy.managedObjectID];
+                }
+                
+                // Safety net in case the model was created on another thread.
+                if (!gamePlayer)
+                {
+                    if (self.intramuralID)
                     {
-                        gamePlayer = [gamePlayers objectAtIndex:0];
+                        NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.intramuralID];
+                        if (gamePlayers.count > 0)
+                        {
+                            gamePlayer = [gamePlayers objectAtIndex:0];
+                        }
                     }
                 }
             }
