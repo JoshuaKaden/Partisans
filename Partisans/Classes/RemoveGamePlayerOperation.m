@@ -68,7 +68,7 @@
     // Here is the actual work of the class.
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     [gameEnvoy removePlayer:self.envoy];
-    
+    [gameEnvoy commitInContext:context];
     
     
     

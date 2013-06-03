@@ -112,7 +112,8 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     }
     BOOL proceed = NO;
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    if (gameEnvoy.host.managedObjectID == [SystemMessage playerEnvoy].managedObjectID)
+    PlayerEnvoy *host = gameEnvoy.host;
+    if ([host.intramuralID isEqualToString:[SystemMessage playerEnvoy].intramuralID])
     {
         // We are hosting a game.
         proceed = YES;
