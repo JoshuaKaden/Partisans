@@ -18,10 +18,12 @@
 
 @property (readwrite) BOOL isScanning;
 @property (readwrite) BOOL hasJoinedGame;
+@property (nonatomic, strong) NSTimer *timer;
 
 - (void)peerWasUpdated:(NSNotification *)notification;
 - (void)peerWasCreated:(NSNotification *)notification;
 - (void)gameWasJoined:(NSNotification *)notification;
+- (void)timerFired:(id)sender;
 
 @end
 
@@ -31,10 +33,13 @@
 @synthesize delegate = m_delegate;
 @synthesize isScanning = m_isScanning;
 @synthesize hasJoinedGame = m_hasJoinedGame;
+@synthesize timer = m_timer;
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.timer invalidate];
+    [m_timer release];
     [super dealloc];
 }
 
@@ -64,6 +69,12 @@
     
     NSString *message = NSLocalizedString(@"Scanning for a game...", @"Scanning for a game...  -  status message");
     [self raiseStatusMessage:message];
+    
+    if (!self.timer)
+    {
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+        self.timer = timer;
+    }
 }
 
 - (void)stopScanning
@@ -109,11 +120,20 @@
 
 - (void)gameWasJoined:(NSNotification *)notification
 {
+    [self.timer invalidate];
     self.hasJoinedGame = YES;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate gameJoinerDidFinish:self];
     });
+}
+
+- (void)timerFired:(id)sender
+{
+    if (self.hasJoinedGame)
+    {
+        return;
+    }
 }
 
 @end

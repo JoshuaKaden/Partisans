@@ -31,6 +31,7 @@
 - (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 - (void)handleLeaveGameAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 - (void)gameChanged:(NSNotification *)notification;
+- (void)leaveGame;
 
 @end
 
@@ -198,19 +199,25 @@
         {
             // Yes -- leave the game.
             // Tell the Host that we're leaving.
-            [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame];
-            
-            GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-            [gameEnvoy deleteGame];
-            [[SystemMessage sharedInstance] setGameEnvoy:nil];
-            [SystemMessage putPlayerOffline];
-            [self.menuViewController invokePop:YES];
+            [self performSelectorOnMainThread:@selector(leaveGame) withObject:nil waitUntilDone:YES];
+//            [SystemMessage putPlayerOffline];
             break;
         }
-            
+        
         default:
             break;
     }
+}
+
+- (void)leaveGame
+{
+    [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame];
+    
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+    [gameEnvoy deleteGame];
+    [[SystemMessage sharedInstance] setGameEnvoy:nil];
+//    [SystemMessage putPlayerOffline];
+    [self.menuViewController invokePop:YES];
 }
 
 

@@ -659,9 +659,6 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         debugLog(@"Unable to find a peer ID for the name %@", to);
         return;
     }
-    
-    
-     
 
     [self archiveAndSend:object toSessionPeerID:peerID];
 }
@@ -835,7 +832,10 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 //    debugLog(@"Received message of %d bytes from peer %@.", data.length, peer);
     
     NSObject <NSCoding> *statement = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    debugLog(@"Received object from peer %@.\nThe object:\n%@", peer, statement);
+    if (kJSKPeerControllerIsDebugOn)
+    {
+        debugLog(@"Received object from peer %@.\nThe object:\n%@", peer, statement);
+    }
     
     //    debugLog(@"Received raw: %@", data);
     

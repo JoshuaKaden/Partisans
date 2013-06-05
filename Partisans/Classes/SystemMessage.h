@@ -47,5 +47,6 @@ extern NSString * const kPartisansNotificationGameChanged;
 + (void)sendToHost:(JSKCommandMessageType)commandMessageType;
 + (void)sendParcelToPlayers:(JSKCommandParcel *)parcel;
 + (BOOL)isHost;
++ (void)askToJoinGame;
 
 @end
