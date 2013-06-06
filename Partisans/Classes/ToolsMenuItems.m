@@ -71,6 +71,10 @@
             label = NSLocalizedString(@"Game Setup Tester", @"Game Setup Tester  --  menu label");
             break;
             
+        case ToolsMenuRowServerTester:
+            label = NSLocalizedString(@"Server Tester", @"Server Tester  --  menu label");
+            break;
+            
         case ToolsMenuRow_MaxValue:
             break;
     }
@@ -93,6 +97,10 @@
             targetClass = [JSKMenuViewController class];
             break;
 
+        case ToolsMenuRowServerTester:
+            targetClass = [JSKMenuViewController class];
+            break;
+            
         case ToolsMenuRow_MaxValue:
             break;
     }
