@@ -10,6 +10,7 @@
 
 #import "JSKDataMiner.h"
 #import "RootViewController.h"
+#import "SystemMessage.h"
 
 @interface AppDelegate ()
 
@@ -76,6 +77,7 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [JSKDataMiner save];
+    [SystemMessage putPlayerOffline];
 }
 
 @end

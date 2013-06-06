@@ -165,7 +165,9 @@ const NSUInteger PeerMessageSizeLimit = 10000;
 }
 
 
-- (void)stopSession {
+- (void)stopSession
+{
+    self.gkSession.available = NO;
     
     if (m_queue) {
         if (m_queue.operationCount > 0) {
@@ -175,10 +177,8 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         }
     }
     
-    if (self.gkSession.available) {
-        [self.gkSession disconnectFromAllPeers];
-        self.gkSession.available = NO;
-    }
+    [self.gkSession disconnectFromAllPeers];
+
     self.gkSession.delegate = nil;
     self.gkSession = nil;
     
@@ -531,7 +531,7 @@ const NSUInteger PeerMessageSizeLimit = 10000;
         {
             debugLog(@"Connecting to peer:%@ named:%@", sessionPeerID, peerName);
         }
-        [self.gkSession connectToPeer:sessionPeerID withTimeout:20];
+        [self.gkSession connectToPeer:sessionPeerID withTimeout:5];
         return;
     }
     
