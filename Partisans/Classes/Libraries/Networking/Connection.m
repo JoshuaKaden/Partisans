@@ -27,6 +27,8 @@
 
 #import "Connection.h"
 
+#import "SystemMessage.h"
+
 
 // Declare C callback functions
 void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType, void *info);
@@ -37,10 +39,10 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 @interface Connection ()
 
 // Properties
-@property(nonatomic,retain) NSString* host;
 @property(nonatomic,assign) int port;
 @property(nonatomic,assign) CFSocketNativeHandle connectedSocketHandle;
 @property(nonatomic,retain) NSNetService* netService;
+@property (nonatomic, strong) NSMutableData *outgoingDataBuffer;
 
 // Initialize
 - (void)clean;
@@ -67,7 +69,8 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 @synthesize host, port;
 @synthesize connectedSocketHandle;
 @synthesize netService;
-@synthesize connectionID = m_connectionID;
+@synthesize outgoingDataBuffer = m_outgoingDataBuffer;
+@synthesize peerID = m_peerID;
 
 
 // Initialize, empty
@@ -79,7 +82,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     writeStreamOpen = NO;
     
     incomingDataBuffer = nil;
-    outgoingDataBuffer = nil;
+    self.outgoingDataBuffer = nil;
     
     self.netService = nil;
     self.host = nil;
@@ -93,8 +96,8 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     self.netService = nil;
     self.host = nil;
     self.delegate = nil;
-    
-    [m_connectionID release];
+    [m_outgoingDataBuffer release];
+    [m_peerID release];
     
     [super dealloc];
 }
@@ -180,7 +183,9 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     
     // Create buffers
     incomingDataBuffer = [[NSMutableData alloc] init];
-    outgoingDataBuffer = [[NSMutableData alloc] init];
+    NSMutableData *outgoingDataBuffer = [[NSMutableData alloc] init];
+    self.outgoingDataBuffer = outgoingDataBuffer;
+    [outgoingDataBuffer release];
     
     // Indicate that we want socket to be closed whenever streams are closed
     CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket,
@@ -238,8 +243,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     [incomingDataBuffer release];
     incomingDataBuffer = NULL;
     
-    [outgoingDataBuffer release];
-    outgoingDataBuffer = NULL;
+    self.outgoingDataBuffer = nil;
     
     // Stop net service?
     if ( netService != nil ) {
@@ -259,10 +263,12 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     
     // Write header: lengh of raw packet
     int packetLength = [rawPacket length];
-    [outgoingDataBuffer appendBytes:&packetLength length:sizeof(int)];
+    [self.outgoingDataBuffer appendBytes:&packetLength length:sizeof(int)];
     
     // Write body: encoded NSDictionary
-    [outgoingDataBuffer appendData:rawPacket];
+    [self.outgoingDataBuffer appendData:rawPacket];
+    
+//    debugLog(@"outgoingDataBuffer %@", self.outgoingDataBuffer);
     
     // Try to write to stream
     [self writeOutgoingBufferToStream];
@@ -418,7 +424,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     }
     
     // Do we have anything to write?
-    if ( [outgoingDataBuffer length] == 0 ) {
+    if ( [self.outgoingDataBuffer length] == 0 ) {
         return;
     }
     
@@ -428,7 +434,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     }
     
     // Write as much as we can
-    CFIndex writtenBytes = CFWriteStreamWrite(writeStream, [outgoingDataBuffer bytes], [outgoingDataBuffer length]);
+    CFIndex writtenBytes = CFWriteStreamWrite(writeStream, [self.outgoingDataBuffer bytes], [self.outgoingDataBuffer length]);
     
     if ( writtenBytes == -1 ) {
         // Error occurred. Close everything up.
@@ -438,7 +444,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     }
     
     NSRange range = {0, writtenBytes};
-    [outgoingDataBuffer replaceBytesInRange:range withBytes:NULL length:0];
+    [self.outgoingDataBuffer replaceBytesInRange:range withBytes:NULL length:0];
 }
 
 
@@ -474,6 +480,10 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     if ( ![self connect] ) {
         [delegate connectionAttemptFailed:self];
         [self close];
+    }
+    else
+    {
+        [delegate netServiceDidResolveAddress:self];
     }
 }
 

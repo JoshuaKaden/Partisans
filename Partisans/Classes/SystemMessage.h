@@ -17,10 +17,14 @@
 
 extern NSString * const JSKNotificationPeerCreated;
 extern NSString * const JSKNotificationPeerUpdated;
+
 extern NSUInteger const kPartisansMaxPlayers;
 extern NSUInteger const kPartisansMinPlayers;
+extern NSString * const kPartisansNetServiceName;
+
 extern NSString * const kPartisansNotificationJoinedGame;
 extern NSString * const kPartisansNotificationGameChanged;
+extern NSString * const kPartisansNotificationConnectedToHost;
 
 @interface SystemMessage : JSKSystemMessage
 
@@ -38,15 +42,14 @@ extern NSString * const kPartisansNotificationGameChanged;
 + (BOOL)isPlayerOnline;
 + (void)putPlayerOnline;
 + (void)putPlayerOffline;
-+ (void)resetPeerController;
-+ (void)broadcastObject:(NSObject <NSCoding> *)object;
 + (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType;
 + (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
 + (void)sendCommandMessage:(JSKCommandMessage *)commandMessage shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 + (void)sendCommandParcel:(JSKCommandParcel *)parcel shouldAwaitResponse:(BOOL)shouldAwaitResponse;
-+ (void)sendToHost:(JSKCommandMessageType)commandMessageType;
++ (void)sendToHost:(JSKCommandMessageType)commandMessageType shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 + (void)sendParcelToPlayers:(JSKCommandParcel *)parcel;
 + (BOOL)isHost;
 + (void)askToJoinGame;
++ (BOOL)connectToService:(NSNetService *)service;
 
 @end

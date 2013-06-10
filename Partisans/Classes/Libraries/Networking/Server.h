@@ -33,7 +33,6 @@
     uint16_t port;
     CFSocketRef listeningSocket;
     id<ServerDelegate> delegate;
-    NSNetService* netService;
 }
 
 // Initialize and start listening for connections

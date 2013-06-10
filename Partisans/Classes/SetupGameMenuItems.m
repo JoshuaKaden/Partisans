@@ -211,7 +211,7 @@
 
 - (void)leaveGame
 {
-    [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame];
+    [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame shouldAwaitResponse:YES];
     
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     [gameEnvoy deleteGame];

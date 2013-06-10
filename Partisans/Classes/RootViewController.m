@@ -118,11 +118,11 @@
         PlayerEnvoy *playerEnvoy = [PlayerEnvoy defaultEnvoy];
         [[SystemMessage sharedInstance] setPlayerEnvoy:playerEnvoy];
         
-        if ([SystemMessage isPlayerOnline])
-        {
-            // This is here to early-instantiate the Peer Controller.
-            [SystemMessage resetPeerController];
-        }
+//        if ([SystemMessage isPlayerOnline])
+//        {
+//            // This is here to early-instantiate the Peer Controller.
+//            [SystemMessage resetPeerController];
+//        }
     }
     
     [self showFirstViewController];

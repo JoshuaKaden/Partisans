@@ -1,100 +1,96 @@
 //
-//  NetHost.m
+//  NetPlayer.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/6/13.
+//  Created by Joshua Kaden on 6/7/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
-#import "NetHost.h"
+#import "NetPlayer.h"
 
 #import "Connection.h"
 #import "ConnectionDelegate.h"
-#import "JSKCommandParcel.h"
-#import "Server.h"
-#import "ServerDelegate.h"
 #import "SystemMessage.h"
 
 
-const BOOL kNetHostIsDebugOn = YES;
+const BOOL kNetPlayerIsDebugOn = YES;
 
 
-@interface NetHost() <ServerDelegate, ConnectionDelegate>
+@interface NetPlayer () <ConnectionDelegate>
 
-@property (nonatomic, strong) Server *server;
-@property (nonatomic, strong) NSMutableSet *clients;
+@property (nonatomic, strong) Connection *connection;
 @property (nonatomic, strong) NSDictionary *stash;
-@property (assign) BOOL hasStarted;
+@property (readwrite) BOOL hasStarted;
+@property (nonatomic, assign) BOOL hasAddressBeenResolved;
 
-- (void)sendObject:(NSObject<NSCoding> *)object to:(NSString *)peerID;
+- (void)sendObject:(NSObject<NSCoding> *)object;
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection;
 - (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(Connection *)connection;
 
 @end
 
 
-@implementation NetHost
+@implementation NetPlayer
 
+@synthesize connection = m_connection;
 @synthesize delegate = m_delegate;
-@synthesize server = m_server;
-@synthesize clients = m_clients;
 @synthesize stash = m_stash;
 @synthesize hasStarted = m_hasStarted;
+@synthesize hasAddressBeenResolved = m_hasAddressBeenResolved;
 
 
 - (void)dealloc
 {
-    [m_server release];
-    [m_clients release];
     [m_stash release];
+    [m_connection release];
     [super dealloc];
+}
+
+- (id)initWithHost:(NSString *)host andPort:(int)port
+{
+    self = [super init];
+    if (self)
+    {
+        Connection *connection = [[Connection alloc] initWithHostAddress:host andPort:port];
+        self.connection = connection;
+        [connection release];
+    }
+    return self;
+}
+
+- (id)initWithNetService:(NSNetService *)netService
+{
+    self = [super init];
+    if (self)
+    {
+        Connection *connection = [[Connection alloc] initWithNetService:netService];
+        self.connection = connection;
+        [connection release];
+    }
+    return self;
 }
 
 - (BOOL)start
 {
-    if (self.server)
+    if (!self.connection)
     {
-        return YES;
-    }
-    
-    if (!self.clients)
-    {
-        NSMutableSet *clients = [[NSMutableSet alloc] initWithCapacity:kPartisansMaxPlayers - 1];
-        self.clients = clients;
-        [clients release];
-    }
-    
-    Server *server = [[Server alloc] init];
-    [server setDelegate:self];
-    self.server = server;
-    [server release];
-    
-    if (![self.server start])
-    {
-        self.server = nil;
         return NO;
     }
     
-    self.hasStarted = YES;
-    return YES;
+    [self.connection setDelegate:self];
+    self.hasStarted = [self.connection connect];
+    return self.hasStarted;
 }
 
 - (void)stop
 {
-    self.hasStarted = NO;
-    
-    [self.server stop];
-    [self.server setDelegate:nil];
-    self.server = nil;
-    
-    // Close all connections
-    for (Connection *connection in self.clients)
+    if (!self.connection)
     {
-        [connection close];
-        [connection setDelegate:nil];
+        return;
     }
-    [self.clients removeAllObjects];
-    self.clients = nil;
+    [self.connection close];
+    [self.connection setDelegate:nil];
+    self.hasStarted = NO;
 }
 
 
@@ -110,39 +106,19 @@ const BOOL kNetHostIsDebugOn = YES;
     return returnValue;
 }
 
-- (void)sendObject:(NSObject<NSCoding> *)object to:(NSString *)peerID
+- (void)sendObject:(NSObject<NSCoding> *)object
 {
-    if (!object) {
-        return;
-    }
-    
-    if (!peerID) {
-        return;
-    }
-    
-    // The "to" parameter is our system's Peer ID.
-    // We need to match that to a connection.
-    Connection *target = nil;
-    for (Connection *connection in self.clients)
+    if (!object)
     {
-        if ([connection.peerID isEqualToString:peerID])
-        {
-            target = connection;
-            break;
-        }
-    }
-    
-    if (!target) {
-        debugLog(@"Unable to find a connection with the peerID %@", peerID);
         return;
     }
     
-    if (kNetHostIsDebugOn)
+    if (kNetPlayerIsDebugOn)
     {
-        debugLog(@"Sending %@\npeerID %@", object, peerID);
+        debugLog(@"Sending %@", object);
     }
     
-    [target sendNetworkPacket:object];
+    [self.connection sendNetworkPacket:object];
 }
 
 
@@ -195,7 +171,7 @@ const BOOL kNetHostIsDebugOn = YES;
         }
     }
     
-    [self sendObject:commandMessage to:commandMessage.to];
+    [self sendObject:commandMessage];
 }
 
 
@@ -206,7 +182,7 @@ const BOOL kNetHostIsDebugOn = YES;
         return;
     }
     
-    [self sendObject:commandParcel to:commandParcel.to];
+    [self sendObject:commandParcel];
 }
 
 - (void)sendCommandParcel:(JSKCommandParcel *)commandParcel shouldAwaitResponse:(BOOL)shouldAwaitResponse
@@ -251,18 +227,7 @@ const BOOL kNetHostIsDebugOn = YES;
         }
     }
     
-    [self sendObject:commandParcel to:commandParcel.to];
-}
-
-- (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType
-{
-    NSString *myPeerID = [self.delegate netHostPeerID:self];
-    for (Connection *connection in self.clients)
-    {
-        JSKCommandMessage *newCommandMessage = [[JSKCommandMessage alloc] initWithType:commandMessageType to:connection.peerID from:myPeerID];
-        [connection sendNetworkPacket:newCommandMessage];
-        [newCommandMessage release];
-    }
+    [self sendObject:commandParcel];
 }
 
 
@@ -278,9 +243,9 @@ const BOOL kNetHostIsDebugOn = YES;
         object = msg;
         
         // Pass on the parcel to the delegate.
-        if (object && [self.delegate respondsToSelector:@selector(netHost:receivedCommandParcel:respondingTo:)])
+        if (object)
         {
-            [self.delegate netHost:self receivedCommandParcel:commandParcel respondingTo:object];
+            [self.delegate netPlayer:self receivedCommandParcel:commandParcel respondingTo:object];
             
             // Stash management.
             NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:self.stash];
@@ -292,85 +257,35 @@ const BOOL kNetHostIsDebugOn = YES;
         }
     }
     
-    if ([self.delegate respondsToSelector:@selector(netHost:receivedCommandParcel:)])
-    {
-        [self.delegate netHost:self receivedCommandParcel:commandParcel];
-    }
+    [self.delegate netPlayer:self receivedCommandParcel:commandParcel];
 }
 
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection
 {
-    NSString *peerID = connection.peerID;
-    // Special case for Identification messages:
-    // Update our dictionary that maps our peer IDs to the Connection's.
-    if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
-    {
-        if (!peerID)
-        {
-            peerID = commandMessage.from;
-            connection.peerID = peerID;
-        }
-        
-        JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerID from:[self.delegate netHostPeerID:self]];
-        [self sendCommandMessage:msg];
-        [msg release];
-        return;
-    }
-    
-    if ([self.delegate respondsToSelector:@selector(netHost:receivedCommandMessage:)])
-    {
-        [self.delegate netHost:self receivedCommandMessage:commandMessage];
-    }
+    [self.delegate netPlayer:self receivedCommandMessage:commandMessage];
 }
 
 
 
-#pragma mark - ServerDelegate Method Implementations
+#pragma mark - Connection delegate
 
-// Server has failed. Stop the world.
-- (void)serverFailed:(Server *)server reason:(NSString *)reason
+- (void)connectionAttemptFailed:(Connection *)connection
 {
-    // Stop everything and let our delegate know
-    [self stop];
-    [self.delegate netHost:self terminated:reason];
+    NSString *reason = NSLocalizedString(@"Unable to connect to the host.", @"Unable to connect to the host.  --  alert message");
+    [self.delegate netPlayer:self terminated:reason];
 }
 
 
-// New client connected to our server. Add it.
-- (void)handleNewConnection:(Connection *)connection
-{
-    if (kNetHostIsDebugOn)
-    {
-        debugLog(@"New connection: %@", connection);
-    }
-    
-    // Delegate everything to us
-    connection.delegate = self;
-    
-    // Add to our list of clients
-    [self.clients addObject:connection];
-}
-
-
-#pragma mark - ConnectionDelegate Method Implementations
-
-// We won't be initiating connections, so this is not important
-- (void)connectionAttemptFailed:(Connection *)connection {
-}
-
-
-// One of the clients disconnected, remove it from our list
 - (void)connectionTerminated:(Connection *)connection
 {
-    [connection setDelegate:nil];
-    [self.clients removeObject:connection];
+    NSString *reason = NSLocalizedString(@"The connection to the host was closed.", @"The connection to the host was closed.  --  alert message");
+    [self.delegate netPlayer:self terminated:reason];
 }
 
 
-// One of connected clients sent a chat message. Propagate it further.
-- (void)receivedNetworkPacket:(NSObject <NSCoding> *)packet viaConnection:(Connection *)connection
+- (void)receivedNetworkPacket:(NSDictionary *)packet viaConnection:(Connection *)connection
 {
-    if (kNetHostIsDebugOn)
+    if (kNetPlayerIsDebugOn)
     {
         debugLog(@"Received network packet:%@\viaConnection:%@", packet, connection);
     }
@@ -388,17 +303,13 @@ const BOOL kNetHostIsDebugOn = YES;
         JSKCommandParcel *commandParcel = (JSKCommandParcel *)packet;
         [self handleCommandParcel:commandParcel viaConnection:connection];
     }
-    
-//    // Display message locally
-//    [self.delegate displayChatMessage:[packet objectForKey:@"message"] fromUser:[packet objectForKey:@"from"]];
-//    
-//    // Broadcast this message to all connected clients, including the one that sent it
-//    [self.clients makeObjectsPerformSelector:@selector(sendNetworkPacket:) withObject:packet];
 }
 
 - (void)netServiceDidResolveAddress:(Connection *)connection
 {
-    
+    self.hasAddressBeenResolved = YES;
+    [self.delegate netPlayerDidResolveAddress:self];
 }
+
 
 @end

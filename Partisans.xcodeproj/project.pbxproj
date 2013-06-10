@@ -68,6 +68,8 @@
 		936CDFBB176125DC00C6A4EE /* ServerBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFB3176125DC00C6A4EE /* ServerBrowser.m */; };
 		936CDFBE1761276900C6A4EE /* NetHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFBD1761276900C6A4EE /* NetHost.m */; };
 		936CDFBF1761276900C6A4EE /* NetHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFBD1761276900C6A4EE /* NetHost.m */; };
+		936CDFC2176202E500C6A4EE /* NetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFC1176202E500C6A4EE /* NetPlayer.m */; };
+		936CDFC3176202E500C6A4EE /* NetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFC1176202E500C6A4EE /* NetPlayer.m */; };
 		93761EDD174A9A3600DFE1F5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDC174A9A3600DFE1F5 /* Icon.png */; };
 		93761EDF174A9A4000DFE1F5 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDE174A9A4000DFE1F5 /* Icon@2x.png */; };
 		93761EE1174A9A7300DFE1F5 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE0174A9A7300DFE1F5 /* Icon-72.png */; };
@@ -268,6 +270,8 @@
 		936CDFB5176125DC00C6A4EE /* ServerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerDelegate.h; path = Classes/Libraries/Networking/ServerDelegate.h; sourceTree = "<group>"; };
 		936CDFBC1761276900C6A4EE /* NetHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetHost.h; path = Classes/NetHost.h; sourceTree = "<group>"; };
 		936CDFBD1761276900C6A4EE /* NetHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetHost.m; path = Classes/NetHost.m; sourceTree = "<group>"; };
+		936CDFC0176202E500C6A4EE /* NetPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetPlayer.h; path = Classes/NetPlayer.h; sourceTree = "<group>"; };
+		936CDFC1176202E500C6A4EE /* NetPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetPlayer.m; path = Classes/NetPlayer.m; sourceTree = "<group>"; };
 		93761EDC174A9A3600DFE1F5 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Arts/Icon.png; sourceTree = "<group>"; };
 		93761EDE174A9A4000DFE1F5 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Arts/Icon@2x.png"; sourceTree = "<group>"; };
 		93761EE0174A9A7300DFE1F5 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Arts/Icon-72.png"; sourceTree = "<group>"; };
@@ -689,6 +693,8 @@
 				9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */,
 				936CDFBC1761276900C6A4EE /* NetHost.h */,
 				936CDFBD1761276900C6A4EE /* NetHost.m */,
+				936CDFC0176202E500C6A4EE /* NetPlayer.h */,
+				936CDFC1176202E500C6A4EE /* NetPlayer.m */,
 				93C10BB817440C4500B47095 /* PlayGameMenuItems.h */,
 				93C10BB917440C4500B47095 /* PlayGameMenuItems.m */,
 				93C10BC6174439B200B47095 /* SetupGameMenuItems.h */,
@@ -891,6 +897,7 @@
 				936CDFB8176125DC00C6A4EE /* Server.m in Sources */,
 				936CDFBA176125DC00C6A4EE /* ServerBrowser.m in Sources */,
 				936CDFBE1761276900C6A4EE /* NetHost.m in Sources */,
+				936CDFC2176202E500C6A4EE /* NetPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,6 +962,7 @@
 				936CDFB9176125DC00C6A4EE /* Server.m in Sources */,
 				936CDFBB176125DC00C6A4EE /* ServerBrowser.m in Sources */,
 				936CDFBF1761276900C6A4EE /* NetHost.m in Sources */,
+				936CDFC3176202E500C6A4EE /* NetPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

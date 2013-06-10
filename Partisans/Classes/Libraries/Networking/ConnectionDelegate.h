@@ -34,5 +34,6 @@
 - (void) connectionAttemptFailed:(Connection*)connection;
 - (void) connectionTerminated:(Connection*)connection;
 - (void) receivedNetworkPacket:(NSObject <NSCoding> *)message viaConnection:(Connection*)connection;
+- (void) netServiceDidResolveAddress:(Connection *)connection;
 
 @end

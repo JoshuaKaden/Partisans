@@ -26,8 +26,8 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import "ServerBrowserDelegate.h"
 
-@class ServerBrowserDelegate;
 
 @interface ServerBrowser : NSObject {
   NSNetServiceBrowser* netServiceBrowser;

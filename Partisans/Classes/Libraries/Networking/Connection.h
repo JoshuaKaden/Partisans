@@ -52,11 +52,11 @@
   // Write stream
   CFWriteStreamRef writeStream;
   bool writeStreamOpen;
-  NSMutableData* outgoingDataBuffer;
 }
 
 @property(nonatomic,retain) id<ConnectionDelegate> delegate;
-@property (nonatomic, strong) NSString *connectionID;
+@property(nonatomic,retain) NSString* host;
+@property (nonatomic, strong) NSString *peerID;
 
 // Initialize and store connection information until 'connect' is called
 - (id)initWithHostAddress:(NSString*)host andPort:(int)port;

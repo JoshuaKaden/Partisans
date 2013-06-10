@@ -25,7 +25,6 @@
 //  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
 
-#import "ServerBrowserDelegate.h"
 #import "ServerBrowser.h"
 
 
@@ -57,7 +56,11 @@
 
 // Initialize
 - (id)init {
-  servers = [[NSMutableArray alloc] init];
+    self = [super init];
+    if (self)
+    {
+        servers = [[NSMutableArray alloc] init];
+    }
   return self;
 }
 

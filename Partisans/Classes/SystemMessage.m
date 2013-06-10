@@ -12,9 +12,11 @@
 #import "CreateGameOperation.h"
 #import "CreatePlayerOperation.h"
 #import "GameEnvoy.h"
+#import "JSKCommandMessage.h"
 #import "JSKCommandParcel.h"
 #import "JSKDataMiner.h"
-#import "JSKPeerController.h"
+#import "NetHost.h"
+#import "NetPlayer.h"
 #import "NSManagedObjectContext+FetchAdditions.h"
 #import "PlayerEnvoy.h"
 #import "RemoveGamePlayerOperation.h"
@@ -32,13 +34,17 @@ NSUInteger const kPartisansMinPlayers = 5;
 
 NSString * const kPartisansNotificationJoinedGame  = @"kPartisansNotificationJoinedGame";
 NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGameChanged";
+NSString * const kPartisansNotificationConnectedToHost = @"kPartisansNotificationConnectedToHost";
+
+NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPartisans";
 
 
-@interface SystemMessage () <JSKPeerControllerDelegate>
+@interface SystemMessage () <NetHostDelegate, NetPlayerDelegate>
 
-@property (atomic, strong) JSKPeerController *peerController;
-@property (atomic, strong) NSMutableArray *stash;
-@property (atomic, strong) NSMutableArray *peerIDs;
+@property (nonatomic, strong) NetHost *netHost;
+@property (nonatomic, strong) NetPlayer *netPlayer;
+@property (nonatomic, strong) NSMutableArray *stash;
+@property (nonatomic, strong) NSMutableArray *peerIDs;
 
 - (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
 - (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseToParcel:(JSKCommandParcel *)inResponseToParcel;
@@ -48,7 +54,6 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 - (void)handleJoinGameResponse:(JSKCommandParcel *)response;
 - (void)handleIdentification:(JSKCommandMessage *)message;
 - (void)handleLeaveGameMessage:(JSKCommandMessage *)message;
-//- (void)handlePlayerLeftParcel:(JSKCommandParcel *)parcel;
 - (void)handleGameUpdate:(JSKCommandParcel *)parcel;
 - (void)handlePlayerUpdate:(JSKCommandParcel *)parcel;
 - (void)handleJoinGameStash:(NSString *)fromPeerID;
@@ -62,7 +67,8 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 @implementation SystemMessage
 
 @synthesize playerEnvoy = m_playerEnvoy;
-@synthesize peerController = m_peerController;
+@synthesize netHost = m_netHost;
+@synthesize netPlayer = m_netPlayer;
 @synthesize gameEnvoy = m_gameEnvoy;
 @synthesize stash = m_stash;
 @synthesize peerIDs = m_peerIDs;
@@ -71,10 +77,11 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 
 - (void)dealloc
 {
-    [m_peerController setDelegate:nil];
+    [m_netHost setDelegate:nil];
     
     [m_playerEnvoy release];
-    [m_peerController release];
+    [m_netHost release];
+    [m_netPlayer release];
     [m_gameEnvoy release];
     [m_stash release];
     [m_peerIDs release];
@@ -85,25 +92,6 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 
 
 #pragma mark - Peer Controller stuff
-
-
-//- (void)handlePlayerLeftParcel:(JSKCommandParcel *)parcel
-//{
-//    if (!parcel.object)
-//    {
-//        return;
-//    }
-//    if (![parcel.object isKindOfClass:[GameEnvoy class]])
-//    {
-//        return;
-//    }
-//    PlayerEnvoy *host = [PlayerEnvoy envoyFromPeerID:parcel.from];
-//    if (!host)
-//    {
-//        return;
-//    }
-//    
-//}
 
 - (void)handleLeaveGameMessage:(JSKCommandMessage *)message
 {
@@ -157,47 +145,6 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:message.from from:info.peerID object:info];
     [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:YES];
     [parcel release];
-    
-//    // All this is to prevent a bunch of empty saves if we keep getting ID messages from the same peer.
-//    if (!self.peerIDs)
-//    {
-//        NSMutableArray *peerIDs = [[NSMutableArray alloc] init];
-//        NSArray *nonNatives = [PlayerEnvoy peerPlayers];
-//        for (PlayerEnvoy *playerEnvoy in nonNatives)
-//        {
-//            [peerIDs addObject:playerEnvoy.peerID];
-//        }
-//        self.peerIDs = peerIDs;
-//        [peerIDs release];
-//    }
-//    for (NSString *peerID in self.peerIDs)
-//    {
-//        if ([peerID isEqualToString:message.from])
-//        {
-//            return;
-//        }
-//    }
-//    [self.peerIDs addObject:message.from];
-//    
-//    
-//    PlayerEnvoy *newEnvoy = [PlayerEnvoy createEnvoyWithPeerID:message.from];
-//    if (!newEnvoy)
-//    {
-//        // Problem with the new envoy; most likely another envoy has the specified peer ID already.
-//        // Just bail in this case.
-//        return;
-//    }
-//    
-//    CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:newEnvoy];
-////    [op setCompletionBlock:^(void){
-////        // Once we've saved, ask for the player's data.
-////        JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:message.from from:self.playerEnvoy.peerID];
-////        [self.peerController sendCommandMessage:msg shouldAwaitResponse:YES];
-////        [msg release];
-////    }];
-//    NSOperationQueue *queue = [SystemMessage mainQueue];
-//    [queue addOperation:op];
-//    [op release];
 }
 
 
@@ -423,7 +370,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     {
         // Apparently new information is available! Let's ask for it.
         JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:response.from from:self.playerEnvoy.peerID];
-        [self.peerController sendCommandMessage:msg shouldAwaitResponse:YES];
+        [self.netHost sendCommandMessage:msg shouldAwaitResponse:YES];
         [msg release];
     }
 }
@@ -605,29 +552,14 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 }
 
 
-- (void)peerController:(JSKPeerController *)peerController connectedToPeer:(NSString *)peerID
+#pragma mark - NetHost delegate
+
+- (NSString *)netHostPeerID:(NetHost *)netHost
 {
-//    PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:peerID];
-//    // Do we already have a locally-saved Player record?
-//    if (other)
-//    {
-//        // Ask for a modified date.
-//        JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetModifiedDate to:peerID from:self.playerEnvoy.peerID];
-//        [self.peerController sendCommandMessage:msg shouldAwaitResponse:YES];
-//        [msg release];
-//    }
-//    else
-//    {
-//        // Ask for this peer's info.
-//        JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:peerID from:self.playerEnvoy.peerID];
-//        [self.peerController sendCommandMessage:msg shouldAwaitResponse:YES];
-//        [msg release];
-//    }
+    return self.playerEnvoy.peerID;
 }
 
-
-
-- (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel
+- (void)netHost:(NetHost *)netHost receivedCommandParcel:(JSKCommandParcel *)commandParcel
 {
     switch (commandParcel.commandParcelType) {
         case JSKCommandParcelTypeResponse:
@@ -652,7 +584,8 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     }
 }
 
-- (void)peerController:(JSKPeerController *)peerController receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingTo:(NSObject<NSCoding> *)inResponseTo
+
+- (void)netHost:(NetHost *)netHost receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingTo:(NSObject<NSCoding> *)inResponseTo
 {
     if ([inResponseTo isKindOfClass:[JSKCommandMessage class]])
     {
@@ -666,32 +599,8 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     }
 }
 
-//- (void)peerController:(JSKPeerController *)peerController receivedCommandResponse:(JSKCommandParcel *)commandResponse from:(NSString *)peerID
-//{
-//    switch (commandResponse.commandParcelType) {
-//        case JSKCommandParcelTypeResponse:
-//            [self handleResponse:commandResponse];
-//            break;
-//            
-//        case JSKCommandParcelTypePlayerJoined:
-//            [self handleJoinGameResponse:commandResponse];
-//            break;
-//            
-//        case JSKCommandParcelTypePlayerLeft:
-//            [self handlePlayerLeftParcel:commandResponse];
-//            break;
-//            
-//        case JSKCommandParcelTypeUnknown:
-//            break;
-//            
-//        case JSKCommandParcelType_maxValue:
-//            break;
-//    }
-//}
 
-
-
-- (void)peerController:(JSKPeerController *)peerController receivedCommandMessage:(JSKCommandMessage *)commandMessage
+- (void)netHost:(NetHost *)netHost receivedCommandMessage:(JSKCommandMessage *)commandMessage
 {
     NSString *peerID = commandMessage.from;
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:peerID];
@@ -707,6 +616,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     if (commandMessage.commandMessageType == JSKCommandMessageTypeJoinGame)
     {
         [self handleJoinGameMessage:commandMessage];
+        return;
     }
     
     if (!other)
@@ -753,7 +663,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
             // If not caught above then we already know about this player.
             // Let's get their data.
             JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:commandMessage.from from:self.playerEnvoy.peerID];
-            [self.peerController sendCommandMessage:msg shouldAwaitResponse:YES];
+            [self.netHost sendCommandMessage:msg shouldAwaitResponse:YES];
             [msg release];
             break;
         }
@@ -771,26 +681,162 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
                                                                        from:playerEnvoy.peerID
                                                                      object:responseObject
                                                                 responseKey:commandMessage.responseKey];
-        [peerController sendCommandParcel:response];
+        [netHost sendCommandParcel:response];
         [response release];
     }
 }
 
-
-
-- (void)peerController:(JSKPeerController *)peerController receivedObject:(NSObject *)object from:(NSString *)peerID
+- (void)netHost:(NetHost *)netHost terminated:(NSString *)reason
 {
-    
+    debugLog(@"NetHost terminated: %@", reason);
 }
 
 
 
+#pragma mark - NetPlayer delegate
+
+- (NSString *)netPlayerPeerID:(NetPlayer *)netPlayer
+{
+    return self.playerEnvoy.peerID;
+}
+
+- (void)netPlayer:(NetPlayer *)netPlayer receivedCommandMessage:(JSKCommandMessage *)commandMessage
+{
+    PlayerEnvoy *playerEnvoy = self.playerEnvoy;
+    JSKCommandMessageType messageType = commandMessage.commandMessageType;
+    NSObject <NSCoding> *responseObject = nil;
+    BOOL shouldAwaitResponse = NO;
+
+    switch (messageType)
+    {
+        case JSKCommandMessageTypeGetInfo:
+            responseObject = playerEnvoy;
+            break;
+        case JSKCommandMessageTypeGetModifiedDate:
+            responseObject = playerEnvoy.modifiedDate;
+            break;
+        case JSKCommandMessageTypeIdentification:
+            // We'll get this back from a host after sending them our ID.
+            // Send the host our player data.
+            // In return, the host will send us their data.
+            responseObject = playerEnvoy;
+            shouldAwaitResponse = YES;
+            break;
+        default:
+            debugLog(@"Unexpected message type from host: %@", commandMessage);
+            break;
+    }
+
+    if (responseObject)
+    {
+        JSKCommandParcel *response = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
+                                                                         to:commandMessage.from
+                                                                       from:playerEnvoy.peerID
+                                                                     object:responseObject
+                                                                responseKey:commandMessage.responseKey];
+        [netPlayer sendCommandParcel:response shouldAwaitResponse:shouldAwaitResponse];
+        [response release];
+    }
+}
+
+- (void)netPlayer:(NetPlayer *)netPlayer receivedCommandParcel:(JSKCommandParcel *)commandParcel
+{
+    NSObject *object = commandParcel.object;
+    if ([object isKindOfClass:[PlayerEnvoy class]])
+    {
+        PlayerEnvoy *other = (PlayerEnvoy *)object;
+        other.isNative = NO;
+        other.isDefault = NO;
+        
+        UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
+        [op setCompletionBlock:^(void){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self.isLookingForGame)
+                {
+                    [self askToJoinGameDelayed:other.peerID];
+                }
+                [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
+            });
+        }];
+        NSOperationQueue *queue = [SystemMessage mainQueue];
+        [queue addOperation:op];
+        [op release];
+        return;
+    }
+    
+    if ([object isKindOfClass:[GameEnvoy class]])
+    {
+        // Let's make sure the copy we're getting is newer than the one we have currently.
+        GameEnvoy *currentGame = self.gameEnvoy;
+        GameEnvoy *updatedGame = (GameEnvoy *)commandParcel.object;
+        if (currentGame.modifiedDate && updatedGame.modifiedDate)
+        {
+            NSInteger delta = [SystemMessage secondsBetweenDates:currentGame.modifiedDate toDate:updatedGame.modifiedDate];
+            if (delta <= 0)
+            {
+                return;
+            }
+        }
+        
+        UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:updatedGame];
+        [op setCompletionBlock:^(void){
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+        }];
+        NSOperationQueue *queue = [SystemMessage mainQueue];
+        [queue addOperation:op];
+        [op release];
+        return;
+    }
+}
+
+- (void)netPlayer:(NetPlayer *)netPlayer receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingTo:(NSObject<NSCoding> *)inResponseTo
+{
+    if ([inResponseTo isKindOfClass:[JSKCommandMessage class]])
+    {
+        JSKCommandMessage *message = (JSKCommandMessage *)inResponseTo;
+        if (message.commandMessageType == JSKCommandMessageTypeJoinGame)
+        {
+            [self handleJoinGameResponse:commandParcel];
+            return;
+        }
+    }
+    [self netPlayer:netPlayer receivedCommandParcel:commandParcel];
+}
+
+- (void)netPlayer:(NetPlayer *)netPlayer terminated:(NSString *)reason
+{
+    debugLog(@"NetPlayer terminated: %@", reason);
+}
+
+- (void)netPlayerDidResolveAddress:(NetPlayer *)netPlayer
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationConnectedToHost object:nil];
+    });
+}
 
 #pragma mark - Class methods
 
++ (BOOL)connectToService:(NSNetService *)service
+{
+    SystemMessage *sharedInstance = [self sharedInstance];
+    if (sharedInstance.netPlayer)
+    {
+        [sharedInstance.netPlayer stop];
+        [sharedInstance.netPlayer setDelegate:nil];
+        sharedInstance.netPlayer = nil;
+    }
+    NetPlayer *netPlayer = [[NetPlayer alloc] initWithNetService:service];
+    [netPlayer setDelegate:sharedInstance];
+    [sharedInstance setNetPlayer:netPlayer];
+    [netPlayer release];
+    return [sharedInstance.netPlayer start];
+}
+
 + (void)askToJoinGame
 {
-    [self broadcastCommandMessage:JSKCommandMessageTypeJoinGame];
+    [self sendToHost:JSKCommandMessageTypeJoinGame shouldAwaitResponse:YES];
+//    [self broadcastCommandMessage:JSKCommandMessageTypeJoinGame];
 }
 
 + (BOOL)isHost
@@ -815,57 +861,70 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
 + (BOOL)isPlayerOnline
 {
     SystemMessage *sharedInstance = [self sharedInstance];
-    JSKPeerController *peerController = sharedInstance.peerController;
-    if (!peerController)
+    if ([self isHost])
     {
-        JSKPeerController *peerController = [[JSKPeerController alloc] init];
-        [peerController setDelegate:sharedInstance];
-        [peerController setPeerID:sharedInstance.playerEnvoy.peerID];
-        [sharedInstance setPeerController:peerController];
-        [peerController release];
+        NetHost *netHost = sharedInstance.netHost;
+        if (!netHost)
+        {
+            NetHost *netHost = [[NetHost alloc] init];
+            [netHost setDelegate:sharedInstance];
+            [sharedInstance setNetHost:netHost];
+            [netHost release];
+        }
+        return netHost.hasStarted;
     }
-    if (!peerController.peerID || peerController.peerID.length == 0)
+    else
     {
-        [peerController setPeerID:sharedInstance.playerEnvoy.peerID];
+        NetPlayer *netPlayer = sharedInstance.netPlayer;
+        if (!netPlayer)
+        {
+            NetPlayer *netPlayer = [[NetPlayer alloc] init];
+            [netPlayer setDelegate:sharedInstance];
+            [sharedInstance setNetPlayer:netPlayer];
+            [netPlayer release];
+        }
+        return netPlayer.hasStarted;
     }
-    return peerController.hasSessionStarted;
 }
 
 + (void)putPlayerOffline
 {
     SystemMessage *sharedInstance = [self sharedInstance];
-    if (sharedInstance.peerController.hasSessionStarted)
+    if ([self isHost])
     {
-        [sharedInstance.peerController stopSession];
+        if (sharedInstance.netHost.hasStarted)
+        {
+            [sharedInstance.netHost stop];
+        }
+    }
+    else
+    {
+        if (sharedInstance.netPlayer.hasStarted)
+        {
+            [sharedInstance.netPlayer stop];
+        }
     }
 }
 
 + (void)putPlayerOnline
 {
     SystemMessage *sharedInstance = [self sharedInstance];
-    if (!sharedInstance.peerController.hasSessionStarted)
+    if ([self isHost])
     {
-        [sharedInstance.peerController startSession];
+        if (!sharedInstance.netHost.hasStarted)
+        {
+            [sharedInstance.netHost start];
+        }
+    }
+    else
+    {
+        if (!sharedInstance.netPlayer.hasStarted)
+        {
+            [sharedInstance.netPlayer start];
+        }
     }
 }
 
-+ (void)resetPeerController
-{
-    [self putPlayerOffline];
-    SystemMessage *sharedInstance = [self sharedInstance];
-    [sharedInstance.peerController setDelegate:nil];
-    [sharedInstance setPeerController:nil];
-}
-
-+ (void)broadcastObject:(NSObject <NSCoding> *)object
-{
-    if (![self isPlayerOnline])
-    {
-        return;
-    }
-    SystemMessage *sharedInstance = [self sharedInstance];
-    [sharedInstance.peerController archiveAndBroadcast:object];
-}
 
 + (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType
 {
@@ -874,9 +933,9 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         return;
     }
     SystemMessage *sharedInstance = [self sharedInstance];
-    JSKPeerController *peerController = sharedInstance.peerController;
+    NetHost *netHost = sharedInstance.netHost;
     
-    [peerController broadcastCommandMessageType:commandMessageType];
+    [netHost broadcastCommandMessageType:commandMessageType];
 }
 
 
@@ -886,7 +945,14 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     {
         return;
     }
-    [[self sharedInstance].peerController sendCommandMessage:commandMessage];
+    if ([self isHost])
+    {
+        [[self sharedInstance].netHost sendCommandMessage:commandMessage];
+    }
+    else
+    {
+        [[self sharedInstance].netPlayer sendCommandMessage:commandMessage];
+    }
 }
 
 
@@ -896,7 +962,14 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     {
         return;
     }
-    [[self sharedInstance].peerController sendCommandMessage:commandMessage shouldAwaitResponse:shouldAwaitResponse];
+    if ([self isHost])
+    {
+        [[self sharedInstance].netHost sendCommandMessage:commandMessage shouldAwaitResponse:shouldAwaitResponse];
+    }
+    else
+    {
+        [[self sharedInstance].netPlayer sendCommandMessage:commandMessage shouldAwaitResponse:shouldAwaitResponse];
+    }
 }
 
 + (void)sendCommandParcel:(JSKCommandParcel *)parcel shouldAwaitResponse:(BOOL)shouldAwaitResponse
@@ -905,23 +978,31 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     {
         return;
     }
-    [[self sharedInstance].peerController sendCommandParcel:parcel shouldAwaitResponse:shouldAwaitResponse];
+    if ([self isHost])
+    {
+        [[self sharedInstance].netHost sendCommandParcel:parcel shouldAwaitResponse:shouldAwaitResponse];
+    }
+    else
+    {
+        [[self sharedInstance].netPlayer sendCommandParcel:parcel shouldAwaitResponse:shouldAwaitResponse];
+    }
 }
 
-+ (void)sendToHost:(JSKCommandMessageType)commandMessageType
++ (void)sendToHost:(JSKCommandMessageType)commandMessageType shouldAwaitResponse:(BOOL)shouldAwaitResponse
 {
     if (![self isPlayerOnline])
     {
         return;
     }
+    NSString *hostID = nil;
     PlayerEnvoy *host = [self sharedInstance].gameEnvoy.host;
-    if (!host)
+    if (host)
     {
-        return;
+        hostID = host.peerID;
     }
-    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:commandMessageType to:host.peerID from:[self playerEnvoy].peerID];
-    JSKPeerController *peerController = [self sharedInstance].peerController;
-    [peerController sendCommandMessage:msg];
+    JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:commandMessageType to:hostID from:[self playerEnvoy].peerID];
+    NetPlayer *netPlayer = [self sharedInstance].netPlayer;
+    [netPlayer sendCommandMessage:msg shouldAwaitResponse:shouldAwaitResponse];
     [msg release];
 }
 
@@ -935,7 +1016,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
     {
         [parcel setFrom:[self playerEnvoy].peerID];
     }
-    JSKPeerController *peerController = [self sharedInstance].peerController;
+    NetHost *netHost = [self sharedInstance].netHost;
     GameEnvoy *gameEnvoy = [self gameEnvoy];
     for (PlayerEnvoy *playerEnvoy in gameEnvoy.players)
     {
@@ -943,7 +1024,7 @@ NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGam
         if (![playerEnvoy.peerID isEqualToString:[self playerEnvoy].peerID])
         {
             [parcel setTo:playerEnvoy.peerID];
-            [peerController sendCommandParcel:parcel];
+            [netHost sendCommandParcel:parcel];
         }
     }
 }
