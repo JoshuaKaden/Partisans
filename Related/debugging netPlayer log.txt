@@ -1,0 +1,79 @@
+2013-06-12 13:48:46.275 Partisans[13061:15b03] -[GameJoiner updateServerList] [Line 171] ServerBrowser found: (
+    "<NSNetService 0x942d370> local. _partisans._tcp. ThoroughlyRandomServiceNameForPartisans"
+)
+2013-06-12 13:48:46.304 Partisans[13061:15b03] -[NetPlayer sendObject:] [Line 119] 
+Sending {
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1";
+    responseKey = "20F67D96-68FE-4B4F-8550-B58B115C84B6";
+    to = "";
+}
+2013-06-12 13:48:46.428 Partisans[13061:15b03] -[NetPlayer receivedNetworkPacket:viaConnection:] [Line 318] 
+Received network packet:{
+    Class = JSKCommandMessage;
+    commandMessageType = 4;
+    commandMessageTypeName = Identification;
+    from = "x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1";
+    responseKey = "";
+    to = "x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1";
+}
+2013-06-12 13:48:46.429 Partisans[13061:15b03] -[NetPlayer sendObject:] [Line 119] 
+Sending {
+    Class = JSKCommandParcel;
+    commandParcelType = 1;
+    commandParcelTypeName = ModifiedDate;
+    from = "x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1";
+    object = "2013-06-12 17:48:35 +0000";
+    responseKey = "";
+    to = "x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1";
+}
+2013-06-12 13:48:46.441 Partisans[13061:15b03] -[NetPlayer receivedNetworkPacket:viaConnection:] [Line 318] 
+Received network packet:{
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1";
+    responseKey = "C12B3594-7B56-4C45-919D-0595EDE5158B";
+    to = "x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1";
+}
+2013-06-12 13:48:46.441 Partisans[13061:15b03] -[NetPlayer sendObject:] [Line 119] 
+Sending {
+    Class = JSKCommandParcel;
+    commandParcelType = 2;
+    commandParcelTypeName = Response;
+    from = "x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.818705 0.149186 0.518893 1\";\n    importedObjectString = \"\";\n    intramuralID = \"x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"0x9280360 <x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1>\";\n    modifiedDate = \"2013-06-12 17:48:35 +0000\";\n    peerID = \"x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"\\\";\\n    intramuralID = \\\"x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Image/p1\\\";\\n    managedObjectID = \\\"0x9430090 <x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Image/p1>\\\";\\n}\";\n    playerName = Morgan;\n}";
+    responseKey = "C12B3594-7B56-4C45-919D-0595EDE5158B";
+    to = "x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1";
+}
+2013-06-12 13:48:46.490 Partisans[13061:15b03] -[NetPlayer receivedNetworkPacket:viaConnection:] [Line 318] 
+Received network packet:{
+    Class = JSKCommandParcel;
+    commandParcelType = 0;
+    commandParcelTypeName = Digest;
+    from = "x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1";
+    object = "{\n    \"x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1\" = \"2013-06-12 17:48:07 +0000\";\n}";
+    responseKey = "";
+    to = "x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1";
+}
+2013-06-12 13:48:46.491 Partisans[13061:15b03] -[NetPlayer sendObject:] [Line 119] 
+Sending {
+    Class = JSKCommandMessage;
+    commandMessageType = 1;
+    commandMessageTypeName = GetInfo;
+    from = "x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1";
+    responseKey = "68F93CD5-E157-49DE-A8FA-D51E797D6AED";
+    to = "x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1";
+}
+2013-06-12 13:48:46.508 Partisans[13061:15b03] -[NetPlayer receivedNetworkPacket:viaConnection:] [Line 318] 
+Received network packet:{
+    Class = JSKCommandParcel;
+    commandParcelType = 2;
+    commandParcelTypeName = Response;
+    from = "x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1";
+    object = "{\n    Class = PlayerEnvoy;\n    favoriteColor = \"UIDeviceRGBColorSpace 0.187538 0.357741 0.0173355 1\";\n    importedObjectString = \"x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1\";\n    intramuralID = \"x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1\";\n    isDefault = 1;\n    isNative = 1;\n    managedObjectID = \"\";\n    modifiedDate = \"2013-06-12 17:48:07 +0000\";\n    peerID = \"x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Player/p1\";\n    picture = \"{\\n    Class = ImageEnvoy;\\n    dateSaved = \\\"\\\";\\n    imageDate = \\\"\\\";\\n    imageLatitude = 0;\\n    imageLongitude = 0;\\n    imageSource = 0;\\n    importedObjectString = \\\"x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Image/p1\\\";\\n    intramuralID = \\\"x-coredata://B13837B8-39F7-4FBF-A8FA-558E3378634E/Image/p1\\\";\\n    managedObjectID = \\\"\\\";\\n}\";\n    playerName = Cayce;\n}";
+    responseKey = "68F93CD5-E157-49DE-A8FA-D51E797D6AED";
+    to = "x-coredata://E4343C55-6933-4074-A5D4-B531462C13D2/Player/p1";
+}

@@ -139,7 +139,7 @@ const BOOL kNetHostIsDebugOn = YES;
     
     if (kNetHostIsDebugOn)
     {
-        debugLog(@"Sending %@\npeerID %@", object, peerID);
+        debugLog(@"\nSending %@\npeerID %@", object, peerID);
     }
     
     [target sendNetworkPacket:object];
@@ -265,6 +265,15 @@ const BOOL kNetHostIsDebugOn = YES;
     }
 }
 
+- (void)broadcastCommandParcel:(JSKCommandParcel *)commandParcel
+{
+    for (Connection *connection in self.clients)
+    {
+        commandParcel.to = connection.peerID;
+        [connection sendNetworkPacket:commandParcel];
+    }
+}
+
 
 #pragma mark - Data Handlers
 
@@ -292,10 +301,7 @@ const BOOL kNetHostIsDebugOn = YES;
         }
     }
     
-    if ([self.delegate respondsToSelector:@selector(netHost:receivedCommandParcel:)])
-    {
-        [self.delegate netHost:self receivedCommandParcel:commandParcel];
-    }
+    [self.delegate netHost:self receivedCommandParcel:commandParcel];
 }
 
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection
@@ -317,10 +323,7 @@ const BOOL kNetHostIsDebugOn = YES;
         return;
     }
     
-    if ([self.delegate respondsToSelector:@selector(netHost:receivedCommandMessage:)])
-    {
-        [self.delegate netHost:self receivedCommandMessage:commandMessage];
-    }
+    [self.delegate netHost:self receivedCommandMessage:commandMessage];
 }
 
 
@@ -341,7 +344,7 @@ const BOOL kNetHostIsDebugOn = YES;
 {
     if (kNetHostIsDebugOn)
     {
-        debugLog(@"New connection: %@", connection);
+        debugLog(@"\nNew connection: %@", connection);
     }
     
     // Delegate everything to us
@@ -372,7 +375,7 @@ const BOOL kNetHostIsDebugOn = YES;
 {
     if (kNetHostIsDebugOn)
     {
-        debugLog(@"Received network packet:%@\viaConnection:%@", packet, connection);
+        debugLog(@"\nReceived network packet:%@", packet);
     }
     
     // We're going to interpret them by class name.

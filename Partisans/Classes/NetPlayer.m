@@ -26,6 +26,7 @@ const BOOL kNetPlayerIsDebugOn = YES;
 - (void)sendObject:(NSObject<NSCoding> *)object;
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection;
 - (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(Connection *)connection;
+- (void)sendID;
 
 @end
 
@@ -115,12 +116,19 @@ const BOOL kNetPlayerIsDebugOn = YES;
     
     if (kNetPlayerIsDebugOn)
     {
-        debugLog(@"Sending %@", object);
+        debugLog(@"\nSending %@", object);
     }
     
     [self.connection sendNetworkPacket:object];
 }
 
+- (void)sendID
+{
+    NSString *peerID = [self.delegate netPlayerPeerID:self];
+    JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:nil from:peerID];
+    [self sendCommandMessage:message];
+    [message release];
+}
 
 #pragma mark - Sending
 
@@ -262,6 +270,26 @@ const BOOL kNetPlayerIsDebugOn = YES;
 
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection
 {
+    // We'll handle an ID message ourselves.
+    if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
+    {
+        // Make note of the host's peer ID.
+        NSString *hostID = commandMessage.from;
+        if (hostID)
+        {
+            self.connection.peerID = hostID;
+        }
+        // Send the host our player's modification date.
+        // The host will request our data if it needs it.
+        NSString *peerID = [self.delegate netPlayerPeerID:self];
+        NSDate *modifiedDate = [self.delegate netPlayerModifiedDate:self];
+        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeModifiedDate to:hostID from:peerID object:modifiedDate];
+        [self sendCommandParcel:parcel];
+        [parcel release];
+        
+        return;
+    }
+    
     [self.delegate netPlayer:self receivedCommandMessage:commandMessage];
 }
 
@@ -287,7 +315,7 @@ const BOOL kNetPlayerIsDebugOn = YES;
 {
     if (kNetPlayerIsDebugOn)
     {
-        debugLog(@"Received network packet:%@\viaConnection:%@", packet, connection);
+        debugLog(@"\nReceived network packet:%@", packet);
     }
     
     // We're going to interpret them by class name.

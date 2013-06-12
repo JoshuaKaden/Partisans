@@ -112,16 +112,24 @@
     
     switch (responseType)
     {
+        case JSKCommandParcelTypeDigest:
+            name = @"Digest";
+            break;
+            
+        case JSKCommandParcelTypeModifiedDate:
+            name = @"ModifiedDate";
+            break;
+            
         case JSKCommandParcelTypeResponse:
             name = @"Response";
             break;
             
-        case JSKCommandParcelTypeUpdate:
-            name = @"Update";
-            break;
-            
         case JSKCommandParcelTypeUnknown:
             name = @"Unknown";
+            break;
+            
+        case JSKCommandParcelTypeUpdate:
+            name = @"Update";
             break;
             
         case JSKCommandParcelType_maxValue:

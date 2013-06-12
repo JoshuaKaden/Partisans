@@ -10,9 +10,11 @@
 
 typedef enum
 {
-    JSKCommandParcelTypeUpdate,
+    JSKCommandParcelTypeDigest,
+    JSKCommandParcelTypeModifiedDate,
     JSKCommandParcelTypeResponse,
     JSKCommandParcelTypeUnknown,
+    JSKCommandParcelTypeUpdate,
     JSKCommandParcelType_maxValue
 } JSKCommandParcelType;
 

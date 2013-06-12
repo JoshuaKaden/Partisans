@@ -551,7 +551,7 @@
     [self.playerEnvoy commitAndSave];
     [self enterViewMode];
     
-    // If in a game, let the other players know about this change.
+    // If in a game, let the host know about this change.
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     if (gameEnvoy)
     {
@@ -559,7 +559,7 @@
                                                                        to:nil
                                                                      from:self.playerEnvoy.peerID
                                                                    object:self.playerEnvoy];
-        [SystemMessage sendParcelToPlayers:parcel];
+        [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:NO];
         [parcel release];
     }
 }

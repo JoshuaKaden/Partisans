@@ -16,6 +16,7 @@
 @protocol NetPlayerDelegate <NSObject>
 
 - (NSString *)netPlayerPeerID:(NetPlayer *)netPlayer;
+- (NSDate *)netPlayerModifiedDate:(NetPlayer *)netPlayer;
 - (void)netPlayer:(NetPlayer *)netPlayer receivedCommandMessage:(JSKCommandMessage *)commandMessage;
 - (void)netPlayer:(NetPlayer *)netPlayer receivedCommandParcel:(JSKCommandParcel *)commandParcel;
 - (void)netPlayer:(NetPlayer *)netPlayer receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingTo:(NSObject <NSCoding> *)inResponseTo;

@@ -45,20 +45,25 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @property (nonatomic, strong) NetPlayer *netPlayer;
 @property (nonatomic, strong) NSMutableArray *stash;
 @property (nonatomic, strong) NSMutableArray *peerIDs;
+@property (nonatomic, strong) NSDictionary *playerDigest;
 
-- (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
+- (void)handlePlayerResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
 - (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseToParcel:(JSKCommandParcel *)inResponseToParcel;
 - (void)handleModifiedDateResponse:(JSKCommandParcel *)response;
 - (void)handleGetInfoResponse:(JSKCommandParcel *)response;
 - (void)handleJoinGameMessage:(JSKCommandMessage *)message;
 - (void)handleJoinGameResponse:(JSKCommandParcel *)response;
-- (void)handleIdentification:(JSKCommandMessage *)message;
 - (void)handleLeaveGameMessage:(JSKCommandMessage *)message;
 - (void)handleGameUpdate:(JSKCommandParcel *)parcel;
 - (void)handlePlayerUpdate:(JSKCommandParcel *)parcel;
 - (void)handleJoinGameStash:(NSString *)fromPeerID;
 - (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey;
 - (void)askToJoinGame:(NSString *)toPeerID;
+- (BOOL)isReadyToJoinGame;
+- (void)processDigest:(NSDictionary *)digest;
+- (void)sendDigestTo:(NSString *)toPeerID;
+- (NSDictionary *)buildDigest;
+- (void)broadcastPlayerData:(NSString *)peerID;
 
 @end
 
@@ -73,6 +78,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @synthesize stash = m_stash;
 @synthesize peerIDs = m_peerIDs;
 @synthesize isLookingForGame = m_isLookingForGame;
+@synthesize playerDigest = m_playerDigest;
 
 
 - (void)dealloc
@@ -85,13 +91,80 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [m_gameEnvoy release];
     [m_stash release];
     [m_peerIDs release];
+    [m_playerDigest release];
     
     [super dealloc];
 }
 
 
 
-#pragma mark - Peer Controller stuff
+#pragma mark - Host
+
+- (void)handlePlayerResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo
+{
+    // This could be a response to a GetInfo message.
+    if (inResponseTo.commandMessageType == JSKCommandMessageTypeGetInfo)
+    {
+        // In this case we expect a PlayerEnvoy.
+        PlayerEnvoy *otherEnvoy = (PlayerEnvoy *)commandParcel.object;
+        otherEnvoy.isNative = NO;
+        otherEnvoy.isDefault = NO;
+        
+        UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:otherEnvoy];
+        [op setCompletionBlock:^(void){
+            [self sendDigestTo:commandParcel.from];
+            [self broadcastPlayerData:commandParcel.from];
+            // Update the UI.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:otherEnvoy.peerID];
+            });
+        }];
+        NSOperationQueue *queue = [SystemMessage mainQueue];
+        [queue addOperation:op];
+        [op release];
+        return;
+    }
+}
+
+- (void)sendDigestTo:(NSString *)toPeerID
+{
+    NSDictionary *digest = [self buildDigest];
+    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeDigest
+                                                                   to:toPeerID
+                                                                 from:self.playerEnvoy.peerID
+                                                               object:digest
+                                                          responseKey:nil];
+    [self.netHost sendCommandParcel:parcel];
+    [parcel release];
+}
+
+- (NSDictionary *)buildDigest
+{
+    NSArray *gamePlayers = [self.gameEnvoy players];
+    NSMutableDictionary *digest = [[NSMutableDictionary alloc] initWithCapacity:gamePlayers.count];
+    for (PlayerEnvoy *player in gamePlayers)
+    {
+        [digest setValue:player.modifiedDate forKey:player.peerID];
+    }
+    NSDictionary *returnValue = [NSDictionary dictionaryWithDictionary:digest];
+    [digest release];
+    return returnValue;
+}
+
+- (void)broadcastPlayerData:(NSString *)peerID
+{
+    PlayerEnvoy *envoy = [PlayerEnvoy envoyFromPeerID:peerID];
+    NSArray *gamePlayers = [self.gameEnvoy players];
+    for (PlayerEnvoy *player in gamePlayers)
+    {
+        if (![player.peerID isEqualToString:peerID])
+        {
+            JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:player.peerID from:self.playerEnvoy.peerID object:envoy];
+            [self.netHost sendCommandParcel:parcel];
+            [parcel release];
+        }
+    }
+}
 
 - (void)handleLeaveGameMessage:(JSKCommandMessage *)message
 {
@@ -100,24 +173,9 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     {
         return;
     }
-    BOOL proceed = NO;
+    // Make sure this player is in the game.
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    PlayerEnvoy *host = gameEnvoy.host;
-    if ([host.intramuralID isEqualToString:[SystemMessage playerEnvoy].intramuralID])
-    {
-        // We are hosting a game.
-        proceed = YES;
-    }
-    if (proceed)
-    {
-        // Make sure this player is in the game.
-        if (![gameEnvoy isPlayerInGame:other])
-        {
-            proceed = NO;
-        }
-    }
-    
-    if (!proceed)
+    if (![gameEnvoy isPlayerInGame:other])
     {
         return;
     }
@@ -137,15 +195,109 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [op release];
 }
 
-- (void)handleIdentification:(JSKCommandMessage *)message
+
+#pragma mark - Player
+
+- (BOOL)isReadyToJoinGame
 {
-    // Send the peer our player data.
-    // In return, the peer will send us their data.
-    PlayerEnvoy *info = self.playerEnvoy;
-    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:message.from from:info.peerID object:info];
-    [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:YES];
-    [parcel release];
+    // Loop through the player digest and see if our saved Player data is up-to-date.
+    BOOL returnValue = YES;
+    NSDictionary *digest = self.playerDigest;
+    for (NSString *otherID in digest.allKeys)
+    {
+        NSDate *otherDate = [digest valueForKey:otherID];
+        PlayerEnvoy *otherEnvoy = [PlayerEnvoy envoyFromPeerID:otherID];
+        if (!otherEnvoy)
+        {
+            returnValue = NO;
+            break;
+        }
+        if ([SystemMessage secondsBetweenDates:otherEnvoy.modifiedDate toDate:otherDate] != 0)
+        {
+            returnValue = NO;
+            break;
+        }
+    }
+    return returnValue;
 }
+
+- (void)handleJoinGameResponse:(JSKCommandParcel *)response
+{
+    if (!response.object)
+    {
+        return;
+    }
+    if (![response.object isKindOfClass:[GameEnvoy class]])
+    {
+        return;
+    }
+    
+    self.isLookingForGame = NO;
+    
+    // Save the game locally.
+    GameEnvoy *envoy = (GameEnvoy *)response.object;
+    CreateGameOperation *op = [[CreateGameOperation alloc] initWithEnvoy:envoy];
+    [op setCompletionBlock:^(void) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Once the save is done, update our own gameEnvoy property.
+            NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+            NSArray *games = [context fetchObjectArrayForEntityName:@"Game" withPredicateFormat:@"intramuralID == %@", envoy.intramuralID];
+            if (games.count > 0)
+            {
+                GameEnvoy *updatedEnvoy = [GameEnvoy envoyFromManagedObject:[games objectAtIndex:0]];
+                [self setGameEnvoy:updatedEnvoy];
+                
+                // Also, post a notification that we joined the game.
+                [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationJoinedGame object:updatedEnvoy];
+            }
+        });
+    }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
+}
+
+
+#pragma mark - Player / Host
+
+// The will check the local data and ask for new data as needed.
+- (void)processDigest:(NSDictionary *)digest
+{
+    // The digest is a dictionary of Player.modifiedDate values, keyed on peerID.
+    PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+    for (NSString *otherID in digest.allKeys)
+    {
+        BOOL shouldAskForData = NO;
+        NSDate *otherDate = [digest valueForKey:otherID];
+        if (otherDate)
+        {
+            PlayerEnvoy *otherEnvoy = [PlayerEnvoy envoyFromPeerID:otherID];
+            if (otherEnvoy)
+            {
+                if ([SystemMessage secondsBetweenDates:otherEnvoy.modifiedDate toDate:otherDate] > 0)
+                {
+                    shouldAskForData = YES;
+                }
+            }
+            else
+            {
+                shouldAskForData = YES;
+            }
+        }
+        if (shouldAskForData)
+        {
+            // If we are a Host, then the dictionary will contain one row, and we'll send the message to that Player.
+            // If we are a Player, the "to" field will not necessarily be the Host's address. But we'll be sending the message to the Host.
+            // Note the use of the "to" field here, to indicate that we're interested in that player's info, not (necessarily) the recipient's.
+            JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:otherID from:playerEnvoy.peerID];
+            [SystemMessage sendCommandMessage:message shouldAwaitResponse:YES];
+            [message release];
+        }
+    }
+}
+
+#pragma mark - Peer Controller stuff
+
 
 
 - (void)handleGameUpdate:(JSKCommandParcel *)parcel
@@ -190,44 +342,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [queue addOperation:op];
     [op release];
 }
-
-
-- (void)handleJoinGameResponse:(JSKCommandParcel *)response
-{
-    if (!response.object)
-    {
-        return;
-    }
-    if (![response.object isKindOfClass:[GameEnvoy class]])
-    {
-        return;
-    }
-    
-    self.isLookingForGame = NO;
-    
-    // Save the game locally.
-    GameEnvoy *envoy = (GameEnvoy *)response.object;
-    CreateGameOperation *op = [[CreateGameOperation alloc] initWithEnvoy:envoy];
-    [op setCompletionBlock:^(void) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // Once the save is done, update our own gameEnvoy property.
-            NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
-            NSArray *games = [context fetchObjectArrayForEntityName:@"Game" withPredicateFormat:@"intramuralID == %@", envoy.intramuralID];
-            if (games.count > 0)
-            {
-                GameEnvoy *updatedEnvoy = [GameEnvoy envoyFromManagedObject:[games objectAtIndex:0]];
-                [self setGameEnvoy:updatedEnvoy];
-                
-                // Also, post a notification that we joined the game.
-                [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationJoinedGame object:updatedEnvoy];
-            }
-        });
-    }];
-    NSOperationQueue *queue = [SystemMessage mainQueue];
-    [queue addOperation:op];
-    [op release];
-}
-
 
 - (void)handleJoinGameMessage:(JSKCommandMessage *)message
 {
@@ -562,15 +676,27 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (void)netHost:(NetHost *)netHost receivedCommandParcel:(JSKCommandParcel *)commandParcel
 {
     switch (commandParcel.commandParcelType) {
+        case JSKCommandParcelTypeDigest:
+            // A player will not send this.
+            break;
+            
+        case JSKCommandParcelTypeModifiedDate:
+        {
+            NSString *otherID = commandParcel.from;
+            NSDate *otherDate = (NSDate *)commandParcel.object;
+            [self processDigest:[NSDictionary dictionaryWithObject:otherDate forKey:otherID]];
+            break;
+        }
+            
         case JSKCommandParcelTypeResponse:
             break;
             
         case JSKCommandParcelTypeUpdate:
-            if ([commandParcel.object isKindOfClass:[GameEnvoy class]])
-            {
-                [self handleGameUpdate:commandParcel];
-            }
-            else if ([commandParcel.object isKindOfClass:[PlayerEnvoy class]])
+//            if ([commandParcel.object isKindOfClass:[GameEnvoy class]])
+//            {
+//                [self handleGameUpdate:commandParcel];
+//            }
+            if ([commandParcel.object isKindOfClass:[PlayerEnvoy class]])
             {
                 [self handlePlayerUpdate:commandParcel];
             }
@@ -590,7 +716,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     if ([inResponseTo isKindOfClass:[JSKCommandMessage class]])
     {
         JSKCommandMessage *msg = (JSKCommandMessage *)inResponseTo;
-        [self handleResponse:commandParcel inResponseTo:msg];
+        [self handlePlayerResponse:commandParcel inResponseTo:msg];
     }
     else if ([inResponseTo isKindOfClass:[JSKCommandParcel class]])
     {
@@ -604,12 +730,10 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 {
     NSString *peerID = commandMessage.from;
     PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:peerID];
-    // An Identification message contains the sender's ID.
-    // This is the equivalent of telling someone your name.
-    // Once I save that player's ID, and she saves mine, we can communicate.
-    if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
+    if (!other)
     {
-        [self handleIdentification:commandMessage];
+        // Unidentified or unmatched player.
+        debugLog(@"Message from unknown peer %@", commandMessage);
         return;
     }
     
@@ -619,12 +743,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         return;
     }
     
-    if (!other)
-    {
-        // Unidentified or unmatched player.
-        debugLog(@"Message from unknown peer %@", commandMessage);
-        return;
-    }
 //    if (!other)
 //    {
 //        // Unidentified or unmatched player.
@@ -700,6 +818,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     return self.playerEnvoy.peerID;
 }
 
+- (NSDate *)netPlayerModifiedDate:(NetPlayer *)netPlayer
+{
+    return self.playerEnvoy.modifiedDate;
+}
+
 - (void)netPlayer:(NetPlayer *)netPlayer receivedCommandMessage:(JSKCommandMessage *)commandMessage
 {
     PlayerEnvoy *playerEnvoy = self.playerEnvoy;
@@ -715,13 +838,13 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         case JSKCommandMessageTypeGetModifiedDate:
             responseObject = playerEnvoy.modifiedDate;
             break;
-        case JSKCommandMessageTypeIdentification:
-            // We'll get this back from a host after sending them our ID.
-            // Send the host our player data.
-            // In return, the host will send us their data.
-            responseObject = playerEnvoy;
-            shouldAwaitResponse = YES;
-            break;
+//        case JSKCommandMessageTypeIdentification:
+//            // We'll get this back from a host after sending them our ID.
+//            // Send the host our player data.
+//            // In return, the host will send us their data.
+//            responseObject = playerEnvoy;
+//            shouldAwaitResponse = YES;
+//            break;
         default:
             debugLog(@"Unexpected message type from host: %@", commandMessage);
             break;
@@ -742,6 +865,16 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (void)netPlayer:(NetPlayer *)netPlayer receivedCommandParcel:(JSKCommandParcel *)commandParcel
 {
     NSObject *object = commandParcel.object;
+    if (commandParcel.commandParcelType == JSKCommandParcelTypeDigest)
+    {
+        // This means that the object is a dictionary of Player.modifiedDate values, keyed on peerID.
+        NSDictionary *digest = (NSDictionary *)object;
+        self.playerDigest = digest;
+        [self processDigest:digest];
+        return;
+    }
+    
+    // Save the player data locally.
     if ([object isKindOfClass:[PlayerEnvoy class]])
     {
         PlayerEnvoy *other = (PlayerEnvoy *)object;
@@ -753,7 +886,10 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (self.isLookingForGame)
                 {
-                    [self askToJoinGameDelayed:other.peerID];
+                    if ([self isReadyToJoinGame])
+                    {
+                        [self askToJoinGameDelayed:other.peerID];
+                    }
                 }
                 [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
             });
@@ -764,6 +900,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         return;
     }
     
+    // Save the Game data locally.
     if ([object isKindOfClass:[GameEnvoy class]])
     {
         // Let's make sure the copy we're getting is newer than the one we have currently.

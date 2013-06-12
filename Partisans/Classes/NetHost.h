@@ -37,5 +37,6 @@
 - (void)sendCommandParcel:(JSKCommandParcel *)commandParcel;
 - (void)sendCommandParcel:(JSKCommandParcel *)commandParcel shouldAwaitResponse:(BOOL)shouldAwaitResponse;
 - (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType;
+- (void)broadcastCommandParcel:(JSKCommandParcel *)commandParcel;
 
 @end
