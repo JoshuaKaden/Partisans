@@ -22,6 +22,7 @@ const BOOL kNetPlayerIsDebugOn = YES;
 @property (nonatomic, strong) NSDictionary *stash;
 @property (readwrite) BOOL hasStarted;
 @property (nonatomic, assign) BOOL hasAddressBeenResolved;
+@property (nonatomic, strong) NSString *hostPeerID;
 
 - (void)sendObject:(NSObject<NSCoding> *)object;
 - (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection;
@@ -38,12 +39,14 @@ const BOOL kNetPlayerIsDebugOn = YES;
 @synthesize stash = m_stash;
 @synthesize hasStarted = m_hasStarted;
 @synthesize hasAddressBeenResolved = m_hasAddressBeenResolved;
+@synthesize hostPeerID = m_hostPeerID;
 
 
 - (void)dealloc
 {
     [m_stash release];
     [m_connection release];
+    [m_hostPeerID release];
     [super dealloc];
 }
 
@@ -278,6 +281,7 @@ const BOOL kNetPlayerIsDebugOn = YES;
         if (hostID)
         {
             self.connection.peerID = hostID;
+            self.hostPeerID = hostID;
         }
         // Send the host our player's modification date.
         // The host will request our data if it needs it.

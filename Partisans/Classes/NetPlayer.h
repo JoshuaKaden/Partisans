@@ -30,6 +30,7 @@
 
 @property (nonatomic, strong) id <NetPlayerDelegate> delegate;
 @property (readonly) BOOL hasStarted;
+@property (nonatomic, readonly) NSString *hostPeerID;
 
 - (id)initWithHost:(NSString *)host andPort:(int)port;
 - (id)initWithNetService:(NSNetService *)netService;

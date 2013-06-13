@@ -96,8 +96,7 @@
     [self.serverBrowser setDelegate:nil];
     self.serverBrowser = nil;
     
-//    [SystemMessage sharedInstance].isLookingForGame = NO;
-//
+    [SystemMessage sharedInstance].isLookingForGame = NO;
 //    [[NSNotificationCenter defaultCenter] removeObserver:self];
 //    [SystemMessage putPlayerOffline];
     
@@ -151,6 +150,7 @@
     {
         return;
     }
+    [SystemMessage sharedInstance].isLookingForGame = YES;
     [SystemMessage sendToHost:JSKCommandMessageTypeIdentification shouldAwaitResponse:YES];
 }
 

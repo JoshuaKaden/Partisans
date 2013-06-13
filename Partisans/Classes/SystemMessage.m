@@ -46,6 +46,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @property (nonatomic, strong) NSMutableArray *stash;
 @property (nonatomic, strong) NSMutableArray *peerIDs;
 @property (nonatomic, strong) NSDictionary *playerDigest;
+@property (nonatomic, strong) NSString *hostPeerID;
 
 - (void)handlePlayerResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
 - (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseToParcel:(JSKCommandParcel *)inResponseToParcel;
@@ -62,7 +63,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (BOOL)isReadyToJoinGame;
 - (void)processDigest:(NSDictionary *)digest;
 - (void)sendDigestTo:(NSString *)toPeerID;
-- (NSDictionary *)buildDigest;
+- (NSDictionary *)buildDigestFor:(NSString *)forPeerID;
 - (void)broadcastPlayerData:(NSString *)peerID;
 
 @end
@@ -79,6 +80,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @synthesize peerIDs = m_peerIDs;
 @synthesize isLookingForGame = m_isLookingForGame;
 @synthesize playerDigest = m_playerDigest;
+@synthesize hostPeerID = m_hostPeerID;
 
 
 - (void)dealloc
@@ -92,6 +94,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [m_stash release];
     [m_peerIDs release];
     [m_playerDigest release];
+    [m_hostPeerID release];
     
     [super dealloc];
 }
@@ -128,7 +131,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 - (void)sendDigestTo:(NSString *)toPeerID
 {
-    NSDictionary *digest = [self buildDigest];
+    NSDictionary *digest = [self buildDigestFor:toPeerID];
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeDigest
                                                                    to:toPeerID
                                                                  from:self.playerEnvoy.peerID
@@ -138,13 +141,16 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [parcel release];
 }
 
-- (NSDictionary *)buildDigest
+- (NSDictionary *)buildDigestFor:(NSString *)forPeerID
 {
     NSArray *gamePlayers = [self.gameEnvoy players];
     NSMutableDictionary *digest = [[NSMutableDictionary alloc] initWithCapacity:gamePlayers.count];
     for (PlayerEnvoy *player in gamePlayers)
     {
-        [digest setValue:player.modifiedDate forKey:player.peerID];
+        if (![player.peerID isEqualToString:forPeerID])
+        {
+            [digest setValue:player.modifiedDate forKey:player.peerID];
+        }
     }
     NSDictionary *returnValue = [NSDictionary dictionaryWithDictionary:digest];
     [digest release];
@@ -157,7 +163,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     NSArray *gamePlayers = [self.gameEnvoy players];
     for (PlayerEnvoy *player in gamePlayers)
     {
-        if (![player.peerID isEqualToString:peerID])
+        if (![player.peerID isEqualToString:peerID] && ![player.peerID isEqualToString:self.playerEnvoy.peerID])
         {
             JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:player.peerID from:self.playerEnvoy.peerID object:envoy];
             [self.netHost sendCommandParcel:parcel];
@@ -165,6 +171,76 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         }
     }
 }
+
+- (void)handleJoinGameMessage:(JSKCommandMessage *)message
+{
+    PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:message.from];
+    if (!other || !other.playerName || other.playerName.length == 0)
+    {
+        if (!self.stash)
+        {
+            NSMutableArray *stash = [[NSMutableArray alloc] initWithCapacity:kPartisansMaxPlayers - 1];
+            self.stash = stash;
+            [stash release];
+        }
+        [self.stash addObject:message];
+        return;
+    }
+    [self addPlayerToGame:other responseKey:message.responseKey];
+}
+
+
+- (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey
+{
+    BOOL proceed = NO;
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+    if ([SystemMessage isHost])
+    {
+        // We are hosting a game.
+        if (gameEnvoy.players.count < kPartisansMaxPlayers && !gameEnvoy.startDate)
+        {
+            // The game has room and hasn't yet started.
+            // So, let the other player join, and send the game object back!
+            proceed = YES;
+        }
+    }
+    if (proceed)
+    {
+        // Make sure this player isn't already in the game.
+        if ([gameEnvoy isPlayerInGame:playerEnvoy])
+        {
+            proceed = NO;
+        }
+    }
+    
+    if (!proceed)
+    {
+        return;
+    }
+    
+    // Add this player to the game.
+    AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithEnvoy:playerEnvoy];
+    [op setCompletionBlock:^(void) {
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+                       {
+                           [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+                       });
+        // Then, once we've saved, send the game envoy to all players. All players need to know!
+        // Reload it just to be sure.
+        GameEnvoy *gameEnvoy = [GameEnvoy envoyFromPlayer:playerEnvoy];
+        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
+                                                                       to:nil
+                                                                     from:self.playerEnvoy.peerID
+                                                                   object:gameEnvoy
+                                                              responseKey:responseKey];
+        [SystemMessage sendParcelToPlayers:parcel];
+        [parcel release];
+    }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
+}
+
 
 - (void)handleLeaveGameMessage:(JSKCommandMessage *)message
 {
@@ -263,6 +339,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 // The will check the local data and ask for new data as needed.
 - (void)processDigest:(NSDictionary *)digest
 {
+    BOOL wasNewDataRequested = NO;
     // The digest is a dictionary of Player.modifiedDate values, keyed on peerID.
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
     for (NSString *otherID in digest.allKeys)
@@ -292,6 +369,25 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:otherID from:playerEnvoy.peerID];
             [SystemMessage sendCommandMessage:message shouldAwaitResponse:YES];
             [message release];
+            wasNewDataRequested = YES;
+        }
+    }
+    if (!wasNewDataRequested)
+    {
+        if ([SystemMessage isHost])
+        {
+            NSString *otherID = [digest.allKeys objectAtIndex:0];
+            [self sendDigestTo:otherID];
+        }
+        else
+        {
+            if (self.isLookingForGame)
+            {
+                if ([self isReadyToJoinGame])
+                {
+                    [self askToJoinGameDelayed:self.netPlayer.hostPeerID];
+                }
+            }
         }
     }
 }
@@ -342,73 +438,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [queue addOperation:op];
     [op release];
 }
-
-- (void)handleJoinGameMessage:(JSKCommandMessage *)message
-{
-    PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:message.from];
-    if (!other || !other.playerName || other.playerName.length == 0)
-    {
-        if (!self.stash)
-        {
-            NSMutableArray *stash = [[NSMutableArray alloc] initWithCapacity:kPartisansMaxPlayers - 1];
-            self.stash = stash;
-            [stash release];
-        }
-        [self.stash addObject:message];
-        return;
-    }
-    [self addPlayerToGame:other responseKey:message.responseKey];
-}
-
-
-- (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey
-{
-    BOOL proceed = NO;
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    if ([SystemMessage isHost])
-    {
-        // We are hosting a game.
-        if (gameEnvoy.players.count < kPartisansMaxPlayers && !gameEnvoy.startDate)
-        {
-            // The game has room and hasn't yet started.
-            // So, let the other player join, and send the game object back!
-            proceed = YES;
-        }
-    }
-    if (proceed)
-    {
-        // Make sure this player isn't already in the game.
-        if ([gameEnvoy isPlayerInGame:playerEnvoy])
-        {
-            proceed = NO;
-        }
-    }
-    
-    if (!proceed)
-    {
-        return;
-    }
-    
-    // Add this player to the game.
-    AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithEnvoy:playerEnvoy];
-    [op setCompletionBlock:^(void) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
-        // Then, once we've saved, send the game envoy to all players. All players need to know!
-        // Reload it just to be sure.
-        GameEnvoy *gameEnvoy = [GameEnvoy envoyFromPlayer:playerEnvoy];
-        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
-                                                                       to:nil
-                                                                     from:self.playerEnvoy.peerID
-                                                                   object:gameEnvoy
-                                                              responseKey:responseKey];
-        [SystemMessage sendParcelToPlayers:parcel];
-        [parcel release];
-    }];
-    NSOperationQueue *queue = [SystemMessage mainQueue];
-    [queue addOperation:op];
-    [op release];
-}
-
 
 - (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo
 {
