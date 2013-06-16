@@ -21,6 +21,7 @@
 
 @interface GameEnvoy ()
 @property (nonatomic, strong) NSArray *gamePlayerEnvoys;
+@property (nonatomic, strong) NSArray *deletedGamePlayerEnvoys;
 - (void)loadGamePlayerEnvoys;
 @end
 
@@ -36,6 +37,7 @@
 @synthesize numberOfPlayers = m_numberOfPlayers;
 @synthesize gamePlayerEnvoys = m_gamePlayerEnvoys;
 @synthesize modifiedDate = m_modifiedDate;
+@synthesize deletedGamePlayerEnvoys = m_deletedGamePlayerEnvoys;
 
 - (void)dealloc
 {
@@ -47,6 +49,7 @@
     [m_endDate release];
     [m_gamePlayerEnvoys release];
     [m_modifiedDate release];
+    [m_deletedGamePlayerEnvoys release];
     
     [super dealloc];
 }
@@ -449,6 +452,20 @@
     [gamePlayerEnvoyList removeObject:theGamePlayerEnvoyThatWillBeRemoved];
     self.gamePlayerEnvoys = [NSArray arrayWithArray:gamePlayerEnvoyList];
     [gamePlayerEnvoyList release];
+    
+    
+    if (self.deletedGamePlayerEnvoys)
+    {
+        NSMutableArray *deleted = [[NSMutableArray alloc] initWithArray:self.deletedGamePlayerEnvoys];
+        [deleted addObject:theGamePlayerEnvoyThatWillBeRemoved];
+        self.deletedGamePlayerEnvoys = [NSArray arrayWithArray:deleted];
+        [deleted release];
+    }
+    else
+    {
+        self.deletedGamePlayerEnvoys = [NSArray arrayWithObject:theGamePlayerEnvoyThatWillBeRemoved];
+    }
+    
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
 //    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
 //    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"gamePlayer" withPredicateFormat:@"player == %@", player];
@@ -511,6 +528,20 @@
         model = (Game *)[context objectWithID:self.managedObjectID];
     }
     
+    // We actually may already know about the game, and are receiving an update from the host.
+    if (!model)
+    {
+        if (self.intramuralID)
+        {
+            NSArray *games = [context fetchObjectArrayForEntityName:@"Game" withPredicateFormat:@"intramuralID == %@", self.intramuralID];
+            if (games.count > 0)
+            {
+                model = [games objectAtIndex:0];
+                self.managedObjectID = model.objectID;
+            }
+        }
+    }
+    
     if (!model)
     {
         model = [NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:context];
@@ -543,34 +574,24 @@
     
     if (self.gamePlayerEnvoys)
     {
-        for (GamePlayer *gamePlayer in model.gamePlayers)
-        {
-            if (![gamePlayer.isHost boolValue])
-            {
-                [context deleteObject:gamePlayer];
-            }
-        }
-        
         for (GamePlayerEnvoy *envoy in self.gamePlayerEnvoys)
         {
             GamePlayer *gamePlayer = nil;
-            if (envoy.isHost)
+            if (envoy.managedObjectID)
             {
-                if (envoy.managedObjectID)
+                gamePlayer = (GamePlayer *)[context objectWithID:envoy.managedObjectID];
+            }
+            
+            // This could be an update from the host in which case we have to hook up to the correct via the intramural ID.
+            if (!gamePlayer)
+            {
+                if (envoy.playerID)
                 {
-                    gamePlayer = (GamePlayer *)[context objectWithID:envoy.managedObjectID];
-                }
-                
-                // Safety net in case the model was created on another thread.
-                if (!gamePlayer)
-                {
-                    if (self.intramuralID)
+                    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.playerID];
+                    if (gamePlayers.count > 0)
                     {
-                        NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.intramuralID];
-                        if (gamePlayers.count > 0)
-                        {
-                            gamePlayer = [gamePlayers objectAtIndex:0];
-                        }
+                        gamePlayer = [gamePlayers objectAtIndex:0];
+                        envoy.managedObjectID = gamePlayer.objectID;
                     }
                 }
             }
@@ -587,11 +608,24 @@
                     envoy.managedObjectID = gamePlayer.objectID;
                 }
             }
-            [model addGamePlayersObject:gamePlayer];
             
             [envoy commitInContext:context];
+            [model addGamePlayersObject:gamePlayer];
         }
     }
+    
+    
+    
+    if (self.deletedGamePlayerEnvoys)
+    {
+        for (PlayerEnvoy *deletedEnvoy in self.deletedGamePlayerEnvoys)
+        {
+            GamePlayer *deletedPlayer = (GamePlayer *)[context objectWithID:deletedEnvoy.managedObjectID];
+            [context deleteObject:deletedPlayer];
+        }
+        self.deletedGamePlayerEnvoys = nil;
+    }
+    
     
     
     // Make sure the envoy knows the new managed object ID, if this is an add.

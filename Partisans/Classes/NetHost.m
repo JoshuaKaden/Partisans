@@ -270,7 +270,7 @@ const BOOL kNetHostIsDebugOn = YES;
     for (Connection *connection in self.clients)
     {
         commandParcel.to = connection.peerID;
-        [connection sendNetworkPacket:commandParcel];
+        [self sendObject:commandParcel to:commandParcel.to];
     }
 }
 
