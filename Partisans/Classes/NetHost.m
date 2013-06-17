@@ -370,7 +370,6 @@ const BOOL kNetHostIsDebugOn = YES;
 }
 
 
-// One of connected clients sent a chat message. Propagate it further.
 - (void)receivedNetworkPacket:(NSObject <NSCoding> *)packet viaConnection:(Connection *)connection
 {
     if (kNetHostIsDebugOn)

@@ -448,11 +448,6 @@
         return;
     }
     
-    NSMutableArray *gamePlayerEnvoyList = [[NSMutableArray alloc] initWithArray:self.gamePlayerEnvoys];
-    [gamePlayerEnvoyList removeObject:theGamePlayerEnvoyThatWillBeRemoved];
-    self.gamePlayerEnvoys = [NSArray arrayWithArray:gamePlayerEnvoyList];
-    [gamePlayerEnvoyList release];
-    
     
     if (self.deletedGamePlayerEnvoys)
     {
@@ -465,6 +460,13 @@
     {
         self.deletedGamePlayerEnvoys = [NSArray arrayWithObject:theGamePlayerEnvoyThatWillBeRemoved];
     }
+
+    
+    NSMutableArray *gamePlayerEnvoyList = [[NSMutableArray alloc] initWithArray:self.gamePlayerEnvoys];
+    [gamePlayerEnvoyList removeObject:theGamePlayerEnvoyThatWillBeRemoved];
+    self.gamePlayerEnvoys = [NSArray arrayWithArray:gamePlayerEnvoyList];
+    [gamePlayerEnvoyList release];
+    
     
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
 //    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
@@ -620,8 +622,17 @@
     {
         for (PlayerEnvoy *deletedEnvoy in self.deletedGamePlayerEnvoys)
         {
-            GamePlayer *deletedPlayer = (GamePlayer *)[context objectWithID:deletedEnvoy.managedObjectID];
-            [context deleteObject:deletedPlayer];
+            if (!deletedEnvoy.managedObjectID)
+            {
+                NSArray *deletedPlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"intramuralID == %@", deletedEnvoy.intramuralID];
+                GamePlayer *deletedPlayer = [deletedPlayers objectAtIndex:0];
+                [context deleteObject:deletedPlayer];
+            }
+            else
+            {
+                GamePlayer *deletedPlayer = (GamePlayer *)[context objectWithID:deletedEnvoy.managedObjectID];
+                [context deleteObject:deletedPlayer];
+            }
         }
         self.deletedGamePlayerEnvoys = nil;
     }
