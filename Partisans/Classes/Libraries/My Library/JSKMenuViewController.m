@@ -20,6 +20,7 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 @property (nonatomic, strong) NSMutableArray *rowCounts;
 @property (nonatomic, strong) UIBarButtonItem *rightButtonItem;
 @property (nonatomic, assign) BOOL hasDataBeenPresented;
+@property (nonatomic, assign) BOOL isRefreshing;
 
 - (void)refreshButtonPressed:(id)sender;
 - (void)createRows:(BOOL)animated;
@@ -41,6 +42,7 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 @synthesize rowCounts = m_rowCounts;
 @synthesize rightButtonItem = m_rightButtonItem;
 @synthesize hasDataBeenPresented = m_hasDataBeenPresented;
+@synthesize isRefreshing = m_isRefreshing;
 
 
 
@@ -278,6 +280,13 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 
 - (void)refresh:(BOOL)animated
 {
+    if (self.isRefreshing)
+    {
+        return;
+    }
+    
+    self.isRefreshing = YES;
+    
     if (animated)
     {
 //        [self.tableView beginUpdates];
@@ -372,6 +381,8 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     {
         [self hideLoadingIndicator];
     }
+    
+    self.isRefreshing = NO;
 }
 
 

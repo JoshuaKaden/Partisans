@@ -531,6 +531,7 @@
     }
     
     // We actually may already know about the game, and are receiving an update from the host.
+    BOOL isUpdateFromHost = NO;
     if (!model)
     {
         if (self.intramuralID)
@@ -540,6 +541,7 @@
             {
                 model = [games objectAtIndex:0];
                 self.managedObjectID = model.objectID;
+                isUpdateFromHost = YES;
             }
         }
     }
@@ -617,7 +619,7 @@
     }
     
     
-    
+    // This is Host code, for handling players who have left the game.
     if (self.deletedGamePlayerEnvoys)
     {
         for (PlayerEnvoy *deletedEnvoy in self.deletedGamePlayerEnvoys)
@@ -635,6 +637,33 @@
             }
         }
         self.deletedGamePlayerEnvoys = nil;
+    }
+    
+    
+    // This is the Player code for handling players who have left the game.
+    if (isUpdateFromHost)
+    {
+        if (self.gamePlayerEnvoys.count != model.gamePlayers.count)
+        {
+            NSMutableArray *hitList = [[NSMutableArray alloc] initWithCapacity:model.gamePlayers.count];
+            // Let's find the player who has left (or the players who have left).
+            for (GamePlayer *gamePlayer in model.gamePlayers)
+            {
+                NSString *playerID = gamePlayer.player.intramuralID;
+                NSArray *envoyList = [self.gamePlayerEnvoys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"playerID == %@", playerID]];
+                if (envoyList.count == 0)
+                {
+                    // Bingo: We found a locally-saved game player who isn't in the game envoy.
+                    // So, let's arrange to have it neutralized.
+                    [hitList addObject:gamePlayer];
+                }
+            }
+            for (GamePlayer *target in hitList)
+            {
+                [context deleteObject:target];
+            }
+            [hitList release];
+        }
     }
     
     
