@@ -18,6 +18,9 @@
 
 @interface AddGamePlayerOperation ()
 
+@property (nonatomic, strong) PlayerEnvoy *playerEnvoy;
+@property (nonatomic, strong) GameEnvoy *gameEnvoy;
+
 - (void)mergeChanges:(NSNotification *)notification;
 
 @end
@@ -26,22 +29,25 @@
 
 @implementation AddGamePlayerOperation
 
-
-@synthesize envoy = m_envoy;
+@synthesize playerEnvoy = m_playerEnvoy;
+@synthesize gameEnvoy = m_gameEnvoy;
 
 
 - (void)dealloc
 {
-    [m_envoy release];
+    [m_playerEnvoy release];
+    [m_gameEnvoy release];
     [super dealloc];
 }
 
 
-- (id)initWithEnvoy:(PlayerEnvoy *)envoy
+- (id)initWithPlayerEnvoy:(PlayerEnvoy *)playerEnvoy gameEnvoy:(GameEnvoy *)gameEnvoy
 {
     self = [super init];
-    if (self) {
-        self.envoy = envoy;
+    if (self)
+    {
+        self.playerEnvoy = playerEnvoy;
+        self.gameEnvoy = gameEnvoy;
     }
     return self;
 }
@@ -66,9 +72,8 @@
     
     
     // Here is the actual work of the class.
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    [gameEnvoy addPlayer:self.envoy];
-    [gameEnvoy commitInContext:context];
+    [self.gameEnvoy addPlayer:self.playerEnvoy];
+    [self.gameEnvoy commitInContext:context];
     
     
     

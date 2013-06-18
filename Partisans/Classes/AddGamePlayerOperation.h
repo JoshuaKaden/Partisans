@@ -9,12 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @class PlayerEnvoy;
+@class GameEnvoy;
 
 @interface AddGamePlayerOperation : NSOperation
 
-@property (nonatomic, strong) PlayerEnvoy *envoy;
-
-- (id)initWithEnvoy:(PlayerEnvoy *)envoy;
+- (id)initWithPlayerEnvoy:(PlayerEnvoy *)playerEnvoy gameEnvoy:(GameEnvoy *)gameEnvoy;
 
 @end
 

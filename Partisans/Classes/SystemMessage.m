@@ -217,6 +217,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         // Make sure this player isn't already in the game.
         if ([gameEnvoy isPlayerInGame:playerEnvoy])
         {
+            [self sendGameUpdateTo:playerEnvoy.peerID modifiedDate:nil];
             proceed = NO;
         }
     }
@@ -227,9 +228,9 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     }
     
     // Add this player to the game.
-    [gameEnvoy addPlayer:playerEnvoy];
-    UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:gameEnvoy];
-//    AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithEnvoy:playerEnvoy];
+    AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithPlayerEnvoy:playerEnvoy gameEnvoy:gameEnvoy];
+//    [gameEnvoy addPlayer:playerEnvoy];
+//    UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:gameEnvoy];
     [op setCompletionBlock:^(void) {
         dispatch_async(dispatch_get_main_queue(), ^(void)
        {
@@ -254,7 +255,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (void)sendGameUpdateTo:(NSString *)peerID modifiedDate:(NSDate *)modifiedDate
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
-    if ([SystemMessage secondsBetweenDates:modifiedDate toDate:gameEnvoy.modifiedDate] > 0)
+    if ([SystemMessage secondsBetweenDates:modifiedDate toDate:gameEnvoy.modifiedDate] > 0 || !modifiedDate)
     {
         JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:peerID from:self.playerEnvoy.peerID object:gameEnvoy];
         [self.netHost sendCommandParcel:parcel];
@@ -747,20 +748,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         [self handleJoinGameMessage:commandMessage];
         return;
     }
-    
-//    if (!other)
-//    {
-//        // Unidentified or unmatched player.
-//        // This is actually ok if the command is an Identification.
-//        // An Identification message contains the sender's ID.
-//        // This is the equivalent of telling someone your name.
-//        // Once I save that player's ID, and she saves mine, we can communicate.
-//        if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
-//        {
-//            [self handleIdentification:commandMessage];
-//        }
-//        return;
-//    }
 
     // The "to" field tells us which player the sender is interested in.
     PlayerEnvoy *playerEnvoy = [PlayerEnvoy envoyFromPeerID:commandMessage.to];
