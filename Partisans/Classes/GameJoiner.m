@@ -11,17 +11,14 @@
 #import "GameEnvoy.h"
 #import "JSKCommandMessage.h"
 #import "PlayerEnvoy.h"
-#import "ServerBrowser.h"
-#import "ServerBrowserDelegate.h"
 #import "SystemMessage.h"
 
 
-@interface GameJoiner () <ServerBrowserDelegate>
+@interface GameJoiner ()
 
 @property (readwrite) BOOL isScanning;
 @property (readwrite) BOOL hasJoinedGame;
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, strong) ServerBrowser *serverBrowser;
 
 - (void)peerWasUpdated:(NSNotification *)notification;
 - (void)peerWasCreated:(NSNotification *)notification;
@@ -38,16 +35,13 @@
 @synthesize isScanning = m_isScanning;
 @synthesize hasJoinedGame = m_hasJoinedGame;
 @synthesize timer = m_timer;
-@synthesize serverBrowser = m_serverBrowser;
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.timer invalidate];
-    [self.serverBrowser setDelegate:nil];
     
     [m_timer release];
-    [m_serverBrowser release];
     [super dealloc];
 }
 
@@ -78,10 +72,8 @@
     NSString *message = NSLocalizedString(@"Scanning for a game...", @"Scanning for a game...  -  status message");
     [self raiseStatusMessage:message];
     
-    ServerBrowser *serverBrowser = [[ServerBrowser alloc] init];
-    [serverBrowser setDelegate:self];
-    self.serverBrowser = serverBrowser;
-    [self.serverBrowser start];
+    [SystemMessage sharedInstance].isLookingForGame = YES;
+    [SystemMessage browseServers];
     
     if (!self.timer)
     {
@@ -92,10 +84,7 @@
 
 - (void)stopScanning
 {
-    [self.serverBrowser stop];
-    [self.serverBrowser setDelegate:nil];
-    self.serverBrowser = nil;
-    
+    [SystemMessage stopBrowsingServers];
     [SystemMessage sharedInstance].isLookingForGame = NO;
 //    [[NSNotificationCenter defaultCenter] removeObserver:self];
 //    [SystemMessage putPlayerOffline];
@@ -150,8 +139,7 @@
     {
         return;
     }
-    [SystemMessage sharedInstance].isLookingForGame = YES;
-    [SystemMessage sendToHost:JSKCommandMessageTypeIdentification shouldAwaitResponse:YES];
+//    [SystemMessage sharedInstance].isLookingForGame = YES;
 }
 
 - (void)timerFired:(id)sender
@@ -160,27 +148,6 @@
     {
         return;
     }
-}
-
-#pragma mark - ServerBrowser delegate
-
-- (void)updateServerList
-{
-    NSArray *servers = self.serverBrowser.servers;
-//    [self.serverBrowser stop];
-    debugLog(@"ServerBrowser found: %@", servers);
-    for (NSNetService *service in servers)
-    {
-        if ([service.name isEqualToString:kPartisansNetServiceName])
-        {
-            if ([SystemMessage connectToService:service])
-            {
-//                [SystemMessage sendToHost:JSKCommandMessageTypeIdentification shouldAwaitResponse:YES];
-            }
-            break;
-        }
-    }
-//    [self.serverBrowser start];
 }
 
 @end

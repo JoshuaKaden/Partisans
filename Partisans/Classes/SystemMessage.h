@@ -50,6 +50,8 @@ extern NSString * const kPartisansNotificationConnectedToHost;
 + (void)sendParcelToPlayers:(JSKCommandParcel *)parcel;
 + (BOOL)isHost;
 + (void)askToJoinGame;
-+ (BOOL)connectToService:(NSNetService *)service;
++ (void)browseServers;
++ (void)stopBrowsingServers;
++ (void)requestGameUpdate;
 
 @end

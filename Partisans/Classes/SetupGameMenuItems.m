@@ -31,6 +31,7 @@
 - (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 - (void)handleLeaveGameAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 - (void)gameChanged:(NSNotification *)notification;
+- (void)connectedToHost:(NSNotification *)notification;
 - (void)leaveGame;
 
 @end
@@ -68,6 +69,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
+- (void)connectedToHost:(NSNotification *)notification
+{
+//    [SystemMessage requestGameUpdate];
+}
 
 - (BOOL)isPlayerHost
 {
@@ -244,6 +249,20 @@
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectedToHost:) name:kPartisansNotificationConnectedToHost object:nil];
+}
+
+
+- (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
+{
+    if ([SystemMessage isPlayerOnline])
+    {
+        [SystemMessage requestGameUpdate];
+    }
+    else
+    {
+        [SystemMessage putPlayerOnline];
+    }
 }
 
 

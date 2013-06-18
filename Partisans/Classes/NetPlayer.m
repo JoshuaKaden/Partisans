@@ -287,7 +287,8 @@ const BOOL kNetPlayerIsDebugOn = YES;
         // The host will request our data if it needs it.
         NSString *peerID = [self.delegate netPlayerPeerID:self];
         NSDate *modifiedDate = [self.delegate netPlayerModifiedDate:self];
-        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeModifiedDate to:hostID from:peerID object:modifiedDate];
+        NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:modifiedDate, @"modifiedDate", @"Player", @"entity", nil];
+        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeModifiedDate to:hostID from:peerID object:dictionary];
         [self sendCommandParcel:parcel];
         [parcel release];
         
