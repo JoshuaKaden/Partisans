@@ -12,6 +12,7 @@
 #import "JSKCommandParcel.h"
 #import "JSKSystemMessage.h"
 
+@class GameDirector;
 @class GameEnvoy;
 @class PlayerEnvoy;
 
@@ -35,6 +36,7 @@ extern NSString * const kPartisansNotificationConnectedToHost;
 + (SystemMessage *)sharedInstance;
 + (PlayerEnvoy *)playerEnvoy;
 + (GameEnvoy *)gameEnvoy;
++ (GameDirector *)gameDirector;
 + (UIImage*)imageWithImage:(UIImage*)sourceImage scaledToSizeWithSameAspectRatio:(CGSize)targetSize;
 + (NSInteger)secondsBetweenDates:(NSDate *)fromDate toDate:(NSDate *)toDate;
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate;

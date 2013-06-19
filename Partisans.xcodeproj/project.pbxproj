@@ -94,6 +94,10 @@
 		937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
 		938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
+		93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
+		93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
+		93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
+		93BF3B581771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
 		93C10B461743A52600B47095 /* Partisans.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B441743A52600B47095 /* Partisans.xcdatamodeld */; };
 		93C10B9D1744028300B47095 /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
 		93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
@@ -288,6 +292,10 @@
 		937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayerEnvoy.m; path = Classes/GamePlayerEnvoy.m; sourceTree = "<group>"; };
 		938429321746C0D30037563D /* AddGamePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddGamePlayerOperation.h; path = Classes/AddGamePlayerOperation.h; sourceTree = "<group>"; };
 		938429331746C0D30037563D /* AddGamePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddGamePlayerOperation.m; path = Classes/AddGamePlayerOperation.m; sourceTree = "<group>"; };
+		93BF3B511771CABF00B20A71 /* GameDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDirector.h; path = Classes/GameDirector.h; sourceTree = "<group>"; };
+		93BF3B521771CABF00B20A71 /* GameDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameDirector.m; path = Classes/GameDirector.m; sourceTree = "<group>"; };
+		93BF3B551771CEA500B20A71 /* MissionEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionEnvoy.h; path = Classes/MissionEnvoy.h; sourceTree = "<group>"; };
+		93BF3B561771CEA500B20A71 /* MissionEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionEnvoy.m; path = Classes/MissionEnvoy.m; sourceTree = "<group>"; };
 		93C10B451743A52600B47095 /* Partisans.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Partisans.xcdatamodel; sourceTree = "<group>"; };
 		93C10B9B1744028300B47095 /* GameEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameEnvoy.h; path = Classes/GameEnvoy.h; sourceTree = "<group>"; };
 		93C10B9C1744028300B47095 /* GameEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameEnvoy.m; path = Classes/GameEnvoy.m; sourceTree = "<group>"; };
@@ -620,6 +628,8 @@
 				937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */,
 				9365110D17415B2000F2AD06 /* ImageEnvoy.h */,
 				9365110E17415B2000F2AD06 /* ImageEnvoy.m */,
+				93BF3B551771CEA500B20A71 /* MissionEnvoy.h */,
+				93BF3B561771CEA500B20A71 /* MissionEnvoy.m */,
 				9365110F17415B2000F2AD06 /* PlayerEnvoy.h */,
 				9365111017415B2000F2AD06 /* PlayerEnvoy.m */,
 			);
@@ -629,20 +639,20 @@
 		9365110417415ADA00F2AD06 /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
-				93C4430717511D28000DEC63 /* Mission.h */,
-				93C4430817511D28000DEC63 /* Mission.m */,
-				93C4430317511D28000DEC63 /* Round.h */,
-				93C4430417511D28000DEC63 /* Round.m */,
-				93C442FF17511D28000DEC63 /* Player.h */,
-				93C4430017511D28000DEC63 /* Player.m */,
-				93C442FB17511D28000DEC63 /* GamePlayer.h */,
-				93C442FC17511D28000DEC63 /* GamePlayer.m */,
 				93C442F717511D28000DEC63 /* Game.h */,
 				93C442F817511D28000DEC63 /* Game.m */,
-				93C442F317511D28000DEC63 /* Scorecard.h */,
-				93C442F417511D28000DEC63 /* Scorecard.m */,
+				93C442FB17511D28000DEC63 /* GamePlayer.h */,
+				93C442FC17511D28000DEC63 /* GamePlayer.m */,
 				93C442EF17511D28000DEC63 /* Image.h */,
 				93C442F017511D28000DEC63 /* Image.m */,
+				93C4430717511D28000DEC63 /* Mission.h */,
+				93C4430817511D28000DEC63 /* Mission.m */,
+				93C442FF17511D28000DEC63 /* Player.h */,
+				93C4430017511D28000DEC63 /* Player.m */,
+				93C4430317511D28000DEC63 /* Round.h */,
+				93C4430417511D28000DEC63 /* Round.m */,
+				93C442F317511D28000DEC63 /* Scorecard.h */,
+				93C442F417511D28000DEC63 /* Scorecard.m */,
 				93C442EB17511D28000DEC63 /* Votes.h */,
 				93C442EC17511D28000DEC63 /* Votes.m */,
 			);
@@ -687,6 +697,8 @@
 		93C10BB617440B9300B47095 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				93BF3B511771CABF00B20A71 /* GameDirector.h */,
+				93BF3B521771CABF00B20A71 /* GameDirector.m */,
 				9303BE531746836A0065ADD2 /* GameJoiner.h */,
 				9303BE541746836A0065ADD2 /* GameJoiner.m */,
 				9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */,
@@ -898,6 +910,8 @@
 				936CDFBA176125DC00C6A4EE /* ServerBrowser.m in Sources */,
 				936CDFBE1761276900C6A4EE /* NetHost.m in Sources */,
 				936CDFC2176202E500C6A4EE /* NetPlayer.m in Sources */,
+				93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */,
+				93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -963,6 +977,8 @@
 				936CDFBB176125DC00C6A4EE /* ServerBrowser.m in Sources */,
 				936CDFBF1761276900C6A4EE /* NetHost.m in Sources */,
 				936CDFC3176202E500C6A4EE /* NetPlayer.m in Sources */,
+				93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */,
+				93BF3B581771CEA500B20A71 /* MissionEnvoy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

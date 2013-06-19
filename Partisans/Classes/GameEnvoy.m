@@ -13,6 +13,7 @@
 #import "GamePlayerEnvoy.h"
 #import "JSKDataMiner.h"
 #import "Mission.h"
+#import "MissionEnvoy.h"
 #import "NSManagedObjectContext+FetchAdditions.h"
 #import "Player.h"
 #import "PlayerEnvoy.h"
@@ -22,7 +23,9 @@
 @interface GameEnvoy ()
 @property (nonatomic, strong) NSArray *gamePlayerEnvoys;
 @property (nonatomic, strong) NSArray *deletedGamePlayerEnvoys;
+@property (nonatomic, strong) NSArray *missionEnvoys;
 - (void)loadGamePlayerEnvoys;
+- (void)loadMissionEnvoys;
 @end
 
 
@@ -38,6 +41,7 @@
 @synthesize gamePlayerEnvoys = m_gamePlayerEnvoys;
 @synthesize modifiedDate = m_modifiedDate;
 @synthesize deletedGamePlayerEnvoys = m_deletedGamePlayerEnvoys;
+@synthesize missionEnvoys = m_missionEnvoys;
 
 - (void)dealloc
 {
@@ -50,6 +54,7 @@
     [m_gamePlayerEnvoys release];
     [m_modifiedDate release];
     [m_deletedGamePlayerEnvoys release];
+    [m_missionEnvoys release];
     
     [super dealloc];
 }
@@ -76,6 +81,7 @@
         self.modifiedDate = managedObject.modifiedDate;
         
         [self loadGamePlayerEnvoys];
+        [self loadMissionEnvoys];
     }
     
     return self;
@@ -278,6 +284,36 @@
 }
 
 
+- (void)loadMissionEnvoys
+{
+    if (!self.managedObjectID)
+    {
+        return;
+    }
+    
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    
+    NSSet *missionSet = game.gamePlayers;
+    NSSortDescriptor *numberSort = [[NSSortDescriptor alloc] initWithKey:@"missionNumber" ascending:YES];
+    NSArray *sorts = [[NSArray alloc] initWithObjects:numberSort, nil];
+    [numberSort release];
+    NSArray *missions = [missionSet sortedArrayUsingDescriptors:sorts];
+    [sorts release];
+    
+    NSMutableArray *envoyList = [[NSMutableArray alloc] initWithCapacity:missions.count];
+    for (Mission *mission in missions)
+    {
+        MissionEnvoy *envoy = [[MissionEnvoy alloc] initWithManagedObject:mission];
+        [envoyList addObject:envoy];
+        [envoy release];
+    }
+    
+    [self setMissionEnvoys:[NSArray arrayWithArray:envoyList]];
+    [envoyList release];
+}
+
+
 - (NSArray *)players
 {
     if (!self.managedObjectID)
@@ -350,6 +386,7 @@
     NSArray *gamePlayerEnvoys = [self.gamePlayerEnvoys arrayByAddingObject:gamePlayerEnvoy];
     [gamePlayerEnvoy release];
     [self setGamePlayerEnvoys:gamePlayerEnvoys];
+    self.numberOfPlayers = self.gamePlayerEnvoys.count;
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
 //    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
 //    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
@@ -392,6 +429,7 @@
     NSArray *gamePlayerEnvoys = [self.gamePlayerEnvoys arrayByAddingObject:gamePlayerEnvoy];
     [gamePlayerEnvoy release];
     [self setGamePlayerEnvoys:gamePlayerEnvoys];
+    self.numberOfPlayers = self.gamePlayerEnvoys.count;
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
 //    Player *player = (Player *)[context objectWithID:playerEnvoy.managedObjectID];
 //    GamePlayer *gamePlayer = (GamePlayer *)[NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
@@ -466,6 +504,7 @@
     [gamePlayerEnvoyList removeObject:theGamePlayerEnvoyThatWillBeRemoved];
     self.gamePlayerEnvoys = [NSArray arrayWithArray:gamePlayerEnvoyList];
     [gamePlayerEnvoyList release];
+    self.numberOfPlayers = self.gamePlayerEnvoys.count;
     
     
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
@@ -668,6 +707,48 @@
     
     
     
+    // The Missions.
+    for (MissionEnvoy *envoy in self.missionEnvoys)
+    {
+        Mission *mission = nil;
+        if (envoy.managedObjectID)
+        {
+            mission = (Mission *)[context objectWithID:envoy.managedObjectID];
+        }
+        
+        // This could be an update from the host in which case we have to hook up to the correct via the intramural ID.
+        if (!mission)
+        {
+            if (envoy.intramuralID)
+            {
+                NSArray *missionList = [context fetchObjectArrayForEntityName:@"Mission" withPredicateFormat:@"intramuralID == %@", envoy.intramuralID];
+                if (missionList.count > 0)
+                {
+                    mission = [missionList objectAtIndex:0];
+                    envoy.managedObjectID = mission.objectID;
+                }
+            }
+        }
+        
+        if (!mission)
+        {
+            // This will create the Mission row.
+            mission = [NSEntityDescription insertNewObjectForEntityForName:@"Mission" inManagedObjectContext:context];
+            // This will associate the new row with the envoy, via the NSManagedObjectID.
+            NSError *error = nil;
+            [context obtainPermanentIDsForObjects:[NSArray arrayWithObject:mission] error:&error];
+            if (!error)
+            {
+                envoy.managedObjectID = mission.objectID;
+            }
+        }
+        
+        [envoy commitInContext:context];
+        [model addMissionsObject:mission];
+    }
+    
+    
+    
     // Make sure the envoy knows the new managed object ID, if this is an add.
     if (!self.managedObjectID)
     {
@@ -689,6 +770,15 @@
     }
     
     for (GamePlayerEnvoy *envoy in self.gamePlayerEnvoys)
+    {
+        if (!envoy.gameID)
+        {
+            [envoy setGameID:self.intramuralID];
+            [envoy commitInContext:context];
+        }
+    }
+    
+    for (MissionEnvoy *envoy in self.missionEnvoys)
     {
         if (!envoy.gameID)
         {

@@ -11,6 +11,7 @@
 #import "AddGamePlayerOperation.h"
 #import "CreateGameOperation.h"
 #import "CreatePlayerOperation.h"
+#import "GameDirector.h"
 #import "GameEnvoy.h"
 #import "JSKCommandMessage.h"
 #import "JSKCommandParcel.h"
@@ -50,6 +51,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @property (nonatomic, strong) NSDictionary *playerDigest;
 @property (nonatomic, strong) NSString *hostPeerID;
 @property (nonatomic, strong) ServerBrowser *serverBrowser;
+@property (nonatomic, strong) GameDirector *gameDirector;
 
 - (void)handlePlayerResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
 - (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseToParcel:(JSKCommandParcel *)inResponseToParcel;
@@ -85,6 +87,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @synthesize playerDigest = m_playerDigest;
 @synthesize hostPeerID = m_hostPeerID;
 @synthesize serverBrowser = m_serverBrowser;
+@synthesize gameDirector = m_gameDirector;
 
 
 - (void)dealloc
@@ -102,6 +105,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [m_playerDigest release];
     [m_hostPeerID release];
     [m_serverBrowser release];
+    [m_gameDirector release];
     
     [super dealloc];
 }
@@ -1242,6 +1246,24 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     }
     
     return nil;
+}
+
++ (GameDirector *)gameDirector
+{
+    if (![self sharedInstance].gameEnvoy)
+    {
+        return nil;
+    }
+    GameDirector *gameDirector = [self sharedInstance].gameDirector;
+    if (gameDirector)
+    {
+        return gameDirector;
+    }
+    gameDirector = [[GameDirector alloc] init];
+    [[self sharedInstance] setGameDirector:gameDirector];
+    [gameDirector release];
+    
+    return [self sharedInstance].gameDirector;
 }
 
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate

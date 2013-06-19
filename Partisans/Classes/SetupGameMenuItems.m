@@ -9,6 +9,7 @@
 #import "SetupGameMenuItems.h"
 
 #import "DossierMenuItems.h"
+#import "GameDirector.h"
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
 #import "PlayerEnvoy.h"
@@ -33,6 +34,7 @@
 - (void)gameChanged:(NSNotification *)notification;
 - (void)connectedToHost:(NSNotification *)notification;
 - (void)leaveGame;
+- (void)startGame;
 
 @end
 
@@ -62,6 +64,12 @@
     [super dealloc];
 }
 
+
+- (void)startGame
+{
+    GameDirector *director = [SystemMessage gameDirector];
+    [director startGame];
+}
 
 - (void)gameChanged:(NSNotification *)notification
 {
@@ -236,7 +244,6 @@
         if (self.shouldHost)
         {
             GameEnvoy *newEnvoy = [[GameEnvoy alloc] init];
-            newEnvoy.numberOfPlayers = kPartisansMinPlayers;
             [newEnvoy addHost:[SystemMessage playerEnvoy]];
             [newEnvoy commitAndSave];
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
@@ -279,6 +286,17 @@
         {
             self.menuViewController = menuViewController;
             [self confirmLeaveGame];
+        }
+    }
+    
+    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowStatus)
+    {
+        if ([self isPlayerHost])
+        {
+            if (self.players.count >= kPartisansMinPlayers)
+            {
+                [self startGame];
+            }
         }
     }
 }
@@ -524,7 +542,7 @@
                         }
                         else
                         {
-                            returnValue = NSLocalizedString(@"Ready to start game.", @"Ready to start game.  --  menu label");
+                            returnValue = NSLocalizedString(@"Tap to start the game.", @"Tap to start the game.  --  menu label");
                         }
                     }
                     else
