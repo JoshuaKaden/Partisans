@@ -17,6 +17,8 @@
 		93040366174E7D0900ED169F /* ToolsMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93040364174E7D0900ED169F /* ToolsMenuItems.m */; };
 		9358BFDE17747C1F00FA2DAF /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 9358BFDD17747C1F00FA2DAF /* mask.png */; };
 		9358BFDF17747C1F00FA2DAF /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 9358BFDD17747C1F00FA2DAF /* mask.png */; };
+		9358BFE217747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */; };
+		9358BFE317747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */; };
 		936510931741578C00F2AD06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510921741578C00F2AD06 /* UIKit.framework */; };
 		936510951741578C00F2AD06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510941741578C00F2AD06 /* Foundation.framework */; };
 		936510971741578C00F2AD06 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510961741578C00F2AD06 /* CoreGraphics.framework */; };
@@ -94,6 +96,8 @@
 		937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
 		937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
 		937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
+		937FFE311774EF1700F3EE55 /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 937FFE301774EF1700F3EE55 /* GamePlayer.m */; };
+		937FFE321774EF1700F3EE55 /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 937FFE301774EF1700F3EE55 /* GamePlayer.m */; };
 		938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		939697E717732A110013B125 /* RoundEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 939697E617732A110013B125 /* RoundEnvoy.m */; };
@@ -106,8 +110,6 @@
 		9398A9CF177224EE00E5D31C /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9CD177224EE00E5D31C /* Game.m */; };
 		9398A9D2177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
 		9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
-		9398A9D6177224EF00E5D31C /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D5177224EF00E5D31C /* GamePlayer.m */; };
-		9398A9D7177224EF00E5D31C /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D5177224EF00E5D31C /* GamePlayer.m */; };
 		9398A9DA177224EF00E5D31C /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D9177224EF00E5D31C /* Mission.m */; };
 		9398A9DB177224EF00E5D31C /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D9177224EF00E5D31C /* Mission.m */; };
 		9398A9DE177224EF00E5D31C /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9DD177224EF00E5D31C /* Round.m */; };
@@ -193,6 +195,8 @@
 		93040363174E7D0900ED169F /* ToolsMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToolsMenuItems.h; path = Classes/ToolsMenuItems.h; sourceTree = "<group>"; };
 		93040364174E7D0900ED169F /* ToolsMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToolsMenuItems.m; path = Classes/ToolsMenuItems.m; sourceTree = "<group>"; };
 		9358BFDD17747C1F00FA2DAF /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = Arts/mask.png; sourceTree = "<group>"; };
+		9358BFE017747E5400FA2DAF /* OperativeAlertMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OperativeAlertMenuItems.h; path = Classes/OperativeAlertMenuItems.h; sourceTree = "<group>"; };
+		9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OperativeAlertMenuItems.m; path = Classes/OperativeAlertMenuItems.m; sourceTree = "<group>"; };
 		9365108F1741578C00F2AD06 /* Partisans.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Partisans.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		936510921741578C00F2AD06 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		936510941741578C00F2AD06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -295,6 +299,8 @@
 		937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateGameOperation.m; path = Classes/CreateGameOperation.m; sourceTree = "<group>"; };
 		937BC0C11747D86D003F42D6 /* GamePlayerEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayerEnvoy.h; path = Classes/GamePlayerEnvoy.h; sourceTree = "<group>"; };
 		937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayerEnvoy.m; path = Classes/GamePlayerEnvoy.m; sourceTree = "<group>"; };
+		937FFE2F1774EF1700F3EE55 /* GamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayer.h; path = Classes/GamePlayer.h; sourceTree = "<group>"; };
+		937FFE301774EF1700F3EE55 /* GamePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayer.m; path = Classes/GamePlayer.m; sourceTree = "<group>"; };
 		938429321746C0D30037563D /* AddGamePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddGamePlayerOperation.h; path = Classes/AddGamePlayerOperation.h; sourceTree = "<group>"; };
 		938429331746C0D30037563D /* AddGamePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddGamePlayerOperation.m; path = Classes/AddGamePlayerOperation.m; sourceTree = "<group>"; };
 		939697E517732A110013B125 /* RoundEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundEnvoy.h; path = Classes/RoundEnvoy.h; sourceTree = "<group>"; };
@@ -307,8 +313,6 @@
 		9398A9CD177224EE00E5D31C /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Game.m; path = Classes/Game.m; sourceTree = "<group>"; };
 		9398A9D0177224EE00E5D31C /* Scorecard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scorecard.h; path = Classes/Scorecard.h; sourceTree = "<group>"; };
 		9398A9D1177224EF00E5D31C /* Scorecard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Scorecard.m; path = Classes/Scorecard.m; sourceTree = "<group>"; };
-		9398A9D4177224EF00E5D31C /* GamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayer.h; path = Classes/GamePlayer.h; sourceTree = "<group>"; };
-		9398A9D5177224EF00E5D31C /* GamePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayer.m; path = Classes/GamePlayer.m; sourceTree = "<group>"; };
 		9398A9D8177224EF00E5D31C /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Classes/Mission.h; sourceTree = "<group>"; };
 		9398A9D9177224EF00E5D31C /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Classes/Mission.m; sourceTree = "<group>"; };
 		9398A9DC177224EF00E5D31C /* Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Round.h; path = Classes/Round.h; sourceTree = "<group>"; };
@@ -649,10 +653,10 @@
 		9365110417415ADA00F2AD06 /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
+				937FFE2F1774EF1700F3EE55 /* GamePlayer.h */,
+				937FFE301774EF1700F3EE55 /* GamePlayer.m */,
 				9398A9CC177224EE00E5D31C /* Game.h */,
 				9398A9CD177224EE00E5D31C /* Game.m */,
-				9398A9D4177224EF00E5D31C /* GamePlayer.h */,
-				9398A9D5177224EF00E5D31C /* GamePlayer.m */,
 				9398A9C4177224EE00E5D31C /* Image.h */,
 				9398A9C5177224EE00E5D31C /* Image.m */,
 				9398A9D8177224EF00E5D31C /* Mission.h */,
@@ -717,6 +721,8 @@
 				936CDFBD1761276900C6A4EE /* NetHost.m */,
 				936CDFC0176202E500C6A4EE /* NetPlayer.h */,
 				936CDFC1176202E500C6A4EE /* NetPlayer.m */,
+				9358BFE017747E5400FA2DAF /* OperativeAlertMenuItems.h */,
+				9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */,
 				93C10BB817440C4500B47095 /* PlayGameMenuItems.h */,
 				93C10BB917440C4500B47095 /* PlayGameMenuItems.m */,
 				93C10BC6174439B200B47095 /* SetupGameMenuItems.h */,
@@ -920,11 +926,12 @@
 				9398A9CA177224EE00E5D31C /* Player.m in Sources */,
 				9398A9CE177224EE00E5D31C /* Game.m in Sources */,
 				9398A9D2177224EF00E5D31C /* Scorecard.m in Sources */,
-				9398A9D6177224EF00E5D31C /* GamePlayer.m in Sources */,
 				9398A9DA177224EF00E5D31C /* Mission.m in Sources */,
 				9398A9DE177224EF00E5D31C /* Round.m in Sources */,
 				9398A9E2177224EF00E5D31C /* Votes.m in Sources */,
 				939697E717732A110013B125 /* RoundEnvoy.m in Sources */,
+				9358BFE217747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
+				937FFE311774EF1700F3EE55 /* GamePlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -988,11 +995,12 @@
 				9398A9CB177224EE00E5D31C /* Player.m in Sources */,
 				9398A9CF177224EE00E5D31C /* Game.m in Sources */,
 				9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */,
-				9398A9D7177224EF00E5D31C /* GamePlayer.m in Sources */,
 				9398A9DB177224EF00E5D31C /* Mission.m in Sources */,
 				9398A9DF177224EF00E5D31C /* Round.m in Sources */,
 				9398A9E3177224EF00E5D31C /* Votes.m in Sources */,
 				939697E817732A110013B125 /* RoundEnvoy.m in Sources */,
+				9358BFE317747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
+				937FFE321774EF1700F3EE55 /* GamePlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

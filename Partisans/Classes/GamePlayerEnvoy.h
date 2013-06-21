@@ -19,6 +19,7 @@
 
 @property (nonatomic, assign) BOOL isHost;
 @property (nonatomic, assign) BOOL isOperative;
+@property (nonatomic, assign) BOOL hasAlertBeenShown;
 @property (nonatomic, strong) NSString *playerID;
 @property (nonatomic, strong) NSString *gameID;
 

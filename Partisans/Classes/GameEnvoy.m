@@ -332,7 +332,7 @@
     NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
     Game *game = (Game *)[context objectWithID:self.managedObjectID];
     
-    NSSet *roundSet = game.gamePlayers;
+    NSSet *roundSet = game.rounds;
     NSSortDescriptor *numberSort = [[NSSortDescriptor alloc] initWithKey:@"roundNumber" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:numberSort, nil];
     [numberSort release];
@@ -383,6 +383,39 @@
     return returnValue;
 }
 
+- (NSArray *)operatives
+{
+    if (!self.managedObjectID)
+    {
+        return nil;
+    }
+    
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    NSSet *playerSet = game.gamePlayers;
+    
+    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"player.playerName" ascending:YES];
+    NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
+    [nameSort release];
+    NSArray *players = [playerSet sortedArrayUsingDescriptors:sorts];
+    [sorts release];
+    
+    NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:players.count];
+    for (GamePlayer *gamePlayer in players)
+    {
+        if (gamePlayer.isOperative)
+        {
+            PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:gamePlayer.player];
+            [envoys addObject:envoy];
+            [envoy release];
+        }
+    }
+    
+    NSArray *returnValue = [NSArray arrayWithArray:envoys];
+    [envoys release];
+    
+    return returnValue;
+}
 
 - (PlayerEnvoy *)host
 {
@@ -499,6 +532,20 @@
 //        }
 //    }
 //    return NO;
+}
+
+- (BOOL)isPlayerAnOperative:(PlayerEnvoy *)playerEnvoy
+{
+    BOOL returnValue = NO;
+    for (GamePlayerEnvoy *gamePlayerEnvoy in self.gamePlayerEnvoys)
+    {
+        if ([gamePlayerEnvoy.playerID isEqualToString:playerEnvoy.intramuralID])
+        {
+            returnValue = gamePlayerEnvoy.isOperative;
+            break;
+        }
+    }
+    return returnValue;
 }
 
 - (void)removePlayer:(PlayerEnvoy *)playerEnvoy

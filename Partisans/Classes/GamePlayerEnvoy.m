@@ -30,6 +30,7 @@
 @synthesize isOperative = m_isOperative;
 @synthesize playerID = m_playerID;
 @synthesize gameID = m_gameID;
+@synthesize hasAlertBeenShown = m_hasAlertBeenShown;
 
 - (void)dealloc
 {
@@ -50,6 +51,7 @@
     {
         self.isHost = [managedObject.isHost boolValue];
         self.isOperative = [managedObject.isOperative boolValue];
+        self.hasAlertBeenShown = [managedObject.hasAlertBeenShown boolValue];
         self.playerID = managedObject.player.intramuralID;
         self.gameID = managedObject.game.intramuralID;
         
@@ -111,6 +113,7 @@
                               managedObjectString, @"managedObjectID",
                               [NSNumber numberWithBool:self.isHost].description, @"isHost",
                               [NSNumber numberWithBool:self.isOperative].description, @"isOperative",
+                              [NSNumber numberWithBool:self.hasAlertBeenShown].description, @"hasAlertBeenShown",
                               playerIDString, @"playerID",
                               gameIDString, @"gameID", nil];
     return descDict.description;
@@ -146,12 +149,20 @@
     if (!model)
     {
         model = [NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
+        model.hasAlertBeenShown = [NSNumber numberWithBool:NO];
     }
     
     model.intramuralID = self.intramuralID;
     
     model.isHost = [NSNumber numberWithBool:self.isHost];
     model.isOperative = [NSNumber numberWithBool:self.isOperative];
+    
+    // This attribute only gets set to YES once, by the player.
+    // So don't update it unless it is NO.
+    if (![model.hasAlertBeenShown boolValue])
+    {
+        model.hasAlertBeenShown = [NSNumber numberWithBool:self.hasAlertBeenShown];
+    }
 
     // Set the player.
     if (self.playerID)
@@ -208,6 +219,7 @@
     [aCoder encodeBool:self.isOperative forKey:@"isOperative"];
     [aCoder encodeObject:self.playerID forKey:@"playerID"];
     [aCoder encodeObject:self.gameID forKey:@"gameID"];
+    [aCoder encodeBool:self.hasAlertBeenShown forKey:@"hasAlertBeenShown"];
 }
 
 
@@ -235,6 +247,7 @@
         self.isOperative = [aDecoder decodeBoolForKey:@"isOperative"];
         self.playerID = [aDecoder decodeObjectForKey:@"playerID"];
         self.gameID = [aDecoder decodeObjectForKey:@"gameID"];
+        self.hasAlertBeenShown = [aDecoder decodeBoolForKey:@"hasAlertBeenShown"];
     }
     
     return self;

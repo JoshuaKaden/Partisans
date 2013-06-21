@@ -2,7 +2,7 @@
 //  GamePlayer.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/19/13.
+//  Created by Joshua Kaden on 6/21/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -19,6 +19,7 @@
 @dynamic intramuralID;
 @dynamic isHost;
 @dynamic isOperative;
+@dynamic hasAlertBeenShown;
 @dynamic candidateForRounds;
 @dynamic game;
 @dynamic leaderForRounds;

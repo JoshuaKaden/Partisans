@@ -296,6 +296,14 @@
             if (self.players.count >= kPartisansMinPlayers)
             {
                 [self startGame];
+                [menuViewController.navigationController popToRootViewControllerAnimated:NO];
+            }
+        }
+        else
+        {
+            if ([SystemMessage gameEnvoy].startDate)
+            {
+                [menuViewController.navigationController popToRootViewControllerAnimated:NO];
             }
         }
     }

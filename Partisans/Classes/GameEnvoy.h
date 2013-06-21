@@ -30,9 +30,11 @@
 @property (readonly) NSUInteger roundCount;
 
 - (NSArray *)players;
+- (NSArray *)operatives;
 - (PlayerEnvoy *)host;
 - (void)addPlayer:(PlayerEnvoy *)playerEnvoy;
 - (BOOL)isPlayerInGame:(PlayerEnvoy *)playerEnvoy;
+- (BOOL)isPlayerAnOperative:(PlayerEnvoy *)playerEnvoy;
 - (void)removePlayer:(PlayerEnvoy *)playerEnvoy;
 - (void)addHost:(PlayerEnvoy *)playerEnvoy;
 - (void)addMission:(MissionEnvoy *)missionEnvoy;

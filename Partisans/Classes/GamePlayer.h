@@ -2,7 +2,7 @@
 //  GamePlayer.h
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/19/13.
+//  Created by Joshua Kaden on 6/21/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString * intramuralID;
 @property (nonatomic, retain) NSNumber * isHost;
 @property (nonatomic, retain) NSNumber * isOperative;
+@property (nonatomic, retain) NSNumber * hasAlertBeenShown;
 @property (nonatomic, retain) NSSet *candidateForRounds;
 @property (nonatomic, retain) Game *game;
 @property (nonatomic, retain) NSSet *leaderForRounds;

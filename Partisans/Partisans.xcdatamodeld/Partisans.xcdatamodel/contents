@@ -11,6 +11,7 @@
         <relationship name="rounds" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Round" inverseName="game" inverseEntity="Round" syncable="YES"/>
     </entity>
     <entity name="GamePlayer" representedClassName="GamePlayer" syncable="YES">
+        <attribute name="hasAlertBeenShown" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isHost" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isOperative" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -84,7 +85,7 @@
     </entity>
     <elements>
         <element name="Game" positionX="-1802" positionY="-1071" width="128" height="165"/>
-        <element name="GamePlayer" positionX="-1865" positionY="-651" width="128" height="180"/>
+        <element name="GamePlayer" positionX="-1865" positionY="-651" width="128" height="195"/>
         <element name="Image" positionX="-2043" positionY="-606" width="128" height="165"/>
         <element name="Mission" positionX="-983" positionY="-954" width="128" height="180"/>
         <element name="Player" positionX="-2052" positionY="-1053" width="128" height="225"/>
