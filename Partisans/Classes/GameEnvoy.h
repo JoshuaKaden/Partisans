@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @class Game;
+@class GamePlayerEnvoy;
+@class MissionEnvoy;
 @class NSManagedObjectID;
 @class PlayerEnvoy;
+@class RoundEnvoy;
 
 @interface GameEnvoy : NSObject <NSCoding>
 
@@ -23,12 +26,22 @@
 @property (nonatomic, assign) NSUInteger numberOfPlayers;
 @property (nonatomic, strong) NSDate *modifiedDate;
 
+@property (readonly) NSUInteger operativeCount;
+@property (readonly) NSUInteger roundCount;
+
 - (NSArray *)players;
 - (PlayerEnvoy *)host;
 - (void)addPlayer:(PlayerEnvoy *)playerEnvoy;
 - (BOOL)isPlayerInGame:(PlayerEnvoy *)playerEnvoy;
 - (void)removePlayer:(PlayerEnvoy *)playerEnvoy;
 - (void)addHost:(PlayerEnvoy *)playerEnvoy;
+- (void)addMission:(MissionEnvoy *)missionEnvoy;
+- (GamePlayerEnvoy *)gamePlayerEnvoyFromPlayer:(PlayerEnvoy *)playerEnvoy;
+- (MissionEnvoy *)missionEnvoyFromNumber:(NSUInteger)missionNumber;
+- (MissionEnvoy *)currentMission;
+- (RoundEnvoy *)roundEnvoyFromNumber:(NSUInteger)roundNumber;
+- (RoundEnvoy *)currentRound;
+- (void)addRound:(RoundEnvoy *)roundEnvoy;
 
 + (GameEnvoy *)envoyFromHost:(PlayerEnvoy *)host;
 + (GameEnvoy *)envoyFromPlayer:(PlayerEnvoy *)player;

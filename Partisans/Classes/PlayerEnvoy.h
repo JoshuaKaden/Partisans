@@ -32,6 +32,7 @@
 // Search for and return the default player.
 + (PlayerEnvoy *)defaultEnvoy;
 
++ (PlayerEnvoy *)envoyFromIntramuralID:(NSString *)intramuralID;
 + (PlayerEnvoy *)envoyFromPeerID:(NSString *)peerID;
 + (PlayerEnvoy *)envoyFromManagedObject:(Player *)managedObject;
 + (PlayerEnvoy *)createEnvoyWithPeerID:(NSString *)peerID;

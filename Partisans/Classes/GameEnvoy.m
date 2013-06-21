@@ -17,6 +17,8 @@
 #import "NSManagedObjectContext+FetchAdditions.h"
 #import "Player.h"
 #import "PlayerEnvoy.h"
+#import "Round.h"
+#import "RoundEnvoy.h"
 #import "SystemMessage.h"
 
 
@@ -24,8 +26,10 @@
 @property (nonatomic, strong) NSArray *gamePlayerEnvoys;
 @property (nonatomic, strong) NSArray *deletedGamePlayerEnvoys;
 @property (nonatomic, strong) NSArray *missionEnvoys;
+@property (nonatomic, strong) NSArray *roundEnvoys;
 - (void)loadGamePlayerEnvoys;
 - (void)loadMissionEnvoys;
+- (void)loadRoundEnvoys;
 @end
 
 
@@ -42,6 +46,7 @@
 @synthesize modifiedDate = m_modifiedDate;
 @synthesize deletedGamePlayerEnvoys = m_deletedGamePlayerEnvoys;
 @synthesize missionEnvoys = m_missionEnvoys;
+@synthesize roundEnvoys = m_roundEnvoys;
 
 - (void)dealloc
 {
@@ -55,6 +60,7 @@
     [m_modifiedDate release];
     [m_deletedGamePlayerEnvoys release];
     [m_missionEnvoys release];
+    [m_roundEnvoys release];
     
     [super dealloc];
 }
@@ -82,6 +88,7 @@
         
         [self loadGamePlayerEnvoys];
         [self loadMissionEnvoys];
+        [self loadRoundEnvoys];
     }
     
     return self;
@@ -149,7 +156,8 @@
                               endDateString, @"endDate",
                               [NSNumber numberWithUnsignedInteger:self.numberOfPlayers].description, @"numberOfPlayers",
                               gamePlayerEnvoysString, @"gamePlayerEnvoys",
-                              modifiedDateString, @"modifiedDate", nil];
+                              modifiedDateString, @"modifiedDate",
+                              [NSNumber numberWithUnsignedInteger:self.operativeCount], @"operativeCount", nil];
     return descDict.description;
 }
 
@@ -294,7 +302,7 @@
     NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
     Game *game = (Game *)[context objectWithID:self.managedObjectID];
     
-    NSSet *missionSet = game.gamePlayers;
+    NSSet *missionSet = game.missions;
     NSSortDescriptor *numberSort = [[NSSortDescriptor alloc] initWithKey:@"missionNumber" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:numberSort, nil];
     [numberSort release];
@@ -310,6 +318,36 @@
     }
     
     [self setMissionEnvoys:[NSArray arrayWithArray:envoyList]];
+    [envoyList release];
+}
+
+
+- (void)loadRoundEnvoys
+{
+    if (!self.managedObjectID)
+    {
+        return;
+    }
+    
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    
+    NSSet *roundSet = game.gamePlayers;
+    NSSortDescriptor *numberSort = [[NSSortDescriptor alloc] initWithKey:@"roundNumber" ascending:YES];
+    NSArray *sorts = [[NSArray alloc] initWithObjects:numberSort, nil];
+    [numberSort release];
+    NSArray *rounds = [roundSet sortedArrayUsingDescriptors:sorts];
+    [sorts release];
+    
+    NSMutableArray *envoyList = [[NSMutableArray alloc] initWithCapacity:rounds.count];
+    for (Round *round in rounds)
+    {
+        RoundEnvoy *envoy = [[RoundEnvoy alloc] initWithManagedObject:round];
+        [envoyList addObject:envoy];
+        [envoy release];
+    }
+    
+    [self setRoundEnvoys:[NSArray arrayWithArray:envoyList]];
     [envoyList release];
 }
 
@@ -517,6 +555,99 @@
 //    GamePlayer *gamePlayer = [gamePlayers objectAtIndex:0];
 //    [context deleteObject:gamePlayer];
 }
+
+
+- (void)addMission:(MissionEnvoy *)missionEnvoy
+{
+    if (!self.missionEnvoys)
+    {
+        self.missionEnvoys = [NSArray array];
+    }
+    NSArray *missionEnvoys= [self.missionEnvoys arrayByAddingObject:missionEnvoy];
+    [self setMissionEnvoys:missionEnvoys];
+}
+
+- (GamePlayerEnvoy *)gamePlayerEnvoyFromPlayer:(PlayerEnvoy *)playerEnvoy
+{
+    GamePlayerEnvoy *returnValue = nil;
+    for (GamePlayerEnvoy *gamePlayerEnvoy in self.gamePlayerEnvoys)
+    {
+        if ([gamePlayerEnvoy.playerID isEqualToString:playerEnvoy.intramuralID])
+        {
+            returnValue = gamePlayerEnvoy;
+            break;
+        }
+    }
+    return returnValue;
+}
+
+- (NSUInteger)operativeCount
+{
+    NSArray *operatives = [self.gamePlayerEnvoys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isOperative == YES"]];
+    return operatives.count;
+}
+
+- (NSUInteger)roundCount
+{
+    return self.roundEnvoys.count;
+}
+
+- (RoundEnvoy *)roundEnvoyFromNumber:(NSUInteger)roundNumber
+{
+    RoundEnvoy *returnValue = nil;
+    for (RoundEnvoy *envoy in self.roundEnvoys)
+    {
+        if (envoy.roundNumber == roundNumber)
+        {
+            returnValue = envoy;
+            break;
+        }
+    }
+    return returnValue;
+}
+
+- (RoundEnvoy *)currentRound
+{
+    return [self.roundEnvoys lastObject];
+}
+
+- (void)addRound:(RoundEnvoy *)roundEnvoy
+{
+    NSArray *rounds = [self.roundEnvoys arrayByAddingObject:roundEnvoy];
+    self.roundEnvoys = rounds;
+}
+
+- (MissionEnvoy *)missionEnvoyFromNumber:(NSUInteger)missionNumber
+{
+    MissionEnvoy *returnValue = nil;
+    for (MissionEnvoy *missionEnvoy in self.missionEnvoys)
+    {
+        if (missionEnvoy.missionNumber == missionNumber)
+        {
+            returnValue = missionEnvoy;
+            break;
+        }
+    }
+    return returnValue;
+}
+
+
+- (MissionEnvoy *)currentMission
+{
+    MissionEnvoy *returnValue = nil;
+    NSArray *completed = [self.missionEnvoys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isComplete == YES"]];
+    if (completed.count == 0)
+    {
+        returnValue = [self missionEnvoyFromNumber:1];
+    }
+    else
+    {
+        MissionEnvoy *previous = [completed lastObject];
+        returnValue = [self missionEnvoyFromNumber:previous.missionNumber + 1];
+    }
+    return returnValue;
+}
+
 
 
 #pragma mark - Commits

@@ -2,7 +2,7 @@
 //  Mission.h
 //  Partisans
 //
-//  Created by Joshua Kaden on 5/25/13.
+//  Created by Joshua Kaden on 6/19/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -21,7 +21,7 @@
 @property (nonatomic, retain) NSNumber * teamCount;
 @property (nonatomic, retain) Game *game;
 @property (nonatomic, retain) NSSet *rounds;
-@property (nonatomic, retain) GamePlayer *teamMembers;
+@property (nonatomic, retain) NSSet *teamMembers;
 @end
 
 @interface Mission (CoreDataGeneratedAccessors)
@@ -30,5 +30,10 @@
 - (void)removeRoundsObject:(Round *)value;
 - (void)addRounds:(NSSet *)values;
 - (void)removeRounds:(NSSet *)values;
+
+- (void)addTeamMembersObject:(GamePlayer *)value;
+- (void)removeTeamMembersObject:(GamePlayer *)value;
+- (void)addTeamMembers:(NSSet *)values;
+- (void)removeTeamMembers:(NSSet *)values;
 
 @end

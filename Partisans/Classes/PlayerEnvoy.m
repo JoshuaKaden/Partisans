@@ -108,6 +108,20 @@
     return newEnvoy;
 }
 
++ (PlayerEnvoy *)envoyFromIntramuralID:(NSString *)intramuralID
+{
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    NSArray *players = [context fetchObjectArrayForEntityName:@"Player" withPredicateFormat:@"intramuralID == %@", intramuralID];
+    
+    if (players.count == 0)
+    {
+        return nil;
+    }
+    
+    Player *player = [players objectAtIndex:0];
+    return [self envoyFromManagedObject:player];
+}
+
 + (PlayerEnvoy *)envoyFromPeerID:(NSString *)peerID
 {
     NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];

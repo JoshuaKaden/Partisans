@@ -40,7 +40,7 @@
         <attribute name="teamCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="game" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="missions" inverseEntity="Game" syncable="YES"/>
         <relationship name="rounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="mission" inverseEntity="Round" syncable="YES"/>
-        <relationship name="teamMembers" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="teamMemberOn" inverseEntity="GamePlayer" syncable="YES"/>
+        <relationship name="teamMembers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="teamMemberOn" inverseEntity="GamePlayer" syncable="YES"/>
     </entity>
     <entity name="Player" representedClassName="Player" syncable="YES">
         <attribute name="favoriteColor" optional="YES" attributeType="Transformable" syncable="YES"/>
