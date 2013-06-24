@@ -43,6 +43,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 @property(nonatomic,assign) CFSocketNativeHandle connectedSocketHandle;
 @property(nonatomic,retain) NSNetService* netService;
 @property (nonatomic, strong) NSMutableData *outgoingDataBuffer;
+@property (nonatomic, strong) NSMutableData *incomingDataBuffer;
 
 // Initialize
 - (void)clean;
@@ -70,6 +71,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 @synthesize connectedSocketHandle;
 @synthesize netService;
 @synthesize outgoingDataBuffer = m_outgoingDataBuffer;
+@synthesize incomingDataBuffer = m_incomingDataBuffer;
 @synthesize peerID = m_peerID;
 
 
@@ -81,7 +83,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     writeStream = nil;
     writeStreamOpen = NO;
     
-    incomingDataBuffer = nil;
+    self.incomingDataBuffer = nil;
     self.outgoingDataBuffer = nil;
     
     self.netService = nil;
@@ -97,6 +99,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     self.host = nil;
     self.delegate = nil;
     [m_outgoingDataBuffer release];
+    [m_incomingDataBuffer release];
     [m_peerID release];
     
     [super dealloc];
@@ -182,7 +185,9 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     }
     
     // Create buffers
-    incomingDataBuffer = [[NSMutableData alloc] init];
+    NSMutableData *incomingDataBuffer = [[NSMutableData alloc] init];
+    self.incomingDataBuffer = incomingDataBuffer;
+    [incomingDataBuffer release];
     NSMutableData *outgoingDataBuffer = [[NSMutableData alloc] init];
     self.outgoingDataBuffer = outgoingDataBuffer;
     [outgoingDataBuffer release];
@@ -240,8 +245,8 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     }
     
     // Cleanup buffers
-    [incomingDataBuffer release];
-    incomingDataBuffer = NULL;
+//    [m_incomingDataBuffer release];
+    self.incomingDataBuffer = nil;
     
     self.outgoingDataBuffer = nil;
     
@@ -280,8 +285,11 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 // Dispatch readStream events
 void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
                             void *info) {
-    Connection* connection = (Connection*)info;
-    [connection readStreamHandleEvent:eventType];
+    dispatch_async(dispatch_get_main_queue(), ^(void)
+    {
+        Connection* connection = (Connection*)info;
+        [connection readStreamHandleEvent:eventType];
+    });
 }
 
 
@@ -327,7 +335,7 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
             return;
         }
         
-        [incomingDataBuffer appendBytes:buf length:len];
+        [self.incomingDataBuffer appendBytes:buf length:len];
     }
     
     // Try to extract packets from the buffer.
@@ -341,13 +349,13 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
         // Did we read the header yet?
         if ( packetBodySize == -1 ) {
             // Do we have enough bytes in the buffer to read the header?
-            if ( [incomingDataBuffer length] >= sizeof(int) ) {
+            if ( [self.incomingDataBuffer length] >= sizeof(int) ) {
                 // extract length
-                memcpy(&packetBodySize, [incomingDataBuffer bytes], sizeof(int));
+                memcpy(&packetBodySize, [self.incomingDataBuffer bytes], sizeof(int));
                 
                 // remove that chunk from buffer
                 NSRange rangeToDelete = {0, sizeof(int)};
-                [incomingDataBuffer replaceBytesInRange:rangeToDelete withBytes:NULL length:0];
+                [self.incomingDataBuffer replaceBytesInRange:rangeToDelete withBytes:NULL length:0];
             }
             else {
                 // We don't have enough yet. Will wait for more data.
@@ -356,9 +364,9 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
         }
         
         // We should now have the header. Time to extract the body.
-        if ( [incomingDataBuffer length] >= packetBodySize ) {
+        if ( [self.incomingDataBuffer length] >= packetBodySize ) {
             // We now have enough data to extract a meaningful packet.
-            NSData* raw = [NSData dataWithBytes:[incomingDataBuffer bytes] length:packetBodySize];
+            NSData* raw = [NSData dataWithBytes:[self.incomingDataBuffer bytes] length:packetBodySize];
             NSObject <NSCoding> *packet = [NSKeyedUnarchiver unarchiveObjectWithData:raw];
             
             // Tell our delegate about it
@@ -366,7 +374,7 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
             
             // Remove that chunk from buffer
             NSRange rangeToDelete = {0, packetBodySize};
-            [incomingDataBuffer replaceBytesInRange:rangeToDelete withBytes:NULL length:0];
+            [self.incomingDataBuffer replaceBytesInRange:rangeToDelete withBytes:NULL length:0];
             
             // We have processed the packet. Resetting the state.
             packetBodySize = -1;
@@ -383,8 +391,11 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
 
 // Dispatch writeStream event handling
 void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventType, void *info) {
-    Connection* connection = (Connection*)info;
-    [connection writeStreamHandleEvent:eventType];
+    dispatch_async(dispatch_get_main_queue(), ^(void)
+    {
+        Connection* connection = (Connection*)info;
+        [connection writeStreamHandleEvent:eventType];
+    });
 }
 
 

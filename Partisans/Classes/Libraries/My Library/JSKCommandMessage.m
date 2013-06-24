@@ -101,6 +101,10 @@
             name = @"DidFinish";
             break;
             
+        case JSKCommandMessageTypeGetDigest:
+            name = @"GetDigest";
+            break;
+            
         case JSKCommandMessageTypeGetInfo:
             name = @"GetInfo";
             break;

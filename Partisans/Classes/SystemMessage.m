@@ -44,8 +44,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 @interface SystemMessage () <NetHostDelegate, NetPlayerDelegate, ServerBrowserDelegate>
 
-@property (nonatomic, strong) NetHost *netHost;
-@property (nonatomic, strong) NetPlayer *netPlayer;
+@property (atomic, strong) NetHost *netHost;
+@property (atomic, strong) NetPlayer *netPlayer;
 @property (nonatomic, strong) NSMutableArray *stash;
 @property (nonatomic, strong) NSMutableArray *peerIDs;
 @property (nonatomic, strong) NSDictionary *playerDigest;
@@ -64,7 +64,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (void)handleJoinGameStash:(NSString *)fromPeerID;
 - (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey;
 - (void)askToJoinGame:(NSString *)toPeerID;
-- (BOOL)isReadyToJoinGame;
+- (BOOL)isDigestCurrent;
 - (void)processDigest:(NSDictionary *)digest;
 - (void)sendDigestTo:(NSString *)toPeerID;
 - (NSDictionary *)buildDigestFor:(NSString *)forPeerID;
@@ -126,10 +126,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         
         UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:otherEnvoy];
         [op setCompletionBlock:^(void){
-            [self sendDigestTo:commandParcel.from];
-            [self broadcastPlayerData:commandParcel.from];
-            // Update the UI.
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^
+            {
+                [self sendDigestTo:commandParcel.from];
+                [self broadcastPlayerData:commandParcel.from];
+                // Update the UI.
                 [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:otherEnvoy.peerID];
             });
         }];
@@ -300,7 +301,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 #pragma mark - Player
 
-- (BOOL)isReadyToJoinGame
+- (BOOL)isDigestCurrent
 {
     // Loop through the player digest and see if our saved Player data is up-to-date.
     BOOL returnValue = YES;
@@ -398,7 +399,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             PlayerEnvoy *otherEnvoy = [PlayerEnvoy envoyFromPeerID:otherID];
             if (otherEnvoy)
             {
-                if ([SystemMessage secondsBetweenDates:otherEnvoy.modifiedDate toDate:otherDate] > 0)
+                if ([SystemMessage secondsBetweenDates:otherEnvoy.modifiedDate toDate:otherDate] > 0 || [otherEnvoy.modifiedDate isEqualToDate:[NSDate distantPast]])
                 {
                     shouldAskForData = YES;
                 }
@@ -430,7 +431,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         {
             if (self.isLookingForGame)
             {
-                if ([self isReadyToJoinGame])
+                if ([self isDigestCurrent])
                 {
                     [self askToJoinGameDelayed:self.netPlayer.hostPeerID];
                 }
@@ -753,6 +754,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         return;
     }
 
+    if (commandMessage.commandMessageType == JSKCommandMessageTypeGetDigest)
+    {
+        [self sendDigestTo:peerID];
+        return;
+    }
+    
     // The "to" field tells us which player the sender is interested in.
     PlayerEnvoy *playerEnvoy = [PlayerEnvoy envoyFromPeerID:commandMessage.to];
 //    PlayerEnvoy *playerEnvoy = self.playerEnvoy;
@@ -884,7 +891,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (self.isLookingForGame)
                 {
-                    if ([self isReadyToJoinGame])
+                    if ([self isDigestCurrent])
                     {
                         [self askToJoinGameDelayed:other.peerID];
                     }

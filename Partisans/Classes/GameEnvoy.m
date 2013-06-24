@@ -403,7 +403,7 @@
     NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:players.count];
     for (GamePlayer *gamePlayer in players)
     {
-        if (gamePlayer.isOperative)
+        if ([gamePlayer.isOperative boolValue])
         {
             PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:gamePlayer.player];
             [envoys addObject:envoy];
@@ -797,6 +797,7 @@
     {
         for (GamePlayerEnvoy *envoy in self.gamePlayerEnvoys)
         {
+            Player *player = nil;
             GamePlayer *gamePlayer = nil;
             if (envoy.managedObjectID)
             {
@@ -808,12 +809,29 @@
             {
                 if (envoy.playerID)
                 {
-                    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.playerID];
-                    if (gamePlayers.count > 0)
+                    // Let's make sure we have a matching Player record.
+                    NSArray *players = [context fetchObjectArrayForEntityName:@"Player" withPredicateFormat:@"intramuralID == %@", envoy.playerID];
+                    if (players.count == 0)
                     {
-                        gamePlayer = [gamePlayers objectAtIndex:0];
-                        envoy.managedObjectID = gamePlayer.objectID;
+                        // Oops, we don't have this Player's data yet.
+                        // So, let's stub one in.
+                        player = [NSEntityDescription insertNewObjectForEntityForName:@"Player" inManagedObjectContext:context];
+                        player.intramuralID = envoy.playerID;
+                        player.isDefault = NO;
+                        player.isNative = NO;
+                        player.playerName = NSLocalizedString(@"TBA", @"TBA  --  label");
+                        player.modifiedDate = [NSDate distantPast];
                     }
+                    else
+                    {
+                        NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.playerID];
+                        if (gamePlayers.count > 0)
+                        {
+                            gamePlayer = [gamePlayers objectAtIndex:0];
+                            envoy.managedObjectID = gamePlayer.objectID;
+                        }
+                    }
+                    
                 }
             }
             
@@ -821,6 +839,10 @@
             {
                 // This will create the GamePlayer row.
                 gamePlayer = [NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
+                if (player)
+                {
+                    gamePlayer.player = player;
+                }
                 // This will associate the new row with the envoy, via the NSManagedObjectID.
                 NSError *error = nil;
                 [context obtainPermanentIDsForObjects:[NSArray arrayWithObject:gamePlayer] error:&error];

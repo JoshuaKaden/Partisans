@@ -264,7 +264,10 @@
 {
     if ([SystemMessage isPlayerOnline])
     {
-        [SystemMessage requestGameUpdate];
+        if (![self isPlayerHost])
+        {
+            [SystemMessage sendToHost:JSKCommandMessageTypeGetDigest shouldAwaitResponse:NO];
+        }
     }
     else
     {

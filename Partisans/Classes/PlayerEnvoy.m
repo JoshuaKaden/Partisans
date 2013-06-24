@@ -80,8 +80,9 @@
         if (!self.peerID)
         {
             self.peerID = self.intramuralID;
-            // I'm having to work quite hard here to get the Peer ID to stick!
-            [self commitInContext:managedObject.managedObjectContext];
+            managedObject.peerID = self.peerID;
+//            // I'm having to work quite hard here to get the Peer ID to stick!
+//            [self commitInContext:managedObject.managedObjectContext];
         }
         
         self.modifiedDate = managedObject.modifiedDate;

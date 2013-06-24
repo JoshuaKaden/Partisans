@@ -46,7 +46,7 @@
   // Read stream
   CFReadStreamRef readStream;
   bool readStreamOpen;
-  NSMutableData* incomingDataBuffer;
+//  NSMutableData* incomingDataBuffer;
   int packetBodySize;
   
   // Write stream

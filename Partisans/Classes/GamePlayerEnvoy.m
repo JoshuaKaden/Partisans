@@ -165,7 +165,7 @@
     }
 
     // Set the player.
-    if (self.playerID)
+    if (self.playerID && !model.player)
     {
         NSArray *players = [context fetchObjectArrayForEntityName:@"Player" withPredicateFormat:@"intramuralID == %@", self.playerID];
         if (players.count > 0)
