@@ -152,7 +152,7 @@
             }
             else
             {
-                returnValue = NSLocalizedString(@"Unknown", @"Unknown  --  label");
+                returnValue = NSLocalizedString(@"<Unknown>", @"<Unknown>  --  label");
             }
             break;
         }
@@ -169,7 +169,7 @@
 {
     if (indexPath.section == OperativeAlertMenuSectionCommand)
     {
-        return NSLocalizedString(@"Tap to destroy this message and begin the game", @"Tap to destroy this message and begin the game  --  sublabel");
+        return NSLocalizedString(@"Tap to destroy this message", @"Tap to destroy this message  --  sublabel");
     }
     else
     {
@@ -195,6 +195,16 @@
     {
         return nil;
     }
+}
+
+- (NSTextAlignment)menuViewController:(JSKMenuViewController *)menuViewController labelAlignmentAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSTextAlignment returnValue = NSTextAlignmentLeft;
+    if (indexPath.section == OperativeAlertMenuSectionCommand)
+    {
+        returnValue = NSTextAlignmentCenter;
+    }
+    return returnValue;
 }
 
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
@@ -223,23 +233,3 @@
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

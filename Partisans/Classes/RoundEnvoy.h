@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class NSManagedObjectID;
+@class PlayerEnvoy;
 @class Round;
 @class RoundEnvoy;
 
@@ -21,6 +22,12 @@
 @property (nonatomic, assign) NSUInteger missionNumber;
 @property (nonatomic, strong) NSString *gameID;
 @property (nonatomic, strong) NSString *coordinatorID;
+
+- (PlayerEnvoy *)coordinator;
+
+- (NSArray *)candidates;
+- (void)addCandidate:(PlayerEnvoy *)playerEnvoy;
+- (void)clearCandidates;
 
 + (RoundEnvoy *)envoyFromManagedObject:(Round *)managedObject;
 

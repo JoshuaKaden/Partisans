@@ -9,13 +9,25 @@
 #import "RoundEnvoy.h"
 
 #import "Game.h"
+#import "GameEnvoy.h"
 #import "GamePlayer.h"
 #import "JSKDataMiner.h"
 #import "Mission.h"
+#import "MissionEnvoy.h"
 #import "NSManagedObjectContext+FetchAdditions.h"
 #import "Player.h"
+#import "PlayerEnvoy.h"
 #import "Round.h"
 #import "SystemMessage.h"
+
+
+@interface RoundEnvoy ()
+
+@property (nonatomic, strong) NSArray *candidateIDs;
+
+- (void)loadCandidateIDs;
+
+@end
 
 
 @implementation RoundEnvoy
@@ -26,6 +38,7 @@
 @synthesize missionNumber = m_missionNumber;
 @synthesize gameID = m_gameID;
 @synthesize coordinatorID = m_coordinatorID;
+@synthesize candidateIDs = m_candidateIDs;
 
 - (void)dealloc
 {
@@ -33,10 +46,88 @@
     [m_intramuralID release];
     [m_gameID release];
     [m_coordinatorID release];
+    [m_candidateIDs release];
     
     [super dealloc];
 }
 
+
+- (PlayerEnvoy *)coordinator
+{
+    return [PlayerEnvoy envoyFromIntramuralID:self.coordinatorID];
+}
+
+#pragma mark - Mission Team Candidates
+
+- (NSArray *)candidates
+{
+    if (self.candidateIDs.count == 0)
+    {
+        return [NSArray array];
+    }
+    
+    NSMutableArray *candidateList = [[NSMutableArray alloc] initWithCapacity:self.candidateIDs.count];
+    for (NSString *candidateID in self.candidateIDs)
+    {
+        [candidateList addObject:[PlayerEnvoy envoyFromIntramuralID:candidateID]];
+    }
+    NSArray *returnValue = [NSArray arrayWithArray:candidateList];
+    [candidateList release];
+    return returnValue;
+}
+
+- (void)addCandidate:(PlayerEnvoy *)playerEnvoy
+{
+    if (self.candidateIDs.count == 0)
+    {
+        self.candidateIDs = [NSArray arrayWithObject:playerEnvoy.intramuralID];
+        return;
+    }
+    MissionEnvoy *missionEnvoy = [[SystemMessage gameEnvoy] currentMission];
+    if (missionEnvoy.teamCount > self.candidateIDs.count)
+    {
+        NSArray *candidates = [self.candidateIDs arrayByAddingObject:playerEnvoy.intramuralID];
+        self.candidateIDs = candidates;
+    }
+}
+
+- (void)clearCandidates
+{
+    self.candidateIDs = nil;
+}
+
+
+- (void)loadCandidateIDs
+{
+    if (!self.managedObjectID)
+    {
+        return;
+    }
+    
+    Round *model = (Round *)[[JSKDataMiner mainObjectContext] objectWithID:self.managedObjectID];
+    NSMutableArray *candidateList = [[NSMutableArray alloc] initWithCapacity:model.missionCandidates.count];
+    for (GamePlayer *gamePlayer in model.missionCandidates)
+    {
+        [candidateList addObject:gamePlayer.player.intramuralID];
+    }
+    self.candidateIDs = [NSArray arrayWithArray:candidateList];
+    [candidateList release];
+}
+
+
+#pragma mark - Overrides
+
+- (NSArray *)candidateIDs
+{
+    if (!m_candidateIDs)
+    {
+        self.candidateIDs = [NSArray array];
+    }
+    return m_candidateIDs;
+}
+
+
+#pragma mark - Envoy
 
 - (id)initWithManagedObject:(Round *)managedObject
 {
@@ -49,6 +140,8 @@
         self.missionNumber   = [managedObject.mission.missionNumber unsignedIntegerValue];
         self.gameID          = managedObject.game.intramuralID;
         self.coordinatorID   = managedObject.leader.player.intramuralID;
+        
+        [self loadCandidateIDs];
     }
     return self;
 }
@@ -95,7 +188,8 @@
                               [NSNumber numberWithUnsignedInteger:self.missionNumber].description, @"missionNumber",
                               [NSNumber numberWithUnsignedInteger:self.roundNumber].description, @"roundNumber",
                               gameIDString, @"gameID",
-                              coordinatorIDString, @"coordinatorID", nil];
+                              coordinatorIDString, @"coordinatorID",
+                              self.candidateIDs, @"candidateIDs", nil];
     return descDict.description;
 }
 
@@ -185,6 +279,22 @@
     }
     
     
+    // The candidates.
+    if (self.candidateIDs.count == 0)
+    {
+        [model removeMissionCandidates:model.missionCandidates];
+    }
+    else
+    {
+        for (NSString *candidateID in self.candidateIDs)
+        {
+            GamePlayer *gamePlayer = [[context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", candidateID] objectAtIndex:0];
+            [model addMissionCandidatesObject:gamePlayer];
+        }
+    }
+    
+    
+    
     // Make sure the envoy knows the new managed object ID, if this is an add.
     if (!self.managedObjectID)
     {
@@ -217,6 +327,7 @@
     [aCoder encodeInteger:self.roundNumber forKey:@"roundNumber"];
     [aCoder encodeObject:self.gameID forKey:@"gameID"];
     [aCoder encodeObject:self.coordinatorID forKey:@"coordinatorID"];
+    [aCoder encodeObject:self.candidateIDs forKey:@"candidateIDs"];
 }
 
 
@@ -232,6 +343,7 @@
         self.roundNumber = [aDecoder decodeIntegerForKey:@"roundNumber"];
         self.gameID = [aDecoder decodeObjectForKey:@"gameID"];
         self.coordinatorID = [aDecoder decodeObjectForKey:@"coordinatorID"];
+        self.candidateIDs = [aDecoder decodeObjectForKey:@"candidateIDs"];
     }
     
     return self;

@@ -620,6 +620,17 @@
 }
 
 
+- (NSTextAlignment)menuViewController:(JSKMenuViewController *)menuViewController labelAlignmentAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSTextAlignment returnValue = NSTextAlignmentLeft;
+    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowStatus)
+    {
+        returnValue = NSTextAlignmentCenter;
+    }
+    return returnValue;
+}
+
+
 - (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *returnValue = nil;

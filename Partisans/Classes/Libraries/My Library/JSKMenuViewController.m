@@ -767,6 +767,13 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
         [cell.contentView setBackgroundColor:[self.delegate menuViewController:self backgroundColorAtIndexPath:indexPath]];
     }
     
+    if ([self.delegate respondsToSelector:@selector(menuViewController:labelAlignmentAtIndexPath:)])
+    {
+        NSTextAlignment textAlignment = [self.delegate menuViewController:self labelAlignmentAtIndexPath:indexPath];
+        [cell.textLabel setTextAlignment:textAlignment];
+    }
+        
+    
     return cell;
 }
 

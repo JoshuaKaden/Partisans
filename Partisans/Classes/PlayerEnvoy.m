@@ -461,12 +461,12 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    // This is the outbound Managed Object ID to String tango.
-    if (self.managedObjectID)
-    {
-        NSString *objectIDString = [[self.managedObjectID URIRepresentation] absoluteString];
-        [aCoder encodeObject:objectIDString forKey:@"managedObjectID"];
-    }
+//    // This is the outbound Managed Object ID to String tango.
+//    if (self.managedObjectID)
+//    {
+//        NSString *objectIDString = [[self.managedObjectID URIRepresentation] absoluteString];
+//        [aCoder encodeObject:objectIDString forKey:@"managedObjectID"];
+//    }
     
     [aCoder encodeObject:self.playerName forKey:@"playerName"];
     [aCoder encodeObject:self.intramuralID forKey:@"intramuralID"];
@@ -495,17 +495,17 @@
     
     if (self)
     {
-        // This is the inbound String to Managed Object ID tango.
-        NSString *objectIDString = [aDecoder decodeObjectForKey:@"managedObjectID"];
-        if (objectIDString)
-        {
-            self.managedObjectID = [JSKDataMiner localObjectIDForImported:objectIDString];
-            if (!self.managedObjectID)
-            {
-                self.importedObjectString = objectIDString;
-                //                debugLog(@"managedObjectID not found in local store %@", objectIDString);
-            }
-        }
+//        // This is the inbound String to Managed Object ID tango.
+//        NSString *objectIDString = [aDecoder decodeObjectForKey:@"managedObjectID"];
+//        if (objectIDString)
+//        {
+//            self.managedObjectID = [JSKDataMiner localObjectIDForImported:objectIDString];
+//            if (!self.managedObjectID)
+//            {
+//                self.importedObjectString = objectIDString;
+//                //                debugLog(@"managedObjectID not found in local store %@", objectIDString);
+//            }
+//        }
         
         self.playerName = [aDecoder decodeObjectForKey:@"playerName"];
         self.intramuralID = [aDecoder decodeObjectForKey:@"intramuralID"];

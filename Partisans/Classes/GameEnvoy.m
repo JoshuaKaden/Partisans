@@ -996,12 +996,12 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    // This is the outbound Managed Object ID to String tango.
-    if (self.managedObjectID)
-    {
-        NSString *objectIDString = [[self.managedObjectID URIRepresentation] absoluteString];
-        [aCoder encodeObject:objectIDString forKey:@"managedObjectID"];
-    }
+//    // This is the outbound Managed Object ID to String tango.
+//    if (self.managedObjectID)
+//    {
+//        NSString *objectIDString = [[self.managedObjectID URIRepresentation] absoluteString];
+//        [aCoder encodeObject:objectIDString forKey:@"managedObjectID"];
+//    }
     
     [aCoder encodeObject:self.intramuralID forKey:@"intramuralID"];
     
@@ -1009,6 +1009,8 @@
     [aCoder encodeObject:self.endDate forKey:@"endDate"];
     [aCoder encodeInteger:self.numberOfPlayers forKey:@"numberOfPlayers"];
     [aCoder encodeObject:self.gamePlayerEnvoys forKey:@"gamePlayerEnvoys"];
+    [aCoder encodeObject:self.missionEnvoys forKey:@"missionEnvoys"];
+    [aCoder encodeObject:self.roundEnvoys forKey:@"roundEnvoys"];
 }
 
 
@@ -1018,17 +1020,17 @@
     
     if (self)
     {
-        // This is the inbound String to Managed Object ID tango.
-        NSString *objectIDString = [aDecoder decodeObjectForKey:@"managedObjectID"];
-        if (objectIDString)
-        {
-            self.managedObjectID = [JSKDataMiner localObjectIDForImported:objectIDString];
-            if (!self.managedObjectID)
-            {
-                self.importedObjectString = objectIDString;
-                //                debugLog(@"managedObjectID not found in local store %@", objectIDString);
-            }
-        }
+//        // This is the inbound String to Managed Object ID tango.
+//        NSString *objectIDString = [aDecoder decodeObjectForKey:@"managedObjectID"];
+//        if (objectIDString)
+//        {
+//            self.managedObjectID = [JSKDataMiner localObjectIDForImported:objectIDString];
+//            if (!self.managedObjectID)
+//            {
+//                self.importedObjectString = objectIDString;
+//                //                debugLog(@"managedObjectID not found in local store %@", objectIDString);
+//            }
+//        }
         
         self.intramuralID = [aDecoder decodeObjectForKey:@"intramuralID"];
         
@@ -1036,6 +1038,8 @@
         self.endDate = [aDecoder decodeObjectForKey:@"endDate"];
         self.numberOfPlayers = [aDecoder decodeIntegerForKey:@"numberOfPlayers"];
         self.gamePlayerEnvoys = [aDecoder decodeObjectForKey:@"gamePlayerEnvoys"];
+        self.missionEnvoys = [aDecoder decodeObjectForKey:@"missionEnvoys"];
+        self.roundEnvoys = [aDecoder decodeObjectForKey:@"roundEnvoys"];
     }
     
     return self;

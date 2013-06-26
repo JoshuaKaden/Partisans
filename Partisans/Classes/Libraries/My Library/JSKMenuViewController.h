@@ -58,6 +58,8 @@ extern NSString * const JSKMenuViewControllerShouldRefresh;
 - (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController backgroundColorAtIndexPath:(NSIndexPath *)indexPath;
 // Label color at index path.
 - (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController labelColorAtIndexPath:(NSIndexPath *)indexPath;
+// Label alignment at index path.
+- (NSTextAlignment)menuViewController:(JSKMenuViewController *)menuViewController labelAlignmentAtIndexPath:(NSIndexPath *)indexPath;
 
 // Should auto-refresh, after initial load, on appearance?
 - (BOOL)menuViewControllerShouldAutoRefresh:(JSKMenuViewController *)menuViewController;

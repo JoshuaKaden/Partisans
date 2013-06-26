@@ -9,9 +9,11 @@
 #import "MainMenuItems.h"
 
 #import "GameEnvoy.h"
+#import "GamePlayerEnvoy.h"
 #import "ImageEnvoy.h"
 #import "OperativeAlertMenuItems.h"
 #import "PlayerEnvoy.h"
+#import "PlayerRoundMenuItems.h"
 #import "PlayerViewController.h"
 #import "PlayGameMenuItems.h"
 #import "SetupGameMenuItems.h"
@@ -49,28 +51,35 @@
     // Are we in a game?
     if ([SystemMessage gameEnvoy])
     {
+        JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
         if ([SystemMessage gameEnvoy].startDate)
         {
             // The game has started.
-            JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
-            OperativeAlertMenuItems *items = [[OperativeAlertMenuItems alloc] init];
-            [vc setMenuItems:items];
-            [items release];
-            [menuViewController invokePush:YES viewController:vc];
-            [vc release];
-            return;
+            PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+            GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+            GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
+            if (gamePlayerEnvoy.hasAlertBeenShown)
+            {
+                PlayerRoundMenuItems *items = [[PlayerRoundMenuItems alloc] init];
+                [vc setMenuItems:items];
+                [items release];
+            }
+            else
+            {
+                OperativeAlertMenuItems *items = [[OperativeAlertMenuItems alloc] init];
+                [vc setMenuItems:items];
+                [items release];
+            }
         }
         else
         {
             // Let's go to the setup screen.
-            JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
             SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
             [vc setMenuItems:items];
             [items release];
-            [menuViewController invokePush:YES viewController:vc];
-            [vc release];
-            return;
         }
+        [menuViewController invokePush:YES viewController:vc];
+        [vc release];
     }
 }
 
