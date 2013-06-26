@@ -660,6 +660,11 @@
 
 - (void)addRound:(RoundEnvoy *)roundEnvoy
 {
+    if (!self.roundEnvoys)
+    {
+        self.roundEnvoys = [NSArray arrayWithObject:roundEnvoy];
+        return;
+    }
     NSArray *rounds = [self.roundEnvoys arrayByAddingObject:roundEnvoy];
     self.roundEnvoys = rounds;
 }
@@ -715,6 +720,16 @@
         debugLog(@"Problem!!");
         return;
     }
+    
+    // Delete the gameplayers manually.
+    // Cudgel to remedy orphaned gameplayer rows.
+    NSSet *gamePlayers = game.gamePlayers;
+    for (GamePlayer *gamePlayer in gamePlayers)
+    {
+        gamePlayer.player = nil;
+        [context deleteObject:gamePlayer];
+    }
+    
     
     [context deleteObject:game];
     [self setManagedObjectID:nil];
@@ -945,6 +960,48 @@
         
         [envoy commitInContext:context];
         [model addMissionsObject:mission];
+    }
+    
+    
+    
+    // The Rounds.
+    for (RoundEnvoy *envoy in self.roundEnvoys)
+    {
+        Round *round = nil;
+        if (envoy.managedObjectID)
+        {
+            round = (Round *)[context objectWithID:envoy.managedObjectID];
+        }
+        
+        // This could be an update from the host in which case we have to hook up to the correct via the intramural ID.
+        if (!round)
+        {
+            if (envoy.intramuralID)
+            {
+                NSArray *list = [context fetchObjectArrayForEntityName:@"Round" withPredicateFormat:@"intramuralID == %@", envoy.intramuralID];
+                if (list.count > 0)
+                {
+                    round = [list objectAtIndex:0];
+                    envoy.managedObjectID = round.objectID;
+                }
+            }
+        }
+        
+        if (!round)
+        {
+            // This will create the Round row.
+            round = [NSEntityDescription insertNewObjectForEntityForName:@"Round" inManagedObjectContext:context];
+            // This will associate the new row with the envoy, via the NSManagedObjectID.
+            NSError *error = nil;
+            [context obtainPermanentIDsForObjects:[NSArray arrayWithObject:round] error:&error];
+            if (!error)
+            {
+                envoy.managedObjectID = round.objectID;
+            }
+        }
+        
+        [envoy commitInContext:context];
+        [model addRoundsObject:round];
     }
     
     

@@ -157,10 +157,16 @@
     switch (menuSection)
     {
         case PlayerRoundMenuSectionMission:
-            returnValue = NSLocalizedString(@"Mission", @"Mission  --  title");
+        {
+            NSString *prefix = NSLocalizedString(@"Mission", @"Mission  --  title");
+            returnValue = [NSString stringWithFormat:@"%@ %d", prefix, self.currentMission.missionNumber];
             break;
+        }
         case PlayerRoundMenuSectionTeam:
-            returnValue = NSLocalizedString(@"Team Candidates", @"Team Candidates  --  title");
+            if (self.candidates.count > 0)
+            {
+                returnValue = NSLocalizedString(@"Team Candidates", @"Team Candidates  --  title");
+            }
             break;
         case PlayerRoundMenuSectionCommand:
             if ([self isReadyForVote])
@@ -169,7 +175,7 @@
             }
             else
             {
-                returnValue = NSLocalizedString(@"Waiting for Coordinator", @"Waiting for Coordinator  --  title");
+                returnValue = NSLocalizedString(@"Waiting for Coordinator...", @"Waiting for Coordinator...  --  title");
             }
             break;
         case PlayerRoundMenuSection_MaxValue:
@@ -192,7 +198,7 @@
                 case PlayerRoundMenuMissionRowName:
                 {
                     NSString *prefix = NSLocalizedString(@"Codename", @"Codename  --  label prefix");
-                    returnValue = [NSString stringWithFormat:@"%@ %@", prefix, self.currentMission.missionName];
+                    returnValue = [NSString stringWithFormat:@"%@: %@", prefix, self.currentMission.missionName];
                     break;
                 }
                     
@@ -235,21 +241,21 @@
 
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController subLabelAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *returnValue = nil;
     if (indexPath.section == PlayerRoundMenuSectionMission)
     {
         if (indexPath.row == PlayerRoundMenuMissionRowCoordinator)
         {
-            return NSLocalizedString(@"Mission Coordinator", @"Mission Coordinator  --  sublabel");
+            returnValue = NSLocalizedString(@"Mission Coordinator", @"Mission Coordinator  --  sublabel");
         }
-        else
+        if (indexPath.row == PlayerRoundMenuMissionRowName)
         {
-            return nil;
+            NSString *prefix = NSLocalizedString(@"Requires", @"Requires  --  sublabel prefix");
+            NSString *suffix = NSLocalizedString(@"team members", @"team members  --  sublabel suffix");
+            returnValue = [NSString stringWithFormat:@"%@ %d %@", prefix, self.currentMission.teamCount, suffix];
         }
     }
-    else
-    {
-        return nil;
-    }
+    return returnValue;
 }
 
 - (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
@@ -277,17 +283,17 @@
 
 - (BOOL)menuViewControllerHidesBackButton:(JSKMenuViewController *)menuViewController
 {
-    return YES;
+    return NO;
 }
 
 - (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController
 {
-    return YES;
+    return NO;
 }
 
 - (BOOL)menuViewControllerShouldAutoRefresh:(JSKMenuViewController *)menuViewController
 {
-    return NO;
+    return YES;
 }
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath

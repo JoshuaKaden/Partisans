@@ -75,6 +75,7 @@
         {
             // Let's go to the setup screen.
             SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
+            self.setupGameMenuItems = items;
             [vc setMenuItems:items];
             [items release];
         }

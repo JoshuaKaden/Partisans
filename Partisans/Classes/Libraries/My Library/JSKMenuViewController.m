@@ -213,10 +213,10 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 {
     [super viewWillDisappear:animated];
     
-    if ([self.delegate respondsToSelector:@selector(menuViewController:willDisappear:)])
-    {
-        [self.delegate menuViewController:self willDisappear:animated];
-    }
+//    if ([self.delegate respondsToSelector:@selector(menuViewController:willDisappear:)])
+//    {
+//        [self.delegate menuViewController:self willDisappear:animated];
+//    }
 }
 
 

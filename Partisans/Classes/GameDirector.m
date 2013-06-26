@@ -219,7 +219,7 @@
     
     if (candidates)
     {
-        NSUInteger coordinatorIndex = arc4random() % candidates.count - 1;
+        NSUInteger coordinatorIndex = arc4random() % (candidates.count - 1);
         returnValue = [candidates objectAtIndex:coordinatorIndex];
     }
     return returnValue;

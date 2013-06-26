@@ -13,6 +13,7 @@
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
 #import "PlayerEnvoy.h"
+#import "PlayerRoundMenuItems.h"
 #import "ProgressCell.h"
 #import "SystemMessage.h"
 
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) UIAlertView *stopHostingAlertView;
 @property (nonatomic, strong) UIAlertView *leaveGameAlertView;
 @property (nonatomic, assign) JSKMenuViewController *menuViewController;
+@property (nonatomic, strong) PlayerRoundMenuItems *playerRoundMenuItems;
 
 - (BOOL)isPlayerHost;
 - (void)confirmStopHosting;
@@ -48,6 +50,7 @@
 @synthesize stopHostingAlertView = m_stopHostingAlertView;
 @synthesize leaveGameAlertView = m_leaveGameAlertView;
 @synthesize menuViewController = m_menuViewController;
+@synthesize playerRoundMenuItems = m_playerRoundMenuItems;
 
 - (void)dealloc
 {
@@ -60,6 +63,7 @@
     [m_dossierMenuItems release];
     [m_stopHostingAlertView release];
     [m_leaveGameAlertView release];
+    [m_playerRoundMenuItems release];
     
     [super dealloc];
 }
@@ -298,7 +302,10 @@
         {
             if (self.players.count >= kPartisansMinPlayers)
             {
-                [self startGame];
+                if (![SystemMessage gameEnvoy].startDate)
+                {
+                    [self startGame];
+                }
                 [menuViewController.navigationController popToRootViewControllerAnimated:NO];
             }
         }
@@ -553,7 +560,14 @@
                         }
                         else
                         {
-                            returnValue = NSLocalizedString(@"Tap to start the game.", @"Tap to start the game.  --  menu label");
+                            if (gameEnvoy.startDate)
+                            {
+                                returnValue = NSLocalizedString(@"Tap to enter the game.", @"Tap to enter the game.  --  menu label");
+                            }
+                            else
+                            {
+                                returnValue = NSLocalizedString(@"Tap to start the game.", @"Tap to start the game.  --  menu label");
+                            }
                         }
                     }
                     else
@@ -564,7 +578,14 @@
                         }
                         else
                         {
-                            returnValue = NSLocalizedString(@"Waiting for host...", @"Waiting for host...  --  menu label");
+                            if (gameEnvoy.startDate)
+                            {
+                                returnValue = NSLocalizedString(@"Tap to enter the game.", @"Tap to enter the game.  --  menu label");
+                            }
+                            else
+                            {
+                                returnValue = NSLocalizedString(@"Waiting for host...", @"Waiting for host...  --  menu label");
+                            }
                         }
                     }
                     break;

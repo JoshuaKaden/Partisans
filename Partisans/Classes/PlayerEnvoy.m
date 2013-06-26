@@ -358,6 +358,7 @@
             if (players.count > 0)
             {
                 model = [players objectAtIndex:0];
+                self.managedObjectID = model.objectID;
             }
         }
     }
