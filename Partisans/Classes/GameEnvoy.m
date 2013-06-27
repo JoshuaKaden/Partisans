@@ -833,9 +833,22 @@
                 gamePlayer = (GamePlayer *)[context objectWithID:envoy.managedObjectID];
             }
             
-            // This could be an update from the host in which case we have to hook up to the correct via the intramural ID.
+            // This could be an update from the host in which case we have to hook up to the correct row via the intramural ID.
             if (!gamePlayer)
             {
+                if (envoy.intramuralID)
+                {
+                    NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"intramuralID == %@", envoy.intramuralID];
+                    if (gamePlayers.count > 0)
+                    {
+                        gamePlayer = [gamePlayers objectAtIndex:0];
+                        envoy.managedObjectID = gamePlayer.objectID;
+                    }
+                }
+            }
+            
+//            if (!gamePlayer)
+//            {
                 if (envoy.playerID)
                 {
                     // Let's make sure we have a matching Player record.
@@ -851,18 +864,18 @@
                         player.playerName = NSLocalizedString(@"TBA", @"TBA  --  label");
                         player.modifiedDate = [NSDate distantPast];
                     }
-                    else
-                    {
-                        NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.playerID];
-                        if (gamePlayers.count > 0)
-                        {
-                            gamePlayer = [gamePlayers objectAtIndex:0];
-                            envoy.managedObjectID = gamePlayer.objectID;
-                        }
-                    }
-                    
+//                    else
+//                    {
+//                        NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", envoy.playerID];
+//                        if (gamePlayers.count > 0)
+//                        {
+//                            gamePlayer = [gamePlayers objectAtIndex:0];
+//                            envoy.managedObjectID = gamePlayer.objectID;
+//                        }
+//                    }
                 }
-            }
+//            }
+
             
             if (!gamePlayer)
             {

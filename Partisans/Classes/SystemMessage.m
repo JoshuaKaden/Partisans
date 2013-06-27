@@ -922,7 +922,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         
         UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:updatedGame];
         [op setCompletionBlock:^(void){
-            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+            dispatch_async(dispatch_get_main_queue(), ^(void)
+            {
+                [[SystemMessage sharedInstance] setGameEnvoy:updatedGame];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+            });
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
         [queue addOperation:op];

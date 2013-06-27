@@ -8,6 +8,16 @@
 
 #import "DossierMenuItems.h"
 
+#import "PlayerEnvoy.h"
+
 @implementation DossierMenuItems
+
+@synthesize playerEnvoy = m_playerEnvoy;
+
+- (void)dealloc
+{
+    [m_playerEnvoy release];
+    [super dealloc];
+}
 
 @end

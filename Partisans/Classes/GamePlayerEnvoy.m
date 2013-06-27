@@ -148,6 +148,19 @@
     
     if (!model)
     {
+        if (self.intramuralID)
+        {
+            NSArray *list = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"intramuralID == %@", self.intramuralID];
+            if (list.count > 0)
+            {
+                model = [list objectAtIndex:0];
+                self.managedObjectID = model.objectID;
+            }
+        }
+    }
+    
+    if (!model)
+    {
         model = [NSEntityDescription insertNewObjectForEntityForName:@"GamePlayer" inManagedObjectContext:context];
         model.hasAlertBeenShown = [NSNumber numberWithBool:NO];
     }

@@ -306,14 +306,14 @@
                 {
                     [self startGame];
                 }
-                [menuViewController.navigationController popToRootViewControllerAnimated:NO];
+                [menuViewController.navigationController popToRootViewControllerAnimated:YES];
             }
         }
         else
         {
             if ([SystemMessage gameEnvoy].startDate)
             {
-                [menuViewController.navigationController popToRootViewControllerAnimated:NO];
+                [menuViewController.navigationController popToRootViewControllerAnimated:YES];
             }
         }
     }

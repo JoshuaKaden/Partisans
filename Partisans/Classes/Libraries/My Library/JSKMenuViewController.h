@@ -58,8 +58,8 @@ extern NSString * const JSKMenuViewControllerShouldRefresh;
 - (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController backgroundColorAtIndexPath:(NSIndexPath *)indexPath;
 // Label color at index path.
 - (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController labelColorAtIndexPath:(NSIndexPath *)indexPath;
-// Label alignment at index path.
-- (NSTextAlignment)menuViewController:(JSKMenuViewController *)menuViewController labelAlignmentAtIndexPath:(NSIndexPath *)indexPath;
+// Label font at index path.
+- (UIFont *)menuViewController:(JSKMenuViewController *)menuViewController labelFontAtIndexPath:(NSIndexPath *)indexPath;
 
 // Should auto-refresh, after initial load, on appearance?
 - (BOOL)menuViewControllerShouldAutoRefresh:(JSKMenuViewController *)menuViewController;
@@ -94,5 +94,9 @@ extern NSString * const JSKMenuViewControllerShouldRefresh;
 - (void)invokePop:(BOOL)animated;
 // This provides a way for the delegate (or, indeed, anyone) to ask for a VC to be pushed.
 - (void)invokePush:(BOOL)animated viewController:(UIViewController *)vc;
+
+// Allows the caller to set the label font of a given cell.
+// Intended for use with a picklist.
+- (void)applyLabelFont:(UIFont *)font indexPath:(NSIndexPath *)indexPath;
 
 @end

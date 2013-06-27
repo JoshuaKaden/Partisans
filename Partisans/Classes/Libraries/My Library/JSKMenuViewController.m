@@ -396,6 +396,12 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     [self.navigationController pushViewController:vc animated:animated];
 }
 
+- (void)applyLabelFont:(UIFont *)font indexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [cell.textLabel setFont:font];
+}
+
 
 #pragma mark - Loading indicator
 
@@ -767,12 +773,16 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
         [cell.contentView setBackgroundColor:[self.delegate menuViewController:self backgroundColorAtIndexPath:indexPath]];
     }
     
-    if ([self.delegate respondsToSelector:@selector(menuViewController:labelAlignmentAtIndexPath:)])
+
+    if ([self.delegate respondsToSelector:@selector(menuViewController:labelFontAtIndexPath:)])
     {
-        NSTextAlignment textAlignment = [self.delegate menuViewController:self labelAlignmentAtIndexPath:indexPath];
-        [cell.textLabel setTextAlignment:textAlignment];
+        UIFont *font = [self.delegate menuViewController:self labelFontAtIndexPath:indexPath];
+        if (font)
+        {
+            [cell.textLabel setFont:font];
+        }
     }
-        
+    
     
     return cell;
 }

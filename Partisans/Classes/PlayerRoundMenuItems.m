@@ -8,6 +8,7 @@
 
 #import "PlayerRoundMenuItems.h"
 
+#import "CandidatePickerMenuItems.h"
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
 #import "MissionEnvoy.h"
@@ -22,8 +23,10 @@
 @property (nonatomic, strong) RoundEnvoy *currentRound;
 @property (nonatomic, strong) MissionEnvoy *currentMission;
 @property (nonatomic, strong) NSArray *candidates;
+@property (nonatomic, strong) CandidatePickerMenuItems *candidatePickerMenuItems;
 
 - (BOOL)isReadyForVote;
+- (BOOL)isCoordinator;
 
 @end
 
@@ -34,6 +37,7 @@
 @synthesize currentRound = m_currentRound;
 @synthesize currentMission = m_currentMission;
 @synthesize candidates = m_candidates;
+@synthesize candidatePickerMenuItems = m_candidatePickerMenuItems;
 
 
 - (void)dealloc
@@ -42,7 +46,19 @@
     [m_currentRound release];
     [m_currentMission release];
     [m_candidates release];
+    [m_candidatePickerMenuItems release];
     [super dealloc];
+}
+
+- (CandidatePickerMenuItems *)candidatePickerMenuItems
+{
+    if (!m_candidatePickerMenuItems)
+    {
+        CandidatePickerMenuItems *items = [[CandidatePickerMenuItems alloc] init];
+        self.candidatePickerMenuItems = items;
+        [items release];
+    }
+    return m_candidatePickerMenuItems;
 }
 
 - (GameEnvoy *)gameEnvoy
@@ -93,16 +109,42 @@
     }
 }
 
+- (BOOL)isCoordinator
+{
+    if ([self.currentRound.coordinatorID isEqualToString:[SystemMessage playerEnvoy].intramuralID])
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+
 #pragma mark - Menu View Controller delegate
 
 - (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
 {
     if (indexPath.section == PlayerRoundMenuSectionCommand)
     {
-        // Voting
-        
-        
-        
+        if ([self isReadyForVote])
+        {
+            // Voting
+            
+            
+            
+        }
+        else
+        {
+            if ([self isCoordinator])
+            {
+                JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+                [vc setDelegate:self.candidatePickerMenuItems];
+                [menuViewController invokePush:YES viewController:vc];
+                [vc release];
+            }
+        }
     }
 }
 
@@ -136,11 +178,21 @@
         case PlayerRoundMenuSectionCommand:
             if ([self isReadyForVote])
             {
-                return 2;
+                // Two possible votes: YES and NO.
+                returnValue = 2;
             }
             else
             {
-                return 0;
+                if ([self isCoordinator])
+                {
+                    // One possible command: Select Candidates.
+                    returnValue = 1;
+                }
+                else
+                {
+                    // Nothing to do but save his life; call his wife in.
+                    returnValue = 0;
+                }
             }
             break;
             
@@ -176,7 +228,14 @@
             }
             else
             {
-                returnValue = NSLocalizedString(@"Waiting for Coordinator...", @"Waiting for Coordinator...  --  title");
+                if ([self isCoordinator])
+                {
+                    returnValue = NSLocalizedString(@"Team Selection", @"Team Selection  --  title");
+                }
+                else
+                {
+                    returnValue = NSLocalizedString(@"Waiting for Coordinator...", @"Waiting for Coordinator...  --  title");
+                }
             }
             break;
         case PlayerRoundMenuSection_MaxValue:
@@ -230,6 +289,13 @@
                 else
                 {
                     returnValue = NSLocalizedString(@"Vote NO", @"Vote NO  --  label");
+                }
+            }
+            else
+            {
+                if ([self isCoordinator])
+                {
+                    returnValue = NSLocalizedString(@"Select Candidates", @"Select Candidates  --  label");
                 }
             }
             break;
@@ -300,7 +366,18 @@
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
-    return UITableViewCellAccessoryNone;
+    UITableViewCellAccessoryType returnValue = UITableViewCellAccessoryNone;
+    if (indexPath.section == PlayerRoundMenuSectionCommand)
+    {
+        if (![self isReadyForVote])
+        {
+            if ([self isCoordinator])
+            {
+                returnValue = UITableViewCellAccessoryDisclosureIndicator;
+            }
+        }
+    }
+    return returnValue;
 }
 
 @end

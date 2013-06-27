@@ -129,6 +129,8 @@
 		93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BE21744515C00B47095 /* DossierMenuItems.m */; };
 		93C442E917511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93C442EA17511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
+		93E65480177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
+		93E65481177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
 		93FECAB1174521A40046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
 		93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
 		93FECAB3174521A40046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
@@ -338,6 +340,8 @@
 		93C10BE21744515C00B47095 /* DossierMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierMenuItems.m; path = Classes/DossierMenuItems.m; sourceTree = "<group>"; };
 		93C442E717511B15000DEC63 /* UpdateGameOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateGameOperation.h; path = Classes/UpdateGameOperation.h; sourceTree = "<group>"; };
 		93C442E817511B15000DEC63 /* UpdateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateGameOperation.m; path = Classes/UpdateGameOperation.m; sourceTree = "<group>"; };
+		93E6547E177C6A95003C73C2 /* CandidatePickerMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CandidatePickerMenuItems.h; path = Classes/CandidatePickerMenuItems.h; sourceTree = "<group>"; };
+		93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CandidatePickerMenuItems.m; path = Classes/CandidatePickerMenuItems.m; sourceTree = "<group>"; };
 		93FECAAB174521A40046529A /* LabelProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelProgressView.h; path = Classes/LabelProgressView.h; sourceTree = "<group>"; };
 		93FECAAC174521A40046529A /* LabelProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelProgressView.m; path = Classes/LabelProgressView.m; sourceTree = "<group>"; };
 		93FECAAD174521A40046529A /* LabelProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LabelProgressView.xib; path = Classes/LabelProgressView.xib; sourceTree = "<group>"; };
@@ -715,6 +719,8 @@
 		93C10BB617440B9300B47095 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				93E6547E177C6A95003C73C2 /* CandidatePickerMenuItems.h */,
+				93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */,
 				93BF3B511771CABF00B20A71 /* GameDirector.h */,
 				93BF3B521771CABF00B20A71 /* GameDirector.m */,
 				9303BE531746836A0065ADD2 /* GameJoiner.h */,
@@ -939,6 +945,7 @@
 				9358BFE217747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
 				937FFE311774EF1700F3EE55 /* GamePlayer.m in Sources */,
 				939F36881779FEEE00A7B766 /* PlayerRoundMenuItems.m in Sources */,
+				93E65480177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1009,6 +1016,7 @@
 				9358BFE317747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
 				937FFE321774EF1700F3EE55 /* GamePlayer.m in Sources */,
 				939F36891779FEEE00A7B766 /* PlayerRoundMenuItems.m in Sources */,
+				93E65481177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

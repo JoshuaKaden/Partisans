@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class PlayerEnvoy;
+
 @interface DossierMenuItems : NSObject
+
+@property (nonatomic, strong) PlayerEnvoy *playerEnvoy;
 
 @end
