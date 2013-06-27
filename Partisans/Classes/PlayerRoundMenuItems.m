@@ -90,10 +90,7 @@
 
 - (NSArray *)candidates
 {
-    if (!m_candidates)
-    {
-        self.candidates = [self.currentRound candidates];
-    }
+    self.candidates = [self.currentRound candidates];
     return m_candidates;
 }
 
@@ -146,6 +143,18 @@
             }
         }
     }
+    
+    // Allow the coordinator to undo choices.
+    if (indexPath.section == PlayerRoundMenuSectionTeam)
+    {
+        if ([self isCoordinator])
+        {
+            JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+            [vc setDelegate:self.candidatePickerMenuItems];
+            [menuViewController invokePush:YES viewController:vc];
+            [vc release];
+        }
+    }
 }
 
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
@@ -185,7 +194,7 @@
             {
                 if ([self isCoordinator])
                 {
-                    // One possible command: Select Candidates.
+                    // One possible commands: Select Candidates.
                     returnValue = 1;
                 }
                 else

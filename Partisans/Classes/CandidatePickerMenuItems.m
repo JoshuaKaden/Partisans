@@ -150,12 +150,29 @@
     }
     else
     {
+        if (self.candidates.count == self.currentMission.teamCount)
+        {
+            return;
+        }
         self.candidates = [self.candidates arrayByAddingObject:playerEnvoy];
         font = [UIFont boldSystemFontOfSize:17.0];
         color = [UIColor blackColor];
     }
     [menuViewController applyLabelFont:font indexPath:indexPath];
     [menuViewController applyLabelColor:color indexPath:indexPath];
+    
+    
+    if (self.candidates.count == self.currentMission.teamCount)
+    {
+        RoundEnvoy *roundEnvoy = self.currentRound;
+        [roundEnvoy clearCandidates];
+        for (PlayerEnvoy *candidate in self.candidates)
+        {
+            [roundEnvoy addCandidate:candidate];
+        }
+        [menuViewController invokePop:YES];
+    }
+    
     
 //    PlayerEnvoy *selected = [self.players objectAtIndex:indexPath.row];
 //    [self.dossierMenuItems setPlayerEnvoy:selected];
