@@ -137,10 +137,12 @@
 - (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
 {
     UIFont *font = nil;
+    UIColor *color = nil;
     PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
     if ([self.candidates containsObject:playerEnvoy])
     {
         font = [UIFont systemFontOfSize:17.0];
+        color = [UIColor lightGrayColor];
         NSMutableArray *list = [[NSMutableArray alloc] initWithArray:self.candidates];
         [list removeObject:playerEnvoy];
         self.candidates = [NSArray arrayWithArray:list];
@@ -150,8 +152,10 @@
     {
         self.candidates = [self.candidates arrayByAddingObject:playerEnvoy];
         font = [UIFont boldSystemFontOfSize:17.0];
+        color = [UIColor blackColor];
     }
     [menuViewController applyLabelFont:font indexPath:indexPath];
+    [menuViewController applyLabelColor:color indexPath:indexPath];
     
 //    PlayerEnvoy *selected = [self.players objectAtIndex:indexPath.row];
 //    [self.dossierMenuItems setPlayerEnvoy:selected];
@@ -208,6 +212,19 @@
     }
 }
 
+- (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController labelColorAtIndexPath:(NSIndexPath *)indexPath
+{
+    PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
+    if ([self.candidates containsObject:playerEnvoy])
+    {
+        return [UIColor blackColor];
+    }
+    else
+    {
+        return [UIColor lightGrayColor];
+    }
+}
+
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
     return nil;
@@ -232,6 +249,11 @@
 - (BOOL)menuViewControllerShouldAutoRefresh:(JSKMenuViewController *)menuViewController
 {
     return NO;
+}
+
+- (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellAccessoryNone;
 }
 
 @end

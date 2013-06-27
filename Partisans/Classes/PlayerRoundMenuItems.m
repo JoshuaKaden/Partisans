@@ -263,7 +263,14 @@
                 }
                     
                 case PlayerRoundMenuMissionRowCoordinator:
-                    returnValue = self.currentRound.coordinator.playerName;
+                    if ([self isCoordinator])
+                    {
+                        returnValue = NSLocalizedString(@"You are the Coordinator", @"You are the Coordinator  --  label");
+                    }
+                    else
+                    {
+                        returnValue = self.currentRound.coordinator.playerName;
+                    }
                     break;
                     
                 case PlayerRoundMenuMissionRow_MaxValue:

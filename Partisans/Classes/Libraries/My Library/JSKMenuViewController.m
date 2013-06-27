@@ -402,6 +402,11 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     [cell.textLabel setFont:font];
 }
 
+- (void)applyLabelColor:(UIColor *)color indexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [cell.textLabel setTextColor:color];
+}
 
 #pragma mark - Loading indicator
 

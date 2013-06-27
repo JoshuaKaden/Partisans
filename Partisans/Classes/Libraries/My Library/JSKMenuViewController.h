@@ -96,7 +96,9 @@ extern NSString * const JSKMenuViewControllerShouldRefresh;
 - (void)invokePush:(BOOL)animated viewController:(UIViewController *)vc;
 
 // Allows the caller to set the label font of a given cell.
-// Intended for use with a picklist.
 - (void)applyLabelFont:(UIFont *)font indexPath:(NSIndexPath *)indexPath;
+// Allows the caller to set the label text color of a given cell.
+- (void)applyLabelColor:(UIColor *)color indexPath:(NSIndexPath *)indexPath;
+
 
 @end
