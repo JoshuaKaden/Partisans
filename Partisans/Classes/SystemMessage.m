@@ -1273,6 +1273,19 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     return [self sharedInstance].gameDirector;
 }
 
+
+
+
++ (NSString *)spellOutNumber:(NSNumber *)number
+{
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterSpellOutStyle];
+    NSString *returnValue = [formatter stringFromNumber:number];
+    [formatter release];
+    return returnValue;
+}
+
+
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate
 {
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];

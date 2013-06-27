@@ -109,8 +109,8 @@
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
 {
     NSString *titlePrefix = NSLocalizedString(@"Round", @"Round  --  prefix");
-    NSUInteger roundNumber = self.currentRound.roundNumber;
-    NSString *title = [NSString stringWithFormat:@"%@ %d", titlePrefix, roundNumber];
+    NSString *spelledNumber = [SystemMessage spellOutNumber:[NSNumber numberWithUnsignedInteger:self.currentRound.roundNumber]];
+    NSString *title = [NSString stringWithFormat:@"%@ %@", titlePrefix, [spelledNumber capitalizedString]];
     return title;
 }
 
@@ -159,7 +159,8 @@
         case PlayerRoundMenuSectionMission:
         {
             NSString *prefix = NSLocalizedString(@"Mission", @"Mission  --  title");
-            returnValue = [NSString stringWithFormat:@"%@ %d", prefix, self.currentMission.missionNumber];
+            NSString *spelledNumber = [SystemMessage spellOutNumber:[NSNumber numberWithUnsignedInteger:self.currentMission.missionNumber]];
+            returnValue = [NSString stringWithFormat:@"%@ %@", prefix, [spelledNumber capitalizedString]];
             break;
         }
         case PlayerRoundMenuSectionTeam:
@@ -251,8 +252,9 @@
         if (indexPath.row == PlayerRoundMenuMissionRowName)
         {
             NSString *prefix = NSLocalizedString(@"Requires", @"Requires  --  sublabel prefix");
+            NSString *spelledNumber = [SystemMessage spellOutNumber:[NSNumber numberWithUnsignedInteger:self.currentMission.teamCount]];
             NSString *suffix = NSLocalizedString(@"team members", @"team members  --  sublabel suffix");
-            returnValue = [NSString stringWithFormat:@"%@ %d %@", prefix, self.currentMission.teamCount, suffix];
+            returnValue = [NSString stringWithFormat:@"%@ %@ %@", prefix, spelledNumber, suffix];
         }
     }
     return returnValue;

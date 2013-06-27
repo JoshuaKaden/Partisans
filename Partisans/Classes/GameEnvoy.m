@@ -147,6 +147,18 @@
         modifiedDateString = @"";
     }
     
+    NSString *missionEnvoysString = [self.missionEnvoys description];
+    if (!missionEnvoysString)
+    {
+        missionEnvoysString = @"";
+    }
+    
+    NSString *roundEnvoysString = [self.roundEnvoys description];
+    if (!roundEnvoysString)
+    {
+        roundEnvoysString = @"";
+    }
+    
     NSDictionary *descDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               @"GameEnvoy", @"Class",
                               intramuralIDString, @"intramuralID",
@@ -157,6 +169,8 @@
                               [NSNumber numberWithUnsignedInteger:self.numberOfPlayers].description, @"numberOfPlayers",
                               gamePlayerEnvoysString, @"gamePlayerEnvoys",
                               modifiedDateString, @"modifiedDate",
+                              missionEnvoysString, @"missionEnvoys",
+                              roundEnvoysString, @"roundEnvoys",
                               [NSNumber numberWithUnsignedInteger:self.operativeCount], @"operativeCount", nil];
     return descDict.description;
 }
@@ -1068,6 +1082,7 @@
     [aCoder encodeObject:self.gamePlayerEnvoys forKey:@"gamePlayerEnvoys"];
     [aCoder encodeObject:self.missionEnvoys forKey:@"missionEnvoys"];
     [aCoder encodeObject:self.roundEnvoys forKey:@"roundEnvoys"];
+    [aCoder encodeObject:self.modifiedDate forKey:@"modifiedDate"];
 }
 
 
@@ -1097,6 +1112,7 @@
         self.gamePlayerEnvoys = [aDecoder decodeObjectForKey:@"gamePlayerEnvoys"];
         self.missionEnvoys = [aDecoder decodeObjectForKey:@"missionEnvoys"];
         self.roundEnvoys = [aDecoder decodeObjectForKey:@"roundEnvoys"];
+        self.modifiedDate = [aDecoder decodeObjectForKey:@"modifiedDate"];
     }
     
     return self;

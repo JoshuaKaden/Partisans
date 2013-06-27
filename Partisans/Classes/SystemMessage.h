@@ -40,6 +40,7 @@ extern NSString * const kPartisansNotificationConnectedToHost;
 + (UIImage*)imageWithImage:(UIImage*)sourceImage scaledToSizeWithSameAspectRatio:(CGSize)targetSize;
 + (NSInteger)secondsBetweenDates:(NSDate *)fromDate toDate:(NSDate *)toDate;
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate;
++ (NSString *)spellOutNumber:(NSNumber *)number;
 
 + (BOOL)isPlayerOnline;
 + (void)putPlayerOnline;
