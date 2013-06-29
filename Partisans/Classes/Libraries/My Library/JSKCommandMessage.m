@@ -97,6 +97,10 @@
     
     switch (messageType)
     {
+        case JSKCommandMessageTypeAcknowledge:
+            name = @"Acknowledge";
+            break;
+            
         case JSKCommandMessageTypeDidFinish:
             name = @"DidFinish";
             break;

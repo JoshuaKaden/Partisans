@@ -2,14 +2,14 @@
 //  Round.h
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/19/13.
+//  Created by Joshua Kaden on 6/28/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Game, GamePlayer, Mission, Votes;
+@class Game, GamePlayer, Mission, Vote;
 
 @interface Round : NSManagedObject
 
@@ -29,8 +29,8 @@
 - (void)addMissionCandidates:(NSSet *)values;
 - (void)removeMissionCandidates:(NSSet *)values;
 
-- (void)addVotesObject:(Votes *)value;
-- (void)removeVotesObject:(Votes *)value;
+- (void)addVotesObject:(Vote *)value;
+- (void)removeVotesObject:(Vote *)value;
 - (void)addVotes:(NSSet *)values;
 - (void)removeVotes:(NSSet *)values;
 

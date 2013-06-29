@@ -9,6 +9,7 @@
 #import "SystemMessage.h"
 
 #import "AddGamePlayerOperation.h"
+#import "CoordinatorVote.h"
 #import "CreateGameOperation.h"
 #import "CreatePlayerOperation.h"
 #import "GameDirector.h"
@@ -25,6 +26,7 @@
 #import "ServerBrowserDelegate.h"
 #import "UpdateGameOperation.h"
 #import "UpdatePlayerOperation.h"
+#import "VoteEnvoy.h"
 
 
 const BOOL kIsDebugOn = YES;
@@ -38,6 +40,7 @@ NSUInteger const kPartisansMinPlayers = 5;
 NSString * const kPartisansNotificationJoinedGame  = @"kPartisansNotificationJoinedGame";
 NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGameChanged";
 NSString * const kPartisansNotificationConnectedToHost = @"kPartisansNotificationConnectedToHost";
+NSString * const kPartisansNotificationHostAcknowledgement = @"kPartisansNotificationHostAcknowledgement";
 
 NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPartisans";
 
@@ -62,6 +65,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (void)handleLeaveGameMessage:(JSKCommandMessage *)message;
 - (void)handlePlayerUpdate:(JSKCommandParcel *)parcel;
 - (void)handleJoinGameStash:(NSString *)fromPeerID;
+- (void)handleCoordinatorVote:(JSKCommandParcel *)parcel;
+- (void)handleVote:(JSKCommandParcel *)parcel;
 - (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey;
 - (void)askToJoinGame:(NSString *)toPeerID;
 - (BOOL)isDigestCurrent;
@@ -266,6 +271,18 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         [self.netHost sendCommandParcel:parcel];
         [parcel release];
     }
+}
+
+
+- (void)handleCoordinatorVote:(JSKCommandParcel *)parcel
+{
+    
+}
+
+
+- (void)handleVote:(JSKCommandParcel *)parcel
+{
+    
 }
 
 
@@ -710,6 +727,14 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             if ([commandParcel.object isKindOfClass:[PlayerEnvoy class]])
             {
                 [self handlePlayerUpdate:commandParcel];
+            }
+            if ([commandParcel.object isKindOfClass:[CoordinatorVote class]])
+            {
+                [self handleCoordinatorVote:commandParcel];
+            }
+            if ([commandParcel.object isKindOfClass:[VoteEnvoy class]])
+            {
+                [self handleVote:commandParcel];
             }
             break;
             
@@ -1278,6 +1303,17 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 }
 
 
+
+
++ (NSString *)buildRandomString
+{
+    CFUUIDRef udid = CFUUIDCreate(NULL);
+    NSString *udidString = (NSString *) CFUUIDCreateString(NULL, udid);
+    NSString *returnValue = [NSString stringWithString:udidString];
+    [udidString release];
+    CFRelease(udid);
+    return returnValue;
+}
 
 
 + (NSString *)spellOutNumber:(NSNumber *)number

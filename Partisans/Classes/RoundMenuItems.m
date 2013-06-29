@@ -6,38 +6,52 @@
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
-#import "PlayerRoundMenuItems.h"
+#import "RoundMenuItems.h"
 
 #import "CandidatePickerMenuItems.h"
+#import "CoordinatorVote.h"
+#import "DecisionMenuItems.h"
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
+#import "JSKOverlayer.h"
 #import "MissionEnvoy.h"
 #import "PlayerEnvoy.h"
 #import "RoundEnvoy.h"
 #import "SystemMessage.h"
+#import "VoteEnvoy.h"
 
 
-@interface PlayerRoundMenuItems ()
+@interface RoundMenuItems ()
 
 @property (nonatomic, strong) GameEnvoy *gameEnvoy;
 @property (nonatomic, strong) RoundEnvoy *currentRound;
 @property (nonatomic, strong) MissionEnvoy *currentMission;
 @property (nonatomic, strong) NSArray *candidates;
 @property (nonatomic, strong) CandidatePickerMenuItems *candidatePickerMenuItems;
+@property (nonatomic, strong) JSKMenuViewController *menuViewController;
+@property (nonatomic, strong) NSString *responseKey;
+@property (nonatomic, strong) JSKOverlayer *overlayer;
+@property (nonatomic, strong) DecisionMenuItems *decisionMenuItems;
 
 - (BOOL)isReadyForVote;
 - (BOOL)isCoordinator;
+- (void)vote:(BOOL)vote;
+- (void)hostAcknowledgement:(NSNotification *)notification;
 
 @end
 
 
-@implementation PlayerRoundMenuItems
+@implementation RoundMenuItems
 
 @synthesize gameEnvoy = m_gameEnvoy;
 @synthesize currentRound = m_currentRound;
 @synthesize currentMission = m_currentMission;
 @synthesize candidates = m_candidates;
 @synthesize candidatePickerMenuItems = m_candidatePickerMenuItems;
+@synthesize menuViewController = m_menuViewController;
+@synthesize responseKey = m_responseKey;
+@synthesize overlayer = m_overlayer;
+@synthesize decisionMenuItems = m_decisionMenuItems;
 
 
 - (void)dealloc
@@ -47,6 +61,11 @@
     [m_currentMission release];
     [m_candidates release];
     [m_candidatePickerMenuItems release];
+    [m_menuViewController release];
+    [m_responseKey release];
+    [m_overlayer release];
+    [m_decisionMenuItems release];
+    
     [super dealloc];
 }
 
@@ -94,6 +113,8 @@
     return m_candidates;
 }
 
+
+
 - (BOOL)isReadyForVote
 {
     if (self.candidates.count == self.currentMission.teamCount)
@@ -119,18 +140,101 @@
 }
 
 
+
+- (void)vote:(BOOL)vote
+{
+    if (!self.overlayer)
+    {
+        JSKOverlayer *overlayer = [[JSKOverlayer alloc] initWithView:self.menuViewController.view];
+        self.overlayer = overlayer;
+        [overlayer release];
+    }
+    NSString *message = NSLocalizedString(@"Sending your vote to the Host...", @"Sending your vote to the Host...  --  message");
+    [self.overlayer createWaitOverlayWithText:message];
+    
+    PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+    
+    // This involves sending a new (unconnected to core data) vote envoy to the host.
+    // After the vote is acknowledged by the host, go to the results screen.
+    // The host will update the game, and broadcast an update.
+    
+    NSObject <NSCoding> *parcelObject = nil;
+
+    VoteEnvoy *voteEnvoy = [[VoteEnvoy alloc] init];
+    voteEnvoy.isCast = NO;
+    voteEnvoy.isYea = vote;
+    voteEnvoy.roundID = self.currentRound.intramuralID;
+    voteEnvoy.playerID = playerEnvoy.intramuralID;
+    
+    if ([self isCoordinator])
+    {
+        // The Coordinator has to send the team candidates to the host, along with the vote.
+        CoordinatorVote *coordinatorVote = [[CoordinatorVote alloc] init];
+        coordinatorVote.voteEnvoy = voteEnvoy;
+        coordinatorVote.candidateIDs = [self.candidates valueForKey:@"intramuralID"];
+        parcelObject = [coordinatorVote retain];
+        [coordinatorVote release];
+    }
+    else
+    {
+        parcelObject = [voteEnvoy retain];
+    }
+    
+    [voteEnvoy release];
+
+    
+    NSString *hostPeerID = self.gameEnvoy.host.peerID;
+    self.responseKey = [SystemMessage buildRandomString];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hostAcknowledgement:) name:kPartisansNotificationHostAcknowledgement object:nil];
+    
+    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:hostPeerID from:playerEnvoy.peerID object:parcelObject responseKey:self.responseKey];
+    [parcelObject release];
+    [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:YES];
+    [parcel release];
+}
+
+
+- (void)hostAcknowledgement:(NSNotification *)notification
+{
+    NSString *responseKey = notification.object;
+    if (![responseKey isEqualToString:self.responseKey])
+    {
+        // Oops! Is this really our notification?
+        return;
+    }
+    
+    [self.overlayer removeWaitOverlay];
+    
+    DecisionMenuItems *items = [[DecisionMenuItems alloc] init];
+    self.decisionMenuItems = items;
+    [items release];
+    
+    JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+    [vc setDelegate:items];
+    [self.menuViewController invokePush:YES viewController:vc];
+    [vc release];
+}
+
+
+
 #pragma mark - Menu View Controller delegate
 
 - (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == PlayerRoundMenuSectionCommand)
+    if (indexPath.section == RoundMenuSectionCommand)
     {
         if ([self isReadyForVote])
         {
-            // Voting
-            
-            
-            
+            // Voting.
+            BOOL vote = YES;
+            if (indexPath.row == 1)
+            {
+                vote = NO;
+            }
+            // Stash a reference to the menuViewController, so we can push the results screen when
+            // the host acknowledges our vote.
+            self.menuViewController = menuViewController;
+            [self vote:vote];
         }
         else
         {
@@ -145,7 +249,7 @@
     }
     
     // Allow the coordinator to undo choices.
-    if (indexPath.section == PlayerRoundMenuSectionTeam)
+    if (indexPath.section == RoundMenuSectionTeam)
     {
         if ([self isCoordinator])
         {
@@ -167,24 +271,24 @@
 
 - (NSInteger)menuViewControllerNumberOfSections:(JSKMenuViewController *)menuViewController
 {
-    return PlayerRoundMenuSection_MaxValue;
+    return RoundMenuSection_MaxValue;
 }
 
 - (NSInteger)menuViewController:(JSKMenuViewController *)menuViewController numberOfRowsInSection:(NSInteger)section
 {
     NSInteger returnValue = 0;
-    PlayerRoundMenuSection menuSection = (PlayerRoundMenuSection)section;
+    RoundMenuSection menuSection = (RoundMenuSection)section;
     switch (menuSection)
     {
-        case PlayerRoundMenuSectionMission:
-            returnValue = PlayerRoundMenuMissionRow_MaxValue;
+        case RoundMenuSectionMission:
+            returnValue = RoundMenuMissionRow_MaxValue;
             break;
             
-        case PlayerRoundMenuSectionTeam:
+        case RoundMenuSectionTeam:
             returnValue = self.candidates.count;
             break;
             
-        case PlayerRoundMenuSectionCommand:
+        case RoundMenuSectionCommand:
             if ([self isReadyForVote])
             {
                 // Two possible votes: YES and NO.
@@ -205,7 +309,7 @@
             }
             break;
             
-        case PlayerRoundMenuSection_MaxValue:
+        case RoundMenuSection_MaxValue:
             break;
     }
     return returnValue;
@@ -214,23 +318,23 @@
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController titleForHeaderInSection:(NSInteger)section
 {
     NSString *returnValue = nil;
-    PlayerRoundMenuSection menuSection = (PlayerRoundMenuSection)section;
+    RoundMenuSection menuSection = (RoundMenuSection)section;
     switch (menuSection)
     {
-        case PlayerRoundMenuSectionMission:
+        case RoundMenuSectionMission:
         {
             NSString *prefix = NSLocalizedString(@"Mission", @"Mission  --  title");
             NSString *spelledNumber = [SystemMessage spellOutNumber:[NSNumber numberWithUnsignedInteger:self.currentMission.missionNumber]];
             returnValue = [NSString stringWithFormat:@"%@ %@", prefix, [spelledNumber capitalizedString]];
             break;
         }
-        case PlayerRoundMenuSectionTeam:
+        case RoundMenuSectionTeam:
             if (self.candidates.count > 0)
             {
                 returnValue = NSLocalizedString(@"Team Candidates", @"Team Candidates  --  title");
             }
             break;
-        case PlayerRoundMenuSectionCommand:
+        case RoundMenuSectionCommand:
             if ([self isReadyForVote])
             {
                 returnValue = NSLocalizedString(@"Ready for Vote", @"Ready for Vote  --  title");
@@ -247,7 +351,7 @@
                 }
             }
             break;
-        case PlayerRoundMenuSection_MaxValue:
+        case RoundMenuSection_MaxValue:
             break;
     }
     return returnValue;
@@ -256,22 +360,22 @@
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController labelAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *returnValue = nil;
-    PlayerRoundMenuSection menuSection = (PlayerRoundMenuSection)indexPath.section;
+    RoundMenuSection menuSection = (RoundMenuSection)indexPath.section;
     switch (menuSection)
     {
-        case PlayerRoundMenuSectionMission:
+        case RoundMenuSectionMission:
         {
-            PlayerRoundMenuMissionRow menuRow = (PlayerRoundMenuMissionRow)indexPath.row;
+            RoundMenuMissionRow menuRow = (RoundMenuMissionRow)indexPath.row;
             switch (menuRow)
             {
-                case PlayerRoundMenuMissionRowName:
+                case RoundMenuMissionRowName:
                 {
                     NSString *prefix = NSLocalizedString(@"Codename", @"Codename  --  label prefix");
                     returnValue = [NSString stringWithFormat:@"%@: %@", prefix, self.currentMission.missionName];
                     break;
                 }
                     
-                case PlayerRoundMenuMissionRowCoordinator:
+                case RoundMenuMissionRowCoordinator:
                     if ([self isCoordinator])
                     {
                         returnValue = NSLocalizedString(@"You are the Coordinator", @"You are the Coordinator  --  label");
@@ -282,20 +386,20 @@
                     }
                     break;
                     
-                case PlayerRoundMenuMissionRow_MaxValue:
+                case RoundMenuMissionRow_MaxValue:
                     break;
             }
             break;
         }
             
-        case PlayerRoundMenuSectionTeam:
+        case RoundMenuSectionTeam:
         {
             PlayerEnvoy *candidate = [self.candidates objectAtIndex:indexPath.row];
             returnValue = candidate.playerName;
             break;
         }
         
-        case PlayerRoundMenuSectionCommand:
+        case RoundMenuSectionCommand:
             if ([self isReadyForVote])
             {
                 if (indexPath.row == 0)
@@ -316,7 +420,7 @@
             }
             break;
             
-        case PlayerRoundMenuSection_MaxValue:
+        case RoundMenuSection_MaxValue:
             break;
     }
     return returnValue;
@@ -325,13 +429,13 @@
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController subLabelAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *returnValue = nil;
-    if (indexPath.section == PlayerRoundMenuSectionMission)
+    if (indexPath.section == RoundMenuSectionMission)
     {
-        if (indexPath.row == PlayerRoundMenuMissionRowCoordinator)
+        if (indexPath.row == RoundMenuMissionRowCoordinator)
         {
             returnValue = NSLocalizedString(@"Mission Coordinator", @"Mission Coordinator  --  sublabel");
         }
-        if (indexPath.row == PlayerRoundMenuMissionRowName)
+        if (indexPath.row == RoundMenuMissionRowName)
         {
             NSString *prefix = NSLocalizedString(@"Requires", @"Requires  --  sublabel prefix");
             NSString *spelledNumber = [SystemMessage spellOutNumber:[NSNumber numberWithUnsignedInteger:self.currentMission.teamCount]];
@@ -345,14 +449,14 @@
 - (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *returnValue = nil;
-    if (indexPath.section == PlayerRoundMenuSectionMission)
+    if (indexPath.section == RoundMenuSectionMission)
     {
-        if (indexPath.row == PlayerRoundMenuMissionRowCoordinator)
+        if (indexPath.row == RoundMenuMissionRowCoordinator)
         {
             returnValue = self.currentRound.coordinator.picture.image;
         }
     }
-    else if (indexPath.section == PlayerRoundMenuSectionTeam)
+    else if (indexPath.section == RoundMenuSectionTeam)
     {
         PlayerEnvoy *candidate = [self.candidates objectAtIndex:indexPath.row];
         returnValue = candidate.picture.image;
@@ -383,7 +487,7 @@
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCellAccessoryType returnValue = UITableViewCellAccessoryNone;
-    if (indexPath.section == PlayerRoundMenuSectionCommand)
+    if (indexPath.section == RoundMenuSectionCommand)
     {
         if (![self isReadyForVote])
         {

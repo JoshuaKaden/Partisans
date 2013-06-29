@@ -2,7 +2,7 @@
 //  GamePlayer.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/21/13.
+//  Created by Joshua Kaden on 6/28/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -11,15 +11,15 @@
 #import "Mission.h"
 #import "Player.h"
 #import "Round.h"
-#import "Votes.h"
+#import "Vote.h"
 
 
 @implementation GamePlayer
 
+@dynamic hasAlertBeenShown;
 @dynamic intramuralID;
 @dynamic isHost;
 @dynamic isOperative;
-@dynamic hasAlertBeenShown;
 @dynamic candidateForRounds;
 @dynamic game;
 @dynamic leaderForRounds;

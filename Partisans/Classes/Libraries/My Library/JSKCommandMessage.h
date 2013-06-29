@@ -11,6 +11,7 @@
 
 typedef enum
 {
+    JSKCommandMessageTypeAcknowledge,
     JSKCommandMessageTypeDidFinish,
     JSKCommandMessageTypeGetDigest,
     JSKCommandMessageTypeGetInfo,

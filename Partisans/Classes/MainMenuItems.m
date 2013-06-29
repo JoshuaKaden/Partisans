@@ -13,7 +13,7 @@
 #import "ImageEnvoy.h"
 #import "OperativeAlertMenuItems.h"
 #import "PlayerEnvoy.h"
-#import "PlayerRoundMenuItems.h"
+#import "RoundMenuItems.h"
 #import "PlayerViewController.h"
 #import "PlayGameMenuItems.h"
 #import "SetupGameMenuItems.h"
@@ -60,7 +60,7 @@
             GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
             if (gamePlayerEnvoy.hasAlertBeenShown)
             {
-                PlayerRoundMenuItems *items = [[PlayerRoundMenuItems alloc] init];
+                RoundMenuItems *items = [[RoundMenuItems alloc] init];
                 [vc setMenuItems:items];
                 [items release];
             }

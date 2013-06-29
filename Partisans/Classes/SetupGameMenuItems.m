@@ -13,7 +13,7 @@
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
 #import "PlayerEnvoy.h"
-#import "PlayerRoundMenuItems.h"
+#import "RoundMenuItems.h"
 #import "ProgressCell.h"
 #import "SystemMessage.h"
 
@@ -26,7 +26,7 @@
 @property (nonatomic, strong) UIAlertView *stopHostingAlertView;
 @property (nonatomic, strong) UIAlertView *leaveGameAlertView;
 @property (nonatomic, assign) JSKMenuViewController *menuViewController;
-@property (nonatomic, strong) PlayerRoundMenuItems *playerRoundMenuItems;
+@property (nonatomic, strong) RoundMenuItems *playerRoundMenuItems;
 
 - (BOOL)isPlayerHost;
 - (void)confirmStopHosting;

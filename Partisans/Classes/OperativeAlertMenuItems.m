@@ -188,7 +188,7 @@
         }
         else
         {
-            return [UIImage imageNamed:@"mask"];
+            return [UIImage imageNamed:@"black_mask"];
         }
     }
     else

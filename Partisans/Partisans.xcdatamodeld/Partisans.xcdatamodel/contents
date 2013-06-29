@@ -18,7 +18,7 @@
         <relationship name="candidateForRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="missionCandidates" inverseEntity="Round" syncable="YES"/>
         <relationship name="game" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="gamePlayers" inverseEntity="Game" syncable="YES"/>
         <relationship name="leaderForRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="leader" inverseEntity="Round" syncable="YES"/>
-        <relationship name="missionVotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Votes" inverseName="gamePlayer" inverseEntity="Votes" syncable="YES"/>
+        <relationship name="missionVotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vote" inverseName="gamePlayer" inverseEntity="Vote" syncable="YES"/>
         <relationship name="player" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="gamePlayer" inverseEntity="Player" syncable="YES"/>
         <relationship name="teamMemberOn" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="teamMembers" inverseEntity="Mission" syncable="YES"/>
     </entity>
@@ -64,7 +64,7 @@
         <relationship name="leader" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="leaderForRounds" inverseEntity="GamePlayer" syncable="YES"/>
         <relationship name="mission" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Mission" inverseName="rounds" inverseEntity="Mission" syncable="YES"/>
         <relationship name="missionCandidates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="candidateForRounds" inverseEntity="GamePlayer" syncable="YES"/>
-        <relationship name="votes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Votes" inverseName="round" inverseEntity="Votes" syncable="YES"/>
+        <relationship name="votes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vote" inverseName="round" inverseEntity="Vote" syncable="YES"/>
     </entity>
     <entity name="Scorecard" representedClassName="Scorecard" syncable="YES">
         <attribute name="gamesPlayed" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -76,7 +76,7 @@
         <relationship name="operativePlayer" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="operativeScorecard" inverseEntity="Player" syncable="YES"/>
         <relationship name="partisanPlayer" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="partisanScorecard" inverseEntity="Player" syncable="YES"/>
     </entity>
-    <entity name="Votes" representedClassName="Votes" syncable="YES">
+    <entity name="Vote" representedClassName="Vote" syncable="YES">
         <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isCast" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isYea" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -91,6 +91,6 @@
         <element name="Player" positionX="-2052" positionY="-1053" width="128" height="225"/>
         <element name="Round" positionX="-1532" positionY="-909" width="128" height="150"/>
         <element name="Scorecard" positionX="-2315" positionY="-930" width="128" height="165"/>
-        <element name="Votes" positionX="-1559" positionY="-606" width="128" height="120"/>
+        <element name="Vote" positionX="-1541" positionY="-597" width="128" height="120"/>
     </elements>
 </model>

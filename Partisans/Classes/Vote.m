@@ -1,17 +1,17 @@
 //
-//  Votes.m
+//  Vote.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/19/13.
+//  Created by Joshua Kaden on 6/28/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
-#import "Votes.h"
+#import "Vote.h"
 #import "GamePlayer.h"
 #import "Round.h"
 
 
-@implementation Votes
+@implementation Vote
 
 @dynamic intramuralID;
 @dynamic isCast;

@@ -2,7 +2,7 @@
 //  Round.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/19/13.
+//  Created by Joshua Kaden on 6/28/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import "Game.h"
 #import "GamePlayer.h"
 #import "Mission.h"
-#import "Votes.h"
+#import "Vote.h"
 
 
 @implementation Round
