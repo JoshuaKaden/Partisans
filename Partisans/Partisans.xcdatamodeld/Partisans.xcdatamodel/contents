@@ -64,7 +64,7 @@
         <relationship name="leader" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="leaderForRounds" inverseEntity="GamePlayer" syncable="YES"/>
         <relationship name="mission" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Mission" inverseName="rounds" inverseEntity="Mission" syncable="YES"/>
         <relationship name="missionCandidates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="candidateForRounds" inverseEntity="GamePlayer" syncable="YES"/>
-        <relationship name="votes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vote" inverseName="round" inverseEntity="Vote" syncable="YES"/>
+        <relationship name="votes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Vote" inverseName="round" inverseEntity="Vote" syncable="YES"/>
     </entity>
     <entity name="Scorecard" representedClassName="Scorecard" syncable="YES">
         <attribute name="gamesPlayed" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>

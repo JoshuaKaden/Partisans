@@ -12,6 +12,7 @@
 @class PlayerEnvoy;
 @class Round;
 @class RoundEnvoy;
+@class VoteEnvoy;
 
 @interface RoundEnvoy : NSObject <NSCoding>
 
@@ -28,6 +29,9 @@
 - (NSArray *)candidates;
 - (void)addCandidate:(PlayerEnvoy *)playerEnvoy;
 - (void)clearCandidates;
+
+- (NSArray *)votes;
+- (void)addVote:(VoteEnvoy *)voteEnvoy;
 
 + (RoundEnvoy *)envoyFromManagedObject:(Round *)managedObject;
 

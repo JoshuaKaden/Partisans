@@ -27,6 +27,7 @@ extern NSString * const kPartisansNotificationJoinedGame;
 extern NSString * const kPartisansNotificationGameChanged;
 extern NSString * const kPartisansNotificationConnectedToHost;
 extern NSString * const kPartisansNotificationHostAcknowledgement;
+extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 
 @interface SystemMessage : JSKSystemMessage
 
@@ -42,7 +43,9 @@ extern NSString * const kPartisansNotificationHostAcknowledgement;
 + (NSInteger)secondsBetweenDates:(NSDate *)fromDate toDate:(NSDate *)toDate;
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate;
 + (NSString *)spellOutNumber:(NSNumber *)number;
++ (NSString *)spellOutInteger:(NSInteger)integer;
 + (NSString *)buildRandomString;
++ (UIView *)rootView;
 
 + (BOOL)isPlayerOnline;
 + (void)putPlayerOnline;

@@ -9,6 +9,7 @@
 #import "SystemMessage.h"
 
 #import "AddGamePlayerOperation.h"
+#import "AppDelegate.h"
 #import "CoordinatorVote.h"
 #import "CreateGameOperation.h"
 #import "CreatePlayerOperation.h"
@@ -22,6 +23,7 @@
 #import "NSManagedObjectContext+FetchAdditions.h"
 #import "PlayerEnvoy.h"
 #import "RemoveGamePlayerOperation.h"
+#import "RoundEnvoy.h"
 #import "ServerBrowser.h"
 #import "ServerBrowserDelegate.h"
 #import "UpdateGameOperation.h"
@@ -41,6 +43,7 @@ NSString * const kPartisansNotificationJoinedGame  = @"kPartisansNotificationJoi
 NSString * const kPartisansNotificationGameChanged = @"kPartisansNotificationGameChanged";
 NSString * const kPartisansNotificationConnectedToHost = @"kPartisansNotificationConnectedToHost";
 NSString * const kPartisansNotificationHostAcknowledgement = @"kPartisansNotificationHostAcknowledgement";
+NSString * const kPartisansNotificationHostReadyToCommunicate = @"kPartisansNotificationHostReadyToCommunicate";
 
 NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPartisans";
 
@@ -67,6 +70,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (void)handleJoinGameStash:(NSString *)fromPeerID;
 - (void)handleCoordinatorVote:(JSKCommandParcel *)parcel;
 - (void)handleVote:(JSKCommandParcel *)parcel;
+- (void)handleHostAcknowledgement:(JSKCommandMessage *)message;
 - (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey;
 - (void)askToJoinGame:(NSString *)toPeerID;
 - (BOOL)isDigestCurrent;
@@ -276,13 +280,47 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 - (void)handleCoordinatorVote:(JSKCommandParcel *)parcel
 {
-    
+    CoordinatorVote *coordinatorVote = (CoordinatorVote *)parcel.object;
+    VoteEnvoy *voteEnvoy = coordinatorVote.voteEnvoy;
+    NSArray *candidateIDs = coordinatorVote.candidateIDs;
+    RoundEnvoy *roundEnvoy = [self.gameEnvoy currentRound];
+    for (NSString *candidateID in candidateIDs)
+    {
+        PlayerEnvoy *candidate = [PlayerEnvoy envoyFromIntramuralID:candidateID];
+        [roundEnvoy addCandidate:candidate];
+    }
+    [roundEnvoy addVote:voteEnvoy];
+    UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:self.gameEnvoy];
+    [op setCompletionBlock:^(void) {
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+        {
+            JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:parcel.from from:self.playerEnvoy.peerID];
+            message.responseKey = parcel.responseKey;
+            [self.netHost sendCommandMessage:message];
+            [message release];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+        });
+    }];
 }
 
 
 - (void)handleVote:(JSKCommandParcel *)parcel
 {
-    
+    VoteEnvoy *voteEnvoy = (VoteEnvoy *)parcel.object;
+    voteEnvoy.isCast = YES;
+    RoundEnvoy *roundEnvoy = [self.gameEnvoy currentRound];
+    [roundEnvoy addVote:voteEnvoy];
+    UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:self.gameEnvoy];
+    [op setCompletionBlock:^(void) {
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+        {
+            JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:parcel.from from:self.playerEnvoy.peerID];
+            message.responseKey = parcel.responseKey;
+            [self.netHost sendCommandMessage:message];
+            [message release];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+        });
+    }];
 }
 
 
@@ -399,6 +437,16 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 }
 
 
+- (void)handleHostAcknowledgement:(JSKCommandMessage *)message
+{
+    dispatch_async(dispatch_get_main_queue(), ^(void)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationHostAcknowledgement object:message.responseKey];
+    });
+}
+
+
+
 #pragma mark - Player / Host
 
 // The will check the local data and ask for new data as needed.
@@ -448,10 +496,10 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         {
             if (self.isLookingForGame)
             {
-                if ([self isDigestCurrent])
-                {
+//                if ([self isDigestCurrent])
+//                {
                     [self askToJoinGameDelayed:self.netPlayer.hostPeerID];
-                }
+//                }
             }
             else
             {
@@ -862,6 +910,9 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
     switch (messageType)
     {
+        case JSKCommandMessageTypeAcknowledge:
+            [self handleHostAcknowledgement:commandMessage];
+            break;
         case JSKCommandMessageTypeGetInfo:
             responseObject = playerEnvoy;
             break;
@@ -1017,6 +1068,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 #pragma mark - Class methods
 
++ (UIView *)rootView
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    return appDelegate.window.rootViewController.view;
+}
+
 + (void)browseServers
 {
     SystemMessage *sharedInstance = [self sharedInstance];
@@ -1036,6 +1093,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 + (void)requestGameUpdate
 {
+    if (![self isPlayerOnline])
+    {
+        // This begins a chain reaction that will end up with us requesting a game update (in processDigest:).
+        [self putPlayerOnline];
+        return;
+    }
     SystemMessage *sharedInstance = [self sharedInstance];
     GameEnvoy *gameEnvoy = sharedInstance.gameEnvoy;
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:gameEnvoy.modifiedDate, @"modifiedDate", @"Game", @"entity", nil];
@@ -1323,6 +1386,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     NSString *returnValue = [formatter stringFromNumber:number];
     [formatter release];
     return returnValue;
+}
+
++ (NSString *)spellOutInteger:(NSInteger)integer
+{
+    return [self spellOutNumber:[NSNumber numberWithInteger:integer]];
 }
 
 

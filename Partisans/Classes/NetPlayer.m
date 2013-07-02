@@ -292,6 +292,13 @@ const BOOL kNetPlayerIsDebugOn = YES;
         [self sendCommandParcel:parcel];
         [parcel release];
         
+        // NOTE: The Host is now ready to receive messages from us.
+        // Post a notification to that effect.
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationHostReadyToCommunicate object:hostID];
+        });
+        
         return;
     }
     

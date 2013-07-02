@@ -9,6 +9,23 @@
 #import <Foundation/Foundation.h>
 #import "JSKMenuViewController.h"
 
+
+typedef enum
+{
+    DecisionMenuSectionStatus,
+    DecisionMenuSectionVotes,
+    DecisionMenuSection_MaxValue
+} DecisionMenuSection;
+
+typedef enum
+{
+    DecisionMenuVotesRowTotal,
+    DecisionMenuVotesRowYea,
+    DecisionMenuVotesRowNay,
+    DecisionMenuVotesRow_MaxValue
+} DecisionMenuVotesRow;
+
+
 @interface DecisionMenuItems : NSObject <JSKMenuViewControllerDelegate>
 
 @end

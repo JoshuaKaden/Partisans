@@ -19,13 +19,17 @@
 #import "PlayerEnvoy.h"
 #import "Round.h"
 #import "SystemMessage.h"
+#import "Vote.h"
+#import "VoteEnvoy.h"
 
 
 @interface RoundEnvoy ()
 
 @property (nonatomic, strong) NSArray *candidateIDs;
+@property (nonatomic, strong) NSArray *voteEnvoys;
 
 - (void)loadCandidateIDs;
+- (void)loadVoteEnvoys;
 
 @end
 
@@ -39,6 +43,8 @@
 @synthesize gameID = m_gameID;
 @synthesize coordinatorID = m_coordinatorID;
 @synthesize candidateIDs = m_candidateIDs;
+@synthesize voteEnvoys = m_voteEnvoys;
+
 
 - (void)dealloc
 {
@@ -47,6 +53,7 @@
     [m_gameID release];
     [m_coordinatorID release];
     [m_candidateIDs release];
+    [m_voteEnvoys release];
     
     [super dealloc];
 }
@@ -115,6 +122,50 @@
 }
 
 
+
+#pragma mark - Votes
+
+- (void)loadVoteEnvoys
+{
+    Round *model = (Round *)[[JSKDataMiner mainObjectContext] objectWithID:self.managedObjectID];
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:model.votes.count];
+    for (Vote *vote in model.votes)
+    {
+        VoteEnvoy *voteEnvoy = [[VoteEnvoy alloc] initWithManagedObject:vote];
+        [list addObject:voteEnvoy];
+        [voteEnvoy release];
+    }
+    self.voteEnvoys = [NSArray arrayWithArray:list];
+    [list release];
+}
+
+- (void)addVote:(VoteEnvoy *)voteEnvoy
+{
+    if (!self.voteEnvoys)
+    {
+        self.voteEnvoys = [NSArray arrayWithObject:voteEnvoy];
+    }
+    else
+    {
+        NSArray *ids = [self.voteEnvoys valueForKey:@"playerID"];
+        for (NSString *playerID in ids)
+        {
+            if ([playerID isEqualToString:voteEnvoy.playerID])
+            {
+                return;
+            }
+        }
+        self.voteEnvoys = [self.voteEnvoys arrayByAddingObject:voteEnvoy];
+    }
+}
+
+- (NSArray *)votes
+{
+    return self.voteEnvoys;
+}
+
+
+
 #pragma mark - Overrides
 
 - (NSArray *)candidateIDs
@@ -142,6 +193,7 @@
         self.coordinatorID   = managedObject.leader.player.intramuralID;
         
         [self loadCandidateIDs];
+        [self loadVoteEnvoys];
     }
     return self;
 }
@@ -189,7 +241,8 @@
                               [NSNumber numberWithUnsignedInteger:self.roundNumber].description, @"roundNumber",
                               gameIDString, @"gameID",
                               coordinatorIDString, @"coordinatorID",
-                              self.candidateIDs, @"candidateIDs", nil];
+                              self.candidateIDs, @"candidateIDs",
+                              self.voteEnvoys, @"voteEnvoys", nil];
     return descDict.description;
 }
 
@@ -294,6 +347,13 @@
     }
     
     
+    // The votes.
+    for (VoteEnvoy *voteEnvoy in self.voteEnvoys)
+    {
+        [voteEnvoy commitInContext:context];
+    }
+    
+
     
     // Make sure the envoy knows the new managed object ID, if this is an add.
     if (!self.managedObjectID)
@@ -328,6 +388,7 @@
     [aCoder encodeObject:self.gameID forKey:@"gameID"];
     [aCoder encodeObject:self.coordinatorID forKey:@"coordinatorID"];
     [aCoder encodeObject:self.candidateIDs forKey:@"candidateIDs"];
+    [aCoder encodeObject:self.voteEnvoys forKey:@"voteEnvoys"];
 }
 
 
@@ -344,6 +405,7 @@
         self.gameID = [aDecoder decodeObjectForKey:@"gameID"];
         self.coordinatorID = [aDecoder decodeObjectForKey:@"coordinatorID"];
         self.candidateIDs = [aDecoder decodeObjectForKey:@"candidateIDs"];
+        self.voteEnvoys = [aDecoder decodeObjectForKey:@"voteEnvoys"];
     }
     
     return self;

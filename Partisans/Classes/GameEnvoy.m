@@ -286,6 +286,17 @@
         return;
     }
     
+    
+//    // Bad record cleanup.
+//    NSSet *orphans = [game.gamePlayers filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"player == nil"]];
+//    for (GamePlayer *orphan in orphans)
+//    {
+//        [context deleteObject:orphan];
+//        [context save:nil];
+//    }
+    
+    
+    
     NSSet *playerSet = game.gamePlayers;
     NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"player.playerName" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
@@ -863,6 +874,10 @@
                         player.isNative = NO;
                         player.playerName = NSLocalizedString(@"TBA", @"TBA  --  label");
                         player.modifiedDate = [NSDate distantPast];
+                    }
+                    else
+                    {
+                        player = [players objectAtIndex:0];
                     }
 //                    else
 //                    {

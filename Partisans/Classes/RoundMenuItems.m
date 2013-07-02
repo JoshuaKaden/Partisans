@@ -12,6 +12,7 @@
 #import "CoordinatorVote.h"
 #import "DecisionMenuItems.h"
 #import "GameEnvoy.h"
+#import "HostFinder.h"
 #import "ImageEnvoy.h"
 #import "JSKOverlayer.h"
 #import "MissionEnvoy.h"
@@ -21,7 +22,7 @@
 #import "VoteEnvoy.h"
 
 
-@interface RoundMenuItems ()
+@interface RoundMenuItems () <HostFinderDelegate>
 
 @property (nonatomic, strong) GameEnvoy *gameEnvoy;
 @property (nonatomic, strong) RoundEnvoy *currentRound;
@@ -32,11 +33,19 @@
 @property (nonatomic, strong) NSString *responseKey;
 @property (nonatomic, strong) JSKOverlayer *overlayer;
 @property (nonatomic, strong) DecisionMenuItems *decisionMenuItems;
+@property (nonatomic, strong) HostFinder *hostFinder;
+@property (nonatomic, strong) NSString *hostPeerID;
+@property (nonatomic, assign) BOOL thisVote;
 
 - (BOOL)isReadyForVote;
 - (BOOL)isCoordinator;
+- (void)voteLocally:(BOOL)vote;
+- (void)connectAndVote:(BOOL)vote;
 - (void)vote:(BOOL)vote;
 - (void)hostAcknowledgement:(NSNotification *)notification;
+- (BOOL)isVotingComplete;
+- (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController;
+- (void)gameChanged:(NSNotification *)notification;
 
 @end
 
@@ -52,10 +61,16 @@
 @synthesize responseKey = m_responseKey;
 @synthesize overlayer = m_overlayer;
 @synthesize decisionMenuItems = m_decisionMenuItems;
+@synthesize hostFinder = m_hostFinder;
+@synthesize hostPeerID = m_hostPeerID;
+@synthesize thisVote = m_vote;
 
 
 - (void)dealloc
 {
+    [self.hostFinder setDelegate:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [m_gameEnvoy release];
     [m_currentRound release];
     [m_currentMission release];
@@ -65,6 +80,8 @@
     [m_responseKey release];
     [m_overlayer release];
     [m_decisionMenuItems release];
+    [m_hostFinder release];
+    [m_hostPeerID release];
     
     [super dealloc];
 }
@@ -139,19 +156,85 @@
     }
 }
 
+- (BOOL)isVotingComplete
+{
+    if (self.currentRound.votes.count == self.gameEnvoy.numberOfPlayers)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+
+
+- (void)voteLocally:(BOOL)vote
+{
+    self.hostPeerID = [SystemMessage playerEnvoy].peerID;
+    
+    VoteEnvoy *voteEnvoy = [[VoteEnvoy alloc] init];
+    voteEnvoy.isCast = YES;
+    voteEnvoy.isYea = vote;
+    voteEnvoy.roundID = self.currentRound.intramuralID;
+    voteEnvoy.playerID = [SystemMessage playerEnvoy].intramuralID;
+    [self.currentRound addVote:voteEnvoy];
+    [voteEnvoy release];
+    
+    [self.gameEnvoy commitAndSave];
+    
+    if (![SystemMessage isPlayerOnline])
+    {
+        [SystemMessage putPlayerOnline];
+    }
+    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:self.gameEnvoy];
+    [SystemMessage sendParcelToPlayers:parcel];
+    [parcel release];
+}
+
+
+- (void)connectAndVote:(BOOL)vote
+{
+    if ([SystemMessage isHost])
+    {
+        [self vote:vote];
+        return;
+    }
+
+    
+    if (!self.overlayer)
+    {
+        JSKOverlayer *overlayer = [[JSKOverlayer alloc] initWithView:[SystemMessage rootView]];
+        self.overlayer = overlayer;
+        [overlayer release];
+    }
+    NSString *message = NSLocalizedString(@"Voting...", @"Voting...  --  message");
+    [self.overlayer createWaitOverlayWithText:message];
+
+    
+    if ([SystemMessage isPlayerOnline])
+    {
+        self.hostPeerID = self.gameEnvoy.host.peerID;
+        [self vote:vote];
+        return;
+    }
+    
+    if (!self.hostFinder)
+    {
+        HostFinder *hostFinder = [[HostFinder alloc] init];
+        [hostFinder setDelegate:self];
+        self.hostFinder = hostFinder;
+        [hostFinder release];
+    }
+    [self.hostFinder connect];
+    
+    self.thisVote = vote;
+}
 
 
 - (void)vote:(BOOL)vote
 {
-    if (!self.overlayer)
-    {
-        JSKOverlayer *overlayer = [[JSKOverlayer alloc] initWithView:self.menuViewController.view];
-        self.overlayer = overlayer;
-        [overlayer release];
-    }
-    NSString *message = NSLocalizedString(@"Sending your vote to the Host...", @"Sending your vote to the Host...  --  message");
-    [self.overlayer createWaitOverlayWithText:message];
-    
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
     
     // This involves sending a new (unconnected to core data) vote envoy to the host.
@@ -183,7 +266,7 @@
     [voteEnvoy release];
 
     
-    NSString *hostPeerID = self.gameEnvoy.host.peerID;
+    NSString *hostPeerID = self.hostPeerID;
     self.responseKey = [SystemMessage buildRandomString];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hostAcknowledgement:) name:kPartisansNotificationHostAcknowledgement object:nil];
     
@@ -205,19 +288,86 @@
     
     [self.overlayer removeWaitOverlay];
     
+    [self goToDecisionScreen:self.menuViewController];
+}
+
+
+- (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController
+{
     DecisionMenuItems *items = [[DecisionMenuItems alloc] init];
     self.decisionMenuItems = items;
     [items release];
     
     JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
     [vc setDelegate:items];
-    [self.menuViewController invokePush:YES viewController:vc];
+    [menuViewController invokePush:YES viewController:vc];
     [vc release];
 }
 
+- (void)gameChanged:(NSNotification *)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
+}
+
+
+#pragma mark - Host Finder delegate
+
+- (void)hostFinder:(HostFinder *)hostFinder isConnectedToHost:(NSString *)hostPeerID
+{
+    self.hostPeerID = hostPeerID;
+    [self vote:self.thisVote];
+}
+
+- (void)hostFinderTimerFired:(HostFinder *)hostFinder
+{
+    static NSUInteger timeoutCount = 0;
+    timeoutCount++;
+    if (timeoutCount == 1)
+    {
+        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Is the Host available?", @"Is the Host available?  --  message")];
+    }
+    else if (timeoutCount == 2)
+    {
+        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Trying one last time...", @"Trying one last time...  --  message")];
+    }
+    else
+    {
+        [hostFinder stop];
+        self.hostFinder = nil;
+        [self.overlayer removeWaitOverlay];
+    }
+}
 
 
 #pragma mark - Menu View Controller delegate
+
+
+
+- (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
+{
+    if ([self isVotingComplete])
+    {
+        [self goToDecisionScreen:menuViewController];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+    }
+}
+
+
+- (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
+{
+    if ([self isVotingComplete])
+    {
+        [self goToDecisionScreen:menuViewController];
+    }
+    else
+    {
+        [SystemMessage requestGameUpdate];
+    }
+}
+
 
 - (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
 {
@@ -231,10 +381,19 @@
             {
                 vote = NO;
             }
+            
+            if ([SystemMessage isHost])
+            {
+                [self voteLocally:vote];
+                [self goToDecisionScreen:menuViewController];
+                return;
+            }
+            
             // Stash a reference to the menuViewController, so we can push the results screen when
             // the host acknowledges our vote.
             self.menuViewController = menuViewController;
-            [self vote:vote];
+            [self connectAndVote:vote];
+            return;
         }
         else
         {
