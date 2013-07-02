@@ -81,7 +81,7 @@
         if (![SystemMessage isPad]) {
             labelW = 200.0f;
             labelH = 100.0f;
-            labelY = 100.0f;
+            labelY = 140.0f;
         }
         
         CGFloat labelX = (self.view.bounds.size.width / 2.0f) - (labelW / 2.0f);

@@ -282,6 +282,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 {
     CoordinatorVote *coordinatorVote = (CoordinatorVote *)parcel.object;
     VoteEnvoy *voteEnvoy = coordinatorVote.voteEnvoy;
+    voteEnvoy.isCast = YES;
     NSArray *candidateIDs = coordinatorVote.candidateIDs;
     RoundEnvoy *roundEnvoy = [self.gameEnvoy currentRound];
     for (NSString *candidateID in candidateIDs)
@@ -301,6 +302,9 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
 }
 
 
@@ -321,6 +325,9 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
 }
 
 

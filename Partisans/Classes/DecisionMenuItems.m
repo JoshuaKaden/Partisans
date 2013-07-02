@@ -21,6 +21,7 @@
 - (NSUInteger)votesCast;
 - (NSUInteger)yeaVotes;
 - (NSUInteger)nayVotes;
+- (void)gameChanged:(NSNotification *)notification;
 
 @end
 
@@ -29,6 +30,8 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [super dealloc];
 }
 
@@ -90,8 +93,26 @@
 }
 
 
+- (void)gameChanged:(NSNotification *)notification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
+}
+
+
 
 #pragma mark - Menu View Controller delegate
+
+
+- (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+}
+
+- (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
+{
+    [SystemMessage requestGameUpdate];
+}
+
 
 - (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
 {
@@ -187,7 +208,7 @@
     NSString *cellPrefix = nil;
     NSString *cellSuffix = nil;
     double progress = 0.0;
-    double majority = ((double)playerCount / (double)2.0) + (double)1.0;
+    double majority = ((playerCount / 2) + 1) / playerCount;
     double dualProgress = majority;
     UIColor *progressColor = playerEnvoy.favoriteColor;
     DecisionMenuVotesRow menuRow = (DecisionMenuVotesRow)indexPath.row;
@@ -217,7 +238,7 @@
                 cellSuffix = NSLocalizedString(@"yea votes", @"yea votes  --  label suffix");
             }
             progress = (double)yeaVotes / (double)playerCount;
-            [cell setIsDual:YES];
+            [cell setIsDual:NO];
             progressColor = [UIColor blueColor];
             break;
         case DecisionMenuVotesRowNay:
@@ -231,7 +252,8 @@
                 cellSuffix = NSLocalizedString(@"nay votes", @"nay votes  --  label suffix");
             }
             progress = (double)nayVotes / (double)playerCount;
-            [cell setIsDual:YES];
+            dualProgress = (playerCount / 2) / playerCount;
+            [cell setIsDual:NO];
             progressColor = [UIColor redColor];
             break;
         case DecisionMenuVotesRow_MaxValue:

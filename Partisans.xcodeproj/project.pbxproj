@@ -199,6 +199,14 @@
 		93FECB5D174548AD0046529A /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB5B174548AD0046529A /* ColorPickerViewController.xib */; };
 		93FECB5E174548AD0046529A /* SlickEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB5C174548AD0046529A /* SlickEditView.xib */; };
 		93FECB61174549D40046529A /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB60174549D40046529A /* PlayerViewController.xib */; };
+		93FFD18E17835F6600ADCB44 /* OverlayTesterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FFD18D17835F6600ADCB44 /* OverlayTesterViewController.m */; };
+		93FFD18F17835F6600ADCB44 /* OverlayTesterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FFD18D17835F6600ADCB44 /* OverlayTesterViewController.m */; };
+		93FFD19117835FF600ADCB44 /* OverlayTesterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD19017835FF600ADCB44 /* OverlayTesterViewController.xib */; };
+		93FFD19217835FF600ADCB44 /* OverlayTesterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD19017835FF600ADCB44 /* OverlayTesterViewController.xib */; };
+		93FFD1961783635100ADCB44 /* waitOverLay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD1941783635100ADCB44 /* waitOverLay@2x.png */; };
+		93FFD1971783635100ADCB44 /* waitOverLay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD1941783635100ADCB44 /* waitOverLay@2x.png */; };
+		93FFD1981783635100ADCB44 /* waitOverLay.png in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD1951783635100ADCB44 /* waitOverLay.png */; };
+		93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD1951783635100ADCB44 /* waitOverLay.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -376,6 +384,11 @@
 		93FECB5B174548AD0046529A /* ColorPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColorPickerViewController.xib; path = Classes/iOS5/ColorPickerViewController.xib; sourceTree = "<group>"; };
 		93FECB5C174548AD0046529A /* SlickEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SlickEditView.xib; path = Classes/iOS5/SlickEditView.xib; sourceTree = "<group>"; };
 		93FECB60174549D40046529A /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerViewController.xib; path = Classes/iOS5/PlayerViewController.xib; sourceTree = "<group>"; };
+		93FFD18C17835F6600ADCB44 /* OverlayTesterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverlayTesterViewController.h; path = Classes/OverlayTesterViewController.h; sourceTree = "<group>"; };
+		93FFD18D17835F6600ADCB44 /* OverlayTesterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayTesterViewController.m; path = Classes/OverlayTesterViewController.m; sourceTree = "<group>"; };
+		93FFD19017835FF600ADCB44 /* OverlayTesterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayTesterViewController.xib; sourceTree = "<group>"; };
+		93FFD1941783635100ADCB44 /* waitOverLay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "waitOverLay@2x.png"; path = "Arts/waitOverLay@2x.png"; sourceTree = "<group>"; };
+		93FFD1951783635100ADCB44 /* waitOverLay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = waitOverLay.png; path = Arts/waitOverLay.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +430,9 @@
 			children = (
 				9300C7D6175BFCA00047AA15 /* GameTesterMenuItems.h */,
 				9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */,
+				93FFD18C17835F6600ADCB44 /* OverlayTesterViewController.h */,
+				93FFD18D17835F6600ADCB44 /* OverlayTesterViewController.m */,
+				93FFD19017835FF600ADCB44 /* OverlayTesterViewController.xib */,
 				936CDFA8176117FC00C6A4EE /* ServerTesterMenuItems.h */,
 				936CDFA9176117FC00C6A4EE /* ServerTesterMenuItems.m */,
 				93040363174E7D0900ED169F /* ToolsMenuItems.h */,
@@ -520,16 +536,11 @@
 		936510AF1741581600F2AD06 /* Arts */ = {
 			isa = PBXGroup;
 			children = (
+				93FFD19A1783635D00ADCB44 /* Icon */,
 				9351AA96177E540E00D4C843 /* black_mask.png */,
-				93761EE0174A9A7300DFE1F5 /* Icon-72.png */,
-				93761EE2174A9A7700DFE1F5 /* Icon-72@2x.png */,
-				93761EE4174A9B1B00DFE1F5 /* Icon-Small-50.png */,
-				93761EE5174A9B1B00DFE1F5 /* Icon-Small-50@2x.png */,
-				93761EE6174A9B1B00DFE1F5 /* Icon-Small.png */,
-				93761EE7174A9B1B00DFE1F5 /* Icon-Small@2x.png */,
-				93761EDC174A9A3600DFE1F5 /* Icon.png */,
-				93761EDE174A9A4000DFE1F5 /* Icon@2x.png */,
 				9358BFDD17747C1F00FA2DAF /* mask.png */,
+				93FFD1951783635100ADCB44 /* waitOverLay.png */,
+				93FFD1941783635100ADCB44 /* waitOverLay@2x.png */,
 			);
 			name = Arts;
 			sourceTree = "<group>";
@@ -818,6 +829,21 @@
 			name = iOS5;
 			sourceTree = "<group>";
 		};
+		93FFD19A1783635D00ADCB44 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				93761EE0174A9A7300DFE1F5 /* Icon-72.png */,
+				93761EE2174A9A7700DFE1F5 /* Icon-72@2x.png */,
+				93761EE4174A9B1B00DFE1F5 /* Icon-Small-50.png */,
+				93761EE5174A9B1B00DFE1F5 /* Icon-Small-50@2x.png */,
+				93761EE6174A9B1B00DFE1F5 /* Icon-Small.png */,
+				93761EE7174A9B1B00DFE1F5 /* Icon-Small@2x.png */,
+				93761EDC174A9A3600DFE1F5 /* Icon.png */,
+				93761EDE174A9A4000DFE1F5 /* Icon@2x.png */,
+			);
+			name = Icon;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -906,6 +932,9 @@
 				93761EEE174A9B1B00DFE1F5 /* Icon-Small@2x.png in Resources */,
 				9358BFDE17747C1F00FA2DAF /* mask.png in Resources */,
 				9351AA97177E540E00D4C843 /* black_mask.png in Resources */,
+				93FFD19117835FF600ADCB44 /* OverlayTesterViewController.xib in Resources */,
+				93FFD1961783635100ADCB44 /* waitOverLay@2x.png in Resources */,
+				93FFD1981783635100ADCB44 /* waitOverLay.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -932,6 +961,9 @@
 				93761EF3174A9B2400DFE1F5 /* Icon.png in Resources */,
 				9358BFDF17747C1F00FA2DAF /* mask.png in Resources */,
 				9351AA98177E540E00D4C843 /* black_mask.png in Resources */,
+				93FFD19217835FF600ADCB44 /* OverlayTesterViewController.xib in Resources */,
+				93FFD1971783635100ADCB44 /* waitOverLay@2x.png in Resources */,
+				93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1011,6 +1043,7 @@
 				9351AA8E177E4E9400D4C843 /* JSKOverlayer.m in Sources */,
 				9351AA92177E52C200D4C843 /* DecisionMenuItems.m in Sources */,
 				9307B3D4177F8A41003CEC6F /* HostFinder.m in Sources */,
+				93FFD18E17835F6600ADCB44 /* OverlayTesterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1087,6 +1120,7 @@
 				9351AA8F177E4E9400D4C843 /* JSKOverlayer.m in Sources */,
 				9351AA93177E52C200D4C843 /* DecisionMenuItems.m in Sources */,
 				9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */,
+				93FFD18F17835F6600ADCB44 /* OverlayTesterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

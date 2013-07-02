@@ -7,7 +7,9 @@
 //
 
 #import "ToolsMenuItems.h"
+
 #import "GameTesterMenuItems.h"
+#import "OverlayTesterViewController.h"
 
 
 @interface ToolsMenuItems()
@@ -75,6 +77,10 @@
             label = NSLocalizedString(@"Server Tester", @"Server Tester  --  menu label");
             break;
             
+        case ToolsMenuRowOverlayTester:
+            label = NSLocalizedString(@"Overlay Tester", @"Overlay Tester  --  menu label");
+            break;
+            
         case ToolsMenuRow_MaxValue:
             break;
     }
@@ -99,6 +105,10 @@
 
         case ToolsMenuRowServerTester:
             targetClass = [JSKMenuViewController class];
+            break;
+            
+        case ToolsMenuRowOverlayTester:
+            targetClass = [OverlayTesterViewController class];
             break;
             
         case ToolsMenuRow_MaxValue:
