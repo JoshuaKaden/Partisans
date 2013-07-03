@@ -143,6 +143,10 @@
 		93C442EA17511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93E65480177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
 		93E65481177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
+		93F06C7D178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
+		93F06C7E178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
+		93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
+		93F06C80178472B000281B6C /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
 		93FECAB1174521A40046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
 		93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
 		93FECAB3174521A40046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
@@ -373,6 +377,9 @@
 		93C442E817511B15000DEC63 /* UpdateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateGameOperation.m; path = Classes/UpdateGameOperation.m; sourceTree = "<group>"; };
 		93E6547E177C6A95003C73C2 /* CandidatePickerMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CandidatePickerMenuItems.h; path = Classes/CandidatePickerMenuItems.h; sourceTree = "<group>"; };
 		93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CandidatePickerMenuItems.m; path = Classes/CandidatePickerMenuItems.m; sourceTree = "<group>"; };
+		93F06C7A178472B000281B6C /* MissionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionViewController.h; path = Classes/MissionViewController.h; sourceTree = "<group>"; };
+		93F06C7B178472B000281B6C /* MissionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionViewController.m; path = Classes/MissionViewController.m; sourceTree = "<group>"; };
+		93F06C7C178472B000281B6C /* MissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MissionViewController.xib; path = Classes/MissionViewController.xib; sourceTree = "<group>"; };
 		93FECAAB174521A40046529A /* LabelProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelProgressView.h; path = Classes/LabelProgressView.h; sourceTree = "<group>"; };
 		93FECAAC174521A40046529A /* LabelProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelProgressView.m; path = Classes/LabelProgressView.m; sourceTree = "<group>"; };
 		93FECAAD174521A40046529A /* LabelProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LabelProgressView.xib; path = Classes/LabelProgressView.xib; sourceTree = "<group>"; };
@@ -454,7 +461,7 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
-		9351AA94177E52DB00D4C843 /* Voting */ = {
+		9351AA94177E52DB00D4C843 /* Round */ = {
 			isa = PBXGroup;
 			children = (
 				93E6547E177C6A95003C73C2 /* CandidatePickerMenuItems.h */,
@@ -466,12 +473,15 @@
 				939F36861779FEEE00A7B766 /* RoundMenuItems.h */,
 				939F36871779FEEE00A7B766 /* RoundMenuItems.m */,
 			);
-			name = Voting;
+			name = Round;
 			sourceTree = "<group>";
 		};
 		9351AA95177E52FD00D4C843 /* Mission */ = {
 			isa = PBXGroup;
 			children = (
+				93F06C7A178472B000281B6C /* MissionViewController.h */,
+				93F06C7B178472B000281B6C /* MissionViewController.m */,
+				93F06C7C178472B000281B6C /* MissionViewController.xib */,
 			);
 			name = Mission;
 			sourceTree = "<group>";
@@ -805,9 +815,9 @@
 				9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */,
 				93C10BB817440C4500B47095 /* PlayGameMenuItems.h */,
 				93C10BB917440C4500B47095 /* PlayGameMenuItems.m */,
+				9351AA94177E52DB00D4C843 /* Round */,
 				93C10BC6174439B200B47095 /* SetupGameMenuItems.h */,
 				93C10BC7174439B300B47095 /* SetupGameMenuItems.m */,
-				9351AA94177E52DB00D4C843 /* Voting */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -935,6 +945,7 @@
 				93FFD19117835FF600ADCB44 /* OverlayTesterViewController.xib in Resources */,
 				93FFD1961783635100ADCB44 /* waitOverLay@2x.png in Resources */,
 				93FFD1981783635100ADCB44 /* waitOverLay.png in Resources */,
+				93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -964,6 +975,7 @@
 				93FFD19217835FF600ADCB44 /* OverlayTesterViewController.xib in Resources */,
 				93FFD1971783635100ADCB44 /* waitOverLay@2x.png in Resources */,
 				93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */,
+				93F06C80178472B000281B6C /* MissionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,6 +1056,7 @@
 				9351AA92177E52C200D4C843 /* DecisionMenuItems.m in Sources */,
 				9307B3D4177F8A41003CEC6F /* HostFinder.m in Sources */,
 				93FFD18E17835F6600ADCB44 /* OverlayTesterViewController.m in Sources */,
+				93F06C7D178472B000281B6C /* MissionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,6 +1134,7 @@
 				9351AA93177E52C200D4C843 /* DecisionMenuItems.m in Sources */,
 				9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */,
 				93FFD18F17835F6600ADCB44 /* OverlayTesterViewController.m in Sources */,
+				93F06C7E178472B000281B6C /* MissionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

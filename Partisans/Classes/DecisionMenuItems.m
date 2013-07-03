@@ -7,7 +7,9 @@
 //
 
 #import "DecisionMenuItems.h"
+
 #import "GameEnvoy.h"
+#import "MissionViewController.h"
 #import "PlayerEnvoy.h"
 #import "ProgressCell.h"
 #import "RoundEnvoy.h"
@@ -66,11 +68,6 @@
     [SystemMessage requestGameUpdate];
 }
 
-
-- (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
-{
-    
-}
 
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
 {
@@ -309,7 +306,17 @@
 
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    Class returnValue = nil;
+    
+    if (indexPath.section == DecisionMenuSectionStatus)
+    {
+        if ([[self currentRound] isVotingComplete])
+        {
+            returnValue = [MissionViewController class];
+        }
+    }
+    
+    return returnValue;
 }
 
 - (BOOL)menuViewControllerHidesBackButton:(JSKMenuViewController *)menuViewController
@@ -329,6 +336,13 @@
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == DecisionMenuSectionStatus)
+    {
+        if ([[self currentRound] isVotingComplete])
+        {
+            return UITableViewCellAccessoryDisclosureIndicator;
+        }
+    }
     return UITableViewCellAccessoryNone;
 }
 

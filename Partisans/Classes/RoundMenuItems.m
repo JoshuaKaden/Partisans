@@ -414,27 +414,27 @@
         }
         else
         {
-            if ([self isCoordinator])
-            {
-                JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
-                [vc setDelegate:self.candidatePickerMenuItems];
-                [menuViewController invokePush:YES viewController:vc];
-                [vc release];
-            }
+//            if ([self isCoordinator])
+//            {
+//                JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+//                [vc setDelegate:self.candidatePickerMenuItems];
+//                [menuViewController invokePush:YES viewController:vc];
+//                [vc release];
+//            }
         }
     }
     
-    // Allow the coordinator to undo choices.
-    if (indexPath.section == RoundMenuSectionTeam)
-    {
-        if ([self isCoordinator])
-        {
-            JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
-            [vc setDelegate:self.candidatePickerMenuItems];
-            [menuViewController invokePush:YES viewController:vc];
-            [vc release];
-        }
-    }
+//    // Allow the coordinator to undo choices.
+//    if (indexPath.section == RoundMenuSectionTeam)
+//    {
+//        if ([self isCoordinator])
+//        {
+//            JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+//            [vc setDelegate:self.candidatePickerMenuItems];
+//            [menuViewController invokePush:YES viewController:vc];
+//            [vc release];
+//        }
+//    }
 }
 
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
@@ -664,6 +664,15 @@
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
     Class returnValue = nil;
+    
+    if (indexPath.section == RoundMenuSectionTeam)
+    {
+        if ([self isCoordinator] && ![self hasVoted])
+        {
+            returnValue = [JSKMenuViewController class];
+        }
+    }
+    
     if (indexPath.section == RoundMenuSectionCommand)
     {
         if ([self hasVoted])
@@ -677,6 +686,19 @@
 - (id)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerDelegateAtIndexPath:(NSIndexPath *)indexPath
 {
     id returnValue = nil;
+    
+    // Allow the coordinator to undo choices.
+    if (indexPath.section == RoundMenuSectionTeam)
+    {
+        if ([self isCoordinator] && ![self hasVoted])
+        {
+            CandidatePickerMenuItems *items = [[CandidatePickerMenuItems alloc] init];
+            self.candidatePickerMenuItems = items;
+            [items release];
+            returnValue = self.candidatePickerMenuItems;
+        }
+    }
+    
     if (indexPath.section == RoundMenuSectionCommand)
     {
         if ([self hasVoted])
@@ -708,6 +730,15 @@
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCellAccessoryType returnValue = UITableViewCellAccessoryNone;
+    
+    if (indexPath.section == RoundMenuSectionTeam)
+    {
+        if ([self isCoordinator] && ![self hasVoted])
+        {
+            returnValue = UITableViewCellAccessoryDisclosureIndicator;
+        }
+    }
+    
     if (indexPath.section == RoundMenuSectionCommand)
     {
         if ([self isCoordinator] && ![self isReadyForVote])

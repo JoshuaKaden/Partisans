@@ -345,10 +345,10 @@
         }
         else if (self.players.count >= kPartisansMinPlayers)
         {
-            label = NSLocalizedString(@"Good to go", @"Good to go  --  label");
+            NSString *suffix = NSLocalizedString(@"players", @"players  --  label suffix");
+            label = [NSString stringWithFormat:@"%@ %@", [[SystemMessage spellOutInteger:self.players.count] capitalizedString], suffix];
         }
         
-        //NSLocalizedString(@"Players", @"Players  --  label")
         [cell setProgressLabelText:label];
         
         [cell setIsDual:YES];

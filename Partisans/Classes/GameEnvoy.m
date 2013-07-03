@@ -561,6 +561,10 @@
 
 - (BOOL)isPlayerAnOperative:(PlayerEnvoy *)playerEnvoy
 {
+    if (!playerEnvoy)
+    {
+        playerEnvoy = [SystemMessage playerEnvoy];
+    }
     BOOL returnValue = NO;
     for (GamePlayerEnvoy *gamePlayerEnvoy in self.gamePlayerEnvoys)
     {
