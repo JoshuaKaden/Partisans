@@ -13,6 +13,7 @@
 #import "ImageEnvoy.h"
 #import "OperativeAlertMenuItems.h"
 #import "PlayerEnvoy.h"
+#import "RoundEnvoy.h"
 #import "RoundMenuItems.h"
 #import "PlayerViewController.h"
 #import "PlayGameMenuItems.h"
@@ -58,7 +59,7 @@
             PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
-            if (gamePlayerEnvoy.hasAlertBeenShown)
+            if (gamePlayerEnvoy.hasAlertBeenShown || [gameEnvoy currentRound].roundNumber > 1 || [gameEnvoy currentRound].candidates.count > 0)
             {
                 RoundMenuItems *items = [[RoundMenuItems alloc] init];
                 [vc setMenuItems:items];

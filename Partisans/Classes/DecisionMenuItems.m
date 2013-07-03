@@ -16,11 +16,7 @@
 
 @interface DecisionMenuItems ()
 
-- (BOOL)isVotingComplete;
-- (BOOL)didPass;
-- (NSUInteger)votesCast;
-- (NSUInteger)yeaVotes;
-- (NSUInteger)nayVotes;
+@property (nonatomic, strong) RoundEnvoy *currentRound;
 - (void)gameChanged:(NSNotification *)notification;
 
 @end
@@ -28,74 +24,30 @@
 
 @implementation DecisionMenuItems
 
+@synthesize currentRound = m_currentRound;
+
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+    [m_currentRound release];
     [super dealloc];
-}
-
-
-- (BOOL)isVotingComplete
-{
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    RoundEnvoy *roundEnvoy = [gameEnvoy currentRound];
-    if (roundEnvoy.votes.count == gameEnvoy.numberOfPlayers)
-    {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
-}
-
-- (BOOL)didPass
-{
-    if (![self isVotingComplete])
-    {
-        return NO;
-    }
-    NSUInteger playerCount = [SystemMessage gameEnvoy].numberOfPlayers;
-    double majority = ((double)playerCount / (double)2.0) + (double)1.0;
-    if ([self yeaVotes] >= majority)
-    {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
-}
-
-- (NSUInteger)votesCast
-{
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    RoundEnvoy *roundEnvoy = [gameEnvoy currentRound];
-    NSArray *cast = [roundEnvoy.votes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isCast == YES"]];
-    return cast.count;
-}
-
-- (NSUInteger)yeaVotes
-{
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    RoundEnvoy *roundEnvoy = [gameEnvoy currentRound];
-    NSArray *yeas = [roundEnvoy.votes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isYea == YES"]];
-    return yeas.count;
-}
-
-- (NSUInteger)nayVotes
-{
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    RoundEnvoy *roundEnvoy = [gameEnvoy currentRound];
-    NSArray *nays = [roundEnvoy.votes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isYea == NO"]];
-    return nays.count;
 }
 
 
 - (void)gameChanged:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
+}
+
+
+- (RoundEnvoy *)currentRound
+{
+    if (!m_currentRound)
+    {
+        self.currentRound = [[SystemMessage gameEnvoy] currentRound];
+    }
+    return m_currentRound;
 }
 
 
@@ -110,6 +62,7 @@
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
 {
+    self.currentRound = nil;
     [SystemMessage requestGameUpdate];
 }
 
@@ -141,7 +94,7 @@
             returnValue = 1;
             break;
         case DecisionMenuSectionVotes:
-            if ([self isVotingComplete])
+            if ([[self currentRound] isVotingComplete])
             {
                 returnValue = 3;
             }
@@ -198,24 +151,29 @@
     
     
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+    RoundEnvoy *roundEnvoy = [self currentRound];
 
     NSUInteger playerCount = [SystemMessage gameEnvoy].numberOfPlayers;
-    NSUInteger votesCast = [self votesCast];
-    NSUInteger yeaVotes = [self yeaVotes];
-    NSUInteger nayVotes = [self nayVotes];
+    NSUInteger votesCast = [roundEnvoy votesCast];
+    NSUInteger yeaVotes = [roundEnvoy yeaVotes];
+    NSUInteger nayVotes = [roundEnvoy nayVotes];
     
+    // The dual progress bar shows the number of required votes to tip the balance.
+    // For the nays, this could be different since a tie means the nays win.
+    double dualYea = (double)[roundEnvoy yeaMajority] / (double)playerCount;
+    double dualNay = (double)[roundEnvoy nayMajority] / (double)playerCount;
     
     NSString *cellPrefix = nil;
     NSString *cellSuffix = nil;
     double progress = 0.0;
-    double majority = ((playerCount / 2) + 1) / playerCount;
-    double dualProgress = majority;
+    double dualProgress = 0.0;
+    
     UIColor *progressColor = playerEnvoy.favoriteColor;
     DecisionMenuVotesRow menuRow = (DecisionMenuVotesRow)indexPath.row;
     switch (menuRow)
     {
         case DecisionMenuVotesRowTotal:
-            cellPrefix = [[SystemMessage spellOutInteger:[self votesCast]] capitalizedString];
+            cellPrefix = [[SystemMessage spellOutInteger:votesCast] capitalizedString];
             if (votesCast == 1)
             {
                 cellSuffix = NSLocalizedString(@"vote cast", @"vote cast  --  label suffix");
@@ -228,7 +186,7 @@
             [cell setIsDual:NO];
             break;
         case DecisionMenuVotesRowYea:
-            cellPrefix = [[SystemMessage spellOutInteger:[self yeaVotes]] capitalizedString];
+            cellPrefix = [[SystemMessage spellOutInteger:yeaVotes] capitalizedString];
             if (yeaVotes == 1)
             {
                 cellSuffix = NSLocalizedString(@"yea vote", @"yea vote  --  label suffix");
@@ -238,11 +196,12 @@
                 cellSuffix = NSLocalizedString(@"yea votes", @"yea votes  --  label suffix");
             }
             progress = (double)yeaVotes / (double)playerCount;
-            [cell setIsDual:NO];
+            dualProgress = dualYea;
+            [cell setIsDual:YES];
             progressColor = [UIColor blueColor];
             break;
         case DecisionMenuVotesRowNay:
-            cellPrefix = [[SystemMessage spellOutInteger:[self nayVotes]] capitalizedString];
+            cellPrefix = [[SystemMessage spellOutInteger:nayVotes] capitalizedString];
             if (nayVotes == 1)
             {
                 cellSuffix = NSLocalizedString(@"nay vote", @"nay vote  --  label suffix");
@@ -252,8 +211,8 @@
                 cellSuffix = NSLocalizedString(@"nay votes", @"nay votes  --  label suffix");
             }
             progress = (double)nayVotes / (double)playerCount;
-            dualProgress = (playerCount / 2) / playerCount;
-            [cell setIsDual:NO];
+            dualProgress = dualNay;
+            [cell setIsDual:YES];
             progressColor = [UIColor redColor];
             break;
         case DecisionMenuVotesRow_MaxValue:
@@ -298,10 +257,12 @@
         return nil;
     }
     
+    RoundEnvoy *roundEnvoy = self.currentRound;
+    
     NSString *returnValue = nil;
-    if ([self isVotingComplete])
+    if ([roundEnvoy isVotingComplete])
     {
-        if ([self didPass])
+        if ([roundEnvoy voteDidPass])
         {
             returnValue = NSLocalizedString(@"The yeas have it!", @"The yeas have it!  --  label");
         }
@@ -324,10 +285,12 @@
         return nil;
     }
     
+    RoundEnvoy *roundEnvoy = self.currentRound;
+    
     NSString *returnValue = nil;
-    if ([self isVotingComplete])
+    if ([roundEnvoy isVotingComplete])
     {
-        if ([self didPass])
+        if ([roundEnvoy voteDidPass])
         {
             returnValue = NSLocalizedString(@"Tap to start the mission.", @"Tap to start the mission.  --  label");
         }
@@ -351,7 +314,7 @@
 
 - (BOOL)menuViewControllerHidesBackButton:(JSKMenuViewController *)menuViewController
 {
-    return YES;
+    return NO;
 }
 
 - (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController

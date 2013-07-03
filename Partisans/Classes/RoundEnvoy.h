@@ -32,6 +32,14 @@
 
 - (NSArray *)votes;
 - (void)addVote:(VoteEnvoy *)voteEnvoy;
+- (BOOL)isVotingComplete;
+- (BOOL)voteDidPass;
+- (NSUInteger)yeaMajority;
+- (NSUInteger)nayMajority;
+- (NSUInteger)votesCast;
+- (NSUInteger)yeaVotes;
+- (NSUInteger)nayVotes;
+
 
 + (RoundEnvoy *)envoyFromManagedObject:(Round *)managedObject;
 

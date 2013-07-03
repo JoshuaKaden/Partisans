@@ -46,6 +46,7 @@
 - (BOOL)isVotingComplete;
 - (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController;
 - (void)gameChanged:(NSNotification *)notification;
+- (BOOL)hasVoted;
 
 @end
 
@@ -166,6 +167,21 @@
     {
         return NO;
     }
+}
+
+- (BOOL)hasVoted
+{
+    BOOL returnValue = NO;
+    PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+    for (VoteEnvoy *voteEnvoy in self.currentRound.votes)
+    {
+        if ([voteEnvoy.playerID isEqualToString:playerEnvoy.intramuralID])
+        {
+            returnValue = YES;
+            break;
+        }
+    }
+    return returnValue;
 }
 
 
@@ -345,27 +361,23 @@
 
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
-    if ([self isVotingComplete])
-    {
-        [self goToDecisionScreen:menuViewController];
-    }
-    else
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
-    }
+    [SystemMessage putPlayerOnline];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
 }
 
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
 {
-    if ([self isVotingComplete])
-    {
-        [self goToDecisionScreen:menuViewController];
-    }
-    else
-    {
+    // Force a reload of our local references.
+    self.gameEnvoy = nil;
+//    if ([self isVotingComplete] || [self hasVoted])
+//    {
+//        [self goToDecisionScreen:menuViewController];
+//    }
+//    else
+//    {
         [SystemMessage requestGameUpdate];
-    }
+//    }
 }
 
 
@@ -373,7 +385,12 @@
 {
     if (indexPath.section == RoundMenuSectionCommand)
     {
-        if ([self isReadyForVote])
+        if ([self hasVoted])
+        {
+//            [self goToDecisionScreen:menuViewController];
+            return;
+        }
+        else if ([self isReadyForVote])
         {
             // Voting.
             BOOL vote = YES;
@@ -385,7 +402,7 @@
             if ([SystemMessage isHost])
             {
                 [self voteLocally:vote];
-                [self goToDecisionScreen:menuViewController];
+//                [self goToDecisionScreen:menuViewController];
                 return;
             }
             
@@ -448,7 +465,12 @@
             break;
             
         case RoundMenuSectionCommand:
-            if ([self isReadyForVote])
+            if ([self hasVoted])
+            {
+                // Let the user navigate to the Decision screen.
+                returnValue = 1;
+            }
+            else if ([self isReadyForVote])
             {
                 // Two possible votes: YES and NO.
                 returnValue = 2;
@@ -494,7 +516,15 @@
             }
             break;
         case RoundMenuSectionCommand:
-            if ([self isReadyForVote])
+            if ([self isVotingComplete])
+            {
+                returnValue = NSLocalizedString(@"Voting Complete", @"Voting Complete  --  title");
+            }
+            else if ([self hasVoted])
+            {
+                returnValue = NSLocalizedString(@"Voting in Progress", @"Voting in Progress  --  title");
+            }
+            else if ([self isReadyForVote])
             {
                 returnValue = NSLocalizedString(@"Ready for Vote", @"Ready for Vote  --  title");
             }
@@ -559,7 +589,15 @@
         }
         
         case RoundMenuSectionCommand:
-            if ([self isReadyForVote])
+            if ([self isVotingComplete])
+            {
+                returnValue = NSLocalizedString(@"Decision", @"Decision  --  label");
+            }
+            else if ([self hasVoted])
+            {
+                returnValue = NSLocalizedString(@"Decision", @"Decision  --  label");
+            }
+            else if ([self isReadyForVote])
             {
                 if (indexPath.row == 0)
                 {
@@ -625,7 +663,31 @@
 
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    Class returnValue = nil;
+    if (indexPath.section == RoundMenuSectionCommand)
+    {
+        if ([self hasVoted])
+        {
+            returnValue = [JSKMenuViewController class];
+        }
+    }
+    return returnValue;
+}
+
+- (id)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerDelegateAtIndexPath:(NSIndexPath *)indexPath
+{
+    id returnValue = nil;
+    if (indexPath.section == RoundMenuSectionCommand)
+    {
+        if ([self hasVoted])
+        {
+            DecisionMenuItems *items = [[DecisionMenuItems alloc] init];
+            self.decisionMenuItems = items;
+            [items release];
+            returnValue = self.decisionMenuItems;
+        }
+    }
+    return returnValue;
 }
 
 - (BOOL)menuViewControllerHidesBackButton:(JSKMenuViewController *)menuViewController
@@ -648,12 +710,13 @@
     UITableViewCellAccessoryType returnValue = UITableViewCellAccessoryNone;
     if (indexPath.section == RoundMenuSectionCommand)
     {
-        if (![self isReadyForVote])
+        if ([self isCoordinator] && ![self isReadyForVote])
         {
-            if ([self isCoordinator])
-            {
-                returnValue = UITableViewCellAccessoryDisclosureIndicator;
-            }
+            returnValue = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if ([self hasVoted])
+        {
+            returnValue = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
     return returnValue;

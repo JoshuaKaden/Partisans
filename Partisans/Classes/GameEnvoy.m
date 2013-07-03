@@ -1033,6 +1033,7 @@
         {
             // This will create the Round row.
             round = [NSEntityDescription insertNewObjectForEntityForName:@"Round" inManagedObjectContext:context];
+            round.intramuralID = envoy.intramuralID;
             // This will associate the new row with the envoy, via the NSManagedObjectID.
             NSError *error = nil;
             [context obtainPermanentIDsForObjects:[NSArray arrayWithObject:round] error:&error];

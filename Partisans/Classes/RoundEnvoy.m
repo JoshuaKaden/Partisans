@@ -165,6 +165,108 @@
 }
 
 
+- (NSUInteger)votesCast
+{
+    NSArray *cast = [self.votes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isCast == YES"]];
+    return cast.count;
+}
+
+- (NSUInteger)yeaVotes
+{
+    NSArray *yeas = [self.votes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isYea == YES"]];
+    return yeas.count;
+}
+
+- (NSUInteger)nayVotes
+{
+    NSArray *nays = [self.votes filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isYea == NO"]];
+    return nays.count;
+}
+
+
+- (BOOL)isVotingComplete
+{
+    NSUInteger playerCount = [SystemMessage gameEnvoy].numberOfPlayers;
+    if (self.votes.count == playerCount)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+
+- (BOOL)voteDidPass
+{
+    NSUInteger majority = [self yeaMajority];
+    if ([self yeaVotes] >= majority)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+
+- (NSUInteger)yeaMajority
+{
+    NSUInteger playerCount = [SystemMessage gameEnvoy].numberOfPlayers;
+    NSUInteger majority = 3;
+    switch (playerCount)
+    {
+        case 6:
+            majority = 4;
+            break;
+        case 7:
+            majority = 4;
+            break;
+        case 8:
+            majority = 5;
+            break;
+        case 9:
+            majority = 5;
+            break;
+        case 10:
+            majority = 6;
+            break;
+        default:
+            break;
+    }
+    return majority;
+}
+
+- (NSUInteger)nayMajority
+{
+    NSUInteger playerCount = [SystemMessage gameEnvoy].numberOfPlayers;
+    NSUInteger majority = 3;
+    switch (playerCount)
+    {
+        case 6:
+            majority = 3;
+            break;
+        case 7:
+            majority = 4;
+            break;
+        case 8:
+            majority = 4;
+            break;
+        case 9:
+            majority = 5;
+            break;
+        case 10:
+            majority = 5;
+            break;
+        default:
+            break;
+    }
+    return majority;
+}
+
+
 
 #pragma mark - Overrides
 
