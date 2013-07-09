@@ -101,6 +101,10 @@
             name = @"Acknowledge";
             break;
             
+        case JSKCommandMessageTypeFail:
+            name = @"Fail";
+            break;
+            
         case JSKCommandMessageTypeDidFinish:
             name = @"DidFinish";
             break;
@@ -149,6 +153,10 @@
             name = @"Stop";
             break;
 
+        case JSKCommandMessageTypeSucceed:
+            name = @"Succeed";
+            break;
+            
         case JSKCommandMessageTypeUnknown:
             name = @"Unknown";
             break;

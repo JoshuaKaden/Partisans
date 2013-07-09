@@ -57,15 +57,23 @@
 
 
 
-- (void)updateWaitOverlayText:(NSString *)text {
-    
-    [NSThread detachNewThreadSelector:@selector(updateWaitOverlayTextInDueTime:) toTarget:self withObject:text];
+- (void)updateWaitOverlayText:(NSString *)text
+{
+    dispatch_async(dispatch_get_main_queue(), ^(void)
+    {
+        self.loadingLabel.text = text;
+    });
+//    
+//    [NSThread detachNewThreadSelector:@selector(updateWaitOverlayTextInDueTime:) toTarget:self withObject:text];
 }
 
 
-- (void)updateWaitOverlayTextInDueTime:(NSString *)text {
-    
-    self.loadingLabel.text = text;
+- (void)updateWaitOverlayTextInDueTime:(NSString *)text
+{
+//    dispatch_async(dispatch_get_main_queue(), ^(void)
+//    {
+//        self.loadingLabel.text = text;
+//    });
 }
 
 

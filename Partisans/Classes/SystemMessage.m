@@ -18,6 +18,7 @@
 #import "JSKCommandMessage.h"
 #import "JSKCommandParcel.h"
 #import "JSKDataMiner.h"
+#import "MissionEnvoy.h"
 #import "NetHost.h"
 #import "NetPlayer.h"
 #import "NSManagedObjectContext+FetchAdditions.h"
@@ -70,6 +71,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (void)handleJoinGameStash:(NSString *)fromPeerID;
 - (void)handleCoordinatorVote:(JSKCommandParcel *)parcel;
 - (void)handleVote:(JSKCommandParcel *)parcel;
+- (void)handlePerformMissionMessage:(JSKCommandMessage *)message;
 - (void)handleHostAcknowledgement:(JSKCommandMessage *)message;
 - (void)addPlayerToGame:(PlayerEnvoy *)playerEnvoy responseKey:(NSString *)responseKey;
 - (void)askToJoinGame:(NSString *)toPeerID;
@@ -323,6 +325,41 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             [self.netHost sendCommandMessage:message];
             [message release];
             [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+        });
+    }];
+    NSOperationQueue *queue = [SystemMessage mainQueue];
+    [queue addOperation:op];
+    [op release];
+}
+
+
+- (void)handlePerformMissionMessage:(JSKCommandMessage *)message
+{
+    MissionEnvoy *missionEnvoy = [self.gameEnvoy currentMission];
+    PlayerEnvoy *from = [PlayerEnvoy envoyFromPeerID:message.from];
+    if (message.commandMessageType == JSKCommandMessageTypeSucceed)
+    {
+        [missionEnvoy applyContributeur:from];
+    }
+    else if (message.commandMessageType == JSKCommandMessageTypeFail)
+    {
+        [missionEnvoy applySaboteur:from];
+    }
+    else
+    {
+        // Unexpected message type.
+        debugLog(@"Unexpected message type");
+        return;
+    }
+    UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:self.gameEnvoy];
+    [op setCompletionBlock:^(void) {
+        dispatch_async(dispatch_get_main_queue(), ^(void)
+        {
+           JSKCommandMessage *response = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:message.from from:self.playerEnvoy.peerID];
+           response.responseKey = message.responseKey;
+           [self.netHost sendCommandMessage:response];
+           [response release];
+           [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
@@ -873,6 +910,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         case JSKCommandMessageTypeLeaveGame:
             [self handleLeaveGameMessage:commandMessage];
             break;
+            
+        case JSKCommandMessageTypeSucceed:
+        case JSKCommandMessageTypeFail:
+            [self handlePerformMissionMessage:commandMessage];
+            break;
+            
         default:
             break;
     }

@@ -11,6 +11,9 @@
 #import "GameEnvoy.h"
 #import "GamePlayerEnvoy.h"
 #import "ImageEnvoy.h"
+#import "MissionEnvoy.h"
+#import "MissionStatusMenuItems.h"
+#import "MissionViewController.h"
 #import "OperativeAlertMenuItems.h"
 #import "PlayerEnvoy.h"
 #import "RoundEnvoy.h"
@@ -24,6 +27,7 @@
 
 @interface MainMenuItems ()
 
+@property (nonatomic, strong) MissionStatusMenuItems *missionStatusMenuItems;
 @property (nonatomic, strong) PlayGameMenuItems *playGameMenuItems;
 @property (nonatomic, strong) SetupGameMenuItems *setupGameMenuItems;
 @property (nonatomic, strong) ToolsMenuItems *toolsMenuItems;
@@ -33,6 +37,7 @@
 
 @implementation MainMenuItems
 
+@synthesize missionStatusMenuItems = m_missionStatusMenuItems;
 @synthesize playGameMenuItems = m_playGameMenuItems;
 @synthesize setupGameMenuItems = m_setupGameMenuItems;
 @synthesize toolsMenuItems = m_toolsMenuItems;
@@ -40,6 +45,7 @@
 
 - (void)dealloc
 {
+    [m_missionStatusMenuItems release];
     [m_playGameMenuItems release];
     [m_setupGameMenuItems release];
     [m_toolsMenuItems release];
@@ -59,6 +65,25 @@
             PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
+            MissionEnvoy *missionEnvoy = [gameEnvoy currentMission];
+            
+            if (missionEnvoy.hasStarted)
+            {
+                if (([missionEnvoy isPlayerOnTeam:playerEnvoy]) && (![missionEnvoy hasPlayerPerformed:playerEnvoy]))
+                {
+                    MissionViewController *realVC = [[MissionViewController alloc] init];
+                    [menuViewController invokePush:YES viewController:vc];
+                    [realVC release];
+                }
+                else
+                {
+                    MissionStatusMenuItems *items = [[MissionStatusMenuItems alloc] init];
+                    self.missionStatusMenuItems = items;
+                    [vc setMenuItems:items];
+                    [items release];
+                }
+            }
+            
             if (gamePlayerEnvoy.hasAlertBeenShown || [gameEnvoy currentRound].roundNumber > 1 || [gameEnvoy currentRound].candidates.count > 0)
             {
                 RoundMenuItems *items = [[RoundMenuItems alloc] init];
@@ -80,7 +105,10 @@
             [vc setMenuItems:items];
             [items release];
         }
-        [menuViewController invokePush:YES viewController:vc];
+        if (vc.menuItems)
+        {
+            [menuViewController invokePush:YES viewController:vc];
+        }
         [vc release];
     }
 }

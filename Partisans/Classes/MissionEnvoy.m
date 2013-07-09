@@ -9,21 +9,45 @@
 #import "MissionEnvoy.h"
 
 #import "Game.h"
+#import "GamePlayer.h"
 #import "JSKDataMiner.h"
 #import "Mission.h"
 #import "NSManagedObjectContext+FetchAdditions.h"
+#import "Player.h"
+#import "PlayerEnvoy.h"
+
+
+@interface MissionEnvoy ()
+
+@property (nonatomic, strong) NSString *coordinatorID;
+@property (nonatomic, strong) NSArray *teamMemberIDs;
+@property (nonatomic, strong) NSArray *saboteurIDs;
+@property (nonatomic, strong) NSArray *contributeurIDs;
+
+- (void)loadCoordinator;
+- (void)loadTeamMemberIDs;
+- (void)loadSaboteurIDs;
+- (void)loadContributeurIDs;
+
+@end
 
 
 @implementation MissionEnvoy
 
 @synthesize managedObjectID = m_managedObjectID;
 @synthesize intramuralID = m_intramuralID;
+@synthesize hasStarted = m_hasStarted;
 @synthesize didSucceed = m_didSucceed;
 @synthesize isComplete = m_isComplete;
 @synthesize missionName = m_missionName;
 @synthesize missionNumber = m_missionNumber;
 @synthesize teamCount = m_teamCount;
 @synthesize gameID = m_gameID;
+@synthesize coordinator = m_coordinator;
+@synthesize coordinatorID = m_coordinatorID;
+@synthesize teamMemberIDs = m_teamMemberIDs;
+@synthesize saboteurIDs = m_saboteurIDs;
+@synthesize contributeurIDs = m_contributeurIDs;
 
 - (void)dealloc
 {
@@ -31,6 +55,11 @@
     [m_intramuralID release];
     [m_missionName release];
     [m_gameID release];
+    [m_coordinator release];
+    [m_coordinatorID release];
+    [m_teamMemberIDs release];
+    [m_saboteurIDs release];
+    [m_contributeurIDs release];
     
     [super dealloc];
 }
@@ -43,12 +72,18 @@
     {
         self.managedObjectID = managedObject.objectID;
         self.intramuralID    = [[self.managedObjectID URIRepresentation] absoluteString];
+        self.hasStarted      = [managedObject.hasStarted boolValue];
         self.didSucceed      = [managedObject.didSucceed boolValue];
         self.isComplete      = [managedObject.isComplete boolValue];
         self.missionName     = managedObject.missionName;
         self.missionNumber   = [managedObject.missionNumber unsignedIntegerValue];
         self.teamCount       = [managedObject.teamCount unsignedIntegerValue];
         self.gameID          = managedObject.game.intramuralID;
+        
+        [self loadCoordinator];
+        [self loadTeamMemberIDs];
+        [self loadSaboteurIDs];
+        [self loadContributeurIDs];
     }
     return self;
 }
@@ -88,18 +123,254 @@
         gameIDString = @"";
     }
     
+    NSString *coordinatorIDString = self.coordinatorID;
+    if (!coordinatorIDString)
+    {
+        coordinatorIDString = @"";
+    }
+    
     NSDictionary *descDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               @"MissionEnvoy", @"Class",
                               intramuralIDString, @"intramuralID",
                               managedObjectString, @"managedObjectID",
+                              [NSNumber numberWithBool:self.hasStarted].description, @"hasStarted",
                               [NSNumber numberWithBool:self.didSucceed].description, @"didSucceed",
                               [NSNumber numberWithBool:self.isComplete].description, @"isComplete",
                               missionNameString, @"missionName",
                               [NSNumber numberWithUnsignedInteger:self.missionNumber].description, @"missionNumber",
                               [NSNumber numberWithUnsignedInteger:self.teamCount].description, @"teamCount",
-                              gameIDString, @"gameID", nil];
+                              gameIDString, @"gameID",
+                              coordinatorIDString, @"coordinatorID",
+                              self.teamMemberIDs, @"teamMemberIDs",
+                              self.saboteurIDs, @"saboteurIDs",
+                              self.contributeurIDs, @"contributeurIDs", nil];
     return descDict.description;
 }
+
+
+- (void)loadCoordinator
+{
+    if (!self.managedObjectID)
+    {
+        return;
+    }
+    NSManagedObjectContext *context = [JSKDataMiner sharedInstance].mainObjectContext;
+    Mission *mission = (Mission *)[context objectWithID:self.managedObjectID];
+    if (mission.coordinator)
+    {
+        self.coordinator = [PlayerEnvoy envoyFromManagedObject:mission.coordinator.player];
+        self.coordinatorID = self.coordinator.intramuralID;
+    }
+}
+
+- (NSString *)coordinatorID
+{
+    if (!m_coordinatorID)
+    {
+        if (self.coordinator)
+        {
+            self.coordinatorID = self.coordinator.intramuralID;
+        }
+    }
+    return m_coordinatorID;
+}
+
+
+#pragma mark - Team Members
+
+- (void)applyTeamMembers:(NSArray *)teamMembers
+{
+    self.teamMemberIDs = [teamMembers valueForKey:@"intramuralID"];
+}
+
+- (NSArray *)teamMembers
+{
+    if (!self.teamMemberIDs)
+    {
+        [self loadTeamMemberIDs];
+    }
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:self.teamMemberIDs.count];
+    for (NSString *intramuralID in self.teamMemberIDs)
+    {
+        [list addObject:[PlayerEnvoy envoyFromIntramuralID:intramuralID]];
+    }
+    NSArray *returnValue = [NSArray arrayWithArray:list];
+    [list release];
+    return returnValue;
+}
+
+- (void)loadTeamMemberIDs
+{
+    if (!self.managedObjectID)
+    {
+        return;
+    }
+    NSManagedObjectContext *context = [JSKDataMiner sharedInstance].mainObjectContext;
+    Mission *mission = (Mission *)[context objectWithID:self.managedObjectID];
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:mission.teamMembers.count];
+    for (GamePlayer *gamePlayer in mission.teamMembers)
+    {
+        [list addObject:gamePlayer.player.intramuralID];
+    }
+    self.teamMemberIDs = [NSArray arrayWithArray:list];
+    [list release];
+}
+
+- (BOOL)isPlayerOnTeam:(PlayerEnvoy *)playerEnvoy
+{
+    BOOL returnValue = NO;
+    if (!self.teamMemberIDs)
+    {
+        [self loadTeamMemberIDs];
+    }
+    for (NSString *intramuralID in self.teamMemberIDs)
+    {
+        if ([intramuralID isEqualToString:playerEnvoy.intramuralID])
+        {
+            returnValue = YES;
+            break;
+        }
+    }
+    return returnValue;
+}
+
+- (BOOL)hasPlayerPerformed:(PlayerEnvoy *)playerEnvoy
+{
+    BOOL returnValue = NO;
+    if (!self.saboteurIDs)
+    {
+        [self loadSaboteurIDs];
+    }
+    for (NSString *intramuralID in self.saboteurIDs)
+    {
+        if ([intramuralID isEqualToString:playerEnvoy.intramuralID])
+        {
+            returnValue = YES;
+            break;
+        }
+    }
+    if (!returnValue)
+    {
+        for (NSString *intramuralID in self.contributeurIDs)
+        {
+            if ([intramuralID isEqualToString:playerEnvoy.intramuralID])
+            {
+                returnValue = YES;
+                break;
+            }
+        }
+    }
+    return returnValue;
+}
+
+
+#pragma mark - Saboteurs and Contributeurs
+
+- (void)applySaboteur:(PlayerEnvoy *)saboteur
+{
+    if (!self.saboteurIDs)
+    {
+        self.saboteurIDs = [NSArray arrayWithObject:saboteur.intramuralID];
+    }
+    else
+    {
+        for (NSString *saboteurID in self.saboteurIDs)
+        {
+            if ([saboteurID isEqualToString:saboteur.intramuralID])
+            {
+                return;
+            }
+        }
+        self.saboteurIDs = [self.saboteurIDs arrayByAddingObject:saboteur.intramuralID];
+    }
+}
+
+- (NSArray *)saboteurs
+{
+    if (!self.saboteurIDs)
+    {
+        [self loadSaboteurIDs];
+    }
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:self.saboteurIDs.count];
+    for (NSString *intramuralID in self.saboteurIDs)
+    {
+        [list addObject:[PlayerEnvoy envoyFromIntramuralID:intramuralID]];
+    }
+    NSArray *returnValue = [NSArray arrayWithArray:list];
+    [list release];
+    return returnValue;
+}
+
+- (void)loadSaboteurIDs
+{
+    if (!self.managedObjectID)
+    {
+        return;
+    }
+    NSManagedObjectContext *context = [JSKDataMiner sharedInstance].mainObjectContext;
+    Mission *mission = (Mission *)[context objectWithID:self.managedObjectID];
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:mission.saboteurs.count];
+    for (GamePlayer *gamePlayer in mission.saboteurs)
+    {
+        [list addObject:gamePlayer.player.intramuralID];
+    }
+    self.saboteurIDs = [NSArray arrayWithArray:list];
+    [list release];
+}
+
+
+- (void)applyContributeur:(PlayerEnvoy *)contributeur
+{
+    if (!self.contributeurIDs)
+    {
+        self.contributeurIDs = [NSArray arrayWithObject:contributeur.intramuralID];
+    }
+    else
+    {
+        for (NSString *contributeurID in self.contributeurIDs)
+        {
+            if ([contributeurID isEqualToString:contributeur.intramuralID])
+            {
+                return;
+            }
+        }
+        self.contributeurIDs = [self.contributeurIDs arrayByAddingObject:contributeur.intramuralID];
+    }
+}
+
+- (NSArray *)contributeurs
+{
+    if (!self.contributeurIDs)
+    {
+        [self loadContributeurIDs];
+    }
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:self.contributeurIDs.count];
+    for (NSString *intramuralID in self.contributeurIDs)
+    {
+        [list addObject:[PlayerEnvoy envoyFromIntramuralID:intramuralID]];
+    }
+    NSArray *returnValue = [NSArray arrayWithArray:list];
+    [list release];
+    return returnValue;
+}
+
+- (void)loadContributeurIDs
+{
+    if (!self.managedObjectID)
+    {
+        return;
+    }
+    NSManagedObjectContext *context = [JSKDataMiner sharedInstance].mainObjectContext;
+    Mission *mission = (Mission *)[context objectWithID:self.managedObjectID];
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:mission.contributeurs.count];
+    for (GamePlayer *gamePlayer in mission.contributeurs)
+    {
+        [list addObject:gamePlayer.player.intramuralID];
+    }
+    self.contributeurIDs = [NSArray arrayWithArray:list];
+    [list release];
+}
+
 
 
 #pragma mark - Commits
@@ -117,6 +388,16 @@
 
 - (void)commitInContext:(NSManagedObjectContext *)context
 {
+    if (self.saboteurIDs.count + self.contributeurIDs.count == self.teamCount)
+    {
+        self.isComplete = YES;
+        if (self.saboteurIDs.count == 0)
+        {
+            self.didSucceed = YES;
+        }
+    }
+    
+    
     if (!context)
     {
         context = [JSKDataMiner sharedInstance].mainObjectContext;
@@ -149,11 +430,53 @@
     
     model.intramuralID = self.intramuralID;
     
+    model.hasStarted = [NSNumber numberWithBool:self.hasStarted];
     model.didSucceed = [NSNumber numberWithBool:self.didSucceed];
     model.isComplete = [NSNumber numberWithBool:self.isComplete];
     model.missionName = self.missionName;
     model.missionNumber = [NSNumber numberWithUnsignedInteger:self.missionNumber];
     model.teamCount = [NSNumber numberWithUnsignedInteger:self.teamCount];
+    
+    
+    
+    // Coordinator.
+    if (self.coordinatorID)
+    {
+        GamePlayer *gamePlayer = [[context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", self.coordinatorID] objectAtIndex:0];
+        model.coordinator = gamePlayer;
+    }
+    
+    
+    // Team members.
+    if (self.teamMemberIDs.count == 0)
+    {
+        [model removeTeamMembers:model.teamMembers];
+    }
+    else
+    {
+        for (NSString *intramuralID in self.teamMemberIDs)
+        {
+            GamePlayer *gamePlayer = [[context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", intramuralID] objectAtIndex:0];
+            [model addTeamMembersObject:gamePlayer];
+        }
+    }
+    
+    
+    // Saboteurs.
+    for (NSString *intramuralID in self.saboteurIDs)
+    {
+        GamePlayer *gamePlayer = [[context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", intramuralID] objectAtIndex:0];
+        [model addSaboteursObject:gamePlayer];
+    }
+    
+    
+    // Contributeurs.
+    for (NSString *intramuralID in self.contributeurIDs)
+    {
+        GamePlayer *gamePlayer = [[context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", intramuralID] objectAtIndex:0];
+        [model addContributeursObject:gamePlayer];
+    }
+
     
     
     // Make sure the envoy knows the new managed object ID, if this is an add.
@@ -184,12 +507,17 @@
 {
     [aCoder encodeObject:self.intramuralID forKey:@"intramuralID"];
     
+    [aCoder encodeBool:self.hasStarted forKey:@"hasStarted"];
     [aCoder encodeBool:self.didSucceed forKey:@"didSucceed"];
     [aCoder encodeBool:self.isComplete forKey:@"isComplete"];
     [aCoder encodeObject:self.missionName forKey:@"missionName"];
     [aCoder encodeInteger:self.missionNumber forKey:@"missionNumber"];
     [aCoder encodeInteger:self.teamCount forKey:@"teamCount"];
     [aCoder encodeObject:self.gameID forKey:@"gameID"];
+    [aCoder encodeObject:self.coordinatorID forKey:@"coordinatorID"];
+    [aCoder encodeObject:self.teamMemberIDs forKey:@"teamMemberIDs"];
+    [aCoder encodeObject:self.saboteurIDs forKey:@"saboteurIDs"];
+    [aCoder encodeObject:self.contributeurIDs forKey:@"contributeurIDs"];
 }
 
 
@@ -201,12 +529,22 @@
     {
         self.intramuralID = [aDecoder decodeObjectForKey:@"intramuralID"];
         
+        self.hasStarted = [aDecoder decodeBoolForKey:@"hasStarted"];
         self.didSucceed = [aDecoder decodeBoolForKey:@"didSucceed"];
         self.isComplete = [aDecoder decodeBoolForKey:@"isComplete"];
         self.missionName = [aDecoder decodeObjectForKey:@"missionName"];
         self.missionNumber = [aDecoder decodeIntegerForKey:@"missionNumber"];
         self.teamCount = [aDecoder decodeIntegerForKey:@"teamCount"];
         self.gameID = [aDecoder decodeObjectForKey:@"gameID"];
+        self.coordinatorID = [aDecoder decodeObjectForKey:@"coordinatorID"];
+        self.teamMemberIDs = [aDecoder decodeObjectForKey:@"teamMemberIDs"];
+        self.saboteurIDs = [aDecoder decodeObjectForKey:@"saboteurIDs"];
+        self.contributeurIDs = [aDecoder decodeObjectForKey:@"contributeurIDs"];
+        
+        if (self.coordinatorID)
+        {
+            self.coordinator = [PlayerEnvoy envoyFromIntramuralID:self.coordinatorID];
+        }
     }
     
     return self;

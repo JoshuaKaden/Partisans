@@ -28,6 +28,7 @@
 - (NSArray *)generateMissionNames;
 - (PlayerEnvoy *)chooseCoordinator;
 - (NSUInteger)getNextRoundNumber;
+- (void)saveAndBroadcastGame;
 
 @end
 
@@ -51,6 +52,9 @@
     return m_gameEnvoy;
 }
 
+
+#pragma mark - Public
+
 - (void)startGame
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
@@ -61,13 +65,39 @@
     
     gameEnvoy.startDate = [NSDate date];
     
+    [self saveAndBroadcastGame];
+}
+
+- (void)startMission
+{
+    GameEnvoy *gameEnvoy = self.gameEnvoy;
+    RoundEnvoy *currentRound = [gameEnvoy currentRound];
+    MissionEnvoy *mission = [gameEnvoy currentMission];
+    
+    mission.coordinator = currentRound.coordinator;
+    [mission applyTeamMembers:[currentRound candidates]];
+    mission.hasStarted = YES;
+    
+    [self saveAndBroadcastGame];
+}
+
+- (void)startNewRound
+{
+    [self createRound];
+    [self saveAndBroadcastGame];
+}
+
+
+#pragma mark - Private
+
+- (void)saveAndBroadcastGame
+{
+    GameEnvoy *gameEnvoy = self.gameEnvoy;
     [gameEnvoy commitAndSave];
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:[SystemMessage playerEnvoy].peerID object:gameEnvoy];
     [SystemMessage sendParcelToPlayers:parcel];
     [parcel release];
 }
-
-#pragma mark - Private
 
 - (void)chooseOperatives
 {
@@ -100,7 +130,7 @@
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
     
-    // Create set of random mission names.
+    // Create set of mission names.
     NSArray *missionNames = [self generateMissionNames];
     
     // Mission One.
@@ -139,7 +169,7 @@
     [gameEnvoy addMission:missionEnvoyFour];
     [missionEnvoyFour release];
 
-    // Mission Four.
+    // Mission Five.
     missionIndex++;
     MissionEnvoy *missionEnvoyFive = [[MissionEnvoy alloc] init];
     missionEnvoyFive.missionName = [missionNames objectAtIndex:missionIndex];

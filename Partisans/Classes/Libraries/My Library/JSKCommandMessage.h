@@ -13,6 +13,7 @@ typedef enum
 {
     JSKCommandMessageTypeAcknowledge,
     JSKCommandMessageTypeDidFinish,
+    JSKCommandMessageTypeFail,
     JSKCommandMessageTypeGetDigest,
     JSKCommandMessageTypeGetInfo,
     JSKCommandMessageTypeGetLocation,
@@ -24,6 +25,7 @@ typedef enum
     JSKCommandMessageTypeResume,
     JSKCommandMessageTypeStart,
     JSKCommandMessageTypeStop,
+    JSKCommandMessageTypeSucceed,
     JSKCommandMessageTypeUnknown,
     JSKCommandMessageType_maxValue
 } JSKCommandMessageType;

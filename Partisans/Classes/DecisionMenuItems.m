@@ -8,6 +8,7 @@
 
 #import "DecisionMenuItems.h"
 
+#import "GameDirector.h"
 #import "GameEnvoy.h"
 #import "MissionViewController.h"
 #import "PlayerEnvoy.h"
@@ -20,6 +21,8 @@
 
 @property (nonatomic, strong) RoundEnvoy *currentRound;
 - (void)gameChanged:(NSNotification *)notification;
+- (void)startMission;
+- (void)startNewRound;
 
 @end
 
@@ -53,6 +56,18 @@
 }
 
 
+- (void)startMission
+{
+    GameDirector *director = [SystemMessage gameDirector];
+    [director startMission];
+}
+
+- (void)startNewRound
+{
+    GameDirector *director = [SystemMessage gameDirector];
+    [director startNewRound];
+}
+
 
 #pragma mark - Menu View Controller delegate
 
@@ -66,6 +81,33 @@
 {
     self.currentRound = nil;
     [SystemMessage requestGameUpdate];
+}
+
+- (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
+{
+    if (!(indexPath.section == DecisionMenuSectionStatus))
+    {
+        return;
+    }
+    
+    RoundEnvoy *roundEnvoy = [self currentRound];
+    
+    if ([roundEnvoy isVotingComplete])
+    {
+        if ([SystemMessage isHost])
+        {
+            if ([roundEnvoy voteDidPass])
+            {
+                [self startMission];
+                [menuViewController.navigationController popToRootViewControllerAnimated:YES];
+            }
+            else
+            {
+                [self startNewRound];
+                [menuViewController.navigationController popToRootViewControllerAnimated:YES];
+            }
+        }
+    }
 }
 
 
@@ -287,13 +329,20 @@
     NSString *returnValue = nil;
     if ([roundEnvoy isVotingComplete])
     {
-        if ([roundEnvoy voteDidPass])
+        if ([SystemMessage isHost])
         {
-            returnValue = NSLocalizedString(@"Tap to start the mission.", @"Tap to start the mission.  --  label");
+            if ([roundEnvoy voteDidPass])
+            {
+                returnValue = NSLocalizedString(@"Tap to start the mission.", @"Tap to start the mission.  --  label");
+            }
+            else
+            {
+                returnValue = NSLocalizedString(@"Tap to start a new round.", @"Tap to start a new round.  --  label");
+            }
         }
         else
         {
-            returnValue = NSLocalizedString(@"Tap to start a new round.", @"Tap to start a new round.  --  label");
+            returnValue = NSLocalizedString(@"Waiting for host...", @"Waiting for host...  --  label");
         }
     }
     return returnValue;

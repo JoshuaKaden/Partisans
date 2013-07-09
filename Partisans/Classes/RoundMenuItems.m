@@ -212,13 +212,6 @@
 
 - (void)connectAndVote:(BOOL)vote
 {
-    if ([SystemMessage isHost])
-    {
-        [self vote:vote];
-        return;
-    }
-
-    
     if (!self.overlayer)
     {
         JSKOverlayer *overlayer = [[JSKOverlayer alloc] initWithView:[SystemMessage rootView]];

@@ -19,8 +19,6 @@
 		9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
 		9351AA7A177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
 		9351AA7B177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
-		9351AA7E177E2A0C00D4C843 /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA7D177E2A0C00D4C843 /* GamePlayer.m */; };
-		9351AA7F177E2A0C00D4C843 /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA7D177E2A0C00D4C843 /* GamePlayer.m */; };
 		9351AA82177E2A0C00D4C843 /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA81177E2A0C00D4C843 /* Round.m */; };
 		9351AA83177E2A0C00D4C843 /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA81177E2A0C00D4C843 /* Round.m */; };
 		9351AA86177E2A4D00D4C843 /* VoteEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA85177E2A4D00D4C843 /* VoteEnvoy.m */; };
@@ -37,6 +35,10 @@
 		9358BFDF17747C1F00FA2DAF /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 9358BFDD17747C1F00FA2DAF /* mask.png */; };
 		9358BFE217747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */; };
 		9358BFE317747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */; };
+		935FC548178C2B1F00F0DC8E /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FC547178C2B1F00F0DC8E /* GamePlayer.m */; };
+		935FC549178C2B1F00F0DC8E /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FC547178C2B1F00F0DC8E /* GamePlayer.m */; };
+		935FC54C178C2B1F00F0DC8E /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FC54B178C2B1F00F0DC8E /* Mission.m */; };
+		935FC54D178C2B1F00F0DC8E /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FC54B178C2B1F00F0DC8E /* Mission.m */; };
 		936510931741578C00F2AD06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510921741578C00F2AD06 /* UIKit.framework */; };
 		936510951741578C00F2AD06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510941741578C00F2AD06 /* Foundation.framework */; };
 		936510971741578C00F2AD06 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510961741578C00F2AD06 /* CoreGraphics.framework */; };
@@ -126,8 +128,6 @@
 		9398A9CF177224EE00E5D31C /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9CD177224EE00E5D31C /* Game.m */; };
 		9398A9D2177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
 		9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
-		9398A9DA177224EF00E5D31C /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D9177224EF00E5D31C /* Mission.m */; };
-		9398A9DB177224EF00E5D31C /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D9177224EF00E5D31C /* Mission.m */; };
 		939F36881779FEEE00A7B766 /* RoundMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F36871779FEEE00A7B766 /* RoundMenuItems.m */; };
 		939F36891779FEEE00A7B766 /* RoundMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F36871779FEEE00A7B766 /* RoundMenuItems.m */; };
 		93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
@@ -141,6 +141,8 @@
 		93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BE21744515C00B47095 /* DossierMenuItems.m */; };
 		93C442E917511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93C442EA17511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
+		93D461C7178B72A700580E9B /* MissionStatusMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */; };
+		93D461C8178B72A700580E9B /* MissionStatusMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */; };
 		93E65480177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
 		93E65481177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
 		93F06C7D178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
@@ -226,8 +228,6 @@
 		9307B3D3177F8A41003CEC6F /* HostFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HostFinder.m; path = Classes/HostFinder.m; sourceTree = "<group>"; };
 		9351AA78177E2A0B00D4C843 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vote.h; path = Classes/Vote.h; sourceTree = "<group>"; };
 		9351AA79177E2A0B00D4C843 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vote.m; path = Classes/Vote.m; sourceTree = "<group>"; };
-		9351AA7C177E2A0C00D4C843 /* GamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayer.h; path = Classes/GamePlayer.h; sourceTree = "<group>"; };
-		9351AA7D177E2A0C00D4C843 /* GamePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayer.m; path = Classes/GamePlayer.m; sourceTree = "<group>"; };
 		9351AA80177E2A0C00D4C843 /* Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Round.h; path = Classes/Round.h; sourceTree = "<group>"; };
 		9351AA81177E2A0C00D4C843 /* Round.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Round.m; path = Classes/Round.m; sourceTree = "<group>"; };
 		9351AA84177E2A4D00D4C843 /* VoteEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoteEnvoy.h; path = Classes/VoteEnvoy.h; sourceTree = "<group>"; };
@@ -242,6 +242,10 @@
 		9358BFDD17747C1F00FA2DAF /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = Arts/mask.png; sourceTree = "<group>"; };
 		9358BFE017747E5400FA2DAF /* OperativeAlertMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OperativeAlertMenuItems.h; path = Classes/OperativeAlertMenuItems.h; sourceTree = "<group>"; };
 		9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OperativeAlertMenuItems.m; path = Classes/OperativeAlertMenuItems.m; sourceTree = "<group>"; };
+		935FC546178C2B1E00F0DC8E /* GamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayer.h; path = Classes/GamePlayer.h; sourceTree = "<group>"; };
+		935FC547178C2B1F00F0DC8E /* GamePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayer.m; path = Classes/GamePlayer.m; sourceTree = "<group>"; };
+		935FC54A178C2B1F00F0DC8E /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Classes/Mission.h; sourceTree = "<group>"; };
+		935FC54B178C2B1F00F0DC8E /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Classes/Mission.m; sourceTree = "<group>"; };
 		9365108F1741578C00F2AD06 /* Partisans.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Partisans.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		936510921741578C00F2AD06 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		936510941741578C00F2AD06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -356,8 +360,6 @@
 		9398A9CD177224EE00E5D31C /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Game.m; path = Classes/Game.m; sourceTree = "<group>"; };
 		9398A9D0177224EE00E5D31C /* Scorecard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scorecard.h; path = Classes/Scorecard.h; sourceTree = "<group>"; };
 		9398A9D1177224EF00E5D31C /* Scorecard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Scorecard.m; path = Classes/Scorecard.m; sourceTree = "<group>"; };
-		9398A9D8177224EF00E5D31C /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Classes/Mission.h; sourceTree = "<group>"; };
-		9398A9D9177224EF00E5D31C /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Classes/Mission.m; sourceTree = "<group>"; };
 		939F36861779FEEE00A7B766 /* RoundMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundMenuItems.h; path = Classes/RoundMenuItems.h; sourceTree = "<group>"; };
 		939F36871779FEEE00A7B766 /* RoundMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundMenuItems.m; path = Classes/RoundMenuItems.m; sourceTree = "<group>"; };
 		93BF3B511771CABF00B20A71 /* GameDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDirector.h; path = Classes/GameDirector.h; sourceTree = "<group>"; };
@@ -375,6 +377,8 @@
 		93C10BE21744515C00B47095 /* DossierMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierMenuItems.m; path = Classes/DossierMenuItems.m; sourceTree = "<group>"; };
 		93C442E717511B15000DEC63 /* UpdateGameOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateGameOperation.h; path = Classes/UpdateGameOperation.h; sourceTree = "<group>"; };
 		93C442E817511B15000DEC63 /* UpdateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateGameOperation.m; path = Classes/UpdateGameOperation.m; sourceTree = "<group>"; };
+		93D461C5178B72A700580E9B /* MissionStatusMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionStatusMenuItems.h; path = Classes/MissionStatusMenuItems.h; sourceTree = "<group>"; };
+		93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionStatusMenuItems.m; path = Classes/MissionStatusMenuItems.m; sourceTree = "<group>"; };
 		93E6547E177C6A95003C73C2 /* CandidatePickerMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CandidatePickerMenuItems.h; path = Classes/CandidatePickerMenuItems.h; sourceTree = "<group>"; };
 		93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CandidatePickerMenuItems.m; path = Classes/CandidatePickerMenuItems.m; sourceTree = "<group>"; };
 		93F06C7A178472B000281B6C /* MissionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionViewController.h; path = Classes/MissionViewController.h; sourceTree = "<group>"; };
@@ -479,6 +483,8 @@
 		9351AA95177E52FD00D4C843 /* Mission */ = {
 			isa = PBXGroup;
 			children = (
+				93D461C5178B72A700580E9B /* MissionStatusMenuItems.h */,
+				93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */,
 				93F06C7A178472B000281B6C /* MissionViewController.h */,
 				93F06C7B178472B000281B6C /* MissionViewController.m */,
 				93F06C7C178472B000281B6C /* MissionViewController.xib */,
@@ -748,12 +754,12 @@
 			children = (
 				9398A9CC177224EE00E5D31C /* Game.h */,
 				9398A9CD177224EE00E5D31C /* Game.m */,
-				9351AA7C177E2A0C00D4C843 /* GamePlayer.h */,
-				9351AA7D177E2A0C00D4C843 /* GamePlayer.m */,
+				935FC546178C2B1E00F0DC8E /* GamePlayer.h */,
+				935FC547178C2B1F00F0DC8E /* GamePlayer.m */,
 				9398A9C4177224EE00E5D31C /* Image.h */,
 				9398A9C5177224EE00E5D31C /* Image.m */,
-				9398A9D8177224EF00E5D31C /* Mission.h */,
-				9398A9D9177224EF00E5D31C /* Mission.m */,
+				935FC54A178C2B1F00F0DC8E /* Mission.h */,
+				935FC54B178C2B1F00F0DC8E /* Mission.m */,
 				9398A9C8177224EE00E5D31C /* Player.h */,
 				9398A9C9177224EE00E5D31C /* Player.m */,
 				9351AA80177E2A0C00D4C843 /* Round.h */,
@@ -1042,13 +1048,11 @@
 				9398A9CA177224EE00E5D31C /* Player.m in Sources */,
 				9398A9CE177224EE00E5D31C /* Game.m in Sources */,
 				9398A9D2177224EF00E5D31C /* Scorecard.m in Sources */,
-				9398A9DA177224EF00E5D31C /* Mission.m in Sources */,
 				939697E717732A110013B125 /* RoundEnvoy.m in Sources */,
 				9358BFE217747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
 				939F36881779FEEE00A7B766 /* RoundMenuItems.m in Sources */,
 				93E65480177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */,
 				9351AA7A177E2A0B00D4C843 /* Vote.m in Sources */,
-				9351AA7E177E2A0C00D4C843 /* GamePlayer.m in Sources */,
 				9351AA82177E2A0C00D4C843 /* Round.m in Sources */,
 				9351AA86177E2A4D00D4C843 /* VoteEnvoy.m in Sources */,
 				9351AA8A177E48CD00D4C843 /* CoordinatorVote.m in Sources */,
@@ -1057,6 +1061,9 @@
 				9307B3D4177F8A41003CEC6F /* HostFinder.m in Sources */,
 				93FFD18E17835F6600ADCB44 /* OverlayTesterViewController.m in Sources */,
 				93F06C7D178472B000281B6C /* MissionViewController.m in Sources */,
+				93D461C7178B72A700580E9B /* MissionStatusMenuItems.m in Sources */,
+				935FC548178C2B1F00F0DC8E /* GamePlayer.m in Sources */,
+				935FC54C178C2B1F00F0DC8E /* Mission.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,13 +1127,11 @@
 				9398A9CB177224EE00E5D31C /* Player.m in Sources */,
 				9398A9CF177224EE00E5D31C /* Game.m in Sources */,
 				9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */,
-				9398A9DB177224EF00E5D31C /* Mission.m in Sources */,
 				939697E817732A110013B125 /* RoundEnvoy.m in Sources */,
 				9358BFE317747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
 				939F36891779FEEE00A7B766 /* RoundMenuItems.m in Sources */,
 				93E65481177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */,
 				9351AA7B177E2A0B00D4C843 /* Vote.m in Sources */,
-				9351AA7F177E2A0C00D4C843 /* GamePlayer.m in Sources */,
 				9351AA83177E2A0C00D4C843 /* Round.m in Sources */,
 				9351AA87177E2A4D00D4C843 /* VoteEnvoy.m in Sources */,
 				9351AA8B177E48CD00D4C843 /* CoordinatorVote.m in Sources */,
@@ -1135,6 +1140,9 @@
 				9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */,
 				93FFD18F17835F6600ADCB44 /* OverlayTesterViewController.m in Sources */,
 				93F06C7E178472B000281B6C /* MissionViewController.m in Sources */,
+				93D461C8178B72A700580E9B /* MissionStatusMenuItems.m in Sources */,
+				935FC549178C2B1F00F0DC8E /* GamePlayer.m in Sources */,
+				935FC54D178C2B1F00F0DC8E /* Mission.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

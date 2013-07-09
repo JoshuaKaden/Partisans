@@ -16,10 +16,13 @@
         <attribute name="isHost" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isOperative" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="candidateForRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="missionCandidates" inverseEntity="Round" syncable="YES"/>
+        <relationship name="contributed" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="contributeurs" inverseEntity="Mission" syncable="YES"/>
+        <relationship name="coordinated" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="coordinator" inverseEntity="Mission" syncable="YES"/>
         <relationship name="game" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="gamePlayers" inverseEntity="Game" syncable="YES"/>
         <relationship name="leaderForRounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="leader" inverseEntity="Round" syncable="YES"/>
         <relationship name="missionVotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vote" inverseName="gamePlayer" inverseEntity="Vote" syncable="YES"/>
         <relationship name="player" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="gamePlayer" inverseEntity="Player" syncable="YES"/>
+        <relationship name="sabotaged" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="saboteurs" inverseEntity="Mission" syncable="YES"/>
         <relationship name="teamMemberOn" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="teamMembers" inverseEntity="Mission" syncable="YES"/>
     </entity>
     <entity name="Image" representedClassName="Image" syncable="YES">
@@ -34,13 +37,17 @@
     </entity>
     <entity name="Mission" representedClassName="Mission" syncable="YES">
         <attribute name="didSucceed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasStarted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="intramuralID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isComplete" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="missionName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="missionNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="teamCount" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="contributeurs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="contributed" inverseEntity="GamePlayer" syncable="YES"/>
+        <relationship name="coordinator" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="coordinated" inverseEntity="GamePlayer" syncable="YES"/>
         <relationship name="game" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="missions" inverseEntity="Game" syncable="YES"/>
         <relationship name="rounds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Round" inverseName="mission" inverseEntity="Round" syncable="YES"/>
+        <relationship name="saboteurs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="sabotaged" inverseEntity="GamePlayer" syncable="YES"/>
         <relationship name="teamMembers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GamePlayer" inverseName="teamMemberOn" inverseEntity="GamePlayer" syncable="YES"/>
     </entity>
     <entity name="Player" representedClassName="Player" syncable="YES">
@@ -85,12 +92,12 @@
     </entity>
     <elements>
         <element name="Game" positionX="-1802" positionY="-1071" width="128" height="165"/>
-        <element name="GamePlayer" positionX="-1865" positionY="-651" width="128" height="195"/>
-        <element name="Image" positionX="-2043" positionY="-606" width="128" height="165"/>
-        <element name="Mission" positionX="-983" positionY="-954" width="128" height="180"/>
+        <element name="GamePlayer" positionX="-1854" positionY="-549" width="128" height="225"/>
+        <element name="Image" positionX="-2270" positionY="-648" width="128" height="165"/>
+        <element name="Mission" positionX="-1053" positionY="-924" width="128" height="240"/>
         <element name="Player" positionX="-2052" positionY="-1053" width="128" height="225"/>
         <element name="Round" positionX="-1532" positionY="-909" width="128" height="150"/>
         <element name="Scorecard" positionX="-2315" positionY="-930" width="128" height="165"/>
-        <element name="Vote" positionX="-1541" positionY="-597" width="128" height="120"/>
+        <element name="Vote" positionX="-1541" positionY="-579" width="128" height="120"/>
     </elements>
 </model>

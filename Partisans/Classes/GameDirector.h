@@ -11,5 +11,7 @@
 @interface GameDirector : NSObject
 
 - (void)startGame;
+- (void)startMission;
+- (void)startNewRound;
 
 @end
