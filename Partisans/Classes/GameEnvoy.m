@@ -73,17 +73,13 @@
     {
         self.managedObjectID = managedObject.objectID;
         self.intramuralID = managedObject.intramuralID;
-        
-        self.startDate = managedObject.startDate;
-        self.endDate = managedObject.endDate;
-        self.numberOfPlayers = [managedObject.numberOfPlayers unsignedIntegerValue];
-        
         if (!self.intramuralID)
         {
             self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
-            //            self.isNative = YES;
         }
-        
+        self.startDate = managedObject.startDate;
+        self.endDate = managedObject.endDate;
+        self.numberOfPlayers = [managedObject.numberOfPlayers unsignedIntegerValue];
         self.modifiedDate = managedObject.modifiedDate;
         
         [self loadGamePlayerEnvoys];

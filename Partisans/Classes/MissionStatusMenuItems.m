@@ -203,8 +203,8 @@
             break;
         case MissionStatusSectionTeam:
         {
-            PlayerEnvoy *playerEnvoy = [missionEnvoy.teamMembers objectAtIndex:indexPath.row];
-            returnValue = playerEnvoy.playerName;
+//            PlayerEnvoy *playerEnvoy = [missionEnvoy.teamMembers objectAtIndex:indexPath.row];
+//            returnValue = playerEnvoy.playerName;
             break;
         }
         case MissionStatusSection_MaxValue:

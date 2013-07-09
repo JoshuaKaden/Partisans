@@ -62,7 +62,11 @@
     if (self)
     {
         self.managedObjectID = managedObject.objectID;
-        self.intramuralID = managedObject.intramuralID;
+        self.intramuralID    = managedObject.intramuralID;
+        if (!self.intramuralID)
+        {
+            self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
+        }
         self.isDefault = [managedObject.isDefault boolValue];
         self.isNative = [managedObject.isNative boolValue];
         self.isDefaultPicture = [managedObject.isDefaultPicture boolValue];

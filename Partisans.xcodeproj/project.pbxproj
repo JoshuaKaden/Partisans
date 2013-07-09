@@ -116,6 +116,7 @@
 		937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
 		937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
 		937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
+		938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 938144F1178CB6FA000AA437 /* MissionViewController.xib */; };
 		938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		939697E717732A110013B125 /* RoundEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 939697E617732A110013B125 /* RoundEnvoy.m */; };
@@ -148,7 +149,6 @@
 		93F06C7D178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7E178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
-		93F06C80178472B000281B6C /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
 		93FECAB1174521A40046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
 		93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
 		93FECAB3174521A40046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
@@ -348,6 +348,7 @@
 		937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateGameOperation.m; path = Classes/CreateGameOperation.m; sourceTree = "<group>"; };
 		937BC0C11747D86D003F42D6 /* GamePlayerEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayerEnvoy.h; path = Classes/GamePlayerEnvoy.h; sourceTree = "<group>"; };
 		937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayerEnvoy.m; path = Classes/GamePlayerEnvoy.m; sourceTree = "<group>"; };
+		938144F1178CB6FA000AA437 /* MissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MissionViewController.xib; path = Classes/iOS5/MissionViewController.xib; sourceTree = "<group>"; };
 		938429321746C0D30037563D /* AddGamePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddGamePlayerOperation.h; path = Classes/AddGamePlayerOperation.h; sourceTree = "<group>"; };
 		938429331746C0D30037563D /* AddGamePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddGamePlayerOperation.m; path = Classes/AddGamePlayerOperation.m; sourceTree = "<group>"; };
 		939697E517732A110013B125 /* RoundEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundEnvoy.h; path = Classes/RoundEnvoy.h; sourceTree = "<group>"; };
@@ -483,6 +484,7 @@
 		9351AA95177E52FD00D4C843 /* Mission */ = {
 			isa = PBXGroup;
 			children = (
+				938144F0178CB694000AA437 /* iOS5 */,
 				93D461C5178B72A700580E9B /* MissionStatusMenuItems.h */,
 				93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */,
 				93F06C7A178472B000281B6C /* MissionViewController.h */,
@@ -807,6 +809,14 @@
 			name = Networking;
 			sourceTree = "<group>";
 		};
+		938144F0178CB694000AA437 /* iOS5 */ = {
+			isa = PBXGroup;
+			children = (
+				938144F1178CB6FA000AA437 /* MissionViewController.xib */,
+			);
+			name = iOS5;
+			sourceTree = "<group>";
+		};
 		93C10BB617440B9300B47095 /* Game */ = {
 			isa = PBXGroup;
 			children = (
@@ -981,7 +991,7 @@
 				93FFD19217835FF600ADCB44 /* OverlayTesterViewController.xib in Resources */,
 				93FFD1971783635100ADCB44 /* waitOverLay@2x.png in Resources */,
 				93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */,
-				93F06C80178472B000281B6C /* MissionViewController.xib in Resources */,
+				938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

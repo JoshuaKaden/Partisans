@@ -658,6 +658,7 @@
 {
     Class returnValue = nil;
     
+    // Allow coordinator to undo candidate selection.
     if (indexPath.section == RoundMenuSectionTeam)
     {
         if ([self isCoordinator] && ![self hasVoted])
@@ -669,6 +670,10 @@
     if (indexPath.section == RoundMenuSectionCommand)
     {
         if ([self hasVoted])
+        {
+            returnValue = [JSKMenuViewController class];
+        }
+        else if ([self isCoordinator])
         {
             returnValue = [JSKMenuViewController class];
         }
@@ -700,6 +705,13 @@
             self.decisionMenuItems = items;
             [items release];
             returnValue = self.decisionMenuItems;
+        }
+        else if ([self isCoordinator] && ![self isReadyForVote])
+        {
+            CandidatePickerMenuItems *items = [[CandidatePickerMenuItems alloc] init];
+            self.candidatePickerMenuItems = items;
+            [items release];
+            returnValue = self.candidatePickerMenuItems;
         }
     }
     return returnValue;

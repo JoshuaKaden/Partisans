@@ -71,7 +71,11 @@
     if (self)
     {
         self.managedObjectID = managedObject.objectID;
-        self.intramuralID    = [[self.managedObjectID URIRepresentation] absoluteString];
+        self.intramuralID    = managedObject.intramuralID;
+        if (!self.intramuralID)
+        {
+            self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
+        }
         self.hasStarted      = [managedObject.hasStarted boolValue];
         self.didSucceed      = [managedObject.didSucceed boolValue];
         self.isComplete      = [managedObject.isComplete boolValue];

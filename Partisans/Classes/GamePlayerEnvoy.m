@@ -55,10 +55,10 @@
         self.playerID = managedObject.player.intramuralID;
         self.gameID = managedObject.game.intramuralID;
         
+        self.intramuralID = managedObject.intramuralID;
         if (!self.intramuralID)
         {
             self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
-            //            self.isNative = YES;
         }
     }
     

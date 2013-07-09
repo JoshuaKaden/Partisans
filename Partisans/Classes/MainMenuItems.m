@@ -59,6 +59,7 @@
     if ([SystemMessage gameEnvoy])
     {
         JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+        BOOL shouldPushMenuVC = YES;
         if ([SystemMessage gameEnvoy].startDate)
         {
             // The game has started.
@@ -72,8 +73,9 @@
                 if (([missionEnvoy isPlayerOnTeam:playerEnvoy]) && (![missionEnvoy hasPlayerPerformed:playerEnvoy]))
                 {
                     MissionViewController *realVC = [[MissionViewController alloc] init];
-                    [menuViewController invokePush:YES viewController:vc];
+                    [menuViewController invokePush:YES viewController:realVC];
                     [realVC release];
+                    shouldPushMenuVC = NO;
                 }
                 else
                 {
@@ -83,8 +85,7 @@
                     [items release];
                 }
             }
-            
-            if (gamePlayerEnvoy.hasAlertBeenShown || [gameEnvoy currentRound].roundNumber > 1 || [gameEnvoy currentRound].candidates.count > 0)
+            else if (gamePlayerEnvoy.hasAlertBeenShown || [gameEnvoy currentRound].roundNumber > 1 || [gameEnvoy currentRound].candidates.count > 0)
             {
                 RoundMenuItems *items = [[RoundMenuItems alloc] init];
                 [vc setMenuItems:items];
@@ -105,7 +106,7 @@
             [vc setMenuItems:items];
             [items release];
         }
-        if (vc.menuItems)
+        if (shouldPushMenuVC)
         {
             [menuViewController invokePush:YES viewController:vc];
         }
