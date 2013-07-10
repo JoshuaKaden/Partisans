@@ -562,7 +562,7 @@
                         {
                             if (gameEnvoy.startDate)
                             {
-                                returnValue = NSLocalizedString(@"Tap to enter the game.", @"Tap to enter the game.  --  menu label");
+                                returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  menu label");
                             }
                             else
                             {
@@ -580,7 +580,7 @@
                         {
                             if (gameEnvoy.startDate)
                             {
-                                returnValue = NSLocalizedString(@"Tap to enter the game.", @"Tap to enter the game.  --  menu label");
+                                returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  menu label");
                             }
                             else
                             {

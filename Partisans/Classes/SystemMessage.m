@@ -81,6 +81,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (NSDictionary *)buildDigestFor:(NSString *)forPeerID;
 - (void)broadcastPlayerData:(NSString *)peerID;
 - (void)sendGameUpdateTo:(NSString *)peerID modifiedDate:(NSDate *)modifiedDate;
+- (void)reloadGame:(GameEnvoy *)gameEnvoy;
 
 @end
 
@@ -121,6 +122,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [super dealloc];
 }
 
+
+- (void)reloadGame:(GameEnvoy *)gameEnvoy
+{
+    GameEnvoy *updatedGame = [GameEnvoy envoyFromIntramuralID:gameEnvoy.intramuralID];
+    [self setGameEnvoy:updatedGame];
+}
 
 
 #pragma mark - Host
@@ -297,6 +304,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [op setCompletionBlock:^(void) {
         dispatch_async(dispatch_get_main_queue(), ^(void)
         {
+            [self reloadGame:self.gameEnvoy];
             JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:parcel.from from:self.playerEnvoy.peerID];
             message.responseKey = parcel.responseKey;
             [self.netHost sendCommandMessage:message];
@@ -320,6 +328,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [op setCompletionBlock:^(void) {
         dispatch_async(dispatch_get_main_queue(), ^(void)
         {
+            [self reloadGame:self.gameEnvoy];
             JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:parcel.from from:self.playerEnvoy.peerID];
             message.responseKey = parcel.responseKey;
             [self.netHost sendCommandMessage:message];
@@ -355,11 +364,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [op setCompletionBlock:^(void) {
         dispatch_async(dispatch_get_main_queue(), ^(void)
         {
-           JSKCommandMessage *response = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:message.from from:self.playerEnvoy.peerID];
-           response.responseKey = message.responseKey;
-           [self.netHost sendCommandMessage:response];
-           [response release];
-           [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+            [self reloadGame:self.gameEnvoy];
+            JSKCommandMessage *response = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:message.from from:self.playerEnvoy.peerID];
+            response.responseKey = message.responseKey;
+            [self.netHost sendCommandMessage:response];
+            [response release];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];

@@ -571,8 +571,10 @@
 				93C10BB617440B9300B47095 /* Game */,
 				936510B21741584E00F2AD06 /* Libraries */,
 				936510B11741583200F2AD06 /* Main */,
+				9351AA95177E52FD00D4C843 /* Mission */,
 				9351AA6B177CDAFB00D4C843 /* Network */,
 				936510F817415A7B00F2AD06 /* Player */,
+				9351AA94177E52DB00D4C843 /* Round */,
 				93040362174E7CF000ED169F /* Tools */,
 			);
 			name = Classes;
@@ -826,12 +828,10 @@
 				9303BE541746836A0065ADD2 /* GameJoiner.m */,
 				9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */,
 				9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */,
-				9351AA95177E52FD00D4C843 /* Mission */,
 				9358BFE017747E5400FA2DAF /* OperativeAlertMenuItems.h */,
 				9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */,
 				93C10BB817440C4500B47095 /* PlayGameMenuItems.h */,
 				93C10BB917440C4500B47095 /* PlayGameMenuItems.m */,
-				9351AA94177E52DB00D4C843 /* Round */,
 				93C10BC6174439B200B47095 /* SetupGameMenuItems.h */,
 				93C10BC7174439B300B47095 /* SetupGameMenuItems.m */,
 			);

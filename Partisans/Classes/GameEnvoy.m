@@ -173,6 +173,20 @@
 
 
 
++ (GameEnvoy *)envoyFromIntramuralID:(NSString *)intramuralID
+{
+    GameEnvoy *returnValue = nil;
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    NSArray *games = [context fetchObjectArrayForEntityName:@"Game" withPredicateFormat:@"intramuralID == %@", intramuralID];
+    if (games.count > 0)
+    {
+        Game *game = [games objectAtIndex:0];
+        returnValue = [self envoyFromManagedObject:game];
+    }
+    return returnValue;
+}
+
+
 + (GameEnvoy *)envoyFromHost:(PlayerEnvoy *)host
 {
     if (!host.managedObjectID)

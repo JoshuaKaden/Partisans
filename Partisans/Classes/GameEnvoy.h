@@ -45,6 +45,7 @@
 - (RoundEnvoy *)currentRound;
 - (void)addRound:(RoundEnvoy *)roundEnvoy;
 
++ (GameEnvoy *)envoyFromIntramuralID:(NSString *)intramuralID;
 + (GameEnvoy *)envoyFromHost:(PlayerEnvoy *)host;
 + (GameEnvoy *)envoyFromPlayer:(PlayerEnvoy *)player;
 

@@ -42,6 +42,7 @@
 
 - (void)gameChanged:(NSNotification *)notification
 {
+    self.currentRound = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 

@@ -44,7 +44,7 @@
 - (void)vote:(BOOL)vote;
 - (void)hostAcknowledgement:(NSNotification *)notification;
 - (BOOL)isVotingComplete;
-- (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController;
+//- (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController;
 - (void)gameChanged:(NSNotification *)notification;
 - (BOOL)hasVoted;
 
@@ -297,24 +297,32 @@
     
     [self.overlayer removeWaitOverlay];
     
-    [self goToDecisionScreen:self.menuViewController];
+    self.gameEnvoy = nil;
+    self.currentRound = nil;
+    self.currentMission = nil;
+    [SystemMessage requestGameUpdate];
+//    [self goToDecisionScreen:self.menuViewController];
 }
 
 
-- (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController
-{
-    DecisionMenuItems *items = [[DecisionMenuItems alloc] init];
-    self.decisionMenuItems = items;
-    [items release];
-    
-    JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
-    [vc setDelegate:items];
-    [menuViewController invokePush:YES viewController:vc];
-    [vc release];
-}
+//- (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController
+//{
+//    DecisionMenuItems *items = [[DecisionMenuItems alloc] init];
+//    self.decisionMenuItems = items;
+//    [items release];
+//    
+//    JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+//    [vc setDelegate:items];
+//    [menuViewController invokePush:YES viewController:vc];
+//    [vc release];
+//}
+
 
 - (void)gameChanged:(NSNotification *)notification
 {
+    self.gameEnvoy = nil;
+    self.currentRound = nil;
+    self.currentMission = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
@@ -363,6 +371,8 @@
 {
     // Force a reload of our local references.
     self.gameEnvoy = nil;
+    self.currentRound = nil;
+    self.currentMission = nil;
 //    if ([self isVotingComplete] || [self hasVoted])
 //    {
 //        [self goToDecisionScreen:menuViewController];

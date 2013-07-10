@@ -92,7 +92,7 @@
     </entity>
     <elements>
         <element name="Game" positionX="-1802" positionY="-1071" width="128" height="165"/>
-        <element name="GamePlayer" positionX="-1854" positionY="-549" width="128" height="225"/>
+        <element name="GamePlayer" positionX="-1854" positionY="-549" width="128" height="240"/>
         <element name="Image" positionX="-2270" positionY="-648" width="128" height="165"/>
         <element name="Mission" positionX="-1053" positionY="-924" width="128" height="240"/>
         <element name="Player" positionX="-2052" positionY="-1053" width="128" height="225"/>

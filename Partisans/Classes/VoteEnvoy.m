@@ -127,6 +127,27 @@
         context = [JSKDataMiner sharedInstance].mainObjectContext;
     }
     
+    
+    // Ensure that this player hasn't already voted.
+    BOOL hasAlreadyVoted = NO;
+    NSArray *rounds = [context fetchObjectArrayForEntityName:@"Round" withPredicateFormat:@"intramuralID == %@", self.roundID];
+    Round *round = [rounds objectAtIndex:0];
+    for (Vote *vote in round.votes)
+    {
+        if ([vote.gamePlayer.player.intramuralID isEqualToString:self.playerID])
+        {
+            hasAlreadyVoted = YES;
+            break;
+        }
+    }
+    if (hasAlreadyVoted)
+    {
+        debugLog(@"Player has already voted: %@", self);
+        return;
+    }
+    
+
+    
     Vote *model = nil;
     if (self.managedObjectID)
     {

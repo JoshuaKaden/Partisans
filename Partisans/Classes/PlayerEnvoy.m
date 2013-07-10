@@ -430,6 +430,13 @@
         model.picture = nil;
     }
     
+    
+    // Cleanup orphaned pictures.
+    NSArray *orphans = [context fetchObjectArrayForEntityName:@"Image" withPredicateFormat:@"player == nil"];
+    for (NSManagedObject *orphan in orphans)
+    {
+        [context deleteObject:orphan];
+    }
 
     
     
