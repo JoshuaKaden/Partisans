@@ -32,6 +32,7 @@
 @property (nonatomic, strong) JSKOverlayer *overlayer;
 @property (nonatomic, strong) HostFinder *hostFinder;
 @property (nonatomic, strong) NSString *responseKey;
+@property (nonatomic, assign) BOOL hasActionBeenConfirmed;
 
 - (IBAction)performButtonPressed:(id)sender;
 - (IBAction)readySwitchFlicked:(id)sender;
@@ -40,6 +41,7 @@
 - (void)performMission:(BOOL)shouldSucceed;
 - (void)performMissionLocally:(BOOL)shouldSucceed;
 - (void)connectAndPerformMission:(BOOL)shouldSucceed;
+- (void)gameChanged:(NSNotification *)notification;
 
 @end
 
@@ -59,6 +61,7 @@
 @synthesize overlayer = m_overlayer;
 @synthesize hostFinder = m_hostFinder;
 @synthesize responseKey = m_responseKey;
+@synthesize hasActionBeenConfirmed = m_hasActionBeenConfirmed;
 
 
 - (void)dealloc
@@ -149,11 +152,17 @@
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:self.gameEnvoy];
     [SystemMessage sendParcelToPlayers:parcel];
     [parcel release];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
 - (void)connectAndPerformMission:(BOOL)shouldSucceed
 {
+    [self.performButton setEnabled:NO];
+    [self.readySwitch setEnabled:NO];
+    [self.sabotageSwitch setEnabled:NO];
+    
     if (!self.overlayer)
     {
         JSKOverlayer *overlayer = [[JSKOverlayer alloc] initWithView:[SystemMessage rootView]];
@@ -212,9 +221,19 @@
         return;
     }
     
-    [self.overlayer removeWaitOverlay];
+    self.hasActionBeenConfirmed = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+    [SystemMessage requestGameUpdate];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)gameChanged:(NSNotification *)notification
+{
+    if (self.hasActionBeenConfirmed)
+    {
+        [self.overlayer removeWaitOverlay];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 

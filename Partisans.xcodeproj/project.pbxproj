@@ -506,7 +506,6 @@
 				936510981741578C00F2AD06 /* Partisans */,
 				936510911741578C00F2AD06 /* Frameworks */,
 				936510901741578C00F2AD06 /* Products */,
-				93FECB59174547850046529A /* Partisans copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -546,13 +545,14 @@
 		936510991741578C00F2AD06 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9365109A1741578C00F2AD06 /* Partisans-Info.plist */,
-				9365109B1741578C00F2AD06 /* InfoPlist.strings */,
-				9365109E1741578C00F2AD06 /* main.m */,
-				936510A01741578C00F2AD06 /* Partisans-Prefix.pch */,
+				936510A81741578C00F2AD06 /* Default-568h@2x.png */,
 				936510A41741578C00F2AD06 /* Default.png */,
 				936510A61741578C00F2AD06 /* Default@2x.png */,
-				936510A81741578C00F2AD06 /* Default-568h@2x.png */,
+				9365109B1741578C00F2AD06 /* InfoPlist.strings */,
+				9365109E1741578C00F2AD06 /* main.m */,
+				93FECB59174547850046529A /* Partisans copy-Info.plist */,
+				9365109A1741578C00F2AD06 /* Partisans-Info.plist */,
+				936510A01741578C00F2AD06 /* Partisans-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

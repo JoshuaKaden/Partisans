@@ -20,8 +20,11 @@
 @interface MissionStatusMenuItems ()
 
 @property (nonatomic, strong) MissionEnvoy *currentMission;
+@property (nonatomic, strong) NSTimer *pollingTimer;
+
 - (void)gameChanged:(NSNotification *)notification;
 - (void)startNewRound;
+- (void)pollingTimerFired:(id)sender;
 
 @end
 
@@ -29,12 +32,17 @@
 @implementation MissionStatusMenuItems
 
 @synthesize currentMission = m_currentMission;
+@synthesize pollingTimer = m_pollingTimer;
 
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.pollingTimer invalidate];
+    
     [m_currentMission release];
+    [m_pollingTimer release];
+    
     [super dealloc];
 }
 
@@ -63,12 +71,22 @@
 }
 
 
+- (void)pollingTimerFired:(id)sender
+{
+    [SystemMessage requestGameUpdate];
+}
+
+
 #pragma mark - Menu View Controller delegate
 
 
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+    
+    // This timer polls the host for game changes.
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
+    self.pollingTimer = timer;
 }
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController

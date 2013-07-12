@@ -352,8 +352,11 @@
         [hostFinder stop];
         self.hostFinder = nil;
         [self.overlayer removeWaitOverlay];
+        timeoutCount = 0;
     }
 }
+
+
 
 
 #pragma mark - Menu View Controller delegate

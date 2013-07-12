@@ -20,9 +20,12 @@
 @interface DecisionMenuItems ()
 
 @property (nonatomic, strong) RoundEnvoy *currentRound;
+@property (nonatomic, strong) NSTimer *pollingTimer;
+
 - (void)gameChanged:(NSNotification *)notification;
 - (void)startMission;
 - (void)startNewRound;
+- (void)pollingTimerFired:(id)sender;
 
 @end
 
@@ -30,12 +33,17 @@
 @implementation DecisionMenuItems
 
 @synthesize currentRound = m_currentRound;
+@synthesize pollingTimer = m_pollingTimer;
 
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.pollingTimer invalidate];
+    
     [m_currentRound release];
+    [m_pollingTimer release];
+    
     [super dealloc];
 }
 
@@ -70,6 +78,15 @@
 }
 
 
+#pragma mark - Polling Timer
+
+- (void)pollingTimerFired:(id)sender
+{
+    [SystemMessage requestGameUpdate];
+}
+
+
+
 #pragma mark - Menu View Controller delegate
 
 
@@ -77,6 +94,10 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [SystemMessage requestGameUpdate];
+    
+    // This timer polls the host for game changes.
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
+    self.pollingTimer = timer;
 }
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
@@ -108,6 +129,10 @@
                 [self startNewRound];
                 [menuViewController.navigationController popToRootViewControllerAnimated:YES];
             }
+        }
+        else
+        {
+            [menuViewController.navigationController popToRootViewControllerAnimated:YES];
         }
     }
 }
@@ -344,7 +369,7 @@
         }
         else
         {
-            returnValue = NSLocalizedString(@"Waiting for host...", @"Waiting for host...  --  label");
+            returnValue = NSLocalizedString(@"Tap to continue...", @"Tap to continue...  --  label");
         }
     }
     return returnValue;
