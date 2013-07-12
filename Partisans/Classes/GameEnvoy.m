@@ -726,6 +726,17 @@
 - (MissionEnvoy *)currentMission
 {
     MissionEnvoy *returnValue = nil;
+    RoundEnvoy *currentRound = [self currentRound];
+    if (currentRound)
+    {
+        returnValue = [self missionEnvoyFromNumber:currentRound.missionNumber];
+    }
+    return returnValue;
+}
+
+- (MissionEnvoy *)firstIncompleteMission
+{
+    MissionEnvoy *returnValue = nil;
     NSArray *completed = [self.missionEnvoys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isComplete == YES"]];
     if (completed.count == 0)
     {
@@ -738,7 +749,6 @@
     }
     return returnValue;
 }
-
 
 
 #pragma mark - Commits

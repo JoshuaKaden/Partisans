@@ -76,6 +76,7 @@
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+    [SystemMessage requestGameUpdate];
 }
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
@@ -358,13 +359,13 @@
 {
     Class returnValue = nil;
     
-    if (indexPath.section == DecisionMenuSectionStatus)
-    {
-        if ([[self currentRound] isVotingComplete])
-        {
-            returnValue = [MissionViewController class];
-        }
-    }
+//    if (indexPath.section == DecisionMenuSectionStatus)
+//    {
+//        if ([[self currentRound] isVotingComplete])
+//        {
+//            returnValue = [MissionViewController class];
+//        }
+//    }
     
     return returnValue;
 }
@@ -386,13 +387,13 @@
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == DecisionMenuSectionStatus)
-    {
-        if ([[self currentRound] isVotingComplete])
-        {
-            return UITableViewCellAccessoryDisclosureIndicator;
-        }
-    }
+//    if (indexPath.section == DecisionMenuSectionStatus)
+//    {
+//        if ([[self currentRound] isVotingComplete])
+//        {
+//            return UITableViewCellAccessoryDisclosureIndicator;
+//        }
+//    }
     return UITableViewCellAccessoryNone;
 }
 

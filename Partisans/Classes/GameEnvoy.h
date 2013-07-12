@@ -41,6 +41,7 @@
 - (GamePlayerEnvoy *)gamePlayerEnvoyFromPlayer:(PlayerEnvoy *)playerEnvoy;
 - (MissionEnvoy *)missionEnvoyFromNumber:(NSUInteger)missionNumber;
 - (MissionEnvoy *)currentMission;
+- (MissionEnvoy *)firstIncompleteMission;
 - (RoundEnvoy *)roundEnvoyFromNumber:(NSUInteger)roundNumber;
 - (RoundEnvoy *)currentRound;
 - (void)addRound:(RoundEnvoy *)roundEnvoy;

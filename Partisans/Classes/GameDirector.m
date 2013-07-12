@@ -45,6 +45,8 @@
 
 - (GameEnvoy *)gameEnvoy
 {
+    // Heavy-handed method for ensuring a fresh game envoy.
+    self.gameEnvoy = nil;
     if (!m_gameEnvoy)
     {
         self.gameEnvoy = [SystemMessage gameEnvoy];
@@ -183,7 +185,7 @@
 {
     NSString *name1 = NSLocalizedString(@"Scrambled Eggs", @"Scrambled Eggs  --  mission name");
     NSString *name2 = NSLocalizedString(@"Lemon Difficult", @"Lemon Difficult  --  mission name");
-    NSString *name3 = NSLocalizedString(@"Hyperspeed", @"Hyperspeed  --  mission name");
+    NSString *name3 = NSLocalizedString(@"Blue Ant", @"Blue Ant  --  mission name");
     NSString *name4 = NSLocalizedString(@"Hollow Hills", @"Hollow Hills  --  mission name");
     NSString *name5 = NSLocalizedString(@"Long Nines", @"Long Nines  --  mission name");
     return [NSArray arrayWithObjects:name1, name2, name3, name4, name5, nil];
@@ -192,7 +194,7 @@
 - (void)createRound
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
-    MissionEnvoy *currentMission = [gameEnvoy currentMission];
+    MissionEnvoy *currentMission = [gameEnvoy firstIncompleteMission];
     PlayerEnvoy *coordinator = [self chooseCoordinator];
     NSUInteger roundNumber = [self getNextRoundNumber];
     

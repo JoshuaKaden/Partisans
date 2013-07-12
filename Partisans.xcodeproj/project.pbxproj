@@ -142,6 +142,8 @@
 		93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BE21744515C00B47095 /* DossierMenuItems.m */; };
 		93C442E917511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93C442EA17511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
+		93D124011790363D003523F9 /* AboutMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D124001790363D003523F9 /* AboutMenuItems.m */; };
+		93D124021790363D003523F9 /* AboutMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D124001790363D003523F9 /* AboutMenuItems.m */; };
 		93D461C7178B72A700580E9B /* MissionStatusMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */; };
 		93D461C8178B72A700580E9B /* MissionStatusMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */; };
 		93E65480177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
@@ -378,6 +380,8 @@
 		93C10BE21744515C00B47095 /* DossierMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierMenuItems.m; path = Classes/DossierMenuItems.m; sourceTree = "<group>"; };
 		93C442E717511B15000DEC63 /* UpdateGameOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateGameOperation.h; path = Classes/UpdateGameOperation.h; sourceTree = "<group>"; };
 		93C442E817511B15000DEC63 /* UpdateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateGameOperation.m; path = Classes/UpdateGameOperation.m; sourceTree = "<group>"; };
+		93D123FF1790363D003523F9 /* AboutMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutMenuItems.h; path = Classes/AboutMenuItems.h; sourceTree = "<group>"; };
+		93D124001790363D003523F9 /* AboutMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutMenuItems.m; path = Classes/AboutMenuItems.m; sourceTree = "<group>"; };
 		93D461C5178B72A700580E9B /* MissionStatusMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionStatusMenuItems.h; path = Classes/MissionStatusMenuItems.h; sourceTree = "<group>"; };
 		93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionStatusMenuItems.m; path = Classes/MissionStatusMenuItems.m; sourceTree = "<group>"; };
 		93E6547E177C6A95003C73C2 /* CandidatePickerMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CandidatePickerMenuItems.h; path = Classes/CandidatePickerMenuItems.h; sourceTree = "<group>"; };
@@ -440,6 +444,8 @@
 		93040362174E7CF000ED169F /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				93D123FF1790363D003523F9 /* AboutMenuItems.h */,
+				93D124001790363D003523F9 /* AboutMenuItems.m */,
 				9300C7D6175BFCA00047AA15 /* GameTesterMenuItems.h */,
 				9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */,
 				93FFD18C17835F6600ADCB44 /* OverlayTesterViewController.h */,
@@ -880,6 +886,7 @@
 				9365108B1741578C00F2AD06 /* Sources */,
 				9365108C1741578C00F2AD06 /* Frameworks */,
 				9365108D1741578C00F2AD06 /* Resources */,
+				93D1240417903B61003523F9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -897,6 +904,7 @@
 				93FECB16174547840046529A /* Sources */,
 				93FECB42174547840046529A /* Frameworks */,
 				93FECB4B174547840046529A /* Resources */,
+				93D1240517903BD9003523F9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -997,6 +1005,35 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		93D1240417903B61003523F9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		93D1240517903BD9003523F9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9365108B1741578C00F2AD06 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1074,6 +1111,7 @@
 				93D461C7178B72A700580E9B /* MissionStatusMenuItems.m in Sources */,
 				935FC548178C2B1F00F0DC8E /* GamePlayer.m in Sources */,
 				935FC54C178C2B1F00F0DC8E /* Mission.m in Sources */,
+				93D124011790363D003523F9 /* AboutMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1153,6 +1191,7 @@
 				93D461C8178B72A700580E9B /* MissionStatusMenuItems.m in Sources */,
 				935FC549178C2B1F00F0DC8E /* GamePlayer.m in Sources */,
 				935FC54D178C2B1F00F0DC8E /* Mission.m in Sources */,
+				93D124021790363D003523F9 /* AboutMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

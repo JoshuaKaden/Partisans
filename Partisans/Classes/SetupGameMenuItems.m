@@ -11,7 +11,9 @@
 #import "DossierMenuItems.h"
 #import "GameDirector.h"
 #import "GameEnvoy.h"
+#import "GamePlayerEnvoy.h"
 #import "ImageEnvoy.h"
+#import "MissionEnvoy.h"
 #import "PlayerEnvoy.h"
 #import "RoundMenuItems.h"
 #import "ProgressCell.h"
@@ -637,6 +639,29 @@
             return NSLocalizedString(@"Tap to leave the game.", @"Tap to leave the game.  --  sub label text");
         }
     }
+    
+    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowStatus)
+    {
+        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+        PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+        if (gameEnvoy.startDate)
+        {
+            GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
+            if (!gamePlayerEnvoy.hasAlertBeenShown)
+            {
+                return NSLocalizedString(@"Hide your screen!", @"Hide your screen!  --  sub label text");
+            }
+            MissionEnvoy *missionEnvoy = [gameEnvoy currentMission];
+            if (missionEnvoy.hasStarted)
+            {
+                if (([missionEnvoy isPlayerOnTeam:playerEnvoy]) && (![missionEnvoy hasPlayerPerformed:playerEnvoy]))
+                {
+                    return NSLocalizedString(@"Hide your screen!", @"Hide your screen!  --  sub label text");
+                }
+            }
+        }
+    }
+    
     return nil;
 }
 

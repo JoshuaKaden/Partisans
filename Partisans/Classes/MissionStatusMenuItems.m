@@ -41,6 +41,7 @@
 
 - (void)gameChanged:(NSNotification *)notification
 {
+    self.currentMission = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 

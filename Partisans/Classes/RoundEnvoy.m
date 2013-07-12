@@ -447,8 +447,12 @@
     {
         for (NSString *candidateID in self.candidateIDs)
         {
-            GamePlayer *gamePlayer = [[context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", candidateID] objectAtIndex:0];
-            [model addMissionCandidatesObject:gamePlayer];
+            NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", candidateID];
+            if (gamePlayers.count > 0)
+            {
+                GamePlayer *gamePlayer = [gamePlayers objectAtIndex:0];
+                [model addMissionCandidatesObject:gamePlayer];
+            }
         }
     }
     

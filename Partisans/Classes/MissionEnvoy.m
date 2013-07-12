@@ -253,6 +253,10 @@
             break;
         }
     }
+    if (!self.contributeurIDs)
+    {
+        [self loadContributeurIDs];
+    }
     if (!returnValue)
     {
         for (NSString *intramuralID in self.contributeurIDs)
@@ -460,8 +464,12 @@
     {
         for (NSString *intramuralID in self.teamMemberIDs)
         {
-            GamePlayer *gamePlayer = [[context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", intramuralID] objectAtIndex:0];
-            [model addTeamMembersObject:gamePlayer];
+            NSArray *gamePlayers = [context fetchObjectArrayForEntityName:@"GamePlayer" withPredicateFormat:@"player.intramuralID == %@", intramuralID];
+            if (gamePlayers.count > 0)
+            {
+                GamePlayer *gamePlayer = [gamePlayers objectAtIndex:0];
+                [model addTeamMembersObject:gamePlayer];
+            }
         }
     }
     
