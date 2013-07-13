@@ -239,8 +239,14 @@
         for (int i = 1; i < newRoundIndex; i++)
         {
             RoundEnvoy *round = [gameEnvoy roundEnvoyFromNumber:i];
-            PlayerEnvoy *envoy = [PlayerEnvoy envoyFromIntramuralID:round.coordinatorID];
-            [list addObject:envoy];
+            for (PlayerEnvoy *envoy in players)
+            {
+                if ([envoy.intramuralID isEqualToString:round.coordinatorID])
+                {
+                    [list addObject:envoy];
+                    break;
+                }
+            }
         }
         NSMutableArray *playerList = [[NSMutableArray alloc] initWithArray:players];
         [playerList removeObjectsInArray:list];

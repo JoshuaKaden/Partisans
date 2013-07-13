@@ -19,6 +19,7 @@
 
 @property (nonatomic, assign) BOOL isOperative;
 @property (nonatomic, strong) NSArray *operatives;
+@property (nonatomic, assign) BOOL isMessageOpen;
 
 @end
 
@@ -27,6 +28,8 @@
 
 @synthesize isOperative = m_isOperative;
 @synthesize operatives = m_operatives;
+@synthesize isMessageOpen = m_isMessageOpen;
+
 
 - (void)dealloc
 {
@@ -69,20 +72,50 @@
         [gamePlayerEnvoy commitAndSave];
         [menuViewController.navigationController popToRootViewControllerAnimated:NO];
     }
+    
+    // This is the "decrypt message" privacy button.
+    if (indexPath.section == OperativeAlertMenuSectionStatus)
+    {
+        if (!self.isMessageOpen)
+        {
+            self.isMessageOpen = YES;
+            [menuViewController refreshData:YES];
+        }
+    }
 }
 
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
 {
-    return NSLocalizedString(@"Encrypted Message", @"Encrypted Message  --  title");
+    return NSLocalizedString(@"Private", @"Private  --  title");
 }
 
 - (NSInteger)menuViewControllerNumberOfSections:(JSKMenuViewController *)menuViewController
 {
     return OperativeAlertMenuSection_MaxValue;
+//    if (self.isMessageOpen)
+//    {
+//        return OperativeAlertMenuSection_MaxValue;
+//    }
+//    else
+//    {
+//        return 1;
+//    }
 }
 
 - (NSInteger)menuViewController:(JSKMenuViewController *)menuViewController numberOfRowsInSection:(NSInteger)section
 {
+    if (!self.isMessageOpen)
+    {
+        if (section == OperativeAlertMenuSectionStatus)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
     if (section == OperativeAlertMenuSectionList)
     {
         return self.operatives.count;
@@ -95,6 +128,18 @@
 
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController titleForHeaderInSection:(NSInteger)section
 {
+    if (!self.isMessageOpen)
+    {
+        if (section == OperativeAlertMenuSectionStatus)
+        {
+            return NSLocalizedString(@"Encrypted Message", @"Encrypted Message  --  title");
+        }
+        else
+        {
+            return nil;
+        }
+    }
+    
     NSString *returnValue = nil;
     OperativeAlertMenuSection menuSection = (OperativeAlertMenuSection)section;
     switch (menuSection)
@@ -129,6 +174,18 @@
 
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController labelAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.isMessageOpen)
+    {
+        if (indexPath.section == OperativeAlertMenuSectionStatus)
+        {
+            return NSLocalizedString(@"Hide your screen", @"Hide your screen  --  label");
+        }
+        else
+        {
+            return nil;
+        }
+    }
+    
     NSString *returnValue = nil;
     OperativeAlertMenuSection menuSection = (OperativeAlertMenuSection)indexPath.section;
     switch (menuSection)
@@ -136,11 +193,11 @@
         case OperativeAlertMenuSectionStatus:
             if (self.isOperative)
             {
-                returnValue = NSLocalizedString(@"You are an Operative", @"You are an Operative  --  title");
+                returnValue = NSLocalizedString(@"You are an Operative", @"You are an Operative  --  label");
             }
             else
             {
-                returnValue = NSLocalizedString(@"Operatives are in our midst", @"Operatives are in our midst  --  title");
+                returnValue = NSLocalizedString(@"Operatives are in our midst", @"Operatives are in our midst  --  label");
             }
             break;
         case OperativeAlertMenuSectionList:
@@ -167,9 +224,29 @@
 
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController subLabelAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.isMessageOpen)
+    {
+        if (indexPath.section == OperativeAlertMenuSectionStatus)
+        {
+            return NSLocalizedString(@"Tap to decrypt this message.", @"Tap to decrypt this message.  --  sub label");
+        }
+        else
+        {
+            return nil;
+        }
+    }
+    
     if (indexPath.section == OperativeAlertMenuSectionCommand)
     {
-        return NSLocalizedString(@"Tap to destroy this message", @"Tap to destroy this message  --  sublabel");
+        return NSLocalizedString(@"Tap to destroy this message.", @"Tap to destroy this message.  --  sub label");
+    }
+    else if (indexPath.section == OperativeAlertMenuSectionStatus && self.isOperative)
+    {
+        NSString *prefix = NSLocalizedString(@"They know there are", @"They know there are  --  label prefix");
+        NSString *suffix = NSLocalizedString(@"of you.", @"of you.  --  label suffix");
+        return [NSString stringWithFormat:@"%@ %d %@", prefix, self.operatives.count + 1, suffix];
+//        NSString *numberString = [SystemMessage spellOutInteger:self.operatives.count + 1];
+//        return [NSString stringWithFormat:@"%@ %@ %@", prefix, numberString, suffix];
     }
     else
     {
@@ -179,6 +256,11 @@
 
 - (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.isMessageOpen)
+    {
+        return nil;
+    }
+    
     if (indexPath.section == OperativeAlertMenuSectionList)
     {
         if (self.isOperative)
@@ -190,6 +272,10 @@
         {
             return [UIImage imageNamed:@"black_mask"];
         }
+    }
+    else if (indexPath.section == OperativeAlertMenuSectionStatus && self.isOperative)
+    {
+        return [UIImage imageNamed:@"black_mask"];
     }
     else
     {
@@ -214,7 +300,7 @@
 
 - (BOOL)menuViewControllerHidesBackButton:(JSKMenuViewController *)menuViewController
 {
-    return YES;
+    return NO;
 }
 
 - (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController

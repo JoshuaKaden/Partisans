@@ -9,13 +9,13 @@
 #import "ToolsMenuItems.h"
 
 #import "AboutMenuItems.h"
-#import "GameTesterMenuItems.h"
-#import "OverlayTesterViewController.h"
+//#import "GameTesterMenuItems.h"
+//#import "OverlayTesterViewController.h"
 
 
 @interface ToolsMenuItems()
 
-@property (nonatomic, strong) GameTesterMenuItems *gameTesterMenuItems;
+//@property (nonatomic, strong) GameTesterMenuItems *gameTesterMenuItems;
 @property (nonatomic, strong) AboutMenuItems *aboutMenuItems;
 
 @end
@@ -23,13 +23,13 @@
 
 @implementation ToolsMenuItems
 
-@synthesize gameTesterMenuItems = m_gameTesterMenuItems;
+//@synthesize gameTesterMenuItems = m_gameTesterMenuItems;
 @synthesize aboutMenuItems = m_aboutMenuItems;
 
 - (void)dealloc
 {
     [m_aboutMenuItems release];
-    [m_gameTesterMenuItems release];
+//    [m_gameTesterMenuItems release];
     [super dealloc];
 }
 
@@ -73,21 +73,21 @@
             label = NSLocalizedString(@"About", @"About  --  menu label");
             break;
             
-        case ToolsMenuRowClearRemoteData:
-            label = NSLocalizedString(@"Clear Remote Data", @"Clear Remote Data  --  menu label");
-            break;
-
-        case ToolsMenuRowGameTester:
-            label = NSLocalizedString(@"Game Setup Tester", @"Game Setup Tester  --  menu label");
-            break;
-            
-        case ToolsMenuRowServerTester:
-            label = NSLocalizedString(@"Server Tester", @"Server Tester  --  menu label");
-            break;
-            
-        case ToolsMenuRowOverlayTester:
-            label = NSLocalizedString(@"Overlay Tester", @"Overlay Tester  --  menu label");
-            break;
+//        case ToolsMenuRowClearRemoteData:
+//            label = NSLocalizedString(@"Clear Remote Data", @"Clear Remote Data  --  menu label");
+//            break;
+//
+//        case ToolsMenuRowGameTester:
+//            label = NSLocalizedString(@"Game Setup Tester", @"Game Setup Tester  --  menu label");
+//            break;
+//            
+//        case ToolsMenuRowServerTester:
+//            label = NSLocalizedString(@"Server Tester", @"Server Tester  --  menu label");
+//            break;
+//            
+//        case ToolsMenuRowOverlayTester:
+//            label = NSLocalizedString(@"Overlay Tester", @"Overlay Tester  --  menu label");
+//            break;
             
         case ToolsMenuRow_MaxValue:
             break;
@@ -108,20 +108,20 @@
             targetClass = [JSKMenuViewController class];
             break;
             
-        case ToolsMenuRowClearRemoteData:
-            break;
-            
-        case ToolsMenuRowGameTester:
-            targetClass = [JSKMenuViewController class];
-            break;
-
-        case ToolsMenuRowServerTester:
-            targetClass = [JSKMenuViewController class];
-            break;
-            
-        case ToolsMenuRowOverlayTester:
-            targetClass = [OverlayTesterViewController class];
-            break;
+//        case ToolsMenuRowClearRemoteData:
+//            break;
+//            
+//        case ToolsMenuRowGameTester:
+//            targetClass = [JSKMenuViewController class];
+//            break;
+//
+//        case ToolsMenuRowServerTester:
+//            targetClass = [JSKMenuViewController class];
+//            break;
+//            
+//        case ToolsMenuRowOverlayTester:
+//            targetClass = [OverlayTesterViewController class];
+//            break;
             
         case ToolsMenuRow_MaxValue:
             break;
@@ -144,17 +144,17 @@
             break;
         }
             
-        case ToolsMenuRowClearRemoteData:
-            break;
-            
-        case ToolsMenuRowGameTester:
-        {
-            GameTesterMenuItems *items = [[GameTesterMenuItems alloc] init];
-            self.gameTesterMenuItems = items;
-            [items release];
-            return self.gameTesterMenuItems;
-            break;
-        }
+//        case ToolsMenuRowClearRemoteData:
+//            break;
+//            
+//        case ToolsMenuRowGameTester:
+//        {
+//            GameTesterMenuItems *items = [[GameTesterMenuItems alloc] init];
+//            self.gameTesterMenuItems = items;
+//            [items release];
+//            return self.gameTesterMenuItems;
+//            break;
+//        }
             
         case ToolsMenuRow_MaxValue:
             break;

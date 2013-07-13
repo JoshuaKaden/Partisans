@@ -13,10 +13,10 @@
 typedef enum
 {
     ToolsMenuRowAbout,
-    ToolsMenuRowClearRemoteData,
-    ToolsMenuRowGameTester,
-    ToolsMenuRowOverlayTester,
-    ToolsMenuRowServerTester,
+//    ToolsMenuRowClearRemoteData,
+//    ToolsMenuRowGameTester,
+//    ToolsMenuRowOverlayTester,
+//    ToolsMenuRowServerTester,
     ToolsMenuRow_MaxValue
 } ToolsMenuRow;
 

@@ -115,7 +115,10 @@
     NSMutableArray *candidateList = [[NSMutableArray alloc] initWithCapacity:model.missionCandidates.count];
     for (GamePlayer *gamePlayer in model.missionCandidates)
     {
-        [candidateList addObject:gamePlayer.player.intramuralID];
+        if (gamePlayer.player)
+        {
+            [candidateList addObject:gamePlayer.player.intramuralID];
+        }
     }
     self.candidateIDs = [NSArray arrayWithArray:candidateList];
     [candidateList release];

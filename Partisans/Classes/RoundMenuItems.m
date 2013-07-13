@@ -686,7 +686,7 @@
         {
             returnValue = [JSKMenuViewController class];
         }
-        else if ([self isCoordinator])
+        else if ([self isCoordinator] && ![self isReadyForVote])
         {
             returnValue = [JSKMenuViewController class];
         }

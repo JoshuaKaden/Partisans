@@ -1046,7 +1046,17 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     {
         // Let's make sure the copy we're getting is newer than the one we have currently.
         GameEnvoy *currentGame = self.gameEnvoy;
+        if (!currentGame)
+        {
+            return;
+        }
         GameEnvoy *updatedGame = (GameEnvoy *)commandParcel.object;
+        
+        if (![currentGame.intramuralID isEqualToString:updatedGame.intramuralID])
+        {
+            return;
+        }
+        
         if (currentGame.modifiedDate && updatedGame.modifiedDate)
         {
             NSInteger delta = [SystemMessage secondsBetweenDates:currentGame.modifiedDate toDate:updatedGame.modifiedDate];

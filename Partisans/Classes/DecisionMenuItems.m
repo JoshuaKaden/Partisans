@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) RoundEnvoy *currentRound;
 @property (nonatomic, strong) NSTimer *pollingTimer;
+@property (nonatomic, assign) BOOL hasNewRoundStarted;
 
 - (void)gameChanged:(NSNotification *)notification;
 - (void)startMission;
@@ -50,7 +51,16 @@
 
 - (void)gameChanged:(NSNotification *)notification
 {
-    self.currentRound = nil;
+    // This update could mean the end of the current round.
+    if (self.currentRound.roundNumber < [[SystemMessage gameEnvoy] currentRound].roundNumber)
+    {
+        self.hasNewRoundStarted = YES;
+    }
+    else
+    {
+        // This will force a refresh of the round data.
+        self.currentRound = nil;
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
@@ -96,7 +106,7 @@
     [SystemMessage requestGameUpdate];
     
     // This timer polls the host for game changes.
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
     self.pollingTimer = timer;
 }
 
@@ -132,7 +142,10 @@
         }
         else
         {
-            [menuViewController.navigationController popToRootViewControllerAnimated:YES];
+            if (self.hasNewRoundStarted)
+            {
+                [menuViewController.navigationController popToRootViewControllerAnimated:YES];
+            }
         }
     }
 }
@@ -369,7 +382,10 @@
         }
         else
         {
-            returnValue = NSLocalizedString(@"Tap to continue...", @"Tap to continue...  --  label");
+            if (self.hasNewRoundStarted)
+            {
+                returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  label");
+            }
         }
     }
     return returnValue;
