@@ -116,6 +116,8 @@
 		937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
 		937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
 		937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
+		937ED0E11791B28100A95231 /* GameOverMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 937ED0E01791B28100A95231 /* GameOverMenuItems.m */; };
+		937ED0E21791B28100A95231 /* GameOverMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 937ED0E01791B28100A95231 /* GameOverMenuItems.m */; };
 		938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 938144F1178CB6FA000AA437 /* MissionViewController.xib */; };
 		938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
@@ -350,6 +352,8 @@
 		937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateGameOperation.m; path = Classes/CreateGameOperation.m; sourceTree = "<group>"; };
 		937BC0C11747D86D003F42D6 /* GamePlayerEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayerEnvoy.h; path = Classes/GamePlayerEnvoy.h; sourceTree = "<group>"; };
 		937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayerEnvoy.m; path = Classes/GamePlayerEnvoy.m; sourceTree = "<group>"; };
+		937ED0DF1791B28100A95231 /* GameOverMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverMenuItems.h; path = Classes/GameOverMenuItems.h; sourceTree = "<group>"; };
+		937ED0E01791B28100A95231 /* GameOverMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameOverMenuItems.m; path = Classes/GameOverMenuItems.m; sourceTree = "<group>"; };
 		938144F1178CB6FA000AA437 /* MissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MissionViewController.xib; path = Classes/iOS5/MissionViewController.xib; sourceTree = "<group>"; };
 		938429321746C0D30037563D /* AddGamePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddGamePlayerOperation.h; path = Classes/AddGamePlayerOperation.h; sourceTree = "<group>"; };
 		938429331746C0D30037563D /* AddGamePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddGamePlayerOperation.m; path = Classes/AddGamePlayerOperation.m; sourceTree = "<group>"; };
@@ -832,6 +836,8 @@
 				93BF3B521771CABF00B20A71 /* GameDirector.m */,
 				9303BE531746836A0065ADD2 /* GameJoiner.h */,
 				9303BE541746836A0065ADD2 /* GameJoiner.m */,
+				937ED0DF1791B28100A95231 /* GameOverMenuItems.h */,
+				937ED0E01791B28100A95231 /* GameOverMenuItems.m */,
 				9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */,
 				9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */,
 				9358BFE017747E5400FA2DAF /* OperativeAlertMenuItems.h */,
@@ -1112,6 +1118,7 @@
 				935FC548178C2B1F00F0DC8E /* GamePlayer.m in Sources */,
 				935FC54C178C2B1F00F0DC8E /* Mission.m in Sources */,
 				93D124011790363D003523F9 /* AboutMenuItems.m in Sources */,
+				937ED0E11791B28100A95231 /* GameOverMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1192,6 +1199,7 @@
 				935FC549178C2B1F00F0DC8E /* GamePlayer.m in Sources */,
 				935FC54D178C2B1F00F0DC8E /* Mission.m in Sources */,
 				93D124021790363D003523F9 /* AboutMenuItems.m in Sources */,
+				937ED0E21791B28100A95231 /* GameOverMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

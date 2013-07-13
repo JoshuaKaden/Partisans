@@ -750,6 +750,11 @@
     return returnValue;
 }
 
+- (NSArray *)missionEnvoys
+{
+    return self.missionEnvoys;
+}
+
 
 #pragma mark - Commits
 

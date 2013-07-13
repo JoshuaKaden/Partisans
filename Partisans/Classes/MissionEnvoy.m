@@ -271,6 +271,16 @@
     return returnValue;
 }
 
+- (NSUInteger)roundCount
+{
+    if (!self.managedObjectID)
+    {
+        return 0;
+    }
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    Mission *mission = (Mission *)[context objectWithID:self.managedObjectID];
+    return mission.rounds.count;
+}
 
 #pragma mark - Saboteurs and Contributeurs
 

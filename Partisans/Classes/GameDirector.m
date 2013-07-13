@@ -29,6 +29,7 @@
 - (PlayerEnvoy *)chooseCoordinator;
 - (NSUInteger)getNextRoundNumber;
 - (void)saveAndBroadcastGame;
+- (BOOL)isGameOver;
 
 @end
 
@@ -85,12 +86,73 @@
 
 - (void)startNewRound
 {
-    [self createRound];
+    if ([self isGameOver])
+    {
+        [self.gameEnvoy setEndDate:[NSDate date]];
+    }
+    else
+    {
+        [self createRound];
+    }
     [self saveAndBroadcastGame];
 }
 
 
 #pragma mark - Private
+
+
+- (BOOL)isGameOver
+{
+    BOOL returnValue = NO;
+    
+    // If the game already has an end date, then it's most definitely over.
+    GameEnvoy *gameEnvoy = self.gameEnvoy;
+    if (gameEnvoy.endDate)
+    {
+        returnValue = YES;
+    }
+
+    // Does the current mission has at least one round for each player?
+    // If so, that means the voting has gone around the table with no decision.
+    // That means the game is over.
+    if (!returnValue)
+    {
+        MissionEnvoy *currentMission = [gameEnvoy currentMission];
+        if (currentMission.roundCount >= gameEnvoy.numberOfPlayers)
+        {
+            returnValue = YES;
+        }
+    }
+    
+    // Have three missions succeeded? Have three missions failed?
+    // If either, then the game is over.
+    if (!returnValue)
+    {
+        NSUInteger successCount = 0;
+        NSUInteger failCount = 0;
+        for (MissionEnvoy *missionEnvoy in gameEnvoy.missionEnvoys)
+        {
+            if (missionEnvoy.isComplete)
+            {
+                if (missionEnvoy.didSucceed)
+                {
+                    successCount ++;
+                }
+                else
+                {
+                    failCount ++;
+                }
+            }
+        }
+        if (successCount > 2 || failCount > 2)
+        {
+            returnValue = YES;
+        }
+    }
+    
+    return returnValue;
+}
+
 
 - (void)saveAndBroadcastGame
 {

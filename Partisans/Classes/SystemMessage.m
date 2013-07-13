@@ -1138,6 +1138,14 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 #pragma mark - Class methods
 
++ (void)leaveGame
+{
+    SystemMessage *sharedInstance = [self sharedInstance];
+    GameEnvoy *gameEnvoy = sharedInstance.gameEnvoy;
+    [gameEnvoy deleteGame];
+    [sharedInstance setGameEnvoy:nil];
+}
+
 + (UIView *)rootView
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];

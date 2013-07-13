@@ -37,6 +37,7 @@
 - (NSArray *)contributeurs;
 
 - (BOOL)hasPlayerPerformed:(PlayerEnvoy *)playerEnvoy;
+- (NSUInteger)roundCount;
 
 + (MissionEnvoy *)envoyFromManagedObject:(Mission *)managedObject;
 

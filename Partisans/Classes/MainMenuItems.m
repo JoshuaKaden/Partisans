@@ -9,6 +9,7 @@
 #import "MainMenuItems.h"
 
 #import "GameEnvoy.h"
+#import "GameOverMenuItems.h"
 #import "GamePlayerEnvoy.h"
 #import "ImageEnvoy.h"
 #import "MissionEnvoy.h"
@@ -31,6 +32,7 @@
 @property (nonatomic, strong) PlayGameMenuItems *playGameMenuItems;
 @property (nonatomic, strong) SetupGameMenuItems *setupGameMenuItems;
 @property (nonatomic, strong) ToolsMenuItems *toolsMenuItems;
+@property (nonatomic, strong) GameOverMenuItems *gameOverMenuItems;
 
 @end
 
@@ -41,6 +43,7 @@
 @synthesize playGameMenuItems = m_playGameMenuItems;
 @synthesize setupGameMenuItems = m_setupGameMenuItems;
 @synthesize toolsMenuItems = m_toolsMenuItems;
+@synthesize gameOverMenuItems = m_gameOverMenuItems;
 
 
 - (void)dealloc
@@ -49,6 +52,7 @@
     [m_playGameMenuItems release];
     [m_setupGameMenuItems release];
     [m_toolsMenuItems release];
+    [m_gameOverMenuItems release];
     
     [super dealloc];
 }
@@ -58,13 +62,24 @@
     // Are we in a game?
     if ([SystemMessage gameEnvoy])
     {
+        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+        
         JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
         BOOL shouldPushMenuVC = YES;
-        if ([SystemMessage gameEnvoy].startDate)
+        
+        if (gameEnvoy.endDate)
+        {
+            // The game is over.
+            GameOverMenuItems *items = [[GameOverMenuItems alloc] init];
+            self.gameOverMenuItems = items;
+            [vc setMenuItems:items];
+            [items release];
+        }
+        
+        else if (gameEnvoy.startDate)
         {
             // The game has started.
             PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
-            GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
             MissionEnvoy *missionEnvoy = [gameEnvoy currentMission];
             
@@ -85,6 +100,7 @@
                     [items release];
                 }
             }
+            
             else if (gamePlayerEnvoy.hasAlertBeenShown || [gameEnvoy currentRound].roundNumber > 1 || [gameEnvoy currentRound].candidates.count > 0)
             {
                 RoundMenuItems *items = [[RoundMenuItems alloc] init];
@@ -98,6 +114,7 @@
                 [items release];
             }
         }
+        
         else
         {
             // Let's go to the setup screen.
@@ -106,6 +123,7 @@
             [vc setMenuItems:items];
             [items release];
         }
+        
         if (shouldPushMenuVC)
         {
             [menuViewController invokePush:YES viewController:vc];

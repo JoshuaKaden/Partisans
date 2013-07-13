@@ -42,6 +42,7 @@
 - (MissionEnvoy *)missionEnvoyFromNumber:(NSUInteger)missionNumber;
 - (MissionEnvoy *)currentMission;
 - (MissionEnvoy *)firstIncompleteMission;
+- (NSArray *)missionEnvoys;
 - (RoundEnvoy *)roundEnvoyFromNumber:(NSUInteger)roundNumber;
 - (RoundEnvoy *)currentRound;
 - (void)addRound:(RoundEnvoy *)roundEnvoy;

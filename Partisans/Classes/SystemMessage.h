@@ -61,5 +61,6 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 + (void)browseServers;
 + (void)stopBrowsingServers;
 + (void)requestGameUpdate;
++ (void)leaveGame;
 
 @end
