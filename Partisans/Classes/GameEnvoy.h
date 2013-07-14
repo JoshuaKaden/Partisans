@@ -28,6 +28,7 @@
 
 @property (readonly) NSUInteger operativeCount;
 @property (readonly) NSUInteger roundCount;
+@property (nonatomic, readonly) NSArray *missionEnvoys;
 
 - (NSArray *)players;
 - (NSArray *)operatives;
@@ -42,7 +43,6 @@
 - (MissionEnvoy *)missionEnvoyFromNumber:(NSUInteger)missionNumber;
 - (MissionEnvoy *)currentMission;
 - (MissionEnvoy *)firstIncompleteMission;
-- (NSArray *)missionEnvoys;
 - (RoundEnvoy *)roundEnvoyFromNumber:(NSUInteger)roundNumber;
 - (RoundEnvoy *)currentRound;
 - (void)addRound:(RoundEnvoy *)roundEnvoy;

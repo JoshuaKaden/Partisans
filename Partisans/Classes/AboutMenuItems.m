@@ -72,6 +72,14 @@
     return returnValue;
 }
 
+- (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == AboutRowName)
+    {
+        
+    }
+}
+
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
     Class returnValue = nil;

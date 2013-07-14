@@ -258,8 +258,8 @@
 		9365109C1741578C00F2AD06 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9365109E1741578C00F2AD06 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		936510A01741578C00F2AD06 /* Partisans-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Partisans-Prefix.pch"; sourceTree = "<group>"; };
-		936510A11741578C00F2AD06 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		936510A21741578C00F2AD06 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		936510A11741578C00F2AD06 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
+		936510A21741578C00F2AD06 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		936510A41741578C00F2AD06 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		936510A61741578C00F2AD06 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		936510A81741578C00F2AD06 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -400,13 +400,13 @@
 		93FECAAF174521A40046529A /* ProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressCell.m; path = Classes/ProgressCell.m; sourceTree = "<group>"; };
 		93FECAB0174521A40046529A /* ProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgressCell.xib; path = Classes/ProgressCell.xib; sourceTree = "<group>"; };
 		93FECB58174547840046529A /* Partisans iOS5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Partisans iOS5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		93FECB59174547850046529A /* Partisans copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Partisans copy-Info.plist"; path = "/Users/jkaden/work/ObjC Apps/Partisans/Partisans copy-Info.plist"; sourceTree = "<absolute>"; };
+		93FECB59174547850046529A /* Partisans copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Partisans copy-Info.plist"; path = "/Users/jkaden/work/ObjC Apps/Partisans/Partisans/Partisans copy-Info.plist"; sourceTree = "<absolute>"; };
 		93FECB5B174548AD0046529A /* ColorPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColorPickerViewController.xib; path = Classes/iOS5/ColorPickerViewController.xib; sourceTree = "<group>"; };
 		93FECB5C174548AD0046529A /* SlickEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SlickEditView.xib; path = Classes/iOS5/SlickEditView.xib; sourceTree = "<group>"; };
 		93FECB60174549D40046529A /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerViewController.xib; path = Classes/iOS5/PlayerViewController.xib; sourceTree = "<group>"; };
 		93FFD18C17835F6600ADCB44 /* OverlayTesterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OverlayTesterViewController.h; path = Classes/OverlayTesterViewController.h; sourceTree = "<group>"; };
 		93FFD18D17835F6600ADCB44 /* OverlayTesterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OverlayTesterViewController.m; path = Classes/OverlayTesterViewController.m; sourceTree = "<group>"; };
-		93FFD19017835FF600ADCB44 /* OverlayTesterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OverlayTesterViewController.xib; sourceTree = "<group>"; };
+		93FFD19017835FF600ADCB44 /* OverlayTesterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OverlayTesterViewController.xib; path = Classes/OverlayTesterViewController.xib; sourceTree = "<group>"; };
 		93FFD1941783635100ADCB44 /* waitOverLay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "waitOverLay@2x.png"; path = "Arts/waitOverLay@2x.png"; sourceTree = "<group>"; };
 		93FFD1951783635100ADCB44 /* waitOverLay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = waitOverLay.png; path = Arts/waitOverLay.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
