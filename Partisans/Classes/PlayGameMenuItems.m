@@ -10,6 +10,7 @@
 
 #import "JoinGameViewController.h"
 #import "SetupGameMenuItems.h"
+#import "SystemMessage.h"
 
 
 @interface PlayGameMenuItems ()

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) RoundEnvoy *currentRound;
 @property (nonatomic, strong) NSTimer *pollingTimer;
 @property (nonatomic, assign) BOOL hasNewRoundStarted;
+@property (nonatomic, assign) NSUInteger thisRoundNumber;
 
 - (void)gameChanged:(NSNotification *)notification;
 - (void)startMission;
@@ -35,6 +36,7 @@
 
 @synthesize currentRound = m_currentRound;
 @synthesize pollingTimer = m_pollingTimer;
+@synthesize thisRoundNumber = m_thisRoundNumber;
 
 
 - (void)dealloc
@@ -52,15 +54,12 @@
 - (void)gameChanged:(NSNotification *)notification
 {
     // This update could mean the end of the current round.
-    if (self.currentRound.roundNumber < [[SystemMessage gameEnvoy] currentRound].roundNumber)
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+    if (self.thisRoundNumber < [gameEnvoy currentRound].roundNumber)
     {
         self.hasNewRoundStarted = YES;
     }
-    else
-    {
-        // This will force a refresh of the round data.
-        self.currentRound = nil;
-    }
+    self.currentRound = [gameEnvoy roundEnvoyFromNumber:self.thisRoundNumber];
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
@@ -69,7 +68,9 @@
 {
     if (!m_currentRound)
     {
-        self.currentRound = [[SystemMessage gameEnvoy] currentRound];
+        RoundEnvoy *currentRound = [[SystemMessage gameEnvoy] currentRound];
+        self.currentRound = currentRound;
+        self.thisRoundNumber = currentRound.roundNumber;
     }
     return m_currentRound;
 }
@@ -105,9 +106,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [SystemMessage requestGameUpdate];
     
-    // This timer polls the host for game changes.
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
-    self.pollingTimer = timer;
+//    // This timer polls the host for game changes.
+//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
+//    self.pollingTimer = timer;
 }
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController

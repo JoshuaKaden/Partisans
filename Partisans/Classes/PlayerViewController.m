@@ -548,6 +548,11 @@
         return;
     }
     
+    // On a change, update the image cache.
+    [SystemMessage clearImageCache];
+//    [SystemMessage cacheImage:self.imageView.image key:self.playerEnvoy.intramuralID];
+  
+    
     [self.playerEnvoy commitAndSave];
     [self enterViewMode];
     

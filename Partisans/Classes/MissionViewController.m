@@ -33,6 +33,7 @@
 @property (nonatomic, strong) HostFinder *hostFinder;
 @property (nonatomic, strong) NSString *responseKey;
 @property (nonatomic, assign) BOOL hasActionBeenConfirmed;
+@property (nonatomic, strong) NSTimer *timer;
 
 - (IBAction)performButtonPressed:(id)sender;
 - (IBAction)readySwitchFlicked:(id)sender;
@@ -42,6 +43,7 @@
 - (void)performMissionLocally:(BOOL)shouldSucceed;
 - (void)connectAndPerformMission:(BOOL)shouldSucceed;
 - (void)gameChanged:(NSNotification *)notification;
+- (void)timerFired:(id)sender;
 
 @end
 
@@ -62,12 +64,14 @@
 @synthesize hostFinder = m_hostFinder;
 @synthesize responseKey = m_responseKey;
 @synthesize hasActionBeenConfirmed = m_hasActionBeenConfirmed;
+@synthesize timer = m_timer;
 
 
 - (void)dealloc
 {
     [self.hostFinder setDelegate:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.timer invalidate];
     
     [m_codenameLabel release];
     [m_performButton release];
@@ -81,6 +85,7 @@
     [m_overlayer release];
     [m_hostFinder release];
     [m_responseKey release];
+    [m_timer release];
     
     [super dealloc];
 }
@@ -122,6 +127,30 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)timerFired:(id)sender
+{
+    static NSUInteger timeoutCount = 0;
+    timeoutCount++;
+    if (timeoutCount == 1)
+    {
+        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Is the Host available?", @"Is the Host available?  --  message")];
+    }
+    else if (timeoutCount == 2)
+    {
+        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Trying one last time...", @"Trying one last time...  --  message")];
+    }
+    else
+    {
+        [self.timer invalidate];
+        self.timer = nil;
+        [self.overlayer removeWaitOverlay];
+        timeoutCount = 0;
+        [self.performButton setEnabled:YES];
+        [self.readySwitch setEnabled:YES];
+        [self.sabotageSwitch setEnabled:YES];
+    }
+}
 
 
 #pragma mark - Mission
@@ -190,6 +219,12 @@
     [self.hostFinder connect];
     
     self.shouldSucceed = shouldSucceed;
+    
+    if (!self.timer)
+    {
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+        self.timer = timer;
+    }
 }
 
 

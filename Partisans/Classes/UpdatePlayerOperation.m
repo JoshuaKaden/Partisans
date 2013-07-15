@@ -8,6 +8,7 @@
 
 #import "UpdatePlayerOperation.h"
 
+#import "ImageEnvoy.h"
 #import "JSKDataMiner.h"
 #import "PlayerEnvoy.h"
 #import "SystemMessage.h"
@@ -65,6 +66,9 @@
     
     
     // Here is the actual work of the class.
+    
+    [SystemMessage clearImageCache];
+//    [SystemMessage cacheImage:self.envoy.picture.image key:self.envoy.intramuralID];
     
     if ([self.envoy respondsToSelector:@selector(commitInContext:)]) {
         [self.envoy performSelector:@selector(commitInContext:) withObject:context];

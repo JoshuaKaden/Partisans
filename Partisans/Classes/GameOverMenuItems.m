@@ -57,7 +57,7 @@
     
     if (successfulMissionCount > 2)
     {
-        NSString *prefix = NSLocalizedString(@"The group successfully completed", @"The group successfully completed  --  label prefix");
+        NSString *prefix = NSLocalizedString(@"The group completed", @"The group completed  --  label prefix");
         NSString *numberString = [SystemMessage spellOutInteger:successfulMissionCount];
         NSString *suffix = NSLocalizedString(@"missions.", @"missions.  --  label suffix");
         returnValue = [NSString stringWithFormat:@"%@ %@ %@", prefix, numberString, suffix];
@@ -71,7 +71,7 @@
     }
     else
     {
-        returnValue = NSLocalizedString(@"The group was unable to reach a consensus during team selection.", @"The group was unable to reach a consensus during team selection.  --  label");
+        returnValue = NSLocalizedString(@"You were unable to reach a consensus.", @"You were unable to reach a consensus.  --  label");
     }
     
     return returnValue;

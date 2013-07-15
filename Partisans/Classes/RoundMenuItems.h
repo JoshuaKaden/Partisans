@@ -12,8 +12,8 @@
 typedef enum
 {
     RoundMenuSectionMission,
-    RoundMenuSectionTeam,
     RoundMenuSectionCommand,
+    RoundMenuSectionTeam,
     RoundMenuSection_MaxValue
 } RoundMenuSection;
 

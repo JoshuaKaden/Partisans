@@ -453,7 +453,7 @@
             
         case SetupGameMenuSectionAwaitingApproval:
         case SetupGameMenuSectionPlayers:
-            returnValue = UITableViewCellAccessoryDisclosureIndicator;
+//            returnValue = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
             
@@ -640,27 +640,27 @@
         }
     }
     
-    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowStatus)
-    {
-        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-        PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
-        if (gameEnvoy.startDate)
-        {
-            GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
-            if (!gamePlayerEnvoy.hasAlertBeenShown)
-            {
-                return NSLocalizedString(@"Hide your screen!", @"Hide your screen!  --  sub label text");
-            }
-            MissionEnvoy *missionEnvoy = [gameEnvoy currentMission];
-            if (missionEnvoy.hasStarted)
-            {
-                if (([missionEnvoy isPlayerOnTeam:playerEnvoy]) && (![missionEnvoy hasPlayerPerformed:playerEnvoy]))
-                {
-                    return NSLocalizedString(@"Hide your screen!", @"Hide your screen!  --  sub label text");
-                }
-            }
-        }
-    }
+//    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowStatus)
+//    {
+//        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+//        PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+//        if (gameEnvoy.startDate)
+//        {
+//            GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
+//            if (!gamePlayerEnvoy.hasAlertBeenShown)
+//            {
+//                return NSLocalizedString(@"Hide your screen!", @"Hide your screen!  --  sub label text");
+//            }
+//            MissionEnvoy *missionEnvoy = [gameEnvoy currentMission];
+//            if (missionEnvoy.hasStarted)
+//            {
+//                if (([missionEnvoy isPlayerOnTeam:playerEnvoy]) && (![missionEnvoy hasPlayerPerformed:playerEnvoy]))
+//                {
+//                    return NSLocalizedString(@"Hide your screen!", @"Hide your screen!  --  sub label text");
+//                }
+//            }
+//        }
+//    }
     
     return nil;
 }
@@ -764,13 +764,13 @@
             
             
         case SetupGameMenuSectionAwaitingApproval:
-            returnValue = [JSKMenuViewController class];
+//            returnValue = [JSKMenuViewController class];
             break;
             
             
             
         case SetupGameMenuSectionPlayers:
-            returnValue = [JSKMenuViewController class];
+//            returnValue = [JSKMenuViewController class];
             break;
             
             
@@ -819,10 +819,10 @@
         case SetupGameMenuSectionAwaitingApproval:
         case SetupGameMenuSectionPlayers:
         {
-            DossierMenuItems *items = [[DossierMenuItems alloc] init];
-            self.dossierMenuItems = items;
-            [items release];
-            return self.dossierMenuItems;
+//            DossierMenuItems *items = [[DossierMenuItems alloc] init];
+//            self.dossierMenuItems = items;
+//            [items release];
+//            return self.dossierMenuItems;
             break;
         }
             

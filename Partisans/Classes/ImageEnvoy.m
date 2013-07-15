@@ -7,8 +7,10 @@
 //
 
 #import "ImageEnvoy.h"
+
 #import "Image.h"
 #import "JSKDataMiner.h"
+#import "SystemMessage.h"
 
 @implementation ImageEnvoy
 
@@ -44,14 +46,24 @@
     if (self)
     {
         self.managedObjectID = managedObject.objectID;
-        self.intramuralID    = managedObject.intramuralID;
+        self.intramuralID = managedObject.intramuralID;
         if (!self.intramuralID)
         {
             self.intramuralID = [[self.managedObjectID URIRepresentation] absoluteString];
         }
         
         self.dateSaved = managedObject.dateSaved;
-        self.image = [UIImage imageWithData:managedObject.imageData];
+        
+        
+        UIImage *image = [SystemMessage cachedImage:self.intramuralID];
+        if (!image)
+        {
+            image = [UIImage imageWithData:managedObject.imageData];
+            [SystemMessage cacheImage:image key:self.intramuralID];
+        }
+        self.image = image;
+        
+        
         self.imageDate = managedObject.imageDate;
         self.imageLatitude = [managedObject.imageLatitude doubleValue];
         self.imageLongitude = [managedObject.imageLongitude doubleValue];

@@ -39,13 +39,16 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 + (PlayerEnvoy *)playerEnvoy;
 + (GameEnvoy *)gameEnvoy;
 + (GameDirector *)gameDirector;
-+ (UIImage*)imageWithImage:(UIImage*)sourceImage scaledToSizeWithSameAspectRatio:(CGSize)targetSize;
++ (UIImage *)imageWithImage:(UIImage*)sourceImage scaledToSizeWithSameAspectRatio:(CGSize)targetSize;
 + (NSInteger)secondsBetweenDates:(NSDate *)fromDate toDate:(NSDate *)toDate;
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate;
 + (NSString *)spellOutNumber:(NSNumber *)number;
 + (NSString *)spellOutInteger:(NSInteger)integer;
 + (NSString *)buildRandomString;
 + (UIView *)rootView;
++ (UIImage *)cachedImage:(NSString *)key;
++ (void)cacheImage:(UIImage *)image key:(NSString *)key;
++ (void)clearImageCache;
 
 + (BOOL)isPlayerOnline;
 + (void)putPlayerOnline;
