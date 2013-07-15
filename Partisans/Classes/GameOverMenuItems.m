@@ -7,10 +7,75 @@
 //
 
 #import "GameOverMenuItems.h"
+
+#import "GameEnvoy.h"
+#import "MissionEnvoy.h"
 #import "SystemMessage.h"
 
 
+
+@interface GameOverMenuItems ()
+
+- (NSString *)reasonLabel;
+- (NSString *)reasonSubLabel;
+
+@end
+
+
 @implementation GameOverMenuItems
+
+
+- (NSString *)reasonLabel
+{
+    NSString *returnValue = nil;
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+    NSUInteger successfulMissionCount = [gameEnvoy successfulMissionCount];
+    NSUInteger failedMissionCount = [gameEnvoy failedMissionCount];
+    
+    if (successfulMissionCount > 2)
+    {
+        returnValue = NSLocalizedString(@"Mission Success", @"Mission Success  --  label");
+    }
+    else if (failedMissionCount > 2)
+    {
+        returnValue = NSLocalizedString(@"Sabotage", @"Sabotage  --  label");
+    }
+    else
+    {
+        returnValue = NSLocalizedString(@"Deadlock", @"Deadlock  --  label");
+    }
+    
+    return returnValue;
+}
+
+- (NSString *)reasonSubLabel
+{
+    NSString *returnValue = nil;
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+    NSUInteger successfulMissionCount = [gameEnvoy successfulMissionCount];
+    NSUInteger failedMissionCount = [gameEnvoy failedMissionCount];
+    
+    if (successfulMissionCount > 2)
+    {
+        NSString *prefix = NSLocalizedString(@"The group successfully completed", @"The group successfully completed  --  label prefix");
+        NSString *numberString = [SystemMessage spellOutInteger:successfulMissionCount];
+        NSString *suffix = NSLocalizedString(@"missions.", @"missions.  --  label suffix");
+        returnValue = [NSString stringWithFormat:@"%@ %@ %@", prefix, numberString, suffix];
+    }
+    else if (failedMissionCount > 2)
+    {
+        NSString *prefix = NSLocalizedString(@"The Operatives sabotaged", @"The Operatives sabotaged  --  label prefix");
+        NSString *numberString = [SystemMessage spellOutInteger:failedMissionCount];
+        NSString *suffix = NSLocalizedString(@"missions.", @"missions.  --  label suffix");
+        returnValue = [NSString stringWithFormat:@"%@ %@ %@", prefix, numberString, suffix];
+    }
+    else
+    {
+        returnValue = NSLocalizedString(@"The group was unable to reach a consensus during team selection.", @"The group was unable to reach a consensus during team selection.  --  label");
+    }
+    
+    return returnValue;
+}
 
 
 #pragma mark - Menu View Controller delegate
@@ -77,6 +142,7 @@
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController labelAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *returnValue = nil;
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     GameOverSection menuSection = (GameOverSection)indexPath.section;
     switch (menuSection)
     {
@@ -86,11 +152,18 @@
             switch (menuRow)
             {
                 case GameOverSummaryRowResult:
-                    
+                    if ([gameEnvoy successfulMissionCount] > 2)
+                    {
+                        returnValue = NSLocalizedString(@"Victory for the Partisans!", @"Victory for the Partisans!  --  label");
+                    }
+                    else
+                    {
+                        returnValue = NSLocalizedString(@"Victory for the Operatives!", @"Victory for the Operatives!  --  label");
+                    }
                     break;
                     
                 case GameOverSummaryRowReason:
-                    
+                    returnValue = [self reasonLabel];
                     break;
                     
                 case GameOverSummaryRow_MaxValue:
@@ -121,11 +194,10 @@
             switch (menuRow)
             {
                 case GameOverSummaryRowResult:
-                    
                     break;
                     
                 case GameOverSummaryRowReason:
-                    
+                    returnValue = [self reasonSubLabel];
                     break;
                     
                 case GameOverSummaryRow_MaxValue:

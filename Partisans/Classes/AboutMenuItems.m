@@ -76,7 +76,11 @@
 {
     if (indexPath.row == AboutRowName)
     {
-        
+        return [UIImage imageNamed:@"Icon"];
+    }
+    else
+    {
+        return nil;
     }
 }
 

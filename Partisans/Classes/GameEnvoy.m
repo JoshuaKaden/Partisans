@@ -750,6 +750,37 @@
     return returnValue;
 }
 
+- (NSUInteger)successfulMissionCount
+{
+    NSUInteger successCount = 0;
+    for (MissionEnvoy *missionEnvoy in self.missionEnvoys)
+    {
+        if (missionEnvoy.isComplete)
+        {
+            if (missionEnvoy.didSucceed)
+            {
+                successCount ++;
+            }
+        }
+    }
+    return successCount;
+}
+
+- (NSUInteger)failedMissionCount
+{
+    NSUInteger failCount = 0;
+    for (MissionEnvoy *missionEnvoy in self.missionEnvoys)
+    {
+        if (missionEnvoy.isComplete)
+        {
+            if (!missionEnvoy.didSucceed)
+            {
+                failCount ++;
+            }
+        }
+    }
+    return failCount;
+}
 
 
 #pragma mark - Commits

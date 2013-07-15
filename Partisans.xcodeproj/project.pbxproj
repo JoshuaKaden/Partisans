@@ -1300,7 +1300,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
-				INFOPLIST_FILE = "Partisans copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Partisans/Partisans copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "Partisans iOS5";
 				WRAPPER_EXTENSION = app;
@@ -1312,7 +1312,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
-				INFOPLIST_FILE = "Partisans copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Partisans/Partisans copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "Partisans iOS5";
 				WRAPPER_EXTENSION = app;

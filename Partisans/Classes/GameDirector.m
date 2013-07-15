@@ -319,8 +319,15 @@
     
     if (candidates)
     {
-        NSUInteger coordinatorIndex = arc4random() % (candidates.count - 1);
-        returnValue = [candidates objectAtIndex:coordinatorIndex];
+        if (candidates.count == 1)
+        {
+            returnValue = [candidates objectAtIndex:0];
+        }
+        else
+        {
+            NSUInteger coordinatorIndex = arc4random() % (candidates.count - 1);
+            returnValue = [candidates objectAtIndex:coordinatorIndex];
+        }
     }
     return returnValue;
 }
