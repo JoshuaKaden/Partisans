@@ -62,5 +62,6 @@
 - (void)commit;
 - (void)commitAndSave;
 - (void)commitInContext:(NSManagedObjectContext *)context;
+- (void)commitModifiedDate;
 
 @end

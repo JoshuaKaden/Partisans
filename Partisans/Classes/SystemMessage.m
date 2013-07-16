@@ -29,6 +29,7 @@
 #import "ServerBrowserDelegate.h"
 #import "UpdateGameOperation.h"
 #import "UpdatePlayerOperation.h"
+#import "UpdateEnvoysOperation.h"
 #import "VoteEnvoy.h"
 
 
@@ -81,7 +82,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 - (void)sendDigestTo:(NSString *)toPeerID;
 - (NSDictionary *)buildDigestFor:(NSString *)forPeerID;
 - (void)broadcastPlayerData:(NSString *)peerID;
-- (void)sendGameUpdateTo:(NSString *)peerID modifiedDate:(NSDate *)modifiedDate;
+- (void)sendGameUpdateTo:(NSString *)peerID modifiedDate:(NSDate *)modifiedDate shouldSendAllData:(BOOL)shouldSendAllData;
 - (void)reloadGame:(GameEnvoy *)gameEnvoy;
 
 @end
@@ -128,6 +129,10 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 - (void)reloadGame:(GameEnvoy *)gameEnvoy
 {
+    if (!gameEnvoy)
+    {
+        gameEnvoy = self.gameEnvoy;
+    }
     GameEnvoy *updatedGame = [GameEnvoy envoyFromIntramuralID:gameEnvoy.intramuralID];
     [self setGameEnvoy:updatedGame];
 }
@@ -154,8 +159,9 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 + (void)cacheImage:(UIImage *)image key:(NSString *)key
 {
+    UIImage *smallerImage = [self imageWithImage:image scaledToSizeWithSameAspectRatio:CGSizeMake(44.0, 44.0)];
     NSCache *cache = [self sharedInstance].imageCache;
-    [cache setObject:image forKey:key];
+    [cache setObject:smallerImage forKey:key];
 }
 
 + (void)clearImageCache
@@ -275,7 +281,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         // Make sure this player isn't already in the game.
         if ([gameEnvoy isPlayerInGame:playerEnvoy])
         {
-            [self sendGameUpdateTo:playerEnvoy.peerID modifiedDate:nil];
+            [self sendGameUpdateTo:playerEnvoy.peerID modifiedDate:nil shouldSendAllData:YES];
             proceed = NO;
         }
     }
@@ -310,15 +316,9 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 }
 
 
-- (void)sendGameUpdateTo:(NSString *)peerID modifiedDate:(NSDate *)modifiedDate
+- (void)sendGameUpdateTo:(NSString *)peerID modifiedDate:(NSDate *)modifiedDate shouldSendAllData:(BOOL)shouldSendAllData
 {
-    GameEnvoy *gameEnvoy = self.gameEnvoy;
-    if ([SystemMessage secondsBetweenDates:modifiedDate toDate:gameEnvoy.modifiedDate] > 0 || !modifiedDate)
-    {
-        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:peerID from:self.playerEnvoy.peerID object:gameEnvoy];
-        [self.netHost sendCommandParcel:parcel];
-        [parcel release];
-    }
+    [[SystemMessage gameDirector] sendGameUpdateTo:peerID modifiedDate:modifiedDate shouldSendAllData:shouldSendAllData];
 }
 
 
@@ -835,7 +835,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 - (void)netHost:(NetHost *)netHost receivedCommandParcel:(JSKCommandParcel *)commandParcel
 {
-    switch (commandParcel.commandParcelType) {
+    switch (commandParcel.commandParcelType)
+    {
         case JSKCommandParcelTypeDigest:
             // A player will not send this.
             break;
@@ -846,17 +847,18 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             NSDictionary *dictionary = (NSDictionary *)commandParcel.object;
             NSString *entity = [dictionary valueForKey:@"entity"];
             NSDate *otherDate = [dictionary valueForKey:@"modifiedDate"];
+            BOOL shouldSendAllData = [[dictionary valueForKey:@"shouldSendAllData"] boolValue];
             if ([entity isEqualToString:@"Player"])
             {
                 [self processDigest:[NSDictionary dictionaryWithObject:otherDate forKey:otherID]];
             }
             else if ([entity isEqualToString:@"Game"])
             {
-                [self sendGameUpdateTo:otherID modifiedDate:otherDate];
+                [self sendGameUpdateTo:otherID modifiedDate:otherDate shouldSendAllData:shouldSendAllData];
             }
             break;
         }
-            
+        
         case JSKCommandParcelTypeResponse:
             break;
             
@@ -1115,7 +1117,34 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         [op release];
         return;
     }
+    
+    
+    // Save the envoys locally.
+    if ([object isKindOfClass:[NSArray class]])
+    {
+        GameEnvoy *currentGame = self.gameEnvoy;
+        if (!currentGame)
+        {
+            return;
+        }
+        NSArray *envoys = (NSArray *)commandParcel.object;
+        
+        UpdateEnvoysOperation *op = [[UpdateEnvoysOperation alloc] initWithEnvoys:envoys];
+        [op setCompletionBlock:^(void)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^(void)
+            {
+                [[SystemMessage sharedInstance] reloadGame:currentGame];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+            });
+        }];
+        NSOperationQueue *queue = [SystemMessage mainQueue];
+        [queue addOperation:op];
+        [op release];
+        return;
+    }
 }
+
 
 - (void)netPlayer:(NetPlayer *)netPlayer receivedCommandParcel:(JSKCommandParcel *)commandParcel respondingTo:(NSObject<NSCoding> *)inResponseTo
 {

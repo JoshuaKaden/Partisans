@@ -133,6 +133,10 @@
 		9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
 		939F36881779FEEE00A7B766 /* RoundMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F36871779FEEE00A7B766 /* RoundMenuItems.m */; };
 		939F36891779FEEE00A7B766 /* RoundMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F36871779FEEE00A7B766 /* RoundMenuItems.m */; };
+		93B2DE4E1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE4D1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m */; };
+		93B2DE4F1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE4D1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m */; };
+		93B2DE5217958E2200FFC1D5 /* GamePrecis.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE5117958E2200FFC1D5 /* GamePrecis.m */; };
+		93B2DE5317958E2200FFC1D5 /* GamePrecis.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE5117958E2200FFC1D5 /* GamePrecis.m */; };
 		93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
@@ -369,6 +373,10 @@
 		9398A9D1177224EF00E5D31C /* Scorecard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Scorecard.m; path = Classes/Scorecard.m; sourceTree = "<group>"; };
 		939F36861779FEEE00A7B766 /* RoundMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundMenuItems.h; path = Classes/RoundMenuItems.h; sourceTree = "<group>"; };
 		939F36871779FEEE00A7B766 /* RoundMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundMenuItems.m; path = Classes/RoundMenuItems.m; sourceTree = "<group>"; };
+		93B2DE4C1794C0DA00FFC1D5 /* UpdateEnvoysOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateEnvoysOperation.h; path = Classes/UpdateEnvoysOperation.h; sourceTree = "<group>"; };
+		93B2DE4D1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateEnvoysOperation.m; path = Classes/UpdateEnvoysOperation.m; sourceTree = "<group>"; };
+		93B2DE5017958E2200FFC1D5 /* GamePrecis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePrecis.h; path = Classes/GamePrecis.h; sourceTree = "<group>"; };
+		93B2DE5117958E2200FFC1D5 /* GamePrecis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePrecis.m; path = Classes/GamePrecis.m; sourceTree = "<group>"; };
 		93BF3B511771CABF00B20A71 /* GameDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDirector.h; path = Classes/GameDirector.h; sourceTree = "<group>"; };
 		93BF3B521771CABF00B20A71 /* GameDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameDirector.m; path = Classes/GameDirector.m; sourceTree = "<group>"; };
 		93BF3B551771CEA500B20A71 /* MissionEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionEnvoy.h; path = Classes/MissionEnvoy.h; sourceTree = "<group>"; };
@@ -801,6 +809,8 @@
 				93C442E817511B15000DEC63 /* UpdateGameOperation.m */,
 				9365110917415B0C00F2AD06 /* UpdatePlayerOperation.h */,
 				9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */,
+				93B2DE4C1794C0DA00FFC1D5 /* UpdateEnvoysOperation.h */,
+				93B2DE4D1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m */,
 			);
 			name = Operations;
 			sourceTree = "<group>";
@@ -838,6 +848,8 @@
 				9303BE541746836A0065ADD2 /* GameJoiner.m */,
 				937ED0DF1791B28100A95231 /* GameOverMenuItems.h */,
 				937ED0E01791B28100A95231 /* GameOverMenuItems.m */,
+				93B2DE5017958E2200FFC1D5 /* GamePrecis.h */,
+				93B2DE5117958E2200FFC1D5 /* GamePrecis.m */,
 				9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */,
 				9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */,
 				9358BFE017747E5400FA2DAF /* OperativeAlertMenuItems.h */,
@@ -1119,6 +1131,8 @@
 				935FC54C178C2B1F00F0DC8E /* Mission.m in Sources */,
 				93D124011790363D003523F9 /* AboutMenuItems.m in Sources */,
 				937ED0E11791B28100A95231 /* GameOverMenuItems.m in Sources */,
+				93B2DE4E1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */,
+				93B2DE5217958E2200FFC1D5 /* GamePrecis.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1200,6 +1214,8 @@
 				935FC54D178C2B1F00F0DC8E /* Mission.m in Sources */,
 				93D124021790363D003523F9 /* AboutMenuItems.m in Sources */,
 				937ED0E21791B28100A95231 /* GameOverMenuItems.m in Sources */,
+				93B2DE4F1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */,
+				93B2DE5317958E2200FFC1D5 /* GamePrecis.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

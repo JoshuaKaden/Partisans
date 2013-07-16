@@ -178,7 +178,7 @@
     {
         [SystemMessage putPlayerOnline];
     }
-    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:self.gameEnvoy];
+    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:[NSArray arrayWithObject:missionEnvoy]];
     [SystemMessage sendParcelToPlayers:parcel];
     [parcel release];
     

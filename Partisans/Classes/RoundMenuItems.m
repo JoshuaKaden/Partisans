@@ -204,7 +204,7 @@
     {
         [SystemMessage putPlayerOnline];
     }
-    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:self.gameEnvoy];
+    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:[NSArray arrayWithObject:self.currentRound]];
     [SystemMessage sendParcelToPlayers:parcel];
     [parcel release];
 }
@@ -376,14 +376,7 @@
     self.gameEnvoy = nil;
     self.currentRound = nil;
     self.currentMission = nil;
-//    if ([self isVotingComplete] || [self hasVoted])
-//    {
-//        [self goToDecisionScreen:menuViewController];
-//    }
-//    else
-//    {
-        [SystemMessage requestGameUpdate];
-//    }
+    [SystemMessage requestGameUpdate];
 }
 
 

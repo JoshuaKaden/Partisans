@@ -13,5 +13,6 @@
 - (void)startGame;
 - (void)startMission;
 - (void)startNewRound;
+- (void)sendGameUpdateTo:(NSString *)peerID modifiedDate:(NSDate *)modifiedDate shouldSendAllData:(BOOL)shouldSendAllData;
 
 @end

@@ -785,6 +785,26 @@
 
 #pragma mark - Commits
 
+- (void)commitModifiedDate
+{
+    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
+    if (!self.managedObjectID)
+    {
+        // Bail in this case.
+        // Should not happen however.
+        return;
+    }
+    Game *game = (Game *)[context objectWithID:self.managedObjectID];
+    if (!game)
+    {
+        // Something badly wrong in this case.
+        debugLog(@"Problem!!");
+        return;
+    }
+    
+    game.modifiedDate = self.modifiedDate;
+}
+
 - (void)deleteGame
 {
     NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];

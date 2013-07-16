@@ -10,6 +10,7 @@
 
 #import "GameEnvoy.h"
 #import "GamePlayerEnvoy.h"
+#import "GamePrecis.h"
 #import "JSKCommandParcel.h"
 #import "MissionEnvoy.h"
 #import "PlayerEnvoy.h"
@@ -157,11 +158,124 @@
 - (void)saveAndBroadcastGame
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
+    NSDate *oldDate = [NSDate distantPast];
     [gameEnvoy commitAndSave];
-    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:[SystemMessage playerEnvoy].peerID object:gameEnvoy];
-    [SystemMessage sendParcelToPlayers:parcel];
+    [self sendGameUpdateTo:nil modifiedDate:oldDate shouldSendAllData:NO];
+//    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:[SystemMessage playerEnvoy].peerID object:gameEnvoy];
+//    [SystemMessage sendParcelToPlayers:parcel];
+//    [parcel release];
+}
+
+
+- (void)sendGameUpdateTo:(NSString *)peerID modifiedDate:(NSDate *)modifiedDate shouldSendAllData:(BOOL)shouldSendAllData
+{
+    GameEnvoy *gameEnvoy = self.gameEnvoy;
+    NSString *hostID = [SystemMessage playerEnvoy].peerID;
+    
+    
+    BOOL shouldProceed = NO;
+    if (!modifiedDate)
+    {
+        shouldProceed = YES;
+    }
+    if (!shouldProceed)
+    {
+        if ([SystemMessage secondsBetweenDates:modifiedDate toDate:gameEnvoy.modifiedDate] > 0)
+        {
+            shouldProceed = YES;
+        }
+    }
+    if (!shouldProceed)
+    {
+        return;
+    }
+    
+    
+    // Send the whole game if...
+    // ...no modified date is specified,
+    if (!modifiedDate)
+    {
+        shouldSendAllData = YES;
+    }
+    // ...the game is over,
+    if (gameEnvoy.endDate)
+    {
+        shouldSendAllData = YES;
+    }
+    // ...there's no current round, or
+    RoundEnvoy *currentRound = [gameEnvoy currentRound];
+    if (!currentRound)
+    {
+        shouldSendAllData = YES;
+    }
+    // ...there's only one round.
+    if (currentRound.roundNumber == 1)
+    {
+        shouldSendAllData = YES;
+    }
+    
+    if (shouldSendAllData)
+    {
+        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:peerID from:hostID object:gameEnvoy];
+        if (peerID)
+        {
+            [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:NO];
+        }
+        else
+        {
+            [SystemMessage sendParcelToPlayers:parcel];
+        }
+        [parcel release];
+        return;
+    }
+    
+    
+    // Send a subset of the game data.
+    // This is a favor to the bandwidth gods.
+    RoundEnvoy *previousRound = nil;
+    if (currentRound.roundNumber > 1)
+    {
+        previousRound = [gameEnvoy roundEnvoyFromNumber:currentRound.roundNumber - 1];
+    }
+    MissionEnvoy *currentMission = [gameEnvoy currentMission];
+    MissionEnvoy *previousMission = nil;
+    if (currentMission.missionNumber > 1)
+    {
+        previousMission = [gameEnvoy missionEnvoyFromNumber:currentMission.missionNumber - 1];
+    }
+    
+    // Five possible objects: game precis, current round, previous round, current mission, previous mission.
+    NSMutableArray *objectList = [[NSMutableArray alloc] initWithCapacity:5];
+    GamePrecis *precis = [[GamePrecis alloc] initWithEnvoy:gameEnvoy];
+    [objectList addObject:precis];
+    [precis release];
+    if (previousRound)
+    {
+        [objectList addObject:previousRound];
+    }
+    if (previousMission)
+    {
+        [objectList addObject:previousMission];
+    }
+    [objectList addObject:currentRound];
+    [objectList addObject:currentMission];
+    NSArray *objectArray = [NSArray arrayWithArray:objectList];
+    [objectList release];
+    
+    // Send the array of objects.
+    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:peerID from:hostID object:objectArray];
+    if (peerID)
+    {
+        [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:NO];
+    }
+    else
+    {
+        [SystemMessage sendParcelToPlayers:parcel];
+    }
     [parcel release];
 }
+
+
 
 - (void)chooseOperatives
 {

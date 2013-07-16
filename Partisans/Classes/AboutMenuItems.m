@@ -58,7 +58,7 @@
     switch (menuRow)
     {
         case AboutRowName:
-            returnValue = NSLocalizedString(@"Name", @"Name  --  sub label");
+//            returnValue = NSLocalizedString(@"Name", @"Name  --  sub label");
             break;
         case AboutRowVersion:
             returnValue = NSLocalizedString(@"Version", @"Version  --  sub label");
