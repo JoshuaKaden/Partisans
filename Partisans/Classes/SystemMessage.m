@@ -63,14 +63,10 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @property (nonatomic, strong) NSCache *imageCache;
 
 - (void)handlePlayerResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
-- (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseToParcel:(JSKCommandParcel *)inResponseToParcel;
-- (void)handleModifiedDateResponse:(JSKCommandParcel *)response;
-- (void)handleGetInfoResponse:(JSKCommandParcel *)response;
 - (void)handleJoinGameMessage:(JSKCommandMessage *)message;
 - (void)handleJoinGameResponse:(JSKCommandParcel *)response;
 - (void)handleLeaveGameMessage:(JSKCommandMessage *)message;
 - (void)handlePlayerUpdate:(JSKCommandParcel *)parcel;
-- (void)handleJoinGameStash:(NSString *)fromPeerID;
 - (void)handleCoordinatorVote:(JSKCommandParcel *)parcel;
 - (void)handleVote:(JSKCommandParcel *)parcel;
 - (void)handlePerformMissionMessage:(JSKCommandMessage *)message;
@@ -159,7 +155,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 + (void)cacheImage:(UIImage *)image key:(NSString *)key
 {
-    UIImage *smallerImage = [self imageWithImage:image scaledToSizeWithSameAspectRatio:CGSizeMake(44.0, 44.0)];
+    UIImage *smallerImage = [self imageWithImage:image scaledToSizeWithSameAspectRatio:CGSizeMake(50.0, 50.0)];
     NSCache *cache = [self sharedInstance].imageCache;
     [cache setObject:smallerImage forKey:key];
 }
@@ -628,202 +624,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         [queue addOperation:op];
         [op release];
     }
-    
-//        // We may already know about this player.
-//        PlayerEnvoy *localOther = [PlayerEnvoy envoyFromPeerID:other.peerID];
-//        if (localOther)
-//        {
-//            UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
-//            [op setCompletionBlock:^(void){
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    // Send them our info back, to be polite.
-//                    JSKCommandParcel *response = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
-//                                                                                     to:parcel.from
-//                                                                                   from:self.playerEnvoy.peerID
-//                                                                                 object:self.playerEnvoy
-//                                                                            responseKey:parcel.responseKey];
-//                    [SystemMessage sendCommandParcel:response shouldAwaitResponse:NO];
-//                    [response release];
-//                    if (self.isLookingForGame)
-//                    {
-//                        [self askToJoinGameDelayed:other.peerID];
-//                    }
-//                    else
-//                    {
-//                        [self handleJoinGameStash:other.peerID];
-//                    }
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
-//                });
-//            }];
-//            NSOperationQueue *queue = [SystemMessage mainQueue];
-//            [queue addOperation:op];
-//            [op release];
-//            return;
-//        }
-//        
-//        CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:other];
-//        [op setCompletionBlock:^(void){
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                // A new player, so let's send them our info back, to be polite.
-//                JSKCommandParcel *response = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
-//                                                                                 to:parcel.from
-//                                                                               from:self.playerEnvoy.peerID
-//                                                                             object:self.playerEnvoy
-//                                                                        responseKey:parcel.responseKey];
-//                [SystemMessage sendCommandParcel:response shouldAwaitResponse:NO];
-//                [response release];
-//                if (self.isLookingForGame)
-//                {
-//                    [self askToJoinGameDelayed:other.peerID];
-//                }
-//                else
-//                {
-//                    [self handleJoinGameStash:other.peerID];
-//                }
-//                [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerCreated object:other.peerID];
-//            });
-//        }];
-//        NSOperationQueue *queue = [SystemMessage mainQueue];
-//        [queue addOperation:op];
-//        [op release];
-//    }
-//    
-//    return;
 }
 
-
-#pragma mark - Peer Controller stuff
-
-
-- (void)handleResponse:(JSKCommandParcel *)commandParcel inResponseToParcel:(JSKCommandParcel *)inResponseToParcel
-{
-    if ([commandParcel.object isKindOfClass:[PlayerEnvoy class]])
-    {
-        [self handleGetInfoResponse:commandParcel];
-    }
-}
-
-
-- (void)handleModifiedDateResponse:(JSKCommandParcel *)response
-{
-    if (!response.object)
-    {
-        return;
-    }
-    if (![response.object isKindOfClass:[NSDate class]])
-    {
-        return;
-    }
-    
-    NSDate *modifiedDate = (NSDate *)response.object;
-    
-    // A "regarding" attribute in the response would help narrow the focus of this operation.
-    // (For instance, an ID that keys to an entity, or particular attribute on an entity)
-    // Like, an ID would mean "the modified date of the picture on the player"
-    // Stored in a custom object perhaps, Operation class or something.
-    
-    // For now assume the modified date of the peer, which is a player.
-    // We use this date to determine whether to ask for player info.
-    
-    PlayerEnvoy *other = [PlayerEnvoy envoyFromPeerID:response.from];
-    if (!other)
-    {
-        return;
-    }
-    if (!modifiedDate || !other.modifiedDate)
-    {
-        return;
-    }
-    if ([SystemMessage secondsBetweenDates:other.modifiedDate toDate:modifiedDate] > 0)
-    {
-        // Apparently new information is available! Let's ask for it.
-        JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:response.from from:self.playerEnvoy.peerID];
-        [self.netHost sendCommandMessage:msg shouldAwaitResponse:YES];
-        [msg release];
-    }
-}
-
-- (void)handleGetInfoResponse:(JSKCommandParcel *)response
-{
-    NSObject *object = response.object;
-    if ([object isKindOfClass:[PlayerEnvoy class]])
-    {
-        PlayerEnvoy *other = (PlayerEnvoy *)object;
-        other.isNative = NO;
-        other.isDefault = NO;
-        
-        // We may already know about this player.
-        PlayerEnvoy *localOther = [PlayerEnvoy envoyFromPeerID:other.peerID];
-        if (localOther)
-        {
-            UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
-            [op setCompletionBlock:^(void){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (self.isLookingForGame)
-                    {
-                        [self askToJoinGameDelayed:other.peerID];
-                    }
-                    else
-                    {
-                        [self handleJoinGameStash:other.peerID];
-                    }
-                    [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
-                });
-            }];
-            NSOperationQueue *queue = [SystemMessage mainQueue];
-            [queue addOperation:op];
-            [op release];
-            return;
-        }
-        
-        CreatePlayerOperation *op = [[CreatePlayerOperation alloc] initWithEnvoy:other];
-        [op setCompletionBlock:^(void){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (self.isLookingForGame)
-                {
-                    [self askToJoinGameDelayed:other.peerID];
-                }
-                else
-                {
-                    [self handleJoinGameStash:other.peerID];
-                }
-                [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerCreated object:other.peerID];
-            });
-        }];
-        NSOperationQueue *queue = [SystemMessage mainQueue];
-        [queue addOperation:op];
-        [op release];
-    }
-    
-    return;
-}
-
-
-- (void)handleJoinGameStash:(NSString *)fromPeerID
-{
-    if (![SystemMessage isHost])
-    {
-        return;
-    }
-//    BOOL shouldAddPlayer = YES;
-    for (JSKCommandMessage *stashedMsg in self.stash)
-    {
-        if (stashedMsg.commandMessageType == JSKCommandMessageTypeJoinGame)
-        {
-            if ([stashedMsg.from isEqualToString:fromPeerID])
-            {
-                [self.stash removeObject:stashedMsg];
-                [self handleJoinGameMessage:stashedMsg];
-//                shouldAddPlayer = NO;
-                break;
-            }
-        }
-    }
-//    if (shouldAddPlayer)
-//    {
-//        [self addPlayerToGame:[PlayerEnvoy envoyFromPeerID:fromPeerID] responseKey:nil];
-//    }
-}
 
 
 #pragma mark - NetHost delegate
@@ -893,11 +695,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         JSKCommandMessage *msg = (JSKCommandMessage *)inResponseTo;
         [self handlePlayerResponse:commandParcel inResponseTo:msg];
     }
-    else if ([inResponseTo isKindOfClass:[JSKCommandParcel class]])
-    {
-        JSKCommandParcel *parcel = (JSKCommandParcel *)inResponseTo;
-        [self handleResponse:commandParcel inResponseToParcel:parcel];
-    }
+//    else if ([inResponseTo isKindOfClass:[JSKCommandParcel class]])
+//    {
+//        JSKCommandParcel *parcel = (JSKCommandParcel *)inResponseTo;
+//        [self handleResponse:commandParcel inResponseToParcel:parcel];
+//    }
 }
 
 

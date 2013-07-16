@@ -10,6 +10,7 @@
 
 #import "GameDirector.h"
 #import "GameEnvoy.h"
+#import "MissionEnvoy.h"
 #import "MissionViewController.h"
 #import "PlayerEnvoy.h"
 #import "ProgressCell.h"
@@ -23,6 +24,7 @@
 @property (nonatomic, strong) NSTimer *pollingTimer;
 @property (nonatomic, assign) BOOL hasNewRoundStarted;
 @property (nonatomic, assign) NSUInteger thisRoundNumber;
+@property (nonatomic, assign) BOOL hasMissionStarted;
 
 - (void)gameChanged:(NSNotification *)notification;
 - (void)startMission;
@@ -55,11 +57,18 @@
 {
     // This update could mean the end of the current round.
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    if (self.thisRoundNumber < [gameEnvoy currentRound].roundNumber)
+    if (self.thisRoundNumber > 0 && self.thisRoundNumber < [gameEnvoy currentRound].roundNumber)
     {
         self.hasNewRoundStarted = YES;
     }
-    self.currentRound = [gameEnvoy roundEnvoyFromNumber:self.thisRoundNumber];
+    self.currentRound = nil;
+    
+    // The update could also mean that the mission has started.
+    if ([gameEnvoy currentMission].hasStarted)
+    {
+        self.hasMissionStarted = YES;
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
@@ -68,9 +77,17 @@
 {
     if (!m_currentRound)
     {
-        RoundEnvoy *currentRound = [[SystemMessage gameEnvoy] currentRound];
-        self.currentRound = currentRound;
-        self.thisRoundNumber = currentRound.roundNumber;
+        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+        if (self.thisRoundNumber > 0)
+        {
+            self.currentRound = [gameEnvoy roundEnvoyFromNumber:self.thisRoundNumber];
+        }
+        else
+        {
+            RoundEnvoy *currentRound = [gameEnvoy currentRound];
+            self.currentRound = currentRound;
+            self.thisRoundNumber = currentRound.roundNumber;
+        }
     }
     return m_currentRound;
 }
@@ -93,7 +110,15 @@
 
 - (void)pollingTimerFired:(id)sender
 {
-    [SystemMessage requestGameUpdate];
+    // Stop polling if a new round, or the mission, has started.
+    if (self.hasNewRoundStarted || self.hasMissionStarted)
+    {
+        [self.pollingTimer invalidate];
+    }
+    else
+    {
+        [SystemMessage requestGameUpdate];
+    }
 }
 
 
@@ -106,9 +131,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [SystemMessage requestGameUpdate];
     
-//    // This timer polls the host for game changes.
-//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
-//    self.pollingTimer = timer;
+    // This timer polls the host for game changes.
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
+    self.pollingTimer = timer;
 }
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
@@ -124,7 +149,7 @@
         return;
     }
     
-    RoundEnvoy *roundEnvoy = [self currentRound];
+    RoundEnvoy *roundEnvoy = self.currentRound;
     
     if ([roundEnvoy isVotingComplete])
     {
@@ -143,7 +168,7 @@
         }
         else
         {
-            if (self.hasNewRoundStarted)
+            if (self.hasNewRoundStarted || self.hasMissionStarted)
             {
                 [menuViewController.navigationController popToRootViewControllerAnimated:YES];
             }
@@ -174,7 +199,7 @@
             returnValue = 1;
             break;
         case DecisionMenuSectionVotes:
-            if ([[self currentRound] isVotingComplete])
+            if ([self.currentRound isVotingComplete])
             {
                 returnValue = 3;
             }
@@ -231,7 +256,7 @@
     
     
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
-    RoundEnvoy *roundEnvoy = [self currentRound];
+    RoundEnvoy *roundEnvoy = self.currentRound;
 
     NSUInteger playerCount = [SystemMessage gameEnvoy].numberOfPlayers;
     NSUInteger votesCast = [roundEnvoy votesCast];
@@ -383,7 +408,7 @@
         }
         else
         {
-            if (self.hasNewRoundStarted)
+            if (self.hasNewRoundStarted || self.hasMissionStarted)
             {
                 returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  label");
             }

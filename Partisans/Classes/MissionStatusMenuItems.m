@@ -58,11 +58,11 @@
 {
     // This update could mean the end of the current mission.
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    if (self.thisMissionNumber < [gameEnvoy currentMission].missionNumber)
+    if (self.thisMissionNumber > 0 && self.thisMissionNumber < [gameEnvoy currentMission].missionNumber)
     {
         self.hasNewRoundStarted = YES;
     }
-    self.currentMission = [gameEnvoy missionEnvoyFromNumber:self.thisMissionNumber];
+    self.currentMission = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
@@ -71,9 +71,17 @@
 {
     if (!m_currentMission)
     {
-        MissionEnvoy *currentMission = [[SystemMessage gameEnvoy] currentMission];
-        self.currentMission = currentMission;
-        self.thisMissionNumber = currentMission.missionNumber;
+        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+        if (self.thisMissionNumber > 0)
+        {
+            self.currentMission = [gameEnvoy missionEnvoyFromNumber:self.thisMissionNumber];
+        }
+        else
+        {
+            MissionEnvoy *currentMission = [[SystemMessage gameEnvoy] currentMission];
+            self.currentMission = currentMission;
+            self.thisMissionNumber = currentMission.missionNumber;
+        }
     }
     return m_currentMission;
 }
@@ -88,7 +96,15 @@
 
 - (void)pollingTimerFired:(id)sender
 {
-    [SystemMessage requestGameUpdate];
+    // Stop polling if a new round has started.
+    if (self.hasNewRoundStarted)
+    {
+        [self.pollingTimer invalidate];
+    }
+    else
+    {
+        [SystemMessage requestGameUpdate];
+    }
 }
 
 
@@ -100,9 +116,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     self.menuViewController = menuViewController;
     
-//    // This timer polls the host for game changes.
-//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
-//    self.pollingTimer = timer;
+    // This timer polls the host for game changes.
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
+    self.pollingTimer = timer;
 }
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
@@ -117,7 +133,7 @@
         return;
     }
     
-    MissionEnvoy *missionEnvoy = [self currentMission];
+    MissionEnvoy *missionEnvoy = self.currentMission;
     
     if (missionEnvoy.isComplete)
     {
@@ -235,7 +251,7 @@
                 }
                 else
                 {
-                    if (self.hasNewRoundStarted)
+                    if (self.hasNewRoundStarted || [SystemMessage gameEnvoy].endDate)
                     {
                         returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  label");
                     }

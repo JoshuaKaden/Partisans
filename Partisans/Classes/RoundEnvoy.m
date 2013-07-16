@@ -80,6 +80,9 @@
     }
     NSArray *returnValue = [NSArray arrayWithArray:candidateList];
     [candidateList release];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerName" ascending:YES];
+    returnValue = [returnValue sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [sortDescriptor release];
     return returnValue;
 }
 

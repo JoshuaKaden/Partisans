@@ -158,9 +158,11 @@
 - (void)saveAndBroadcastGame
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
-    NSDate *oldDate = [NSDate distantPast];
     [gameEnvoy commitAndSave];
-    [self sendGameUpdateTo:nil modifiedDate:oldDate shouldSendAllData:NO];
+    
+//    NSDate *oldDate = [NSDate distantPast];
+//    [self sendGameUpdateTo:nil modifiedDate:oldDate shouldSendAllData:NO];
+
 //    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:[SystemMessage playerEnvoy].peerID object:gameEnvoy];
 //    [SystemMessage sendParcelToPlayers:parcel];
 //    [parcel release];
