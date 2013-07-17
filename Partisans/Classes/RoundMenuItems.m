@@ -36,6 +36,8 @@
 @property (nonatomic, strong) HostFinder *hostFinder;
 @property (nonatomic, strong) NSString *hostPeerID;
 @property (nonatomic, assign) BOOL thisVote;
+@property (nonatomic, assign) BOOL isVotePending;
+@property (nonatomic, strong) NSTimer *pollingTimer;
 
 - (BOOL)isReadyForVote;
 - (BOOL)isCoordinator;
@@ -65,12 +67,15 @@
 @synthesize hostFinder = m_hostFinder;
 @synthesize hostPeerID = m_hostPeerID;
 @synthesize thisVote = m_vote;
+@synthesize isVotePending = m_isVotePending;
+@synthesize pollingTimer = m_pollingTimer;
 
 
 - (void)dealloc
 {
     [self.hostFinder setDelegate:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.pollingTimer invalidate];
     
     [m_gameEnvoy release];
     [m_currentRound release];
@@ -83,6 +88,7 @@
     [m_decisionMenuItems release];
     [m_hostFinder release];
     [m_hostPeerID release];
+    [m_pollingTimer release];
     
     [super dealloc];
 }
@@ -200,18 +206,25 @@
     
     [self.gameEnvoy commitAndSave];
     
-    if (![SystemMessage isPlayerOnline])
-    {
-        [SystemMessage putPlayerOnline];
-    }
-    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:[NSArray arrayWithObject:self.currentRound]];
-    [SystemMessage sendParcelToPlayers:parcel];
-    [parcel release];
+//    if (![SystemMessage isPlayerOnline])
+//    {
+//        [SystemMessage putPlayerOnline];
+//    }
+//    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:[NSArray arrayWithObject:self.currentRound]];
+//    [SystemMessage sendParcelToPlayers:parcel];
+//    [parcel release];
 }
 
 
 - (void)connectAndVote:(BOOL)vote
 {
+    if (self.isVotePending)
+    {
+        return;
+    }
+    
+    self.isVotePending = YES;
+    
     if (!self.overlayer)
     {
         JSKOverlayer *overlayer = [[JSKOverlayer alloc] initWithView:[SystemMessage rootView]];
@@ -295,36 +308,44 @@
         return;
     }
     
-    [self.overlayer removeWaitOverlay];
+//    [self.overlayer removeWaitOverlay];
     
-    self.gameEnvoy = nil;
-    self.currentRound = nil;
-    self.currentMission = nil;
+//    self.gameEnvoy = nil;
+//    self.currentRound = nil;
+//    self.currentMission = nil;
     [SystemMessage requestGameUpdate];
-//    [self goToDecisionScreen:self.menuViewController];
 }
 
-
-//- (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController
-//{
-//    DecisionMenuItems *items = [[DecisionMenuItems alloc] init];
-//    self.decisionMenuItems = items;
-//    [items release];
-//    
-//    JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
-//    [vc setDelegate:items];
-//    [menuViewController invokePush:YES viewController:vc];
-//    [vc release];
-//}
 
 
 - (void)gameChanged:(NSNotification *)notification
 {
+    if (self.isVotePending)
+    {
+        [self.overlayer removeWaitOverlay];
+    }
     self.gameEnvoy = nil;
     self.currentRound = nil;
     self.currentMission = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
+
+
+#pragma mark - Polling Timer
+
+- (void)pollingTimerFired:(id)sender
+{
+    // Stop polling if we're ready for a vote.
+    if ([self isReadyForVote])
+    {
+        [self.pollingTimer invalidate];
+    }
+    else
+    {
+        [SystemMessage requestGameUpdate];
+    }
+}
+
 
 
 #pragma mark - Host Finder delegate
@@ -367,6 +388,13 @@
 {
     [SystemMessage putPlayerOnline];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+
+    // This timer polls the host for game changes.
+    if (![self isReadyForVote])
+    {
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
+        self.pollingTimer = timer;
+    }
 }
 
 
@@ -386,7 +414,6 @@
     {
         if ([self hasVoted])
         {
-//            [self goToDecisionScreen:menuViewController];
             return;
         }
         else if ([self isReadyForVote])
@@ -401,7 +428,6 @@
             if ([SystemMessage isHost])
             {
                 [self voteLocally:vote];
-//                [self goToDecisionScreen:menuViewController];
                 return;
             }
             

@@ -174,13 +174,13 @@
     
     [gameEnvoy commitAndSave];
     
-    if (![SystemMessage isPlayerOnline])
-    {
-        [SystemMessage putPlayerOnline];
-    }
-    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:[NSArray arrayWithObject:missionEnvoy]];
-    [SystemMessage sendParcelToPlayers:parcel];
-    [parcel release];
+//    if (![SystemMessage isPlayerOnline])
+//    {
+//        [SystemMessage putPlayerOnline];
+//    }
+//    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:[NSArray arrayWithObject:missionEnvoy]];
+//    [SystemMessage sendParcelToPlayers:parcel];
+//    [parcel release];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

@@ -142,7 +142,7 @@
             [self startNewRound];
             [menuViewController.navigationController popToRootViewControllerAnimated:YES];
         }
-        else if (self.hasNewRoundStarted)
+        else if (self.hasNewRoundStarted || [SystemMessage gameEnvoy].endDate)
         {
             [menuViewController.navigationController popToRootViewControllerAnimated:YES];
         }

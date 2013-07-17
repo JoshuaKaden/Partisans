@@ -399,18 +399,22 @@
         {
             if ([roundEnvoy voteDidPass])
             {
-                returnValue = NSLocalizedString(@"Tap to start the mission.", @"Tap to start the mission.  --  label");
+                returnValue = NSLocalizedString(@"Tap to start the mission.", @"Tap to start the mission.  --  sub label");
             }
             else
             {
-                returnValue = NSLocalizedString(@"Tap to start a new round.", @"Tap to start a new round.  --  label");
+                returnValue = NSLocalizedString(@"Tap to start a new round.", @"Tap to start a new round.  --  sub label");
             }
         }
         else
         {
             if (self.hasNewRoundStarted || self.hasMissionStarted)
             {
-                returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  label");
+                returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  sub label");
+            }
+            else
+            {
+                returnValue = NSLocalizedString(@"Waiting for host...", @"Waiting for host...  --  sub label");
             }
         }
     }
