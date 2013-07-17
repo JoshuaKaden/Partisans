@@ -38,6 +38,7 @@
 @property (nonatomic, assign) BOOL thisVote;
 @property (nonatomic, assign) BOOL isVotePending;
 @property (nonatomic, strong) NSTimer *pollingTimer;
+@property (nonatomic, assign) BOOL isWaitingForUpdate;
 
 - (BOOL)isReadyForVote;
 - (BOOL)isCoordinator;
@@ -69,6 +70,7 @@
 @synthesize thisVote = m_vote;
 @synthesize isVotePending = m_isVotePending;
 @synthesize pollingTimer = m_pollingTimer;
+@synthesize isWaitingForUpdate = m_isWaitingForUpdate;
 
 
 - (void)dealloc
@@ -313,6 +315,8 @@
 //    self.gameEnvoy = nil;
 //    self.currentRound = nil;
 //    self.currentMission = nil;
+    
+    self.isWaitingForUpdate = YES;
     [SystemMessage requestGameUpdate];
 }
 
@@ -320,7 +324,7 @@
 
 - (void)gameChanged:(NSNotification *)notification
 {
-    if (self.isVotePending)
+    if (self.isWaitingForUpdate)
     {
         [self.overlayer removeWaitOverlay];
     }

@@ -129,7 +129,7 @@
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
-    [SystemMessage requestGameUpdate];
+//    [SystemMessage requestGameUpdate];
     
     // This timer polls the host for game changes.
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];

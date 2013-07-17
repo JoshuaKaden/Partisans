@@ -24,6 +24,8 @@
 @property (nonatomic, strong) IBOutlet UISwitch *readySwitch;
 @property (nonatomic, strong) IBOutlet UILabel *sabotageLabel;
 @property (nonatomic, strong) IBOutlet UISwitch *sabotageSwitch;
+@property (nonatomic, strong) IBOutlet UISwitch *privacySwitch;
+@property (nonatomic, strong) IBOutlet UILabel *privacyLabel;
 
 @property (nonatomic, strong) GameEnvoy *gameEnvoy;
 @property (nonatomic, strong) MissionEnvoy *missionEnvoy;
@@ -34,10 +36,12 @@
 @property (nonatomic, strong) NSString *responseKey;
 @property (nonatomic, assign) BOOL hasActionBeenConfirmed;
 @property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, assign) BOOL isOperative;
 
 - (IBAction)performButtonPressed:(id)sender;
 - (IBAction)readySwitchFlicked:(id)sender;
 - (IBAction)sabotageSwitchFlicked:(id)sender;
+- (IBAction)privacySwitchFlicked:(id)sender;
 
 - (void)performMission:(BOOL)shouldSucceed;
 - (void)performMissionLocally:(BOOL)shouldSucceed;
@@ -56,6 +60,8 @@
 @synthesize readySwitch = m_readySwitch;
 @synthesize sabotageLabel = m_sabotageLabel;
 @synthesize sabotageSwitch = m_sabotageSwitch;
+@synthesize privacyLabel = m_privacyLabel;
+@synthesize privacySwitch = m_privacySwitch;
 @synthesize gameEnvoy = m_gameEnvoy;
 @synthesize missionEnvoy = m_missionEnvoy;
 @synthesize hostPeerID = m_hostPeerID;
@@ -65,6 +71,7 @@
 @synthesize responseKey = m_responseKey;
 @synthesize hasActionBeenConfirmed = m_hasActionBeenConfirmed;
 @synthesize timer = m_timer;
+@synthesize isOperative = m_isOperative;
 
 
 - (void)dealloc
@@ -79,6 +86,8 @@
     [m_readySwitch release];
     [m_sabotageLabel release];
     [m_sabotageSwitch release];
+    [m_privacyLabel release];
+    [m_privacySwitch release];
     [m_gameEnvoy release];
     [m_missionEnvoy release];
     [m_hostPeerID release];
@@ -115,9 +124,14 @@
     NSString *codenamePrefix = NSLocalizedString(@"Codename", @"Codename  --  label prefix");
     self.codenameLabel.text = [NSString stringWithFormat:@"%@: %@", codenamePrefix, self.missionEnvoy.missionName];
     
-    BOOL preventSabotage = ![[SystemMessage gameEnvoy] isPlayerAnOperative:nil];
-    self.sabotageLabel.hidden = preventSabotage;
-    self.sabotageSwitch.hidden = preventSabotage;
+    self.isOperative = [[SystemMessage gameEnvoy] isPlayerAnOperative:nil];
+    
+    // Privacy screen.
+    [self.performButton setHidden:YES];
+    [self.readyLabel setHidden:YES];
+    [self.readySwitch setHidden:YES];
+    [self.sabotageLabel setHidden:YES];
+    [self.sabotageSwitch setHidden:YES];
 }
 
 
@@ -332,6 +346,19 @@
 {
     [self.readySwitch setOn:self.sabotageSwitch.isOn animated:YES];
     self.performButton.enabled = self.readySwitch.isOn;
+}
+
+- (IBAction)privacySwitchFlicked:(id)sender
+{
+    BOOL hidden = self.privacySwitch.isOn;
+    [self.performButton setHidden:hidden];
+    [self.readySwitch setHidden:hidden];
+    [self.readyLabel setHidden:hidden];
+    if (self.isOperative)
+    {
+        [self.sabotageSwitch setHidden:hidden];
+        [self.sabotageLabel setHidden:hidden];
+    }
 }
 
 

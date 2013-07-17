@@ -29,7 +29,7 @@
 - (NSArray *)generateMissionNames;
 - (PlayerEnvoy *)chooseCoordinator;
 - (NSUInteger)getNextRoundNumber;
-- (void)saveAndBroadcastGame;
+- (void)saveGame;
 - (BOOL)isGameOver;
 
 @end
@@ -69,7 +69,11 @@
     
     gameEnvoy.startDate = [NSDate date];
     
-    [self saveAndBroadcastGame];
+    [self saveGame];
+    
+    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:[SystemMessage playerEnvoy].peerID object:gameEnvoy];
+    [SystemMessage sendParcelToPlayers:parcel];
+    [parcel release];
 }
 
 - (void)startMission
@@ -82,7 +86,7 @@
     [mission applyTeamMembers:[currentRound candidates]];
     mission.hasStarted = YES;
     
-    [self saveAndBroadcastGame];
+    [self saveGame];
 }
 
 - (void)startNewRound
@@ -95,7 +99,7 @@
     {
         [self createRound];
     }
-    [self saveAndBroadcastGame];
+    [self saveGame];
 }
 
 
@@ -155,7 +159,7 @@
 }
 
 
-- (void)saveAndBroadcastGame
+- (void)saveGame
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
     [gameEnvoy commitAndSave];
