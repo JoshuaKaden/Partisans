@@ -142,7 +142,7 @@
     }
     if (hasAlreadyVoted)
     {
-        debugLog(@"Player has already voted: %@", self);
+//        debugLog(@"Player has already voted: %@", self);
         return;
     }
     

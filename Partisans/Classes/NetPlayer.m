@@ -13,7 +13,8 @@
 #import "SystemMessage.h"
 
 
-const BOOL kNetPlayerIsDebugOn = YES;
+const BOOL kNetPlayerIsDebugOn = NO;
+//const BOOL kNetPlayerIsDebugOn = YES;
 
 
 @interface NetPlayer () <ConnectionDelegate>

@@ -125,7 +125,7 @@
     if (!returnValue)
     {
         MissionEnvoy *currentMission = [gameEnvoy currentMission];
-        if (currentMission.roundCount >= gameEnvoy.numberOfPlayers)
+        if (currentMission.roundCount > gameEnvoy.numberOfPlayers)
         {
             returnValue = YES;
         }

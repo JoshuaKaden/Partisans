@@ -90,6 +90,9 @@
         }
         
         self.modifiedDate = managedObject.modifiedDate;
+        
+        
+        [SystemMessage cachePlayer:self key:self.intramuralID];
     }
     
     return self;
@@ -115,6 +118,12 @@
 
 + (PlayerEnvoy *)envoyFromIntramuralID:(NSString *)intramuralID
 {
+    PlayerEnvoy *cachedPlayer = [SystemMessage cachedPlayer:intramuralID];
+    if (cachedPlayer)
+    {
+        return cachedPlayer;
+    }
+    
     NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
     NSArray *players = [context fetchObjectArrayForEntityName:@"Player" withPredicateFormat:@"intramuralID == %@", intramuralID];
     
@@ -129,6 +138,12 @@
 
 + (PlayerEnvoy *)envoyFromPeerID:(NSString *)peerID
 {
+    PlayerEnvoy *cachedPlayer = [SystemMessage cachedPlayer:peerID];
+    if (cachedPlayer)
+    {
+        return cachedPlayer;
+    }
+    
     NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
     NSArray *players = [context fetchObjectArrayForEntityName:@"Player" withPredicateFormat:@"peerID == %@", peerID];
     

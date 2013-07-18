@@ -68,6 +68,7 @@
     // Here is the actual work of the class.
     
     [SystemMessage clearImageCache];
+    [SystemMessage clearPlayerCache];
 //    [SystemMessage cacheImage:self.envoy.picture.image key:self.envoy.intramuralID];
     
     if ([self.envoy respondsToSelector:@selector(commitInContext:)]) {

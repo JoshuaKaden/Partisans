@@ -452,13 +452,18 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
         }
     }
 
-	UIBarButtonItem *refreshButton =
-    [[[UIBarButtonItem alloc]
-      initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-      target:self
-      action:@selector(refreshButtonPressed:)]
-     autorelease];
-	[self.navigationItem setRightBarButtonItem:refreshButton animated:YES];
+    
+    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed:)];
+    [self.navigationItem setRightBarButtonItem:refreshButton];
+    [refreshButton release];
+    
+//	UIBarButtonItem *refreshButton =
+//    [[[UIBarButtonItem alloc]
+//      initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+//      target:self
+//      action:@selector(refreshButtonPressed:)]
+//     autorelease];
+//	[self.navigationItem setRightBarButtonItem:refreshButton animated:YES];
 }
 
 

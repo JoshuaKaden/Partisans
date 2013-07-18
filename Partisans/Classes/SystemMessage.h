@@ -46,9 +46,14 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 + (NSString *)spellOutInteger:(NSInteger)integer;
 + (NSString *)buildRandomString;
 + (UIView *)rootView;
+
 + (UIImage *)cachedImage:(NSString *)key;
 + (void)cacheImage:(UIImage *)image key:(NSString *)key;
 + (void)clearImageCache;
+
++ (PlayerEnvoy *)cachedPlayer:(NSString *)key;
++ (void)cachePlayer:(PlayerEnvoy *)playerEnvoy key:(NSString *)key;
++ (void)clearPlayerCache;
 
 + (BOOL)isPlayerOnline;
 + (void)putPlayerOnline;

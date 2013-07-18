@@ -16,7 +16,8 @@
 #import "SystemMessage.h"
 
 
-const BOOL kNetHostIsDebugOn = YES;
+const BOOL kNetHostIsDebugOn = NO;
+//const BOOL kNetHostIsDebugOn = YES;
 
 
 @interface NetHost() <ServerDelegate, ConnectionDelegate>

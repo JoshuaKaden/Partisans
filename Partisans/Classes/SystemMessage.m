@@ -62,6 +62,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @property (nonatomic, strong) ServerBrowser *serverBrowser;
 @property (nonatomic, strong) GameDirector *gameDirector;
 @property (nonatomic, strong) NSCache *imageCache;
+@property (nonatomic, strong) NSCache *playerCache;
 
 - (void)handlePlayerResponse:(JSKCommandParcel *)commandParcel inResponseTo:(JSKCommandMessage *)inResponseTo;
 - (void)handleJoinGameMessage:(JSKCommandMessage *)message;
@@ -100,6 +101,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @synthesize serverBrowser = m_serverBrowser;
 @synthesize gameDirector = m_gameDirector;
 @synthesize imageCache = m_imageCache;
+@synthesize playerCache = m_playerCache;
 
 
 - (void)dealloc
@@ -119,6 +121,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [m_serverBrowser release];
     [m_gameDirector release];
     [m_imageCache release];
+    [m_playerCache release];
     
     [super dealloc];
 }
@@ -166,6 +169,41 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     NSCache *cache = [self sharedInstance].imageCache;
     [cache removeAllObjects];
 }
+
+
+
+#pragma mark - Player Cache
+
++ (PlayerEnvoy *)cachedPlayer:(NSString *)key
+{
+    PlayerEnvoy *returnValue = nil;
+    NSCache *cache = [self sharedInstance].playerCache;
+    if (!cache)
+    {
+        cache = [[NSCache alloc] init];
+        [self sharedInstance].playerCache = cache;
+        [cache release];
+    }
+    else
+    {
+        returnValue = [cache objectForKey:key];
+    }
+    return returnValue;
+}
+
++ (void)cachePlayer:(PlayerEnvoy *)playerEnvoy key:(NSString *)key
+{
+    NSCache *cache = [self sharedInstance].playerCache;
+    [cache setObject:playerEnvoy forKey:key];
+}
+
++ (void)clearPlayerCache
+{
+    NSCache *cache = [self sharedInstance].playerCache;
+    [cache removeAllObjects];
+}
+
+
 
 
 #pragma mark - Host

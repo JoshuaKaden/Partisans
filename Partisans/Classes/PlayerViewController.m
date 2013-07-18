@@ -550,6 +550,7 @@
     
     // On a change, update the image cache.
     [SystemMessage clearImageCache];
+    [SystemMessage clearPlayerCache];
 //    [SystemMessage cacheImage:self.imageView.image key:self.playerEnvoy.intramuralID];
   
     

@@ -346,9 +346,11 @@
 - (void)pollingTimerFired:(id)sender
 {
     // Stop polling if we're ready for a vote.
-    if ([self isReadyForVote])
+    if ([self isReadyForVote] || [self hasVoted])
     {
         [self.pollingTimer invalidate];
+        [self.overlayer removeWaitOverlay];
+        [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
     }
     else
     {
