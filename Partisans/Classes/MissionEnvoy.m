@@ -409,6 +409,8 @@
 
 - (void)commitInContext:(NSManagedObjectContext *)context
 {
+    // This is where the mission completion and success is determined.
+    // Not sure if this logic really belongs here. GameDirector might be a better spot.
     if (self.saboteurIDs.count + self.contributeurIDs.count == self.teamCount)
     {
         self.isComplete = YES;

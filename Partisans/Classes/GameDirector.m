@@ -31,6 +31,8 @@
 - (NSUInteger)getNextRoundNumber;
 - (void)saveGame;
 - (BOOL)isGameOver;
+- (NSUInteger)calculateOperativeCount:(NSUInteger)playerCount;
+- (NSUInteger)calculateTeamCount:(NSUInteger)missionNumber playerCount:(NSUInteger)playerCount;
 
 @end
 
@@ -292,12 +294,19 @@
     }
     
     NSArray *playerEnvoys = [gameEnvoy players];
+    NSUInteger playerCount = playerEnvoys.count;
+    NSUInteger operativeCount = [self calculateOperativeCount:playerEnvoys.count];
+    if (operativeCount == 0)
+    {
+        // Invalid player count!
+        return;
+    }
     
-    NSUInteger operativeOneIndex = arc4random() % playerEnvoys.count;
-    NSUInteger operativeTwoIndex = arc4random() % playerEnvoys.count;
+    NSUInteger operativeOneIndex = arc4random() % playerCount;
+    NSUInteger operativeTwoIndex = arc4random() % playerCount;
     while (operativeTwoIndex == operativeOneIndex)
     {
-        operativeTwoIndex = arc4random() % playerEnvoys.count;
+        operativeTwoIndex = arc4random() % playerCount;
     }
     
     PlayerEnvoy *operativeOne = [playerEnvoys objectAtIndex:operativeOneIndex];
@@ -308,11 +317,65 @@
     
     gameOperativeOne.isOperative = YES;
     gameOperativeTwo.isOperative = YES;
+    
+    
+    NSUInteger operativeThreeIndex;
+    if (operativeCount > 2)
+    {
+        operativeThreeIndex = arc4random() % playerCount;
+        while (operativeThreeIndex == operativeOneIndex || operativeThreeIndex == operativeTwoIndex)
+        {
+            operativeThreeIndex = arc4random() % playerCount;
+        }
+        PlayerEnvoy *operativeThree = [playerEnvoys objectAtIndex:operativeThreeIndex];
+        GamePlayerEnvoy *gameOperativeThree = [gameEnvoy gamePlayerEnvoyFromPlayer:operativeThree];
+        gameOperativeThree.isOperative = YES;
+    }
+    
+    if (operativeCount > 3)
+    {
+        NSUInteger operativeFourIndex = arc4random() % playerCount;
+        while (operativeFourIndex == operativeOneIndex || operativeFourIndex == operativeTwoIndex || operativeFourIndex == operativeThreeIndex)
+        {
+            operativeFourIndex = arc4random() % playerCount;
+        }
+        PlayerEnvoy *operativeFour = [playerEnvoys objectAtIndex:operativeFourIndex];
+        GamePlayerEnvoy *gameOperativeFour = [gameEnvoy gamePlayerEnvoyFromPlayer:operativeFour];
+        gameOperativeFour.isOperative = YES;
+    }
 }
+
+- (NSUInteger)calculateOperativeCount:(NSUInteger)playerCount
+{
+    NSUInteger returnValue = 0;
+    switch (playerCount)
+    {
+        case 5:
+        case 6:
+            returnValue = 2;
+            break;
+            
+        case 7:
+        case 8:
+        case 9:
+            returnValue = 3;
+            break;
+            
+        case 10:
+            returnValue = 4;
+            break;
+            
+        default:
+            break;
+    }
+    return returnValue;
+}
+
 
 - (void)createMissions
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
+    NSUInteger playerCount = [gameEnvoy players].count;
     
     // Create set of mission names.
     NSArray *missionNames = [self generateMissionNames];
@@ -322,7 +385,7 @@
     MissionEnvoy *missionEnvoyOne = [[MissionEnvoy alloc] init];
     missionEnvoyOne.missionName = [missionNames objectAtIndex:missionIndex];
     missionEnvoyOne.missionNumber = missionIndex + 1;
-    missionEnvoyOne.teamCount = 2;
+    missionEnvoyOne.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyOne];
     [missionEnvoyOne release];
     
@@ -331,7 +394,7 @@
     MissionEnvoy *missionEnvoyTwo = [[MissionEnvoy alloc] init];
     missionEnvoyTwo.missionName = [missionNames objectAtIndex:missionIndex];
     missionEnvoyTwo.missionNumber = missionIndex + 1;
-    missionEnvoyTwo.teamCount = 3;
+    missionEnvoyTwo.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyTwo];
     [missionEnvoyTwo release];
 
@@ -340,7 +403,7 @@
     MissionEnvoy *missionEnvoyThree = [[MissionEnvoy alloc] init];
     missionEnvoyThree.missionName = [missionNames objectAtIndex:missionIndex];
     missionEnvoyThree.missionNumber = missionIndex + 1;
-    missionEnvoyThree.teamCount = 2;
+    missionEnvoyThree.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyThree];
     [missionEnvoyThree release];
     
@@ -349,7 +412,7 @@
     MissionEnvoy *missionEnvoyFour = [[MissionEnvoy alloc] init];
     missionEnvoyFour.missionName = [missionNames objectAtIndex:missionIndex];
     missionEnvoyFour.missionNumber = missionIndex + 1;
-    missionEnvoyFour.teamCount = 3;
+    missionEnvoyFour.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyFour];
     [missionEnvoyFour release];
 
@@ -358,9 +421,128 @@
     MissionEnvoy *missionEnvoyFive = [[MissionEnvoy alloc] init];
     missionEnvoyFive.missionName = [missionNames objectAtIndex:missionIndex];
     missionEnvoyFive.missionNumber = missionIndex + 1;
-    missionEnvoyFive.teamCount = 3;
+    missionEnvoyFive.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyFive];
     [missionEnvoyFive release];
+}
+
+- (NSUInteger)calculateTeamCount:(NSUInteger)missionNumber playerCount:(NSUInteger)playerCount
+{
+    NSUInteger returnValue = 0;
+    switch (missionNumber)
+    {
+        case 1:
+        {
+            switch (playerCount)
+            {
+                case 5:
+                case 6:
+                case 7:
+                    returnValue = 2;
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                    returnValue = 3;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }
+            
+        case 2:
+        {
+            switch (playerCount)
+            {
+                case 5:
+                case 6:
+                case 7:
+                    returnValue = 3;
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                    returnValue = 4;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }
+            
+        case 3:
+        {
+            switch (playerCount)
+            {
+                case 5:
+                    returnValue = 2;
+                    break;
+                case 6:
+                    returnValue = 4;
+                    break;
+                case 7:
+                    returnValue = 3;
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                    returnValue = 4;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }
+            
+        case 4:
+        {
+            switch (playerCount)
+            {
+                case 5:
+                case 6:
+                    returnValue = 3;
+                    break;
+                case 7:
+                    returnValue = 4;
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                    returnValue = 5;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }
+            
+        case 5:
+        {
+            switch (playerCount)
+            {
+                case 5:
+                    returnValue = 3;
+                    break;
+                case 6:
+                case 7:
+                    returnValue = 4;
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                    returnValue = 5;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+    return returnValue;
 }
 
 - (NSArray *)generateMissionNames

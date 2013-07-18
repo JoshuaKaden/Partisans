@@ -15,6 +15,7 @@
 #import "CreatePlayerOperation.h"
 #import "GameDirector.h"
 #import "GameEnvoy.h"
+#import "GamePrecis.h"
 #import "JSKCommandMessage.h"
 #import "JSKCommandParcel.h"
 #import "JSKDataMiner.h"
@@ -335,12 +336,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [op setCompletionBlock:^(void) {
         dispatch_async(dispatch_get_main_queue(), ^(void)
         {
-            [self reloadGame:self.gameEnvoy];
+//            [self reloadGame:self.gameEnvoy];
             JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:parcel.from from:self.playerEnvoy.peerID];
             message.responseKey = parcel.responseKey;
             [self.netHost sendCommandMessage:message];
             [message release];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
@@ -930,6 +931,20 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             return;
         }
         NSArray *envoys = (NSArray *)commandParcel.object;
+        
+        GamePrecis *precis = (GamePrecis *)[envoys objectAtIndex:0];
+        if (!precis)
+        {
+            return;
+        }
+        if (currentGame.modifiedDate && precis.modifiedDate)
+        {
+            NSInteger delta = [SystemMessage secondsBetweenDates:currentGame.modifiedDate toDate:precis.modifiedDate];
+            if (delta <= 0)
+            {
+                return;
+            }
+        }
         
         UpdateEnvoysOperation *op = [[UpdateEnvoysOperation alloc] initWithEnvoys:envoys];
         [op setCompletionBlock:^(void)

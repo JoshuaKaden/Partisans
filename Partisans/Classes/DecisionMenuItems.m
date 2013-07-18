@@ -168,7 +168,7 @@
         }
         else
         {
-            if (self.hasNewRoundStarted || self.hasMissionStarted)
+            if (self.hasNewRoundStarted || self.hasMissionStarted || [SystemMessage gameEnvoy].endDate)
             {
                 [menuViewController.navigationController popToRootViewControllerAnimated:YES];
             }
@@ -408,7 +408,7 @@
         }
         else
         {
-            if (self.hasNewRoundStarted || self.hasMissionStarted)
+            if (self.hasNewRoundStarted || self.hasMissionStarted || [SystemMessage gameEnvoy].endDate)
             {
                 returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  sub label");
             }

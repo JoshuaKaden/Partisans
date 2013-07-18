@@ -331,6 +331,12 @@
     self.gameEnvoy = nil;
     self.currentRound = nil;
     self.currentMission = nil;
+    
+    if ([self hasVoted])
+    {
+        [self.overlayer removeWaitOverlay];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
@@ -555,7 +561,20 @@
             }
             else if ([self isReadyForVote])
             {
-                returnValue = NSLocalizedString(@"Ready for Vote", @"Ready for Vote  --  title");
+                NSUInteger roundCount = [self.currentMission roundCount];
+                NSUInteger roundsToDeadlock = self.gameEnvoy.numberOfPlayers - roundCount;
+                switch (roundsToDeadlock)
+                {
+                    case 0:
+                        returnValue = NSLocalizedString(@"Vote (deadlock imminent!)", @"Vote (deadlock imminent!)  --  title");
+                        break;
+                    case 1:
+                        returnValue = NSLocalizedString(@"Vote (deadlock in 2 rounds)", @"Vote (deadlock in 2 rounds)  --  title");
+                        break;
+                    default:
+                        returnValue = NSLocalizedString(@"Vote", @"Vote  --  title");
+                        break;
+                }
             }
             else
             {
