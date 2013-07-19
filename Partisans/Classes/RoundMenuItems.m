@@ -9,20 +9,18 @@
 #import "RoundMenuItems.h"
 
 #import "CandidatePickerMenuItems.h"
-#import "CoordinatorVote.h"
 #import "DecisionMenuItems.h"
 #import "GameEnvoy.h"
-#import "HostFinder.h"
 #import "ImageEnvoy.h"
-#import "JSKOverlayer.h"
 #import "MissionEnvoy.h"
 #import "PlayerEnvoy.h"
 #import "RoundEnvoy.h"
 #import "SystemMessage.h"
 #import "VoteEnvoy.h"
+#import "VoteViewController.h"
 
 
-@interface RoundMenuItems () <HostFinderDelegate>
+@interface RoundMenuItems ()
 
 @property (nonatomic, strong) GameEnvoy *gameEnvoy;
 @property (nonatomic, strong) RoundEnvoy *currentRound;
@@ -31,23 +29,11 @@
 @property (nonatomic, strong) CandidatePickerMenuItems *candidatePickerMenuItems;
 @property (nonatomic, strong) JSKMenuViewController *menuViewController;
 @property (nonatomic, strong) NSString *responseKey;
-@property (nonatomic, strong) JSKOverlayer *overlayer;
 @property (nonatomic, strong) DecisionMenuItems *decisionMenuItems;
-@property (nonatomic, strong) HostFinder *hostFinder;
-@property (nonatomic, strong) NSString *hostPeerID;
-@property (nonatomic, assign) BOOL thisVote;
-@property (nonatomic, assign) BOOL isVotePending;
 @property (nonatomic, strong) NSTimer *pollingTimer;
-@property (nonatomic, assign) BOOL isWaitingForUpdate;
 
 - (BOOL)isReadyForVote;
 - (BOOL)isCoordinator;
-- (void)voteLocally:(BOOL)vote;
-- (void)connectAndVote:(BOOL)vote;
-- (void)vote:(BOOL)vote;
-- (void)hostAcknowledgement:(NSNotification *)notification;
-- (BOOL)isVotingComplete;
-//- (void)goToDecisionScreen:(JSKMenuViewController *)menuViewController;
 - (void)gameChanged:(NSNotification *)notification;
 - (BOOL)hasVoted;
 
@@ -63,19 +49,12 @@
 @synthesize candidatePickerMenuItems = m_candidatePickerMenuItems;
 @synthesize menuViewController = m_menuViewController;
 @synthesize responseKey = m_responseKey;
-@synthesize overlayer = m_overlayer;
 @synthesize decisionMenuItems = m_decisionMenuItems;
-@synthesize hostFinder = m_hostFinder;
-@synthesize hostPeerID = m_hostPeerID;
-@synthesize thisVote = m_vote;
-@synthesize isVotePending = m_isVotePending;
 @synthesize pollingTimer = m_pollingTimer;
-@synthesize isWaitingForUpdate = m_isWaitingForUpdate;
 
 
 - (void)dealloc
 {
-    [self.hostFinder setDelegate:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.pollingTimer invalidate];
     
@@ -86,10 +65,7 @@
     [m_candidatePickerMenuItems release];
     [m_menuViewController release];
     [m_responseKey release];
-    [m_overlayer release];
     [m_decisionMenuItems release];
-    [m_hostFinder release];
-    [m_hostPeerID release];
     [m_pollingTimer release];
     
     [super dealloc];
@@ -194,149 +170,12 @@
 
 
 
-- (void)voteLocally:(BOOL)vote
-{
-    self.hostPeerID = [SystemMessage playerEnvoy].peerID;
-    
-    VoteEnvoy *voteEnvoy = [[VoteEnvoy alloc] init];
-    voteEnvoy.isCast = YES;
-    voteEnvoy.isYea = vote;
-    voteEnvoy.roundID = self.currentRound.intramuralID;
-    voteEnvoy.playerID = [SystemMessage playerEnvoy].intramuralID;
-    [self.currentRound addVote:voteEnvoy];
-    [voteEnvoy release];
-    
-    [self.gameEnvoy commitAndSave];
-    
-//    if (![SystemMessage isPlayerOnline])
-//    {
-//        [SystemMessage putPlayerOnline];
-//    }
-//    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:[NSArray arrayWithObject:self.currentRound]];
-//    [SystemMessage sendParcelToPlayers:parcel];
-//    [parcel release];
-}
-
-
-- (void)connectAndVote:(BOOL)vote
-{
-    if (self.isVotePending)
-    {
-        return;
-    }
-    
-    self.isVotePending = YES;
-    
-    if (!self.overlayer)
-    {
-        JSKOverlayer *overlayer = [[JSKOverlayer alloc] initWithView:[SystemMessage rootView]];
-        self.overlayer = overlayer;
-        [overlayer release];
-    }
-    NSString *message = NSLocalizedString(@"Voting...", @"Voting...  --  message");
-    [self.overlayer createWaitOverlayWithText:message];
-
-    
-    if ([SystemMessage isPlayerOnline])
-    {
-        self.hostPeerID = self.gameEnvoy.host.peerID;
-        [self vote:vote];
-        return;
-    }
-    
-    if (!self.hostFinder)
-    {
-        HostFinder *hostFinder = [[HostFinder alloc] init];
-        [hostFinder setDelegate:self];
-        self.hostFinder = hostFinder;
-        [hostFinder release];
-    }
-    [self.hostFinder connect];
-    
-    self.thisVote = vote;
-}
-
-
-- (void)vote:(BOOL)vote
-{
-    PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
-    
-    // This involves sending a new (unconnected to core data) vote envoy to the host.
-    // After the vote is acknowledged by the host, go to the results screen.
-    // The host will update the game, and broadcast an update.
-    
-    NSObject <NSCoding> *parcelObject = nil;
-
-    VoteEnvoy *voteEnvoy = [[VoteEnvoy alloc] init];
-    voteEnvoy.isCast = NO;
-    voteEnvoy.isYea = vote;
-    voteEnvoy.roundID = self.currentRound.intramuralID;
-    voteEnvoy.playerID = playerEnvoy.intramuralID;
-    
-    if ([self isCoordinator])
-    {
-        // The Coordinator has to send the team candidates to the host, along with the vote.
-        CoordinatorVote *coordinatorVote = [[CoordinatorVote alloc] init];
-        coordinatorVote.voteEnvoy = voteEnvoy;
-        coordinatorVote.candidateIDs = [self.candidates valueForKey:@"intramuralID"];
-        parcelObject = [coordinatorVote retain];
-        [coordinatorVote release];
-    }
-    else
-    {
-        parcelObject = [voteEnvoy retain];
-    }
-    
-    [voteEnvoy release];
-
-    
-    NSString *hostPeerID = self.hostPeerID;
-    self.responseKey = [SystemMessage buildRandomString];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hostAcknowledgement:) name:kPartisansNotificationHostAcknowledgement object:nil];
-    
-    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:hostPeerID from:playerEnvoy.peerID object:parcelObject responseKey:self.responseKey];
-    [parcelObject release];
-    [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:YES];
-    [parcel release];
-}
-
-
-- (void)hostAcknowledgement:(NSNotification *)notification
-{
-    NSString *responseKey = notification.object;
-    if (![responseKey isEqualToString:self.responseKey])
-    {
-        // Oops! Is this really our notification?
-        return;
-    }
-    
-//    [self.overlayer removeWaitOverlay];
-    
-//    self.gameEnvoy = nil;
-//    self.currentRound = nil;
-//    self.currentMission = nil;
-    
-    self.isWaitingForUpdate = YES;
-    [SystemMessage requestGameUpdate];
-}
-
-
 
 - (void)gameChanged:(NSNotification *)notification
 {
-    if (self.isWaitingForUpdate)
-    {
-        [self.overlayer removeWaitOverlay];
-    }
     self.gameEnvoy = nil;
     self.currentRound = nil;
     self.currentMission = nil;
-    
-    if ([self hasVoted])
-    {
-        [self.overlayer removeWaitOverlay];
-    }
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
@@ -349,43 +188,11 @@
     if ([self isReadyForVote] || [self hasVoted])
     {
         [self.pollingTimer invalidate];
-        [self.overlayer removeWaitOverlay];
         [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
     }
     else
     {
         [SystemMessage requestGameUpdate];
-    }
-}
-
-
-
-#pragma mark - Host Finder delegate
-
-- (void)hostFinder:(HostFinder *)hostFinder isConnectedToHost:(NSString *)hostPeerID
-{
-    self.hostPeerID = hostPeerID;
-    [self vote:self.thisVote];
-}
-
-- (void)hostFinderTimerFired:(HostFinder *)hostFinder
-{
-    static NSUInteger timeoutCount = 0;
-    timeoutCount++;
-    if (timeoutCount == 1)
-    {
-        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Is the Host available?", @"Is the Host available?  --  message")];
-    }
-    else if (timeoutCount == 2)
-    {
-        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Trying one last time...", @"Trying one last time...  --  message")];
-    }
-    else
-    {
-        [hostFinder stop];
-        self.hostFinder = nil;
-        [self.overlayer removeWaitOverlay];
-        timeoutCount = 0;
     }
 }
 
@@ -422,56 +229,56 @@
 
 - (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == RoundMenuSectionCommand)
-    {
-        if ([self hasVoted])
-        {
-            return;
-        }
-        else if ([self isReadyForVote])
-        {
-            // Voting.
-            BOOL vote = YES;
-            if (indexPath.row == 1)
-            {
-                vote = NO;
-            }
-            
-            if ([SystemMessage isHost])
-            {
-                [self voteLocally:vote];
-                return;
-            }
-            
-            // Stash a reference to the menuViewController, so we can push the results screen when
-            // the host acknowledges our vote.
-            self.menuViewController = menuViewController;
-            [self connectAndVote:vote];
-            return;
-        }
-        else
-        {
-//            if ([self isCoordinator])
-//            {
-//                JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
-//                [vc setDelegate:self.candidatePickerMenuItems];
-//                [menuViewController invokePush:YES viewController:vc];
-//                [vc release];
-//            }
-        }
-    }
-    
-//    // Allow the coordinator to undo choices.
-//    if (indexPath.section == RoundMenuSectionTeam)
+//    if (indexPath.section == RoundMenuSectionCommand)
 //    {
-//        if ([self isCoordinator])
+//        if ([self hasVoted])
 //        {
-//            JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
-//            [vc setDelegate:self.candidatePickerMenuItems];
-//            [menuViewController invokePush:YES viewController:vc];
-//            [vc release];
+//            return;
+//        }
+//        else if ([self isReadyForVote])
+//        {
+//            // Voting.
+//            BOOL vote = YES;
+//            if (indexPath.row == 1)
+//            {
+//                vote = NO;
+//            }
+//            
+//            if ([SystemMessage isHost])
+//            {
+//                [self voteLocally:vote];
+//                return;
+//            }
+//            
+//            // Stash a reference to the menuViewController, so we can push the results screen when
+//            // the host acknowledges our vote.
+//            self.menuViewController = menuViewController;
+//            [self connectAndVote:vote];
+//            return;
+//        }
+//        else
+//        {
+////            if ([self isCoordinator])
+////            {
+////                JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+////                [vc setDelegate:self.candidatePickerMenuItems];
+////                [menuViewController invokePush:YES viewController:vc];
+////                [vc release];
+////            }
 //        }
 //    }
+//    
+////    // Allow the coordinator to undo choices.
+////    if (indexPath.section == RoundMenuSectionTeam)
+////    {
+////        if ([self isCoordinator])
+////        {
+////            JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
+////            [vc setDelegate:self.candidatePickerMenuItems];
+////            [menuViewController invokePush:YES viewController:vc];
+////            [vc release];
+////        }
+////    }
 }
 
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
@@ -509,8 +316,9 @@
             }
             else if ([self isReadyForVote])
             {
-                // Two possible votes: YES and NO.
-                returnValue = 2;
+                returnValue = 1;
+//                // Two possible votes: YES and NO.
+//                returnValue = 2;
             }
             else
             {
@@ -649,14 +457,15 @@
             }
             else if ([self isReadyForVote])
             {
-                if (indexPath.row == 0)
-                {
-                    returnValue = NSLocalizedString(@"Vote YES", @"Vote YES  --  label");
-                }
-                else
-                {
-                    returnValue = NSLocalizedString(@"Vote NO", @"Vote NO  --  label");
-                }
+                returnValue = NSLocalizedString(@"Voting Booth", @"Voting Booth  --  label");
+//                if (indexPath.row == 0)
+//                {
+//                    returnValue = NSLocalizedString(@"Vote YES", @"Vote YES  --  label");
+//                }
+//                else
+//                {
+//                    returnValue = NSLocalizedString(@"Vote NO", @"Vote NO  --  label");
+//                }
             }
             else
             {
@@ -729,6 +538,10 @@
         if ([self hasVoted])
         {
             returnValue = [JSKMenuViewController class];
+        }
+        else if ([self isReadyForVote])
+        {
+            returnValue = [VoteViewController class];
         }
         else if ([self isCoordinator] && ![self isReadyForVote])
         {
@@ -803,7 +616,11 @@
     
     if (indexPath.section == RoundMenuSectionCommand)
     {
-        if ([self isCoordinator] && ![self isReadyForVote])
+        if ([self isReadyForVote])
+        {
+            returnValue = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if ([self isCoordinator] && ![self isReadyForVote])
         {
             returnValue = UITableViewCellAccessoryDisclosureIndicator;
         }

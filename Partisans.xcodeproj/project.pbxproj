@@ -17,6 +17,7 @@
 		93040366174E7D0900ED169F /* ToolsMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93040364174E7D0900ED169F /* ToolsMenuItems.m */; };
 		9307B3D4177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
 		9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
+		93515AF5179992450044E998 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93515AF4179992450044E998 /* VoteViewController.xib */; };
 		9351AA7A177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
 		9351AA7B177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
 		9351AA82177E2A0C00D4C843 /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA81177E2A0C00D4C843 /* Round.m */; };
@@ -137,6 +138,9 @@
 		93B2DE4F1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE4D1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m */; };
 		93B2DE5217958E2200FFC1D5 /* GamePrecis.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE5117958E2200FFC1D5 /* GamePrecis.m */; };
 		93B2DE5317958E2200FFC1D5 /* GamePrecis.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE5117958E2200FFC1D5 /* GamePrecis.m */; };
+		93B37B7317988FA000118CE3 /* VoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B37B7117988FA000118CE3 /* VoteViewController.m */; };
+		93B37B7417988FA000118CE3 /* VoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B37B7117988FA000118CE3 /* VoteViewController.m */; };
+		93B37B7517988FA000118CE3 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B37B7217988FA000118CE3 /* VoteViewController.xib */; };
 		93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
@@ -234,6 +238,7 @@
 		93040364174E7D0900ED169F /* ToolsMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToolsMenuItems.m; path = Classes/ToolsMenuItems.m; sourceTree = "<group>"; };
 		9307B3D2177F8A41003CEC6F /* HostFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostFinder.h; path = Classes/HostFinder.h; sourceTree = "<group>"; };
 		9307B3D3177F8A41003CEC6F /* HostFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HostFinder.m; path = Classes/HostFinder.m; sourceTree = "<group>"; };
+		93515AF4179992450044E998 /* VoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VoteViewController.xib; path = Classes/iOS5/VoteViewController.xib; sourceTree = "<group>"; };
 		9351AA78177E2A0B00D4C843 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vote.h; path = Classes/Vote.h; sourceTree = "<group>"; };
 		9351AA79177E2A0B00D4C843 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vote.m; path = Classes/Vote.m; sourceTree = "<group>"; };
 		9351AA80177E2A0C00D4C843 /* Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Round.h; path = Classes/Round.h; sourceTree = "<group>"; };
@@ -377,6 +382,9 @@
 		93B2DE4D1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateEnvoysOperation.m; path = Classes/UpdateEnvoysOperation.m; sourceTree = "<group>"; };
 		93B2DE5017958E2200FFC1D5 /* GamePrecis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePrecis.h; path = Classes/GamePrecis.h; sourceTree = "<group>"; };
 		93B2DE5117958E2200FFC1D5 /* GamePrecis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePrecis.m; path = Classes/GamePrecis.m; sourceTree = "<group>"; };
+		93B37B7017988FA000118CE3 /* VoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoteViewController.h; path = Classes/VoteViewController.h; sourceTree = "<group>"; };
+		93B37B7117988FA000118CE3 /* VoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoteViewController.m; path = Classes/VoteViewController.m; sourceTree = "<group>"; };
+		93B37B7217988FA000118CE3 /* VoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VoteViewController.xib; path = Classes/VoteViewController.xib; sourceTree = "<group>"; };
 		93BF3B511771CABF00B20A71 /* GameDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDirector.h; path = Classes/GameDirector.h; sourceTree = "<group>"; };
 		93BF3B521771CABF00B20A71 /* GameDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameDirector.m; path = Classes/GameDirector.m; sourceTree = "<group>"; };
 		93BF3B551771CEA500B20A71 /* MissionEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionEnvoy.h; path = Classes/MissionEnvoy.h; sourceTree = "<group>"; };
@@ -471,6 +479,14 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
+		93515AF3179991FD0044E998 /* iOS5 */ = {
+			isa = PBXGroup;
+			children = (
+				93515AF4179992450044E998 /* VoteViewController.xib */,
+			);
+			name = iOS5;
+			sourceTree = "<group>";
+		};
 		9351AA6B177CDAFB00D4C843 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +503,7 @@
 		9351AA94177E52DB00D4C843 /* Round */ = {
 			isa = PBXGroup;
 			children = (
+				93515AF3179991FD0044E998 /* iOS5 */,
 				93E6547E177C6A95003C73C2 /* CandidatePickerMenuItems.h */,
 				93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */,
 				9351AA88177E48CD00D4C843 /* CoordinatorVote.h */,
@@ -495,6 +512,9 @@
 				9351AA91177E52C200D4C843 /* DecisionMenuItems.m */,
 				939F36861779FEEE00A7B766 /* RoundMenuItems.h */,
 				939F36871779FEEE00A7B766 /* RoundMenuItems.m */,
+				93B37B7017988FA000118CE3 /* VoteViewController.h */,
+				93B37B7117988FA000118CE3 /* VoteViewController.m */,
+				93B37B7217988FA000118CE3 /* VoteViewController.xib */,
 			);
 			name = Round;
 			sourceTree = "<group>";
@@ -988,6 +1008,7 @@
 				93FFD1961783635100ADCB44 /* waitOverLay@2x.png in Resources */,
 				93FFD1981783635100ADCB44 /* waitOverLay.png in Resources */,
 				93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */,
+				93B37B7517988FA000118CE3 /* VoteViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1018,6 +1039,7 @@
 				93FFD1971783635100ADCB44 /* waitOverLay@2x.png in Resources */,
 				93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */,
 				938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */,
+				93515AF5179992450044E998 /* VoteViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1133,6 +1155,7 @@
 				937ED0E11791B28100A95231 /* GameOverMenuItems.m in Sources */,
 				93B2DE4E1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */,
 				93B2DE5217958E2200FFC1D5 /* GamePrecis.m in Sources */,
+				93B37B7317988FA000118CE3 /* VoteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1216,6 +1239,7 @@
 				937ED0E21791B28100A95231 /* GameOverMenuItems.m in Sources */,
 				93B2DE4F1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */,
 				93B2DE5317958E2200FFC1D5 /* GamePrecis.m in Sources */,
+				93B37B7417988FA000118CE3 /* VoteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

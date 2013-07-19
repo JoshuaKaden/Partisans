@@ -1017,7 +1017,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 - (void)netPlayer:(NetPlayer *)netPlayer terminated:(NSString *)reason
 {
-    debugLog(@"NetPlayer terminated: %@", reason);
+    [netPlayer stop];
+//    debugLog(@"NetPlayer terminated: %@", reason);
 }
 
 - (void)netPlayerDidResolveAddress:(NetPlayer *)netPlayer
