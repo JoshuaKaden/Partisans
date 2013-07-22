@@ -72,7 +72,11 @@
         self.isDefaultPicture = [managedObject.isDefaultPicture boolValue];
         self.playerName = managedObject.playerName;
         self.favoriteColor = managedObject.favoriteColor;
-        self.picture = [ImageEnvoy envoyFromManagedObject:managedObject.picture];
+        
+        ImageEnvoy *imageEnvoy = [[ImageEnvoy alloc] initWithManagedObject:managedObject.picture];
+        self.picture = imageEnvoy;
+        [imageEnvoy release];
+        
         self.peerID = managedObject.peerID;
 
         if (!self.intramuralID)
@@ -96,6 +100,17 @@
     }
     
     return self;
+}
+
+
+- (UIImage *)image
+{
+    return self.picture.image;
+}
+
+- (UIImage *)smallImage
+{
+    return [SystemMessage cachedSmallImage:self.picture.intramuralID];
 }
 
 

@@ -8,7 +8,8 @@
 
 #import "SetupGameMenuItems.h"
 
-#import "DossierMenuItems.h"
+#import "DossierDelegate.h"
+#import "DossierViewController.h"
 #import "GameDirector.h"
 #import "GameEnvoy.h"
 #import "GamePlayerEnvoy.h"
@@ -24,7 +25,7 @@
 
 @property (nonatomic, strong) NSArray *awaitingApproval;
 @property (nonatomic, strong) NSArray *players;
-@property (nonatomic, strong) DossierMenuItems *dossierMenuItems;
+@property (nonatomic, strong) DossierDelegate *dossierDelegate;
 @property (nonatomic, strong) UIAlertView *stopHostingAlertView;
 @property (nonatomic, strong) UIAlertView *leaveGameAlertView;
 @property (nonatomic, assign) JSKMenuViewController *menuViewController;
@@ -47,7 +48,7 @@
 
 @synthesize awaitingApproval = m_awaitingApproval;
 @synthesize players = m_players;
-@synthesize dossierMenuItems = m_dossierMenuItems;
+@synthesize dossierDelegate = m_dossierDelegate;
 @synthesize shouldHost = m_shouldHost;
 @synthesize stopHostingAlertView = m_stopHostingAlertView;
 @synthesize leaveGameAlertView = m_leaveGameAlertView;
@@ -62,7 +63,7 @@
     
     [m_awaitingApproval release];
     [m_players release];
-    [m_dossierMenuItems release];
+    [m_dossierDelegate release];
     [m_stopHostingAlertView release];
     [m_leaveGameAlertView release];
     [m_playerRoundMenuItems release];
@@ -452,8 +453,10 @@
 
             
         case SetupGameMenuSectionAwaitingApproval:
+            break;
+            
         case SetupGameMenuSectionPlayers:
-//            returnValue = UITableViewCellAccessoryDisclosureIndicator;
+            returnValue = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
             
@@ -689,7 +692,7 @@
             switch ((SetupGameMenuRow)indexPath.row)
             {
                 case SetupGameMenuRowHost:
-                    returnValue = gameEnvoy.host.picture.image;
+                    returnValue = gameEnvoy.host.smallImage;
                     break;
                     
                 case SetupGameMenuRowPlayers:
@@ -709,7 +712,7 @@
             if (self.awaitingApproval.count > 0)
             {
                 PlayerEnvoy *playerEnvoy = [self.awaitingApproval objectAtIndex:indexPath.row];
-                returnValue = playerEnvoy.picture.image;
+                returnValue = playerEnvoy.smallImage;
             }
             break;
             
@@ -719,7 +722,7 @@
             if (self.players.count > 0)
             {
                 PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
-                returnValue = playerEnvoy.picture.image;
+                returnValue = playerEnvoy.smallImage;
             }
             break;
             
@@ -770,7 +773,7 @@
             
             
         case SetupGameMenuSectionPlayers:
-//            returnValue = [JSKMenuViewController class];
+            returnValue = [DossierViewController class];
             break;
             
             
@@ -817,16 +820,19 @@
         
             
         case SetupGameMenuSectionAwaitingApproval:
+            break;
+            
         case SetupGameMenuSectionPlayers:
         {
-//            DossierMenuItems *items = [[DossierMenuItems alloc] init];
-//            self.dossierMenuItems = items;
-//            [items release];
-//            return self.dossierMenuItems;
+            PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
+            DossierDelegate *delegate = [[DossierDelegate alloc] initWithPlayerEnvoy:playerEnvoy];
+            self.dossierDelegate = delegate;
+            [delegate release];
+            returnValue = self.dossierDelegate;
             break;
         }
             
-            
+        
             
         case SetupGameMenuSection_MaxValue:
             break;

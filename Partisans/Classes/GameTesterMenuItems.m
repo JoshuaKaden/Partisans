@@ -169,7 +169,7 @@
             if (self.players.count > 0)
             {
                 PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
-                returnValue = playerEnvoy.picture.image;
+                returnValue = playerEnvoy.smallImage;
             }
             break;
         }

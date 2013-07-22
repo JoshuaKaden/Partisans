@@ -509,13 +509,13 @@
     {
         if (indexPath.row == RoundMenuMissionRowCoordinator)
         {
-            returnValue = self.currentRound.coordinator.picture.image;
+            returnValue = self.currentRound.coordinator.smallImage;
         }
     }
     else if (indexPath.section == RoundMenuSectionTeam)
     {
         PlayerEnvoy *candidate = [self.candidates objectAtIndex:indexPath.row];
-        returnValue = candidate.picture.image;
+        returnValue = candidate.smallImage;
     }
     return returnValue;
 }

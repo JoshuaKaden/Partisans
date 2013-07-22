@@ -266,7 +266,7 @@
         if (self.isOperative)
         {
             PlayerEnvoy *envoy = [self.operatives objectAtIndex:indexPath.row];
-            return envoy.picture.image;
+            return envoy.smallImage;
         }
         else
         {

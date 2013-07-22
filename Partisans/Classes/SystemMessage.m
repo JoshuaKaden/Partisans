@@ -157,11 +157,33 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     return returnValue;
 }
 
++ (UIImage *)cachedSmallImage:(NSString *)key
+{
+    UIImage *returnValue = nil;
+    NSCache *cache = [self sharedInstance].imageCache;
+    if (!cache)
+    {
+        cache = [[NSCache alloc] init];
+        [self sharedInstance].imageCache = cache;
+        [cache release];
+    }
+    else
+    {
+        NSString *smallKey = [[NSString alloc] initWithFormat:@"%@-small", key];
+        returnValue = [cache objectForKey:smallKey];
+        [smallKey release];
+    }
+    return returnValue;
+}
+
 + (void)cacheImage:(UIImage *)image key:(NSString *)key
 {
+    NSString *smallKey = [[NSString alloc] initWithFormat:@"%@-small", key];
     UIImage *smallerImage = [self imageWithImage:image scaledToSizeWithSameAspectRatio:CGSizeMake(50.0, 50.0)];
     NSCache *cache = [self sharedInstance].imageCache;
-    [cache setObject:smallerImage forKey:key];
+    [cache setObject:image forKey:key];
+    [cache setObject:smallerImage forKey:smallKey];
+    [smallKey release];
 }
 
 + (void)clearImageCache

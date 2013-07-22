@@ -273,7 +273,6 @@
     self.hasActionBeenConfirmed = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [SystemMessage requestGameUpdate];
-    
 }
 
 - (void)gameChanged:(NSNotification *)notification

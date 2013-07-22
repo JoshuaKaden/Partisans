@@ -280,7 +280,7 @@
     if (indexPath.section == MissionStatusSectionTeam)
     {
         PlayerEnvoy *playerEnvoy = [self.currentMission.teamMembers objectAtIndex:indexPath.row];
-        returnValue = playerEnvoy.picture.image;
+        returnValue = playerEnvoy.smallImage;
     }
     return returnValue;
 }

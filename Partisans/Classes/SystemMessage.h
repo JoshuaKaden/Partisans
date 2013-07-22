@@ -48,6 +48,7 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 + (UIView *)rootView;
 
 + (UIImage *)cachedImage:(NSString *)key;
++ (UIImage *)cachedSmallImage:(NSString *)key;
 + (void)cacheImage:(UIImage *)image key:(NSString *)key;
 + (void)clearImageCache;
 

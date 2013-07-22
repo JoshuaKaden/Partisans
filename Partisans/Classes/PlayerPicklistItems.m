@@ -108,7 +108,7 @@
 - (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
 {
     PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
-    return playerEnvoy.picture.image;
+    return playerEnvoy.smallImage;
 }
 
 

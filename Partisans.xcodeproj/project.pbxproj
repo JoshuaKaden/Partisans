@@ -117,6 +117,10 @@
 		937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
 		937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
 		937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
+		937C02BF179D45DD00C8FAE2 /* DossierDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C02BE179D45DD00C8FAE2 /* DossierDelegate.m */; };
+		937C02C0179D45DD00C8FAE2 /* DossierDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C02BE179D45DD00C8FAE2 /* DossierDelegate.m */; };
+		937C02C1179DD43E00C8FAE2 /* DossierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */; };
+		937C02C2179DD44A00C8FAE2 /* DossierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */; };
 		937ED0E11791B28100A95231 /* GameOverMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 937ED0E01791B28100A95231 /* GameOverMenuItems.m */; };
 		937ED0E21791B28100A95231 /* GameOverMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 937ED0E01791B28100A95231 /* GameOverMenuItems.m */; };
 		938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 938144F1178CB6FA000AA437 /* MissionViewController.xib */; };
@@ -141,6 +145,8 @@
 		93B37B7317988FA000118CE3 /* VoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B37B7117988FA000118CE3 /* VoteViewController.m */; };
 		93B37B7417988FA000118CE3 /* VoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B37B7117988FA000118CE3 /* VoteViewController.m */; };
 		93B37B7517988FA000118CE3 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B37B7217988FA000118CE3 /* VoteViewController.xib */; };
+		93BCDD2E179ABEF9002F8E6D /* DossierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */; };
+		93BCDD2F179ABEF9002F8E6D /* DossierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */; };
 		93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
@@ -149,7 +155,6 @@
 		93C10B9D1744028300B47095 /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
 		93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
 		93C10BC8174439B300B47095 /* SetupGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BC7174439B300B47095 /* SetupGameMenuItems.m */; };
-		93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BE21744515C00B47095 /* DossierMenuItems.m */; };
 		93C442E917511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93C442EA17511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93D124011790363D003523F9 /* AboutMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D124001790363D003523F9 /* AboutMenuItems.m */; };
@@ -197,7 +202,6 @@
 		93FECB34174547840046529A /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
 		93FECB35174547840046529A /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
 		93FECB36174547840046529A /* SetupGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BC7174439B300B47095 /* SetupGameMenuItems.m */; };
-		93FECB3F174547840046529A /* DossierMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BE21744515C00B47095 /* DossierMenuItems.m */; };
 		93FECB40174547840046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
 		93FECB41174547840046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
 		93FECB43174547840046529A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
@@ -361,6 +365,8 @@
 		937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateGameOperation.m; path = Classes/CreateGameOperation.m; sourceTree = "<group>"; };
 		937BC0C11747D86D003F42D6 /* GamePlayerEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GamePlayerEnvoy.h; path = Classes/GamePlayerEnvoy.h; sourceTree = "<group>"; };
 		937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePlayerEnvoy.m; path = Classes/GamePlayerEnvoy.m; sourceTree = "<group>"; };
+		937C02BD179D45DD00C8FAE2 /* DossierDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DossierDelegate.h; path = Classes/DossierDelegate.h; sourceTree = "<group>"; };
+		937C02BE179D45DD00C8FAE2 /* DossierDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierDelegate.m; path = Classes/DossierDelegate.m; sourceTree = "<group>"; };
 		937ED0DF1791B28100A95231 /* GameOverMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverMenuItems.h; path = Classes/GameOverMenuItems.h; sourceTree = "<group>"; };
 		937ED0E01791B28100A95231 /* GameOverMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameOverMenuItems.m; path = Classes/GameOverMenuItems.m; sourceTree = "<group>"; };
 		938144F1178CB6FA000AA437 /* MissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MissionViewController.xib; path = Classes/iOS5/MissionViewController.xib; sourceTree = "<group>"; };
@@ -385,6 +391,9 @@
 		93B37B7017988FA000118CE3 /* VoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoteViewController.h; path = Classes/VoteViewController.h; sourceTree = "<group>"; };
 		93B37B7117988FA000118CE3 /* VoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoteViewController.m; path = Classes/VoteViewController.m; sourceTree = "<group>"; };
 		93B37B7217988FA000118CE3 /* VoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VoteViewController.xib; path = Classes/VoteViewController.xib; sourceTree = "<group>"; };
+		93BCDD2B179ABEF9002F8E6D /* DossierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DossierViewController.h; path = Classes/DossierViewController.h; sourceTree = "<group>"; };
+		93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierViewController.m; path = Classes/DossierViewController.m; sourceTree = "<group>"; };
+		93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DossierViewController.xib; path = Classes/DossierViewController.xib; sourceTree = "<group>"; };
 		93BF3B511771CABF00B20A71 /* GameDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDirector.h; path = Classes/GameDirector.h; sourceTree = "<group>"; };
 		93BF3B521771CABF00B20A71 /* GameDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameDirector.m; path = Classes/GameDirector.m; sourceTree = "<group>"; };
 		93BF3B551771CEA500B20A71 /* MissionEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionEnvoy.h; path = Classes/MissionEnvoy.h; sourceTree = "<group>"; };
@@ -396,8 +405,6 @@
 		93C10BB917440C4500B47095 /* PlayGameMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayGameMenuItems.m; path = Classes/PlayGameMenuItems.m; sourceTree = "<group>"; };
 		93C10BC6174439B200B47095 /* SetupGameMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupGameMenuItems.h; path = Classes/SetupGameMenuItems.h; sourceTree = "<group>"; };
 		93C10BC7174439B300B47095 /* SetupGameMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetupGameMenuItems.m; path = Classes/SetupGameMenuItems.m; sourceTree = "<group>"; };
-		93C10BE11744515C00B47095 /* DossierMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DossierMenuItems.h; path = Classes/DossierMenuItems.h; sourceTree = "<group>"; };
-		93C10BE21744515C00B47095 /* DossierMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierMenuItems.m; path = Classes/DossierMenuItems.m; sourceTree = "<group>"; };
 		93C442E717511B15000DEC63 /* UpdateGameOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateGameOperation.h; path = Classes/UpdateGameOperation.h; sourceTree = "<group>"; };
 		93C442E817511B15000DEC63 /* UpdateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateGameOperation.m; path = Classes/UpdateGameOperation.m; sourceTree = "<group>"; };
 		93D123FF1790363D003523F9 /* AboutMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutMenuItems.h; path = Classes/AboutMenuItems.h; sourceTree = "<group>"; };
@@ -739,8 +746,11 @@
 		936510F817415A7B00F2AD06 /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				93C10BE11744515C00B47095 /* DossierMenuItems.h */,
-				93C10BE21744515C00B47095 /* DossierMenuItems.m */,
+				937C02BD179D45DD00C8FAE2 /* DossierDelegate.h */,
+				937C02BE179D45DD00C8FAE2 /* DossierDelegate.m */,
+				93BCDD2B179ABEF9002F8E6D /* DossierViewController.h */,
+				93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */,
+				93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */,
 				93FECB5F174549C10046529A /* iOS5 */,
 				936510F917415A9D00F2AD06 /* PlayerPicklistItems.h */,
 				936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */,
@@ -1009,6 +1019,7 @@
 				93FFD1981783635100ADCB44 /* waitOverLay.png in Resources */,
 				93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */,
 				93B37B7517988FA000118CE3 /* VoteViewController.xib in Resources */,
+				93BCDD2F179ABEF9002F8E6D /* DossierViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,6 +1051,7 @@
 				93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */,
 				938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */,
 				93515AF5179992450044E998 /* VoteViewController.xib in Resources */,
+				937C02C2179DD44A00C8FAE2 /* DossierViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1111,7 +1123,6 @@
 				93C10B9D1744028300B47095 /* GameEnvoy.m in Sources */,
 				93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */,
 				93C10BC8174439B300B47095 /* SetupGameMenuItems.m in Sources */,
-				93C10BE31744515C00B47095 /* DossierMenuItems.m in Sources */,
 				93FECAB1174521A40046529A /* LabelProgressView.m in Sources */,
 				93FECAB3174521A40046529A /* ProgressCell.m in Sources */,
 				9303BE5117467CAE0065ADD2 /* JoinGameViewController.m in Sources */,
@@ -1156,6 +1167,8 @@
 				93B2DE4E1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */,
 				93B2DE5217958E2200FFC1D5 /* GamePrecis.m in Sources */,
 				93B37B7317988FA000118CE3 /* VoteViewController.m in Sources */,
+				93BCDD2E179ABEF9002F8E6D /* DossierViewController.m in Sources */,
+				937C02BF179D45DD00C8FAE2 /* DossierDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1195,7 +1208,6 @@
 				93FECB34174547840046529A /* GameEnvoy.m in Sources */,
 				93FECB35174547840046529A /* PlayGameMenuItems.m in Sources */,
 				93FECB36174547840046529A /* SetupGameMenuItems.m in Sources */,
-				93FECB3F174547840046529A /* DossierMenuItems.m in Sources */,
 				93FECB40174547840046529A /* LabelProgressView.m in Sources */,
 				93FECB41174547840046529A /* ProgressCell.m in Sources */,
 				9303BE5217467CAE0065ADD2 /* JoinGameViewController.m in Sources */,
@@ -1240,6 +1252,8 @@
 				93B2DE4F1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */,
 				93B2DE5317958E2200FFC1D5 /* GamePrecis.m in Sources */,
 				93B37B7417988FA000118CE3 /* VoteViewController.m in Sources */,
+				937C02C0179D45DD00C8FAE2 /* DossierDelegate.m in Sources */,
+				937C02C1179DD43E00C8FAE2 /* DossierViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -212,7 +212,7 @@
 {
     UIImage *returnValue = nil;
     PlayerEnvoy *player = [self.players objectAtIndex:indexPath.row];
-    returnValue = player.picture.image;
+    returnValue = player.smallImage;
     return returnValue;
 }
 

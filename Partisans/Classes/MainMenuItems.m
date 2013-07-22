@@ -232,7 +232,7 @@
 {
     if (indexPath.section == 0 && indexPath.row == MainMenuRowPlayer)
     {
-        return [SystemMessage playerEnvoy].picture.image;
+        return [SystemMessage playerEnvoy].smallImage;
     }
     else
     {
