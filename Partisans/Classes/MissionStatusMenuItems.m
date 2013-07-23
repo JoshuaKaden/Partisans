@@ -8,6 +8,8 @@
 
 #import "MissionStatusMenuItems.h"
 
+#import "DossierDelegate.h"
+#import "DossierViewController.h"
 #import "GameDirector.h"
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
@@ -24,6 +26,7 @@
 @property (nonatomic, strong) JSKMenuViewController *menuViewController;
 @property (nonatomic, assign) NSUInteger thisMissionNumber;
 @property (nonatomic, assign) BOOL hasNewRoundStarted;
+@property (nonatomic, strong) DossierDelegate *dossierDelegate;
 
 - (void)gameChanged:(NSNotification *)notification;
 - (void)startNewRound;
@@ -39,6 +42,7 @@
 @synthesize menuViewController = m_menuViewController;
 @synthesize thisMissionNumber = m_thisMissionNumber;
 @synthesize hasNewRoundStarted = m_hasNewRoundStarted;
+@synthesize dossierDelegate = m_dossierDelegate;
 
 
 - (void)dealloc
@@ -49,6 +53,7 @@
     [m_currentMission release];
     [m_pollingTimer release];
     [m_menuViewController release];
+    [m_dossierDelegate release];
     
     [super dealloc];
 }
@@ -288,6 +293,26 @@
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
     Class returnValue = nil;
+    
+    if (indexPath.section == MissionStatusSectionTeam)
+    {
+        returnValue = [DossierViewController class];
+    }
+    
+    return returnValue;
+}
+
+- (id)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerDelegateAtIndexPath:(NSIndexPath *)indexPath
+{
+    id returnValue = nil;
+    if (indexPath.section == MissionStatusSectionTeam)
+    {
+        PlayerEnvoy *playerEnvoy = [self.currentMission.teamMembers objectAtIndex:indexPath.row];
+        DossierDelegate *delegate = [[DossierDelegate alloc] initWithPlayerEnvoy:playerEnvoy];
+        self.dossierDelegate = delegate;
+        [delegate release];
+        returnValue = self.dossierDelegate;
+    }
     return returnValue;
 }
 
@@ -308,7 +333,14 @@
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
-    return UITableViewCellAccessoryNone;
+    if (indexPath.section == MissionStatusSectionTeam)
+    {
+        return UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else
+    {
+        return UITableViewCellAccessoryNone;
+    }
 }
 
 @end

@@ -10,6 +10,8 @@
 
 #import "CandidatePickerMenuItems.h"
 #import "DecisionMenuItems.h"
+#import "DossierDelegate.h"
+#import "DossierViewController.h"
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
 #import "MissionEnvoy.h"
@@ -31,6 +33,7 @@
 @property (nonatomic, strong) NSString *responseKey;
 @property (nonatomic, strong) DecisionMenuItems *decisionMenuItems;
 @property (nonatomic, strong) NSTimer *pollingTimer;
+@property (nonatomic, strong) DossierDelegate *dossierDelegate;
 
 - (BOOL)isReadyForVote;
 - (BOOL)isCoordinator;
@@ -51,6 +54,7 @@
 @synthesize responseKey = m_responseKey;
 @synthesize decisionMenuItems = m_decisionMenuItems;
 @synthesize pollingTimer = m_pollingTimer;
+@synthesize dossierDelegate = m_dossierDelegate;
 
 
 - (void)dealloc
@@ -67,6 +71,7 @@
     [m_responseKey release];
     [m_decisionMenuItems release];
     [m_pollingTimer release];
+    [m_dossierDelegate release];
     
     [super dealloc];
 }
@@ -531,6 +536,10 @@
         {
             returnValue = [JSKMenuViewController class];
         }
+        else if ([self isReadyForVote])
+        {
+            returnValue = [DossierViewController class];
+        }
     }
     
     if (indexPath.section == RoundMenuSectionCommand)
@@ -564,6 +573,14 @@
             self.candidatePickerMenuItems = items;
             [items release];
             returnValue = self.candidatePickerMenuItems;
+        }
+        else if ([self isReadyForVote])
+        {
+            PlayerEnvoy *playerEnvoy = [self.candidates objectAtIndex:indexPath.row];
+            DossierDelegate *delegate = [[DossierDelegate alloc] initWithPlayerEnvoy:playerEnvoy];
+            self.dossierDelegate = delegate;
+            [delegate release];
+            returnValue = self.dossierDelegate;
         }
     }
     
@@ -609,6 +626,10 @@
     if (indexPath.section == RoundMenuSectionTeam)
     {
         if ([self isCoordinator] && ![self hasVoted])
+        {
+            returnValue = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if ([self isReadyForVote])
         {
             returnValue = UITableViewCellAccessoryDisclosureIndicator;
         }
