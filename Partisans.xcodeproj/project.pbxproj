@@ -17,6 +17,12 @@
 		93040366174E7D0900ED169F /* ToolsMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93040364174E7D0900ED169F /* ToolsMenuItems.m */; };
 		9307B3D4177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
 		9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
+		9327777217A86D4100CFE99B /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777117A86D4100CFE99B /* Game.m */; };
+		9327777317A86D4100CFE99B /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777117A86D4100CFE99B /* Game.m */; };
+		9327777717A86FAD00CFE99B /* GameCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777517A86FAD00CFE99B /* GameCodeViewController.m */; };
+		9327777817A86FAD00CFE99B /* GameCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777517A86FAD00CFE99B /* GameCodeViewController.m */; };
+		9327777917A86FAD00CFE99B /* GameCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9327777617A86FAD00CFE99B /* GameCodeViewController.xib */; };
+		9327777A17A86FAD00CFE99B /* GameCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9327777617A86FAD00CFE99B /* GameCodeViewController.xib */; };
 		93515AF5179992450044E998 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93515AF4179992450044E998 /* VoteViewController.xib */; };
 		9351AA7A177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
 		9351AA7B177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
@@ -126,14 +132,18 @@
 		938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 938144F1178CB6FA000AA437 /* MissionViewController.xib */; };
 		938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
+		9392E6D217A66F5E00FE6B9C /* TestCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392E6D017A66F5E00FE6B9C /* TestCodeViewController.m */; };
+		9392E6D317A66F5E00FE6B9C /* TestCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392E6D017A66F5E00FE6B9C /* TestCodeViewController.m */; };
+		9392E6D417A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9392E6D117A66F5E00FE6B9C /* TestCodeViewController.xib */; };
+		9392E6D517A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9392E6D117A66F5E00FE6B9C /* TestCodeViewController.xib */; };
+		9392E6DA17A6767100FE6B9C /* EditCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9392E6D917A6767100FE6B9C /* EditCodeView.xib */; };
+		9392E6DB17A6767100FE6B9C /* EditCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9392E6D917A6767100FE6B9C /* EditCodeView.xib */; };
 		939697E717732A110013B125 /* RoundEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 939697E617732A110013B125 /* RoundEnvoy.m */; };
 		939697E817732A110013B125 /* RoundEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 939697E617732A110013B125 /* RoundEnvoy.m */; };
 		9398A9C6177224EE00E5D31C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9C5177224EE00E5D31C /* Image.m */; };
 		9398A9C7177224EE00E5D31C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9C5177224EE00E5D31C /* Image.m */; };
 		9398A9CA177224EE00E5D31C /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9C9177224EE00E5D31C /* Player.m */; };
 		9398A9CB177224EE00E5D31C /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9C9177224EE00E5D31C /* Player.m */; };
-		9398A9CE177224EE00E5D31C /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9CD177224EE00E5D31C /* Game.m */; };
-		9398A9CF177224EE00E5D31C /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9CD177224EE00E5D31C /* Game.m */; };
 		9398A9D2177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
 		9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
 		939F36881779FEEE00A7B766 /* RoundMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F36871779FEEE00A7B766 /* RoundMenuItems.m */; };
@@ -155,6 +165,10 @@
 		93C10B9D1744028300B47095 /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
 		93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
 		93C10BC8174439B300B47095 /* SetupGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BC7174439B300B47095 /* SetupGameMenuItems.m */; };
+		93C1D6F217A564B400EE2878 /* EditCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1D6F117A564B400EE2878 /* EditCodeView.m */; };
+		93C1D6F317A564B400EE2878 /* EditCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1D6F117A564B400EE2878 /* EditCodeView.m */; };
+		93C1D6F517A564E300EE2878 /* EditCodeView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C1D6F417A564E300EE2878 /* EditCodeView~iphone.xib */; };
+		93C1D6F617A564E300EE2878 /* EditCodeView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C1D6F417A564E300EE2878 /* EditCodeView~iphone.xib */; };
 		93C442E917511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93C442EA17511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93D124011790363D003523F9 /* AboutMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D124001790363D003523F9 /* AboutMenuItems.m */; };
@@ -242,6 +256,11 @@
 		93040364174E7D0900ED169F /* ToolsMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToolsMenuItems.m; path = Classes/ToolsMenuItems.m; sourceTree = "<group>"; };
 		9307B3D2177F8A41003CEC6F /* HostFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostFinder.h; path = Classes/HostFinder.h; sourceTree = "<group>"; };
 		9307B3D3177F8A41003CEC6F /* HostFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HostFinder.m; path = Classes/HostFinder.m; sourceTree = "<group>"; };
+		9327777017A86D4100CFE99B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Classes/Game.h; sourceTree = "<group>"; };
+		9327777117A86D4100CFE99B /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Game.m; path = Classes/Game.m; sourceTree = "<group>"; };
+		9327777417A86FAD00CFE99B /* GameCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameCodeViewController.h; path = Classes/GameCodeViewController.h; sourceTree = "<group>"; };
+		9327777517A86FAD00CFE99B /* GameCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameCodeViewController.m; path = Classes/GameCodeViewController.m; sourceTree = "<group>"; };
+		9327777617A86FAD00CFE99B /* GameCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameCodeViewController.xib; path = Classes/GameCodeViewController.xib; sourceTree = "<group>"; };
 		93515AF4179992450044E998 /* VoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VoteViewController.xib; path = Classes/iOS5/VoteViewController.xib; sourceTree = "<group>"; };
 		9351AA78177E2A0B00D4C843 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vote.h; path = Classes/Vote.h; sourceTree = "<group>"; };
 		9351AA79177E2A0B00D4C843 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vote.m; path = Classes/Vote.m; sourceTree = "<group>"; };
@@ -372,14 +391,16 @@
 		938144F1178CB6FA000AA437 /* MissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MissionViewController.xib; path = Classes/iOS5/MissionViewController.xib; sourceTree = "<group>"; };
 		938429321746C0D30037563D /* AddGamePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddGamePlayerOperation.h; path = Classes/AddGamePlayerOperation.h; sourceTree = "<group>"; };
 		938429331746C0D30037563D /* AddGamePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddGamePlayerOperation.m; path = Classes/AddGamePlayerOperation.m; sourceTree = "<group>"; };
+		9392E6CF17A66F5E00FE6B9C /* TestCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestCodeViewController.h; path = Classes/TestCodeViewController.h; sourceTree = "<group>"; };
+		9392E6D017A66F5E00FE6B9C /* TestCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestCodeViewController.m; path = Classes/TestCodeViewController.m; sourceTree = "<group>"; };
+		9392E6D117A66F5E00FE6B9C /* TestCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TestCodeViewController.xib; path = Classes/TestCodeViewController.xib; sourceTree = "<group>"; };
+		9392E6D917A6767100FE6B9C /* EditCodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditCodeView.xib; path = Classes/EditCodeView.xib; sourceTree = "<group>"; };
 		939697E517732A110013B125 /* RoundEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundEnvoy.h; path = Classes/RoundEnvoy.h; sourceTree = "<group>"; };
 		939697E617732A110013B125 /* RoundEnvoy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundEnvoy.m; path = Classes/RoundEnvoy.m; sourceTree = "<group>"; };
 		9398A9C4177224EE00E5D31C /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = Classes/Image.h; sourceTree = "<group>"; };
 		9398A9C5177224EE00E5D31C /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Image.m; path = Classes/Image.m; sourceTree = "<group>"; };
 		9398A9C8177224EE00E5D31C /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Classes/Player.h; sourceTree = "<group>"; };
 		9398A9C9177224EE00E5D31C /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Classes/Player.m; sourceTree = "<group>"; };
-		9398A9CC177224EE00E5D31C /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Classes/Game.h; sourceTree = "<group>"; };
-		9398A9CD177224EE00E5D31C /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Game.m; path = Classes/Game.m; sourceTree = "<group>"; };
 		9398A9D0177224EE00E5D31C /* Scorecard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scorecard.h; path = Classes/Scorecard.h; sourceTree = "<group>"; };
 		9398A9D1177224EF00E5D31C /* Scorecard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Scorecard.m; path = Classes/Scorecard.m; sourceTree = "<group>"; };
 		939F36861779FEEE00A7B766 /* RoundMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundMenuItems.h; path = Classes/RoundMenuItems.h; sourceTree = "<group>"; };
@@ -405,6 +426,9 @@
 		93C10BB917440C4500B47095 /* PlayGameMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayGameMenuItems.m; path = Classes/PlayGameMenuItems.m; sourceTree = "<group>"; };
 		93C10BC6174439B200B47095 /* SetupGameMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SetupGameMenuItems.h; path = Classes/SetupGameMenuItems.h; sourceTree = "<group>"; };
 		93C10BC7174439B300B47095 /* SetupGameMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SetupGameMenuItems.m; path = Classes/SetupGameMenuItems.m; sourceTree = "<group>"; };
+		93C1D6F017A564B400EE2878 /* EditCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditCodeView.h; path = Classes/EditCodeView.h; sourceTree = "<group>"; };
+		93C1D6F117A564B400EE2878 /* EditCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditCodeView.m; path = Classes/EditCodeView.m; sourceTree = "<group>"; };
+		93C1D6F417A564E300EE2878 /* EditCodeView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "EditCodeView~iphone.xib"; path = "Classes/EditCodeView~iphone.xib"; sourceTree = "<group>"; };
 		93C442E717511B15000DEC63 /* UpdateGameOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateGameOperation.h; path = Classes/UpdateGameOperation.h; sourceTree = "<group>"; };
 		93C442E817511B15000DEC63 /* UpdateGameOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateGameOperation.m; path = Classes/UpdateGameOperation.m; sourceTree = "<group>"; };
 		93D123FF1790363D003523F9 /* AboutMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutMenuItems.h; path = Classes/AboutMenuItems.h; sourceTree = "<group>"; };
@@ -480,6 +504,9 @@
 				93FFD19017835FF600ADCB44 /* OverlayTesterViewController.xib */,
 				936CDFA8176117FC00C6A4EE /* ServerTesterMenuItems.h */,
 				936CDFA9176117FC00C6A4EE /* ServerTesterMenuItems.m */,
+				9392E6CF17A66F5E00FE6B9C /* TestCodeViewController.h */,
+				9392E6D017A66F5E00FE6B9C /* TestCodeViewController.m */,
+				9392E6D117A66F5E00FE6B9C /* TestCodeViewController.xib */,
 				93040363174E7D0900ED169F /* ToolsMenuItems.h */,
 				93040364174E7D0900ED169F /* ToolsMenuItems.m */,
 			);
@@ -735,6 +762,10 @@
 				936510ED17415A4E00F2AD06 /* ColorPickerViewController.h */,
 				936510EE17415A4E00F2AD06 /* ColorPickerViewController.m */,
 				936510EF17415A4E00F2AD06 /* ColorPickerViewController.xib */,
+				93C1D6F017A564B400EE2878 /* EditCodeView.h */,
+				93C1D6F117A564B400EE2878 /* EditCodeView.m */,
+				9392E6D917A6767100FE6B9C /* EditCodeView.xib */,
+				93C1D6F417A564E300EE2878 /* EditCodeView~iphone.xib */,
 				93FECB5A174547E60046529A /* iOS5 */,
 				936510F017415A4E00F2AD06 /* SlickEditView.h */,
 				936510F117415A4E00F2AD06 /* SlickEditView.m */,
@@ -804,8 +835,8 @@
 		9365110417415ADA00F2AD06 /* Managed Objects */ = {
 			isa = PBXGroup;
 			children = (
-				9398A9CC177224EE00E5D31C /* Game.h */,
-				9398A9CD177224EE00E5D31C /* Game.m */,
+				9327777017A86D4100CFE99B /* Game.h */,
+				9327777117A86D4100CFE99B /* Game.m */,
 				935FC546178C2B1E00F0DC8E /* GamePlayer.h */,
 				935FC547178C2B1F00F0DC8E /* GamePlayer.m */,
 				9398A9C4177224EE00E5D31C /* Image.h */,
@@ -872,6 +903,9 @@
 		93C10BB617440B9300B47095 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				9327777417A86FAD00CFE99B /* GameCodeViewController.h */,
+				9327777517A86FAD00CFE99B /* GameCodeViewController.m */,
+				9327777617A86FAD00CFE99B /* GameCodeViewController.xib */,
 				93BF3B511771CABF00B20A71 /* GameDirector.h */,
 				93BF3B521771CABF00B20A71 /* GameDirector.m */,
 				9303BE531746836A0065ADD2 /* GameJoiner.h */,
@@ -1020,6 +1054,10 @@
 				93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */,
 				93B37B7517988FA000118CE3 /* VoteViewController.xib in Resources */,
 				93BCDD2F179ABEF9002F8E6D /* DossierViewController.xib in Resources */,
+				93C1D6F517A564E300EE2878 /* EditCodeView~iphone.xib in Resources */,
+				9392E6D417A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */,
+				9392E6DA17A6767100FE6B9C /* EditCodeView.xib in Resources */,
+				9327777917A86FAD00CFE99B /* GameCodeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1052,6 +1090,10 @@
 				938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */,
 				93515AF5179992450044E998 /* VoteViewController.xib in Resources */,
 				937C02C2179DD44A00C8FAE2 /* DossierViewController.xib in Resources */,
+				93C1D6F617A564E300EE2878 /* EditCodeView~iphone.xib in Resources */,
+				9392E6D517A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */,
+				9392E6DB17A6767100FE6B9C /* EditCodeView.xib in Resources */,
+				9327777A17A86FAD00CFE99B /* GameCodeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1144,7 +1186,6 @@
 				93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */,
 				9398A9C6177224EE00E5D31C /* Image.m in Sources */,
 				9398A9CA177224EE00E5D31C /* Player.m in Sources */,
-				9398A9CE177224EE00E5D31C /* Game.m in Sources */,
 				9398A9D2177224EF00E5D31C /* Scorecard.m in Sources */,
 				939697E717732A110013B125 /* RoundEnvoy.m in Sources */,
 				9358BFE217747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
@@ -1169,6 +1210,10 @@
 				93B37B7317988FA000118CE3 /* VoteViewController.m in Sources */,
 				93BCDD2E179ABEF9002F8E6D /* DossierViewController.m in Sources */,
 				937C02BF179D45DD00C8FAE2 /* DossierDelegate.m in Sources */,
+				93C1D6F217A564B400EE2878 /* EditCodeView.m in Sources */,
+				9392E6D217A66F5E00FE6B9C /* TestCodeViewController.m in Sources */,
+				9327777217A86D4100CFE99B /* Game.m in Sources */,
+				9327777717A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,7 +1274,6 @@
 				93BF3B581771CEA500B20A71 /* MissionEnvoy.m in Sources */,
 				9398A9C7177224EE00E5D31C /* Image.m in Sources */,
 				9398A9CB177224EE00E5D31C /* Player.m in Sources */,
-				9398A9CF177224EE00E5D31C /* Game.m in Sources */,
 				9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */,
 				939697E817732A110013B125 /* RoundEnvoy.m in Sources */,
 				9358BFE317747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
@@ -1254,6 +1298,10 @@
 				93B37B7417988FA000118CE3 /* VoteViewController.m in Sources */,
 				937C02C0179D45DD00C8FAE2 /* DossierDelegate.m in Sources */,
 				937C02C1179DD43E00C8FAE2 /* DossierViewController.m in Sources */,
+				93C1D6F317A564B400EE2878 /* EditCodeView.m in Sources */,
+				9392E6D317A66F5E00FE6B9C /* TestCodeViewController.m in Sources */,
+				9327777317A86D4100CFE99B /* Game.m in Sources */,
+				9327777817A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

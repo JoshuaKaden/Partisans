@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSDate *endDate;
 @property (nonatomic, assign) NSUInteger numberOfPlayers;
 @property (nonatomic, strong) NSDate *modifiedDate;
+@property (nonatomic, assign) NSUInteger gameCode;
 
 @property (readonly) NSUInteger operativeCount;
 @property (readonly) NSUInteger roundCount;

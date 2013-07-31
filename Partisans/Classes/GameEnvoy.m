@@ -47,6 +47,8 @@
 @synthesize deletedGamePlayerEnvoys = m_deletedGamePlayerEnvoys;
 @synthesize missionEnvoys = m_missionEnvoys;
 @synthesize roundEnvoys = m_roundEnvoys;
+@synthesize gameCode = m_gameCode;
+
 
 - (void)dealloc
 {
@@ -81,6 +83,7 @@
         self.endDate = managedObject.endDate;
         self.numberOfPlayers = [managedObject.numberOfPlayers unsignedIntegerValue];
         self.modifiedDate = managedObject.modifiedDate;
+        self.gameCode = [managedObject.gameCode unsignedIntegerValue];
         
         [self loadGamePlayerEnvoys];
         [self loadMissionEnvoys];
@@ -167,7 +170,8 @@
                               modifiedDateString, @"modifiedDate",
                               missionEnvoysString, @"missionEnvoys",
                               roundEnvoysString, @"roundEnvoys",
-                              [NSNumber numberWithUnsignedInteger:self.operativeCount], @"operativeCount", nil];
+                              [NSNumber numberWithUnsignedInteger:self.operativeCount], @"operativeCount",
+                              [NSNumber numberWithUnsignedInteger:self.gameCode], @"gameCode", nil];
     return descDict.description;
 }
 
@@ -908,6 +912,7 @@
     model.endDate = self.endDate;
     model.numberOfPlayers = [NSNumber numberWithUnsignedInteger:self.numberOfPlayers];
     model.modifiedDate = self.modifiedDate;
+    model.gameCode = [NSNumber numberWithUnsignedInteger:self.gameCode];
     
     if (self.gamePlayerEnvoys)
     {
@@ -1188,6 +1193,7 @@
     [aCoder encodeObject:self.missionEnvoys forKey:@"missionEnvoys"];
     [aCoder encodeObject:self.roundEnvoys forKey:@"roundEnvoys"];
     [aCoder encodeObject:self.modifiedDate forKey:@"modifiedDate"];
+    [aCoder encodeInteger:self.gameCode forKey:@"gameCode"];
 }
 
 
@@ -1218,6 +1224,7 @@
         self.missionEnvoys = [aDecoder decodeObjectForKey:@"missionEnvoys"];
         self.roundEnvoys = [aDecoder decodeObjectForKey:@"roundEnvoys"];
         self.modifiedDate = [aDecoder decodeObjectForKey:@"modifiedDate"];
+        self.gameCode = [aDecoder decodeIntegerForKey:@"gameCode"];
     }
     
     return self;

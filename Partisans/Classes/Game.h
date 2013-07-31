@@ -2,7 +2,7 @@
 //  Game.h
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/19/13.
+//  Created by Joshua Kaden on 7/30/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSDate * modifiedDate;
 @property (nonatomic, retain) NSNumber * numberOfPlayers;
 @property (nonatomic, retain) NSDate * startDate;
+@property (nonatomic, retain) NSNumber * gameCode;
 @property (nonatomic, retain) NSSet *gamePlayers;
 @property (nonatomic, retain) NSSet *missions;
 @property (nonatomic, retain) NSSet *rounds;

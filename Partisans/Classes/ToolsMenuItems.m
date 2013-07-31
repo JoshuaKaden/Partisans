@@ -9,6 +9,8 @@
 #import "ToolsMenuItems.h"
 
 #import "AboutMenuItems.h"
+#import "GameCodeViewController.h"
+//#import "TestCodeViewController.h"
 //#import "GameTesterMenuItems.h"
 //#import "OverlayTesterViewController.h"
 
@@ -73,6 +75,10 @@
             label = NSLocalizedString(@"About", @"About  --  menu label");
             break;
             
+        case ToolsMenuRowTestEditCode:
+            label = NSLocalizedString(@"Test Edit Code View", @"Test Edit Code View  --  label");
+            break;
+            
 //        case ToolsMenuRowClearRemoteData:
 //            label = NSLocalizedString(@"Clear Remote Data", @"Clear Remote Data  --  menu label");
 //            break;
@@ -107,6 +113,9 @@
         case ToolsMenuRowAbout:
             targetClass = [JSKMenuViewController class];
             break;
+            
+        case ToolsMenuRowTestEditCode:
+            targetClass = [GameCodeViewController class];
             
 //        case ToolsMenuRowClearRemoteData:
 //            break;

@@ -13,6 +13,7 @@
 typedef enum
 {
     ToolsMenuRowAbout,
+    ToolsMenuRowTestEditCode,
 //    ToolsMenuRowClearRemoteData,
 //    ToolsMenuRowGameTester,
 //    ToolsMenuRowOverlayTester,

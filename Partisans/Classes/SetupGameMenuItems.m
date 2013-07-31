@@ -250,8 +250,11 @@
         // Should we start a new game, as host?
         if (self.shouldHost)
         {
+            // This is the game creation code.
             GameEnvoy *newEnvoy = [[GameEnvoy alloc] init];
             [newEnvoy addHost:[SystemMessage playerEnvoy]];
+            NSUInteger gameCode = arc4random() % (8999 + 1000);
+            [newEnvoy setGameCode:gameCode];
             [newEnvoy commitAndSave];
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
             [newEnvoy release];

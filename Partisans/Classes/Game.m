@@ -2,7 +2,7 @@
 //  Game.m
 //  Partisans
 //
-//  Created by Joshua Kaden on 6/19/13.
+//  Created by Joshua Kaden on 7/30/13.
 //  Copyright (c) 2013 Chadford Software. All rights reserved.
 //
 
@@ -19,6 +19,7 @@
 @dynamic modifiedDate;
 @dynamic numberOfPlayers;
 @dynamic startDate;
+@dynamic gameCode;
 @dynamic gamePlayers;
 @dynamic missions;
 @dynamic rounds;

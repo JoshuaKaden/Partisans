@@ -323,6 +323,7 @@
     }
 }
 
+
 - (void)updateNameLabels
 {
     PlayerEnvoy *playerEnvoy = self.playerEnvoy;
