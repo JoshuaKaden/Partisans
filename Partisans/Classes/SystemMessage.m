@@ -102,6 +102,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @synthesize gameDirector = m_gameDirector;
 @synthesize imageCache = m_imageCache;
 @synthesize playerCache = m_playerCache;
+@synthesize hasSplashBeenShown = m_hasSplashBeenShown;
 
 
 - (void)dealloc

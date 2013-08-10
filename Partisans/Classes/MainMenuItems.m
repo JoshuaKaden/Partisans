@@ -22,6 +22,7 @@
 #import "PlayerViewController.h"
 #import "PlayGameMenuItems.h"
 #import "SetupGameMenuItems.h"
+#import "SplashViewController.h"
 #import "SystemMessage.h"
 #import "ToolsMenuItems.h"
 
@@ -59,6 +60,16 @@
 
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
+    SystemMessage *systemMessage = [SystemMessage sharedInstance];
+    if (!systemMessage.hasSplashBeenShown)
+    {
+        systemMessage.hasSplashBeenShown = YES;
+        SplashViewController *vc = [[SplashViewController alloc] init];
+        [menuViewController invokePush:YES viewController:vc];
+        [vc release];
+        return;
+    }
+    
     // Are we in a game?
     if ([SystemMessage gameEnvoy])
     {

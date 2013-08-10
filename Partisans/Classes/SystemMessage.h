@@ -34,11 +34,13 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 @property (nonatomic, strong) PlayerEnvoy *playerEnvoy;
 @property (nonatomic, strong) GameEnvoy *gameEnvoy;
 @property (nonatomic, assign) BOOL isLookingForGame;
+@property (nonatomic, assign) BOOL hasSplashBeenShown;
 
 + (SystemMessage *)sharedInstance;
 + (PlayerEnvoy *)playerEnvoy;
 + (GameEnvoy *)gameEnvoy;
 + (GameDirector *)gameDirector;
+
 + (UIImage *)imageWithImage:(UIImage*)sourceImage scaledToSizeWithSameAspectRatio:(CGSize)targetSize;
 + (NSInteger)secondsBetweenDates:(NSDate *)fromDate toDate:(NSDate *)toDate;
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate;

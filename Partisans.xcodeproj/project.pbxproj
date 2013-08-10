@@ -157,6 +157,12 @@
 		93B37B7517988FA000118CE3 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B37B7217988FA000118CE3 /* VoteViewController.xib */; };
 		93BCDD2E179ABEF9002F8E6D /* DossierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */; };
 		93BCDD2F179ABEF9002F8E6D /* DossierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */; };
+		93BD6CDC17B4062500078709 /* bigP.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CDB17B4062500078709 /* bigP.png */; };
+		93BD6CDD17B4062500078709 /* bigP.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CDB17B4062500078709 /* bigP.png */; };
+		93BD6CE117B4068800078709 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BD6CDF17B4068800078709 /* SplashViewController.m */; };
+		93BD6CE217B4068800078709 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BD6CDF17B4068800078709 /* SplashViewController.m */; };
+		93BD6CE317B4068800078709 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE017B4068800078709 /* SplashViewController.xib */; };
+		93BD6CE417B4068800078709 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE017B4068800078709 /* SplashViewController.xib */; };
 		93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
@@ -415,6 +421,10 @@
 		93BCDD2B179ABEF9002F8E6D /* DossierViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DossierViewController.h; path = Classes/DossierViewController.h; sourceTree = "<group>"; };
 		93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierViewController.m; path = Classes/DossierViewController.m; sourceTree = "<group>"; };
 		93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DossierViewController.xib; path = Classes/DossierViewController.xib; sourceTree = "<group>"; };
+		93BD6CDB17B4062500078709 /* bigP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bigP.png; path = Arts/bigP.png; sourceTree = "<group>"; };
+		93BD6CDE17B4068800078709 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashViewController.h; path = Classes/SplashViewController.h; sourceTree = "<group>"; };
+		93BD6CDF17B4068800078709 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Classes/SplashViewController.m; sourceTree = "<group>"; };
+		93BD6CE017B4068800078709 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashViewController.xib; path = Classes/SplashViewController.xib; sourceTree = "<group>"; };
 		93BF3B511771CABF00B20A71 /* GameDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDirector.h; path = Classes/GameDirector.h; sourceTree = "<group>"; };
 		93BF3B521771CABF00B20A71 /* GameDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameDirector.m; path = Classes/GameDirector.m; sourceTree = "<group>"; };
 		93BF3B551771CEA500B20A71 /* MissionEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionEnvoy.h; path = Classes/MissionEnvoy.h; sourceTree = "<group>"; };
@@ -626,8 +636,9 @@
 		936510AF1741581600F2AD06 /* Arts */ = {
 			isa = PBXGroup;
 			children = (
-				93FFD19A1783635D00ADCB44 /* Icon */,
+				93BD6CDB17B4062500078709 /* bigP.png */,
 				9351AA96177E540E00D4C843 /* black_mask.png */,
+				93FFD19A1783635D00ADCB44 /* Icon */,
 				9358BFDD17747C1F00FA2DAF /* mask.png */,
 				93FFD1951783635100ADCB44 /* waitOverLay.png */,
 				93FFD1941783635100ADCB44 /* waitOverLay@2x.png */,
@@ -662,6 +673,9 @@
 				936510EA17415A1000F2AD06 /* MainMenuItems.m */,
 				936510DF174159C900F2AD06 /* RootViewController.h */,
 				936510E0174159C900F2AD06 /* RootViewController.m */,
+				93BD6CDE17B4068800078709 /* SplashViewController.h */,
+				93BD6CDF17B4068800078709 /* SplashViewController.m */,
+				93BD6CE017B4068800078709 /* SplashViewController.xib */,
 				936510991741578C00F2AD06 /* Supporting Files */,
 				936510E1174159C900F2AD06 /* SystemMessage.h */,
 				936510E2174159C900F2AD06 /* SystemMessage.m */,
@@ -1058,6 +1072,8 @@
 				9392E6D417A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */,
 				9392E6DA17A6767100FE6B9C /* EditCodeView.xib in Resources */,
 				9327777917A86FAD00CFE99B /* GameCodeViewController.xib in Resources */,
+				93BD6CDC17B4062500078709 /* bigP.png in Resources */,
+				93BD6CE317B4068800078709 /* SplashViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1094,6 +1110,8 @@
 				9392E6D517A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */,
 				9392E6DB17A6767100FE6B9C /* EditCodeView.xib in Resources */,
 				9327777A17A86FAD00CFE99B /* GameCodeViewController.xib in Resources */,
+				93BD6CDD17B4062500078709 /* bigP.png in Resources */,
+				93BD6CE417B4068800078709 /* SplashViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1214,6 +1232,7 @@
 				9392E6D217A66F5E00FE6B9C /* TestCodeViewController.m in Sources */,
 				9327777217A86D4100CFE99B /* Game.m in Sources */,
 				9327777717A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
+				93BD6CE117B4068800078709 /* SplashViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,6 +1321,7 @@
 				9392E6D317A66F5E00FE6B9C /* TestCodeViewController.m in Sources */,
 				9327777317A86D4100CFE99B /* Game.m in Sources */,
 				9327777817A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
+				93BD6CE217B4068800078709 /* SplashViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
