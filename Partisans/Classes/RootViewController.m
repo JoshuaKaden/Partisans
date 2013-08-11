@@ -12,6 +12,7 @@
 #import "MainMenuItems.h"
 #import "PlayerEnvoy.h"
 #import "PlayerViewController.h"
+#import "SplashViewController.h"
 #import "SystemMessage.h"
 
 
@@ -68,7 +69,7 @@
 	// Do any additional setup after loading the view.
     
     
-    self.title = NSLocalizedString(@"Quest Player", @"Quest Player  --  title");
+    self.title = NSLocalizedString(@"Partisans", @"Partisans  --  title");
     
     // The background image.
     UIImage *image = [UIImage imageNamed:@"splash"];
@@ -144,6 +145,16 @@
 
 - (void)showFirstViewController
 {
+    SystemMessage *systemMessage = [SystemMessage sharedInstance];
+    if (!systemMessage.hasSplashBeenShown)
+    {
+        systemMessage.hasSplashBeenShown = YES;
+        SplashViewController *vc = [[SplashViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:NO];
+        [vc release];
+        return;
+    }
+    
     // If there are no default players, then have the user make one.
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
     if (!playerEnvoy)

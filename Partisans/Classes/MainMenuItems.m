@@ -60,16 +60,6 @@
 
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
-    SystemMessage *systemMessage = [SystemMessage sharedInstance];
-    if (!systemMessage.hasSplashBeenShown)
-    {
-        systemMessage.hasSplashBeenShown = YES;
-        SplashViewController *vc = [[SplashViewController alloc] init];
-        [menuViewController invokePush:YES viewController:vc];
-        [vc release];
-        return;
-    }
-    
     // Are we in a game?
     if ([SystemMessage gameEnvoy])
     {

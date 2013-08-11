@@ -163,6 +163,10 @@
 		93BD6CE217B4068800078709 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BD6CDF17B4068800078709 /* SplashViewController.m */; };
 		93BD6CE317B4068800078709 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE017B4068800078709 /* SplashViewController.xib */; };
 		93BD6CE417B4068800078709 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE017B4068800078709 /* SplashViewController.xib */; };
+		93BD6CEA17B7E92800078709 /* SplashViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE617B7DC3000078709 /* SplashViewController~iphone.xib */; };
+		93BD6CEB17B7E92900078709 /* SplashViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE617B7DC3000078709 /* SplashViewController~iphone.xib */; };
+		93BD6CED17B7E9C900078709 /* p320.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CEC17B7E9C900078709 /* p320.png */; };
+		93BD6CEE17B7E9C900078709 /* p320.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CEC17B7E9C900078709 /* p320.png */; };
 		93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
@@ -425,6 +429,8 @@
 		93BD6CDE17B4068800078709 /* SplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashViewController.h; path = Classes/SplashViewController.h; sourceTree = "<group>"; };
 		93BD6CDF17B4068800078709 /* SplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashViewController.m; path = Classes/SplashViewController.m; sourceTree = "<group>"; };
 		93BD6CE017B4068800078709 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SplashViewController.xib; path = Classes/SplashViewController.xib; sourceTree = "<group>"; };
+		93BD6CE617B7DC3000078709 /* SplashViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "SplashViewController~iphone.xib"; path = "Classes/SplashViewController~iphone.xib"; sourceTree = "<group>"; };
+		93BD6CEC17B7E9C900078709 /* p320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = p320.png; path = Arts/p320.png; sourceTree = "<group>"; };
 		93BF3B511771CABF00B20A71 /* GameDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDirector.h; path = Classes/GameDirector.h; sourceTree = "<group>"; };
 		93BF3B521771CABF00B20A71 /* GameDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameDirector.m; path = Classes/GameDirector.m; sourceTree = "<group>"; };
 		93BF3B551771CEA500B20A71 /* MissionEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionEnvoy.h; path = Classes/MissionEnvoy.h; sourceTree = "<group>"; };
@@ -640,6 +646,7 @@
 				9351AA96177E540E00D4C843 /* black_mask.png */,
 				93FFD19A1783635D00ADCB44 /* Icon */,
 				9358BFDD17747C1F00FA2DAF /* mask.png */,
+				93BD6CEC17B7E9C900078709 /* p320.png */,
 				93FFD1951783635100ADCB44 /* waitOverLay.png */,
 				93FFD1941783635100ADCB44 /* waitOverLay@2x.png */,
 			);
@@ -673,9 +680,7 @@
 				936510EA17415A1000F2AD06 /* MainMenuItems.m */,
 				936510DF174159C900F2AD06 /* RootViewController.h */,
 				936510E0174159C900F2AD06 /* RootViewController.m */,
-				93BD6CDE17B4068800078709 /* SplashViewController.h */,
-				93BD6CDF17B4068800078709 /* SplashViewController.m */,
-				93BD6CE017B4068800078709 /* SplashViewController.xib */,
+				93BD6CE917B7DC5000078709 /* Splash */,
 				936510991741578C00F2AD06 /* Supporting Files */,
 				936510E1174159C900F2AD06 /* SystemMessage.h */,
 				936510E2174159C900F2AD06 /* SystemMessage.m */,
@@ -914,6 +919,17 @@
 			name = iOS5;
 			sourceTree = "<group>";
 		};
+		93BD6CE917B7DC5000078709 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				93BD6CDE17B4068800078709 /* SplashViewController.h */,
+				93BD6CDF17B4068800078709 /* SplashViewController.m */,
+				93BD6CE017B4068800078709 /* SplashViewController.xib */,
+				93BD6CE617B7DC3000078709 /* SplashViewController~iphone.xib */,
+			);
+			name = Splash;
+			sourceTree = "<group>";
+		};
 		93C10BB617440B9300B47095 /* Game */ = {
 			isa = PBXGroup;
 			children = (
@@ -1074,6 +1090,8 @@
 				9327777917A86FAD00CFE99B /* GameCodeViewController.xib in Resources */,
 				93BD6CDC17B4062500078709 /* bigP.png in Resources */,
 				93BD6CE317B4068800078709 /* SplashViewController.xib in Resources */,
+				93BD6CEB17B7E92900078709 /* SplashViewController~iphone.xib in Resources */,
+				93BD6CED17B7E9C900078709 /* p320.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,6 +1130,8 @@
 				9327777A17A86FAD00CFE99B /* GameCodeViewController.xib in Resources */,
 				93BD6CDD17B4062500078709 /* bigP.png in Resources */,
 				93BD6CE417B4068800078709 /* SplashViewController.xib in Resources */,
+				93BD6CEA17B7E92800078709 /* SplashViewController~iphone.xib in Resources */,
+				93BD6CEE17B7E9C900078709 /* p320.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

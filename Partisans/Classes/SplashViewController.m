@@ -23,8 +23,11 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSArray *tiles;
 @property (nonatomic, strong) NSArray *scrambledTiles;
+@property (nonatomic, strong) UIView *triggerView;
+@property (nonatomic, strong) UITapGestureRecognizer *triggerGesture;
 
 - (void)buildLayer;
+- (void)toggleState;
 - (void)scramble;
 - (void)unscramble;
 //- (CAAnimation *)animationForX:(NSInteger)x Y:(NSInteger)y;
@@ -33,6 +36,8 @@
 - (void)scrambleTiles;
 - (CGPoint)destinationForPoint:(CGPoint)point;
 - (void)moveLayer:(CALayer *)layer to:(CGPoint)point;
+- (void)applyTriggerView;
+- (void)handleTap:(UITapGestureRecognizer *)recognizer;
 
 
 @end
@@ -40,7 +45,7 @@
 
 //static CGFloat kMaxWidth = 725.0f;
 //static CGFloat kMaxHeight = 725.0f;
-static CGFloat kXSlices = 10.0f;
+static CGFloat kXSlices = 20.0f;
 static CGFloat kYSlices = 10.0f;
 
 
@@ -54,12 +59,15 @@ static CGFloat kYSlices = 10.0f;
 @synthesize timer = m_timer;
 @synthesize tiles = m_tiles;
 @synthesize scrambledTiles = m_scrambledTiles;
+@synthesize triggerView = m_triggerView;
+@synthesize triggerGesture = m_triggerGesture;
 
 
 - (void)dealloc
 {
     self.imageView.image = nil;
     [self.timer invalidate];
+    [self.triggerView removeGestureRecognizer:self.triggerGesture];
     
     [m_imageView release];
     [m_image release];
@@ -67,6 +75,8 @@ static CGFloat kYSlices = 10.0f;
     [m_timer release];
     [m_tiles release];
     [m_scrambledTiles release];
+    [m_triggerView release];
+    [m_triggerGesture release];
     
     [super dealloc];
 }
@@ -124,6 +134,20 @@ static CGFloat kYSlices = 10.0f;
 {
     if (self.isScrambled)
     {
+        [self.timer invalidate];
+        [self toggleState];
+        [self applyTriggerView];
+    }
+    else
+    {
+        [self toggleState];
+    }
+}
+
+- (void)toggleState
+{
+    if (self.isScrambled)
+    {
         [self unscramble];
         self.isScrambled = NO;
         [self.timer invalidate];
@@ -157,7 +181,7 @@ static CGFloat kYSlices = 10.0f;
 - (void)moveLayer:(CALayer *)layer to:(CGPoint)point
 {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     animation.fromValue = [layer valueForKey:@"position"];
     animation.toValue = [NSValue valueWithCGPoint:point];
     animation.duration = 0.75f;
@@ -333,6 +357,30 @@ static CGFloat kYSlices = 10.0f;
         }
     }
     return returnValue;
+}
+
+
+#pragma mark - Tap trigger (gesture recognizer)
+
+- (void)applyTriggerView
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    self.triggerGesture = tapGesture;
+    [tapGesture release];
+    
+    UIView *view = [[UIView alloc] initWithFrame:self.imageView.frame];
+    view.backgroundColor = [UIColor clearColor];
+    [view setOpaque:NO];
+    [self.view addSubview:view];
+    [view addGestureRecognizer:tapGesture];
+    
+    self.triggerView = view;
+    [view release];
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)recognizer
+{
+    [self toggleState];
 }
 
 
