@@ -22,7 +22,6 @@
 #import "PlayerViewController.h"
 #import "PlayGameMenuItems.h"
 #import "SetupGameMenuItems.h"
-#import "SplashViewController.h"
 #import "SystemMessage.h"
 #import "ToolsMenuItems.h"
 

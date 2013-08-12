@@ -15,6 +15,7 @@
 @interface SplashViewController ()
 
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *closeButton;
 
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) CALayer *imageLayer;
@@ -38,6 +39,7 @@
 - (void)moveLayer:(CALayer *)layer to:(CGPoint)point;
 - (void)applyTriggerView;
 - (void)handleTap:(UITapGestureRecognizer *)recognizer;
+- (IBAction)closeButtonPressed:(id)sender;
 
 
 @end
@@ -61,6 +63,7 @@ static CGFloat kYSlices = 10.0f;
 @synthesize scrambledTiles = m_scrambledTiles;
 @synthesize triggerView = m_triggerView;
 @synthesize triggerGesture = m_triggerGesture;
+@synthesize closeButton = m_closeButton;
 
 
 - (void)dealloc
@@ -77,6 +80,7 @@ static CGFloat kYSlices = 10.0f;
     [m_scrambledTiles release];
     [m_triggerView release];
     [m_triggerGesture release];
+    [m_closeButton release];
     
     [super dealloc];
 }
@@ -95,6 +99,9 @@ static CGFloat kYSlices = 10.0f;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    [self.navigationItem setHidesBackButton:YES animated:NO];
+    [self.navigationItem setLeftBarButtonItem:self.closeButton animated:NO];
     
     self.title = NSLocalizedString(@"Partisans", @"Partisans  --  title");
     
@@ -128,6 +135,13 @@ static CGFloat kYSlices = 10.0f;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+- (IBAction)closeButtonPressed:(id)sender
+{
+    [self.navigationController popToRootViewControllerAnimated:NO];
+}
+
 
 
 - (void)timerFired:(id)sender

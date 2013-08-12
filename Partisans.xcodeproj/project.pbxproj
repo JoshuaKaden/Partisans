@@ -190,6 +190,12 @@
 		93F06C7D178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7E178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
+		93F94AEE17B9416600D5D9A6 /* ScrambleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AED17B9416600D5D9A6 /* ScrambleView.xib */; };
+		93F94AEF17B9416600D5D9A6 /* ScrambleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AED17B9416600D5D9A6 /* ScrambleView.xib */; };
+		93F94AF217B9419000D5D9A6 /* ScrambleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F94AF117B9419000D5D9A6 /* ScrambleView.m */; };
+		93F94AF317B9419000D5D9A6 /* ScrambleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F94AF117B9419000D5D9A6 /* ScrambleView.m */; };
+		93F94AF517B9457900D5D9A6 /* p135.png in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AF417B9457900D5D9A6 /* p135.png */; };
+		93F94AF617B9457900D5D9A6 /* p135.png in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AF417B9457900D5D9A6 /* p135.png */; };
 		93FECAB1174521A40046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
 		93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
 		93FECAB3174521A40046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
@@ -456,6 +462,10 @@
 		93F06C7A178472B000281B6C /* MissionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionViewController.h; path = Classes/MissionViewController.h; sourceTree = "<group>"; };
 		93F06C7B178472B000281B6C /* MissionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionViewController.m; path = Classes/MissionViewController.m; sourceTree = "<group>"; };
 		93F06C7C178472B000281B6C /* MissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MissionViewController.xib; path = Classes/MissionViewController.xib; sourceTree = "<group>"; };
+		93F94AED17B9416600D5D9A6 /* ScrambleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ScrambleView.xib; path = Classes/ScrambleView.xib; sourceTree = "<group>"; };
+		93F94AF017B9419000D5D9A6 /* ScrambleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrambleView.h; path = Classes/ScrambleView.h; sourceTree = "<group>"; };
+		93F94AF117B9419000D5D9A6 /* ScrambleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrambleView.m; path = Classes/ScrambleView.m; sourceTree = "<group>"; };
+		93F94AF417B9457900D5D9A6 /* p135.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = p135.png; path = Arts/p135.png; sourceTree = "<group>"; };
 		93FECAAB174521A40046529A /* LabelProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelProgressView.h; path = Classes/LabelProgressView.h; sourceTree = "<group>"; };
 		93FECAAC174521A40046529A /* LabelProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelProgressView.m; path = Classes/LabelProgressView.m; sourceTree = "<group>"; };
 		93FECAAD174521A40046529A /* LabelProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LabelProgressView.xib; path = Classes/LabelProgressView.xib; sourceTree = "<group>"; };
@@ -646,6 +656,7 @@
 				9351AA96177E540E00D4C843 /* black_mask.png */,
 				93FFD19A1783635D00ADCB44 /* Icon */,
 				9358BFDD17747C1F00FA2DAF /* mask.png */,
+				93F94AF417B9457900D5D9A6 /* p135.png */,
 				93BD6CEC17B7E9C900078709 /* p320.png */,
 				93FFD1951783635100ADCB44 /* waitOverLay.png */,
 				93FFD1941783635100ADCB44 /* waitOverLay@2x.png */,
@@ -922,6 +933,9 @@
 		93BD6CE917B7DC5000078709 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
+				93F94AF017B9419000D5D9A6 /* ScrambleView.h */,
+				93F94AF117B9419000D5D9A6 /* ScrambleView.m */,
+				93F94AED17B9416600D5D9A6 /* ScrambleView.xib */,
 				93BD6CDE17B4068800078709 /* SplashViewController.h */,
 				93BD6CDF17B4068800078709 /* SplashViewController.m */,
 				93BD6CE017B4068800078709 /* SplashViewController.xib */,
@@ -1092,6 +1106,8 @@
 				93BD6CE317B4068800078709 /* SplashViewController.xib in Resources */,
 				93BD6CEB17B7E92900078709 /* SplashViewController~iphone.xib in Resources */,
 				93BD6CED17B7E9C900078709 /* p320.png in Resources */,
+				93F94AEE17B9416600D5D9A6 /* ScrambleView.xib in Resources */,
+				93F94AF517B9457900D5D9A6 /* p135.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,6 +1148,8 @@
 				93BD6CE417B4068800078709 /* SplashViewController.xib in Resources */,
 				93BD6CEA17B7E92800078709 /* SplashViewController~iphone.xib in Resources */,
 				93BD6CEE17B7E9C900078709 /* p320.png in Resources */,
+				93F94AEF17B9416600D5D9A6 /* ScrambleView.xib in Resources */,
+				93F94AF617B9457900D5D9A6 /* p135.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1253,6 +1271,7 @@
 				9327777217A86D4100CFE99B /* Game.m in Sources */,
 				9327777717A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
 				93BD6CE117B4068800078709 /* SplashViewController.m in Sources */,
+				93F94AF217B9419000D5D9A6 /* ScrambleView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1342,6 +1361,7 @@
 				9327777317A86D4100CFE99B /* Game.m in Sources */,
 				9327777817A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
 				93BD6CE217B4068800078709 /* SplashViewController.m in Sources */,
+				93F94AF317B9419000D5D9A6 /* ScrambleView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
