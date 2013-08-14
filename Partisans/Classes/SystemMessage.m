@@ -53,8 +53,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 @interface SystemMessage () <NetHostDelegate, NetPlayerDelegate, ServerBrowserDelegate>
 
-@property (nonatomic, strong) NetHost *netHost;
-@property (nonatomic, strong) NetPlayer *netPlayer;
+@property (atomic, strong) NetHost *netHost;
+@property (atomic, strong) NetPlayer *netPlayer;
 @property (nonatomic, strong) NSMutableArray *stash;
 @property (nonatomic, strong) NSMutableArray *peerIDs;
 @property (nonatomic, strong) NSDictionary *playerDigest;

@@ -80,13 +80,15 @@
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="1029950576">
-							<int key="type">1</int>
-							<double key="pointSize">17</double>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="405255006">
+							<string key="name">GillSans</string>
+							<string key="family">Gill Sans</string>
+							<int key="traits">0</int>
+							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="838682817">
-							<string key="NSName">Helvetica</string>
-							<double key="NSSize">17</double>
+						<object class="NSFont" key="IBUIFont" id="529889766">
+							<string key="NSName">GillSans</string>
+							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -111,8 +113,8 @@
 						</object>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
-						<reference key="IBUIFontDescription" ref="1029950576"/>
-						<reference key="IBUIFont" ref="838682817"/>
+						<reference key="IBUIFontDescription" ref="405255006"/>
+						<reference key="IBUIFont" ref="529889766"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 				</array>

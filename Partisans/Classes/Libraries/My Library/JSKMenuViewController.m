@@ -113,6 +113,8 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     
+    
+    
     [self.view addSubview:tableView];
     self.tableView = tableView;
     [tableView release];
@@ -784,6 +786,10 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     }
     
 
+    CGFloat size = 18.0f;
+    UIFont *font = [UIFont fontWithName:@"GillSans" size:size];
+    [cell.textLabel setFont:font];
+    
     if ([self.delegate respondsToSelector:@selector(menuViewController:labelFontAtIndexPath:)])
     {
         UIFont *font = [self.delegate menuViewController:self labelFontAtIndexPath:indexPath];
@@ -792,6 +798,10 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
             [cell.textLabel setFont:font];
         }
     }
+    
+    UIFont *subFont = [UIFont fontWithName:@"GillSans" size:14.0f];
+    [cell.detailTextLabel setFont:subFont];
+    
     
     
     return cell;

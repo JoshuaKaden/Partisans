@@ -17,6 +17,10 @@
 		93040366174E7D0900ED169F /* ToolsMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93040364174E7D0900ED169F /* ToolsMenuItems.m */; };
 		9307B3D4177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
 		9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
+		931D116417BBD1FD00068279 /* ScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931D116217BBD1FD00068279 /* ScoreViewController.m */; };
+		931D116517BBD1FD00068279 /* ScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931D116217BBD1FD00068279 /* ScoreViewController.m */; };
+		931D116617BBD1FD00068279 /* ScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931D116317BBD1FD00068279 /* ScoreViewController.xib */; };
+		931D116717BBD1FD00068279 /* ScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931D116317BBD1FD00068279 /* ScoreViewController.xib */; };
 		9327777217A86D4100CFE99B /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777117A86D4100CFE99B /* Game.m */; };
 		9327777317A86D4100CFE99B /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777117A86D4100CFE99B /* Game.m */; };
 		9327777717A86FAD00CFE99B /* GameCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777517A86FAD00CFE99B /* GameCodeViewController.m */; };
@@ -272,6 +276,9 @@
 		93040364174E7D0900ED169F /* ToolsMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ToolsMenuItems.m; path = Classes/ToolsMenuItems.m; sourceTree = "<group>"; };
 		9307B3D2177F8A41003CEC6F /* HostFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostFinder.h; path = Classes/HostFinder.h; sourceTree = "<group>"; };
 		9307B3D3177F8A41003CEC6F /* HostFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HostFinder.m; path = Classes/HostFinder.m; sourceTree = "<group>"; };
+		931D116117BBD1FD00068279 /* ScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreViewController.h; path = Classes/ScoreViewController.h; sourceTree = "<group>"; };
+		931D116217BBD1FD00068279 /* ScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScoreViewController.m; path = Classes/ScoreViewController.m; sourceTree = "<group>"; };
+		931D116317BBD1FD00068279 /* ScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ScoreViewController.xib; path = Classes/ScoreViewController.xib; sourceTree = "<group>"; };
 		9327777017A86D4100CFE99B /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Classes/Game.h; sourceTree = "<group>"; };
 		9327777117A86D4100CFE99B /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Game.m; path = Classes/Game.m; sourceTree = "<group>"; };
 		9327777417A86FAD00CFE99B /* GameCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameCodeViewController.h; path = Classes/GameCodeViewController.h; sourceTree = "<group>"; };
@@ -964,6 +971,9 @@
 				9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */,
 				93C10BB817440C4500B47095 /* PlayGameMenuItems.h */,
 				93C10BB917440C4500B47095 /* PlayGameMenuItems.m */,
+				931D116117BBD1FD00068279 /* ScoreViewController.h */,
+				931D116217BBD1FD00068279 /* ScoreViewController.m */,
+				931D116317BBD1FD00068279 /* ScoreViewController.xib */,
 				93C10BC6174439B200B47095 /* SetupGameMenuItems.h */,
 				93C10BC7174439B300B47095 /* SetupGameMenuItems.m */,
 			);
@@ -1108,6 +1118,7 @@
 				93BD6CED17B7E9C900078709 /* p320.png in Resources */,
 				93F94AEE17B9416600D5D9A6 /* ScrambleView.xib in Resources */,
 				93F94AF517B9457900D5D9A6 /* p135.png in Resources */,
+				931D116617BBD1FD00068279 /* ScoreViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1150,6 +1161,7 @@
 				93BD6CEE17B7E9C900078709 /* p320.png in Resources */,
 				93F94AEF17B9416600D5D9A6 /* ScrambleView.xib in Resources */,
 				93F94AF617B9457900D5D9A6 /* p135.png in Resources */,
+				931D116717BBD1FD00068279 /* ScoreViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1272,6 +1284,7 @@
 				9327777717A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
 				93BD6CE117B4068800078709 /* SplashViewController.m in Sources */,
 				93F94AF217B9419000D5D9A6 /* ScrambleView.m in Sources */,
+				931D116417BBD1FD00068279 /* ScoreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1362,6 +1375,7 @@
 				9327777817A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
 				93BD6CE217B4068800078709 /* SplashViewController.m in Sources */,
 				93F94AF317B9419000D5D9A6 /* ScrambleView.m in Sources */,
+				931D116517BBD1FD00068279 /* ScoreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
