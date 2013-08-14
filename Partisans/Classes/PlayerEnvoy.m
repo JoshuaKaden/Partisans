@@ -110,7 +110,12 @@
 
 - (UIImage *)smallImage
 {
-    return [SystemMessage cachedSmallImage:self.picture.intramuralID];
+    UIImage *returnValue = [SystemMessage cachedSmallImage:self.picture.intramuralID];
+    if (!returnValue)
+    {
+        returnValue = self.picture.image;
+    }
+    return returnValue;
 }
 
 

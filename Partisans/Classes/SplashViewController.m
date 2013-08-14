@@ -12,7 +12,7 @@
 #import "SystemMessage.h"
 
 
-@interface SplashViewController ()
+@interface SplashViewController () 
 
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *closeButton;
@@ -26,6 +26,8 @@
 @property (nonatomic, strong) NSArray *scrambledTiles;
 @property (nonatomic, strong) UIView *triggerView;
 @property (nonatomic, strong) UITapGestureRecognizer *triggerGesture;
+@property (nonatomic, assign) BOOL shouldCycle;
+@property (nonatomic, strong) CABasicAnimation *animation;
 
 - (void)buildLayer;
 - (void)toggleState;
@@ -47,8 +49,8 @@
 
 //static CGFloat kMaxWidth = 725.0f;
 //static CGFloat kMaxHeight = 725.0f;
-static CGFloat kXSlices = 20.0f;
-static CGFloat kYSlices = 10.0f;
+static CGFloat kXSlices = 10.0f;
+static CGFloat kYSlices = 5.0f;
 
 
 @implementation SplashViewController
@@ -64,6 +66,8 @@ static CGFloat kYSlices = 10.0f;
 @synthesize triggerView = m_triggerView;
 @synthesize triggerGesture = m_triggerGesture;
 @synthesize closeButton = m_closeButton;
+@synthesize shouldCycle = m_shouldCycle;
+@synthesize animation = m_animation;
 
 
 - (void)dealloc
@@ -71,6 +75,7 @@ static CGFloat kYSlices = 10.0f;
     self.imageView.image = nil;
     [self.timer invalidate];
     [self.triggerView removeGestureRecognizer:self.triggerGesture];
+    self.animation.delegate = nil;
     
     [m_imageView release];
     [m_image release];
@@ -81,6 +86,7 @@ static CGFloat kYSlices = 10.0f;
     [m_triggerView release];
     [m_triggerGesture release];
     [m_closeButton release];
+    [m_animation release];
     
     [super dealloc];
 }
@@ -194,14 +200,23 @@ static CGFloat kYSlices = 10.0f;
 
 - (void)moveLayer:(CALayer *)layer to:(CGPoint)point
 {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    animation.fromValue = [layer valueForKey:@"position"];
-    animation.toValue = [NSValue valueWithCGPoint:point];
-    animation.duration = 0.75f;
+    if (!self.animation)
+    {
+        CABasicAnimation *animation = [[CABasicAnimation alloc] init];
+        animation.keyPath = @"position";
+//        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+        animation.duration = 0.75f;
+        self.animation = animation;
+        [animation release];
+    }
+    
+    self.animation.fromValue = [layer valueForKey:@"position"];
+    self.animation.toValue = [NSValue valueWithCGPoint:point];
     layer.position = point;
-    [layer addAnimation:animation forKey:@"position"];
+    [layer addAnimation:self.animation forKey:@"position"];
 }
+
 
 - (void)scramble
 {
@@ -394,6 +409,7 @@ static CGFloat kYSlices = 10.0f;
 
 - (void)handleTap:(UITapGestureRecognizer *)recognizer
 {
+    self.shouldCycle = !self.shouldCycle;
     [self toggleState];
 }
 

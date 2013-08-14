@@ -182,6 +182,13 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     NSString *smallKey = [[NSString alloc] initWithFormat:@"%@-small", key];
     UIImage *smallerImage = [self imageWithImage:image scaledToSizeWithSameAspectRatio:CGSizeMake(50.0, 50.0)];
     NSCache *cache = [self sharedInstance].imageCache;
+    if (!cache)
+    {
+        NSCache *newCache = [[NSCache alloc] init];
+        [self sharedInstance].imageCache = newCache;
+        [newCache release];
+        cache = [self sharedInstance].imageCache;
+    }
     [cache setObject:image forKey:key];
     [cache setObject:smallerImage forKey:smallKey];
     [smallKey release];
