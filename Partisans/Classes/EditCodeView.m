@@ -155,11 +155,6 @@
 
 - (void)setCode:(NSUInteger)code
 {
-    if (code < 1000)
-    {
-        code = 1000;
-    }
-    
     m_code = code;
     
     NSNumber *codeNumber = [[NSNumber alloc] initWithUnsignedInteger:code];

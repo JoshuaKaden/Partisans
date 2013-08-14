@@ -14,7 +14,6 @@ typedef enum
 {
     MainMenuRowPlayer,
     MainMenuRowGame,
-    MainMenuRowScores,
     MainMenuRowTools,
     MainMenuRow_MaxValue
 } MainMenuRow;

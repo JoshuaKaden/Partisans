@@ -1,0 +1,9 @@
+We need to complete three missions to ensure the success of our movement.
+If we can manage to complete two more missions, then we will have won.
+We are only one successful mission away from victory!
+We have triumphed!
+
+The Operatives will need to sabotage three missions to prevent our success.
+If the Operatives foil two more missions, then we will have been beaten.
+The Operatives need only sabotage one more mission to doom our endeavor!
+The Operatives have won!

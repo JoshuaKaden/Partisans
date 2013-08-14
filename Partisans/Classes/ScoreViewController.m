@@ -8,6 +8,7 @@
 
 #import "ScoreViewController.h"
 
+#import "GameEnvoy.h"
 #import "JSKMenuViewController.h"
 #import "SetupGameMenuItems.h"
 #import "SystemMessage.h"
@@ -28,6 +29,8 @@
 
 - (IBAction)setupButtonPressed:(id)sender;
 - (IBAction)proceedButtonPressed:(id)sender;
+
+- (void)updateLabels;
 
 @end
 
@@ -79,13 +82,93 @@
     self.setupButton.title = NSLocalizedString(@"Setup", @"Setup  --  title");
     [self.navigationItem setRightBarButtonItem:self.setupButton animated:NO];
     
-    
+    [self updateLabels];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void)updateLabels
+{
+    GameEnvoy *envoy = [SystemMessage gameEnvoy];
+    NSUInteger successCount = envoy.successfulMissionCount;
+    NSUInteger failCount = envoy.failedMissionCount;
+    
+    NSString *string = [[NSString alloc] initWithFormat:@"%d", successCount];
+    self.scoreLabel1.text = string;
+    [string release];
+    
+    string = [[NSString alloc] initWithFormat:@"%d", failCount];
+    self.scoreLabel2.text = string;
+    [string release];
+    
+    
+    if (successCount == 1)
+    {
+        self.titleLabel1.text = NSLocalizedString(@"Successful Mission", @"Successful Mission  --  label");
+    }
+    else
+    {
+        self.titleLabel1.text = NSLocalizedString(@"Successful Missions", @"Successful Missions  --  label");
+    }
+    
+    if (failCount == 1)
+    {
+        self.titleLabel2.text = NSLocalizedString(@"Failed Mission", @"Failed Mission  --  label");
+    }
+    else
+    {
+        self.titleLabel2.text = NSLocalizedString(@"Failed Missions", @"Failed Missions  --  label");
+    }
+    
+    
+    switch (successCount)
+    {
+        case 0:
+            self.summaryLabel1.text = NSLocalizedString(@"We need to complete three missions to ensure the success of our movement.", @"We need to complete three missions to ensure the success of our movement.  --  summary");
+            break;
+            
+        case 1:
+            self.summaryLabel1.text = NSLocalizedString(@"If we can manage to complete two more missions, then we will have won.", @"If we can manage to complete two more missions, then we will have won.  --  summary");
+            break;
+            
+        case 2:
+            self.summaryLabel1.text = NSLocalizedString(@"We are only one successful mission away from victory!", @"We are only one successful mission away from victory!  --  summary");
+            break;
+        
+        case 3:
+            self.summaryLabel1.text = NSLocalizedString(@"We have triumphed!", @"We have triumphed!  --  summary");
+            break;
+            
+        default:
+            break;
+    }
+    
+    switch (failCount)
+    {
+        case 0:
+            self.summaryLabel2.text = NSLocalizedString(@"The Operatives will need to sabotage three missions to prevent our success.", @"The Operatives will need to sabotage three missions to prevent our success.  --  summary");
+            break;
+            
+        case 1:
+            self.summaryLabel2.text = NSLocalizedString(@"If the Operatives foil two more missions, then we will have been beaten.", @"If the Operatives foil two more missions, then we will have been beaten.  --  summary");
+            break;
+            
+        case 2:
+            self.summaryLabel2.text = NSLocalizedString(@"The Operatives need only sabotage one more mission to doom our endeavor!", @"The Operatives need only sabotage one more mission to doom our endeavor!  --  summary");
+            break;
+            
+        case 3:
+            self.summaryLabel2.text = NSLocalizedString(@"The Operatives have won!", @"The Operatives have won!  --  summary");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 

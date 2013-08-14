@@ -10,6 +10,8 @@
 
 #import "AboutMenuItems.h"
 #import "GameCodeViewController.h"
+#import "SplashViewController.h"
+
 //#import "TestCodeViewController.h"
 //#import "GameTesterMenuItems.h"
 //#import "OverlayTesterViewController.h"
@@ -79,6 +81,10 @@
             label = NSLocalizedString(@"Test Edit Code View", @"Test Edit Code View  --  label");
             break;
             
+        case ToolsMenuRowSplash:
+            label = NSLocalizedString(@"Splash Screen", @"Splash Screen  --  label");
+            break;
+            
 //        case ToolsMenuRowClearRemoteData:
 //            label = NSLocalizedString(@"Clear Remote Data", @"Clear Remote Data  --  menu label");
 //            break;
@@ -116,6 +122,11 @@
             
         case ToolsMenuRowTestEditCode:
             targetClass = [GameCodeViewController class];
+            break;
+            
+        case ToolsMenuRowSplash:
+            targetClass = [SplashViewController class];
+            break;
             
 //        case ToolsMenuRowClearRemoteData:
 //            break;

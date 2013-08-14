@@ -181,10 +181,6 @@
         case MainMenuRowGame:
             label = NSLocalizedString(@"Game", @"Game  --  menu label");
             break;
-                        
-        case MainMenuRowScores:
-            label = NSLocalizedString(@"Scores", @"Scores  --  menu label");
-            break;
             
         case MainMenuRowTools:
             label = NSLocalizedString(@"Tools", @"Tools  --  menu label");
@@ -214,9 +210,6 @@
             break;
 
         case MainMenuRowGame:
-            break;
-            
-        case MainMenuRowScores:
             break;
             
         case MainMenuRowTools:
@@ -263,7 +256,6 @@
             }
             break;
             
-        case MainMenuRowScores:
         case MainMenuRowTools:
             targetClass = [JSKMenuViewController class];
             break;
@@ -306,10 +298,6 @@
             }
             break;
         }
-            
-        case MainMenuRowScores:
-            return nil;
-            break;
             
         case MainMenuRowTools:
         {
