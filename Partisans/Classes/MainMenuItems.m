@@ -21,6 +21,7 @@
 #import "RoundMenuItems.h"
 #import "PlayerViewController.h"
 #import "PlayGameMenuItems.h"
+#import "ScoreViewController.h"
 #import "SetupGameMenuItems.h"
 #import "SystemMessage.h"
 #import "ToolsMenuItems.h"
@@ -252,6 +253,16 @@
             break;
         
         case MainMenuRowGame:
+            if ([SystemMessage gameEnvoy].startDate)
+            {
+                targetClass = [ScoreViewController class];
+            }
+            else
+            {
+                targetClass = [JSKMenuViewController class];
+            }
+            break;
+            
         case MainMenuRowScores:
         case MainMenuRowTools:
             targetClass = [JSKMenuViewController class];
@@ -274,10 +285,17 @@
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             if (gameEnvoy)
             {
-                SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
-                self.setupGameMenuItems = items;
-                [items release];
-                return self.setupGameMenuItems;
+                if (gameEnvoy.startDate)
+                {
+                    return nil;
+                }
+                else
+                {
+                    SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
+                    self.setupGameMenuItems = items;
+                    [items release];
+                    return self.setupGameMenuItems;
+                }
             }
             else
             {
