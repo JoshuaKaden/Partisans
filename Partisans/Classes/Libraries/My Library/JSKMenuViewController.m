@@ -712,6 +712,31 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 
 
 
+// This code is erroring out for some reason.
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *returnValue = nil;
+//    CGRect frame = CGRectMake(10.0f, 0.0f, 160.0f, 21.0f);
+//    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+//    if ([self.delegate respondsToSelector:@selector(menuViewController:titleForHeaderInSection:)])
+//    {
+//        NSString *text = [self.delegate menuViewController:self titleForHeaderInSection:section];
+//        label.text = text;
+//        [label setFont:[UIFont fontWithName:@"GillSans" size:18]];
+//    }
+//    returnValue = label;
+//    [label release];
+//    return returnValue;
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 21.0f;
+//}
+
+
+
 // Customize the appearance of table view cells.
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
