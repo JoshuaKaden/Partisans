@@ -109,7 +109,7 @@ static CGFloat kYSlices = 5.0f;
     [self.navigationItem setHidesBackButton:YES animated:NO];
     [self.navigationItem setLeftBarButtonItem:self.closeButton animated:NO];
     
-    self.title = NSLocalizedString(@"Partisans", @"Partisans  --  title");
+//    self.title = NSLocalizedString(@"Partisans", @"Partisans  --  title");
     
     self.drawnImage = self.imageView.image.CGImage;
     
