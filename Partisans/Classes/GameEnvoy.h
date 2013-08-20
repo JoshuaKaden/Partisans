@@ -30,6 +30,7 @@
 @property (readonly) NSUInteger operativeCount;
 @property (readonly) NSUInteger roundCount;
 @property (nonatomic, readonly) NSArray *missionEnvoys;
+@property (nonatomic, assign) BOOL hasScoreBeenShown;
 
 - (NSArray *)players;
 - (NSArray *)operatives;

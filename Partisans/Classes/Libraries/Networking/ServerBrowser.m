@@ -103,6 +103,7 @@
   
   [netServiceBrowser stop];
   [netServiceBrowser release];
+  [netServiceBrowser setDelegate:nil];
   netServiceBrowser = nil;
   
   [servers removeAllObjects];

@@ -48,6 +48,7 @@
 @synthesize missionEnvoys = m_missionEnvoys;
 @synthesize roundEnvoys = m_roundEnvoys;
 @synthesize gameCode = m_gameCode;
+@synthesize hasScoreBeenShown = m_hasScoreBeenShown;
 
 
 - (void)dealloc

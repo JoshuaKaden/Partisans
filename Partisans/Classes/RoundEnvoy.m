@@ -189,6 +189,23 @@
     return nays.count;
 }
 
+- (BOOL)hasPlayerVoted:(PlayerEnvoy *)playerEnvoy
+{
+    BOOL returnValue = NO;
+    if (!playerEnvoy)
+    {
+        playerEnvoy = [SystemMessage playerEnvoy];
+    }
+    for (VoteEnvoy *voteEnvoy in self.votes)
+    {
+        if ([voteEnvoy.playerID isEqualToString:playerEnvoy.intramuralID])
+        {
+            returnValue = YES;
+            break;
+        }
+    }
+    return returnValue;
+}
 
 - (BOOL)isVotingComplete
 {

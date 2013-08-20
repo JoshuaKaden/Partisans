@@ -228,8 +228,12 @@ static NSString * const kDataManagerSQLiteBaseName = @"Partisans";
 }
 
 
-- (BOOL)save {
-    
+- (BOOL)save
+{
+    if (!m_mainObjectContext)
+    {
+        return NO;
+    }
 	return [self saveWithContext:self.mainObjectContext];
 }
 

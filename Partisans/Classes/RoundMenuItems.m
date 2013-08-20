@@ -160,17 +160,18 @@
 
 - (BOOL)hasVoted
 {
-    BOOL returnValue = NO;
-    PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
-    for (VoteEnvoy *voteEnvoy in self.currentRound.votes)
-    {
-        if ([voteEnvoy.playerID isEqualToString:playerEnvoy.intramuralID])
-        {
-            returnValue = YES;
-            break;
-        }
-    }
-    return returnValue;
+    return [self.currentRound hasPlayerVoted:nil];
+//    BOOL returnValue = NO;
+//    PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+//    for (VoteEnvoy *voteEnvoy in self.currentRound.votes)
+//    {
+//        if ([voteEnvoy.playerID isEqualToString:playerEnvoy.intramuralID])
+//        {
+//            returnValue = YES;
+//            break;
+//        }
+//    }
+//    return returnValue;
 }
 
 

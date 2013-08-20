@@ -100,6 +100,7 @@
     else
     {
         [self createRound];
+        [SystemMessage gameEnvoy].hasScoreBeenShown = NO;
     }
     [self saveGame];
 }

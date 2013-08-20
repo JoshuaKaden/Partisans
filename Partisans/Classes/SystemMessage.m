@@ -975,10 +975,13 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             }
         }
         
+        updatedGame.hasScoreBeenShown = YES;
+        
         UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:updatedGame];
         [op setCompletionBlock:^(void){
             dispatch_async(dispatch_get_main_queue(), ^(void)
             {
+                updatedGame.hasScoreBeenShown = YES;
                 [[SystemMessage sharedInstance] setGameEnvoy:updatedGame];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
             });

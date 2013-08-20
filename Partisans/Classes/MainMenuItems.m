@@ -82,12 +82,16 @@
             // The game has started.
             PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
             GamePlayerEnvoy *gamePlayerEnvoy = [gameEnvoy gamePlayerEnvoyFromPlayer:playerEnvoy];
+            RoundEnvoy *currentRound = [gameEnvoy currentRound];
             MissionEnvoy *missionEnvoy = [gameEnvoy currentMission];
             
+            // Is a mission in progress?
             if (missionEnvoy.hasStarted)
             {
+                // Is this player on this mission's team?
                 if (([missionEnvoy isPlayerOnTeam:playerEnvoy]) && (![missionEnvoy hasPlayerPerformed:playerEnvoy]))
                 {
+                    // Go to the Perform Mission screen.
                     MissionViewController *realVC = [[MissionViewController alloc] init];
                     [menuViewController invokePush:YES viewController:realVC];
                     [realVC release];
@@ -95,6 +99,7 @@
                 }
                 else
                 {
+                    // Go to the Mission Status screen.
                     MissionStatusMenuItems *items = [[MissionStatusMenuItems alloc] init];
                     self.missionStatusMenuItems = items;
                     [vc setMenuItems:items];
@@ -102,11 +107,35 @@
                 }
             }
             
-            else if (gamePlayerEnvoy.hasAlertBeenShown || [gameEnvoy currentRound].roundNumber > 1 || [gameEnvoy currentRound].candidates.count > 0)
+            // Should we show the Round Screen, or the Operative Alert screen?
+            // The former if we've shown the latter.
+            // Or, since we aren't saving that flag between sessions, if we've finished round 1.
+            // ?? Or, if some candidates have been selected? What is the logic here?
+            else if (gamePlayerEnvoy.hasAlertBeenShown || currentRound.roundNumber > 1 || currentRound.candidates.count > 0)
             {
-                RoundMenuItems *items = [[RoundMenuItems alloc] init];
-                [vc setMenuItems:items];
-                [items release];
+                if ([currentRound hasPlayerVoted:playerEnvoy])
+                {
+                    gameEnvoy.hasScoreBeenShown = YES;
+                }
+                
+                
+                // Has the score already been shown?
+                if (gameEnvoy.hasScoreBeenShown)
+                {
+                    // Show the Round Screen.
+                    RoundMenuItems *items = [[RoundMenuItems alloc] init];
+                    [vc setMenuItems:items];
+                    [items release];
+                }
+                else
+                {
+                    // Show the Score Screen.
+                    ScoreViewController *realVC = [[ScoreViewController alloc] init];
+                    [menuViewController invokePush:YES viewController:realVC];
+                    [realVC release];
+                    shouldPushMenuVC = NO;
+                }
+                
             }
             else
             {

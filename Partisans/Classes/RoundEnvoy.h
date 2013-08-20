@@ -39,6 +39,7 @@
 - (NSUInteger)votesCast;
 - (NSUInteger)yeaVotes;
 - (NSUInteger)nayVotes;
+- (BOOL)hasPlayerVoted:(PlayerEnvoy *)playerEnvoy;
 
 
 + (RoundEnvoy *)envoyFromManagedObject:(Round *)managedObject;

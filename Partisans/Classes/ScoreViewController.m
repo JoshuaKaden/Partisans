@@ -83,6 +83,8 @@
     [self.navigationItem setRightBarButtonItem:self.setupButton animated:NO];
     
     [self updateLabels];
+    
+    [SystemMessage gameEnvoy].hasScoreBeenShown = YES;
 }
 
 - (void)didReceiveMemoryWarning

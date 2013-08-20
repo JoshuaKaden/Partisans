@@ -280,6 +280,7 @@
     if (self.hasActionBeenConfirmed)
     {
         [self.overlayer removeWaitOverlay];
+        [SystemMessage gameEnvoy].hasScoreBeenShown = YES;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
