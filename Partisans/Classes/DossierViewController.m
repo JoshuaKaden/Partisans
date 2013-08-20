@@ -21,6 +21,8 @@
 @property (nonatomic, strong) IBOutlet UIImageView *headshotImageView;
 @property (nonatomic, strong) IBOutlet JSKViewStack *serviceRecordViewStack;
 
+@property (nonatomic, strong) UIFont *font;
+
 - (void)addServiceRecordEntry:(NSString *)message;
 - (void)generateServiceRecord;
 
@@ -33,6 +35,7 @@
 @synthesize headshotImageView = m_headshotImageView;
 @synthesize serviceRecordViewStack = m_serviceRecordViewStack;
 @synthesize delegate = m_delegate;
+@synthesize font = m_font;
 
 
 - (void)dealloc
@@ -40,6 +43,7 @@
     [m_nameLabel release];
     [m_headshotImageView release];
     [m_serviceRecordViewStack release];
+    [m_font release];
     
     [super dealloc];
 }
@@ -229,7 +233,13 @@
     CGRect labelFrame = CGRectMake(10.0f, 10.0f, self.serviceRecordViewStack.frame.size.width - 20.0f, 25.0f);
     UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
     [label setText:message];
-    [label setFont:[UIFont systemFontOfSize:13.0f]];
+    if (!self.font)
+    {
+        UIFont *font = [UIFont fontWithName:@"GillSans" size:18];
+        self.font = font;
+    }
+    [label setFont:self.font];
+//    [label setFont:[UIFont systemFontOfSize:13.0f]];
     [self.serviceRecordViewStack addView:label];
     [label release];
 }

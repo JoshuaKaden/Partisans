@@ -74,13 +74,15 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="575792441">
-							<int key="type">2</int>
-							<double key="pointSize">15</double>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="930908307">
+							<string key="name">GillSans</string>
+							<string key="family">Gill Sans</string>
+							<int key="traits">0</int>
+							<double key="pointSize">18</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="614820316">
-							<string key="NSName">Helvetica-Bold</string>
-							<double key="NSSize">15</double>
+						<object class="NSFont" key="IBUIFont" id="826643887">
+							<string key="NSName">GillSans</string>
+							<double key="NSSize">18</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -107,11 +109,13 @@
 						<float key="IBUIMinimumFontSize">16</float>
 						<int key="IBUITextAlignment">1</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
-							<int key="type">1</int>
+							<string key="name">GillSans</string>
+							<string key="family">Gill Sans</string>
+							<int key="traits">0</int>
 							<double key="pointSize">100</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
-							<string key="NSName">Helvetica</string>
+							<string key="NSName">GillSans</string>
 							<double key="NSSize">100</double>
 							<int key="NSfFlags">16</int>
 						</object>
@@ -136,8 +140,15 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="1037752732"/>
-						<reference key="IBUIFontDescription" ref="575792441"/>
-						<reference key="IBUIFont" ref="614820316"/>
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="575792441">
+							<int key="type">2</int>
+							<double key="pointSize">15</double>
+						</object>
+						<object class="NSFont" key="IBUIFont" id="171762537">
+							<string key="NSName">Helvetica-Bold</string>
+							<double key="NSSize">15</double>
+							<int key="NSfFlags">16</int>
+						</object>
 					</object>
 					<object class="IBUIImageView" id="79963201">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -172,8 +183,8 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="1037752732"/>
-						<reference key="IBUIFontDescription" ref="575792441"/>
-						<reference key="IBUIFont" ref="614820316"/>
+						<reference key="IBUIFontDescription" ref="930908307"/>
+						<reference key="IBUIFont" ref="826643887"/>
 					</object>
 					<object class="IBUILabel" id="273019868">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -223,8 +234,8 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="1037752732"/>
-						<reference key="IBUIFontDescription" ref="575792441"/>
-						<reference key="IBUIFont" ref="614820316"/>
+						<reference key="IBUIFontDescription" ref="930908307"/>
+						<reference key="IBUIFont" ref="826643887"/>
 					</object>
 					<object class="IBUIButton" id="715171870">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -247,7 +258,7 @@
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="1037752732"/>
 						<reference key="IBUIFontDescription" ref="575792441"/>
-						<reference key="IBUIFont" ref="614820316"/>
+						<reference key="IBUIFont" ref="171762537"/>
 					</object>
 					<object class="IBUIButton" id="1022425020">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -255,7 +266,6 @@
 						<string key="NSFrame">{{20, 373}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -269,8 +279,8 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="1037752732"/>
-						<reference key="IBUIFontDescription" ref="575792441"/>
-						<reference key="IBUIFont" ref="614820316"/>
+						<reference key="IBUIFontDescription" ref="930908307"/>
+						<reference key="IBUIFont" ref="826643887"/>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
