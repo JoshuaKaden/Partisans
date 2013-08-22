@@ -13,6 +13,7 @@ typedef enum
 {
     GameOverSectionSummary,
     GameOverSectionCommand,
+    GameOverSectionPlayers,
     GameOverSection_MaxValue
 } GameOverSection;
 

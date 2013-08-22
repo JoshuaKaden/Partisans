@@ -196,7 +196,7 @@
     {
         NSString *spellOut = [SystemMessage spellOutInteger:successfulMissionsCoordinated];
         NSString *suffix = nil;
-        if (successfulMissions == 1)
+        if (successfulMissionsCoordinated == 1)
         {
             suffix = successfulSuffixSingular;
         }
@@ -213,7 +213,7 @@
     {
         NSString *spellOut = [SystemMessage spellOutInteger:failedMissionsCoordinated];
         NSString *suffix = nil;
-        if (failedMissions == 1)
+        if (failedMissionsCoordinated == 1)
         {
             suffix = failedSuffixSingular;
         }
@@ -235,7 +235,7 @@
     [label setText:message];
     if (!self.font)
     {
-        UIFont *font = [UIFont fontWithName:@"GillSans" size:18];
+        UIFont *font = [UIFont fontWithName:@"GillSans" size:15];
         self.font = font;
     }
     [label setFont:self.font];

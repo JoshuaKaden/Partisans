@@ -221,11 +221,13 @@
     PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
     if ([self.candidates containsObject:playerEnvoy])
     {
-        return [UIFont boldSystemFontOfSize:17.0];
+        return [UIFont fontWithName:@"GillSans-Bold" size:18.0];
+//        return [UIFont boldSystemFontOfSize:17.0];
     }
     else
     {
-        return [UIFont systemFontOfSize:17.0];
+        return [UIFont fontWithName:@"GillSans" size:18.0];
+//        return [UIFont systemFontOfSize:17.0];
     }
 }
 

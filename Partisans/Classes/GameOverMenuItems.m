@@ -8,13 +8,19 @@
 
 #import "GameOverMenuItems.h"
 
+#import "DossierDelegate.h"
+#import "DossierViewController.h"
 #import "GameEnvoy.h"
 #import "MissionEnvoy.h"
+#import "PlayerEnvoy.h"
 #import "SystemMessage.h"
 
 
 
 @interface GameOverMenuItems ()
+
+@property (nonatomic, strong) NSArray *players;
+@property (nonatomic, strong) DossierDelegate *dossierDelegate;
 
 - (NSString *)reasonLabel;
 - (NSString *)reasonSubLabel;
@@ -23,6 +29,18 @@
 
 
 @implementation GameOverMenuItems
+
+@synthesize players = m_players;
+@synthesize dossierDelegate = m_dossierDelegate;
+
+
+- (void)dealloc
+{
+    [m_players release];
+    [m_dossierDelegate release];
+    
+    [super dealloc];
+}
 
 
 - (NSString *)reasonLabel
@@ -80,6 +98,11 @@
 
 #pragma mark - Menu View Controller delegate
 
+- (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
+{
+    self.players = [[SystemMessage gameEnvoy] players];
+}
+
 - (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
 {
     if (indexPath.section == GameOverSectionCommand)
@@ -114,6 +137,10 @@
             returnValue = 1;
             break;
             
+        case GameOverSectionPlayers:
+            returnValue = self.players.count;
+            break;
+            
         case GameOverSection_MaxValue:
             break;
     }
@@ -131,6 +158,10 @@
             break;
             
         case GameOverSectionCommand:
+            break;
+            
+        case GameOverSectionPlayers:
+            returnValue = NSLocalizedString(@"Players", @"Players  --  title");
             break;
             
         case GameOverSection_MaxValue:
@@ -176,6 +207,13 @@
             returnValue = NSLocalizedString(@"Dismiss", @"Dismiss  --  label");
             break;
             
+        case GameOverSectionPlayers:
+        {
+            PlayerEnvoy *player = [self.players objectAtIndex:indexPath.row];
+            returnValue = player.playerName;
+            break;
+        }
+            
         case GameOverSection_MaxValue:
             break;
     }
@@ -210,16 +248,52 @@
             returnValue = NSLocalizedString(@"Tap to leave the game.", @"Tap to leave the game.  --  sub label");
             break;
             
+        case GameOverSectionPlayers:
+            break;
+            
         case GameOverSection_MaxValue:
             break;
     }
     return returnValue;
 }
 
+- (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == GameOverSectionPlayers)
+    {
+        PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
+        return playerEnvoy.smallImage;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
     Class returnValue = nil;
+    if (indexPath.section == GameOverSectionPlayers)
+    {
+        returnValue = [DossierViewController class];
+    }
     return returnValue;
+}
+
+- (id)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerDelegateAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == GameOverSectionPlayers)
+    {
+        PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
+        DossierDelegate *delegate = [[DossierDelegate alloc] initWithPlayerEnvoy:playerEnvoy];
+        self.dossierDelegate = delegate;
+        [delegate release];
+        return self.dossierDelegate;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (BOOL)menuViewControllerHidesBackButton:(JSKMenuViewController *)menuViewController
@@ -239,7 +313,14 @@
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
-    return UITableViewCellAccessoryNone;
+    if (indexPath.section == GameOverSectionSummary)
+    {
+        return UITableViewCellAccessoryNone;
+    }
+    else
+    {
+        return UITableViewCellAccessoryDisclosureIndicator;
+    }
 }
 
 @end

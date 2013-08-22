@@ -277,6 +277,9 @@
 
 - (void)gameChanged:(NSNotification *)notification
 {
+    self.gameEnvoy = nil;
+    self.missionEnvoy = nil;
+    
     if (self.hasActionBeenConfirmed)
     {
         [self.overlayer removeWaitOverlay];
