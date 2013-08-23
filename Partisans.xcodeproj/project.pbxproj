@@ -27,7 +27,6 @@
 		9327777817A86FAD00CFE99B /* GameCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777517A86FAD00CFE99B /* GameCodeViewController.m */; };
 		9327777917A86FAD00CFE99B /* GameCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9327777617A86FAD00CFE99B /* GameCodeViewController.xib */; };
 		9327777A17A86FAD00CFE99B /* GameCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9327777617A86FAD00CFE99B /* GameCodeViewController.xib */; };
-		93515AF5179992450044E998 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93515AF4179992450044E998 /* VoteViewController.xib */; };
 		9351AA7A177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
 		9351AA7B177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
 		9351AA82177E2A0C00D4C843 /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA81177E2A0C00D4C843 /* Round.m */; };
@@ -67,7 +66,6 @@
 		936510D01741597500F2AD06 /* JSKCommandMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C51741597500F2AD06 /* JSKCommandMessage.m */; };
 		936510D11741597500F2AD06 /* JSKDataMiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C71741597500F2AD06 /* JSKDataMiner.m */; };
 		936510D21741597500F2AD06 /* JSKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C91741597500F2AD06 /* JSKMenuViewController.m */; };
-		936510D31741597500F2AD06 /* JSKPeerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CB1741597500F2AD06 /* JSKPeerController.m */; };
 		936510D41741597500F2AD06 /* JSKSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CD1741597500F2AD06 /* JSKSystemMessage.m */; };
 		936510D51741597500F2AD06 /* JSKViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CF1741597500F2AD06 /* JSKViewStack.m */; };
 		936510DC1741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */; };
@@ -133,7 +131,6 @@
 		937C02C2179DD44A00C8FAE2 /* DossierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */; };
 		937ED0E11791B28100A95231 /* GameOverMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 937ED0E01791B28100A95231 /* GameOverMenuItems.m */; };
 		937ED0E21791B28100A95231 /* GameOverMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 937ED0E01791B28100A95231 /* GameOverMenuItems.m */; };
-		938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 938144F1178CB6FA000AA437 /* MissionViewController.xib */; };
 		938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		9392E6D217A66F5E00FE6B9C /* TestCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392E6D017A66F5E00FE6B9C /* TestCodeViewController.m */; };
@@ -194,6 +191,8 @@
 		93F06C7D178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7E178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
+		93F84AB317C6576A00081906 /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
+		93F84AB417C65B9900081906 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B37B7217988FA000118CE3 /* VoteViewController.xib */; };
 		93F94AEE17B9416600D5D9A6 /* ScrambleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AED17B9416600D5D9A6 /* ScrambleView.xib */; };
 		93F94AEF17B9416600D5D9A6 /* ScrambleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AED17B9416600D5D9A6 /* ScrambleView.xib */; };
 		93F94AF217B9419000D5D9A6 /* ScrambleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F94AF117B9419000D5D9A6 /* ScrambleView.m */; };
@@ -214,7 +213,6 @@
 		93FECB1E174547840046529A /* JSKCommandMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C51741597500F2AD06 /* JSKCommandMessage.m */; };
 		93FECB1F174547840046529A /* JSKDataMiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C71741597500F2AD06 /* JSKDataMiner.m */; };
 		93FECB20174547840046529A /* JSKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C91741597500F2AD06 /* JSKMenuViewController.m */; };
-		93FECB21174547840046529A /* JSKPeerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CB1741597500F2AD06 /* JSKPeerController.m */; };
 		93FECB22174547840046529A /* JSKSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CD1741597500F2AD06 /* JSKSystemMessage.m */; };
 		93FECB23174547840046529A /* JSKViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CF1741597500F2AD06 /* JSKViewStack.m */; };
 		93FECB24174547840046529A /* NSManagedObjectContext+FetchAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */; };
@@ -284,7 +282,6 @@
 		9327777417A86FAD00CFE99B /* GameCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameCodeViewController.h; path = Classes/GameCodeViewController.h; sourceTree = "<group>"; };
 		9327777517A86FAD00CFE99B /* GameCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameCodeViewController.m; path = Classes/GameCodeViewController.m; sourceTree = "<group>"; };
 		9327777617A86FAD00CFE99B /* GameCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GameCodeViewController.xib; path = Classes/GameCodeViewController.xib; sourceTree = "<group>"; };
-		93515AF4179992450044E998 /* VoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VoteViewController.xib; path = Classes/iOS5/VoteViewController.xib; sourceTree = "<group>"; };
 		9351AA78177E2A0B00D4C843 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vote.h; path = Classes/Vote.h; sourceTree = "<group>"; };
 		9351AA79177E2A0B00D4C843 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vote.m; path = Classes/Vote.m; sourceTree = "<group>"; };
 		9351AA80177E2A0C00D4C843 /* Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Round.h; path = Classes/Round.h; sourceTree = "<group>"; };
@@ -334,8 +331,6 @@
 		936510C71741597500F2AD06 /* JSKDataMiner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKDataMiner.m; path = "Classes/Libraries/My Library/JSKDataMiner.m"; sourceTree = "<group>"; };
 		936510C81741597500F2AD06 /* JSKMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKMenuViewController.h; path = "Classes/Libraries/My Library/JSKMenuViewController.h"; sourceTree = "<group>"; };
 		936510C91741597500F2AD06 /* JSKMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKMenuViewController.m; path = "Classes/Libraries/My Library/JSKMenuViewController.m"; sourceTree = "<group>"; };
-		936510CA1741597500F2AD06 /* JSKPeerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKPeerController.h; path = "Classes/Libraries/My Library/JSKPeerController.h"; sourceTree = "<group>"; };
-		936510CB1741597500F2AD06 /* JSKPeerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKPeerController.m; path = "Classes/Libraries/My Library/JSKPeerController.m"; sourceTree = "<group>"; };
 		936510CC1741597500F2AD06 /* JSKSystemMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKSystemMessage.h; path = "Classes/Libraries/My Library/JSKSystemMessage.h"; sourceTree = "<group>"; };
 		936510CD1741597500F2AD06 /* JSKSystemMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKSystemMessage.m; path = "Classes/Libraries/My Library/JSKSystemMessage.m"; sourceTree = "<group>"; };
 		936510CE1741597500F2AD06 /* JSKViewStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKViewStack.h; path = "Classes/Libraries/My Library/JSKViewStack.h"; sourceTree = "<group>"; };
@@ -411,7 +406,6 @@
 		937C02BE179D45DD00C8FAE2 /* DossierDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossierDelegate.m; path = Classes/DossierDelegate.m; sourceTree = "<group>"; };
 		937ED0DF1791B28100A95231 /* GameOverMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameOverMenuItems.h; path = Classes/GameOverMenuItems.h; sourceTree = "<group>"; };
 		937ED0E01791B28100A95231 /* GameOverMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameOverMenuItems.m; path = Classes/GameOverMenuItems.m; sourceTree = "<group>"; };
-		938144F1178CB6FA000AA437 /* MissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MissionViewController.xib; path = Classes/iOS5/MissionViewController.xib; sourceTree = "<group>"; };
 		938429321746C0D30037563D /* AddGamePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddGamePlayerOperation.h; path = Classes/AddGamePlayerOperation.h; sourceTree = "<group>"; };
 		938429331746C0D30037563D /* AddGamePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddGamePlayerOperation.m; path = Classes/AddGamePlayerOperation.m; sourceTree = "<group>"; };
 		9392E6CF17A66F5E00FE6B9C /* TestCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestCodeViewController.h; path = Classes/TestCodeViewController.h; sourceTree = "<group>"; };
@@ -546,14 +540,6 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
-		93515AF3179991FD0044E998 /* iOS5 */ = {
-			isa = PBXGroup;
-			children = (
-				93515AF4179992450044E998 /* VoteViewController.xib */,
-			);
-			name = iOS5;
-			sourceTree = "<group>";
-		};
 		9351AA6B177CDAFB00D4C843 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,7 +556,6 @@
 		9351AA94177E52DB00D4C843 /* Round */ = {
 			isa = PBXGroup;
 			children = (
-				93515AF3179991FD0044E998 /* iOS5 */,
 				93E6547E177C6A95003C73C2 /* CandidatePickerMenuItems.h */,
 				93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */,
 				9351AA88177E48CD00D4C843 /* CoordinatorVote.h */,
@@ -589,7 +574,6 @@
 		9351AA95177E52FD00D4C843 /* Mission */ = {
 			isa = PBXGroup;
 			children = (
-				938144F0178CB694000AA437 /* iOS5 */,
 				93D461C5178B72A700580E9B /* MissionStatusMenuItems.h */,
 				93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */,
 				93F06C7A178472B000281B6C /* MissionViewController.h */,
@@ -731,8 +715,6 @@
 				936510C91741597500F2AD06 /* JSKMenuViewController.m */,
 				9351AA8C177E4E9400D4C843 /* JSKOverlayer.h */,
 				9351AA8D177E4E9400D4C843 /* JSKOverlayer.m */,
-				936510CA1741597500F2AD06 /* JSKPeerController.h */,
-				936510CB1741597500F2AD06 /* JSKPeerController.m */,
 				936510CC1741597500F2AD06 /* JSKSystemMessage.h */,
 				936510CD1741597500F2AD06 /* JSKSystemMessage.m */,
 				936510CE1741597500F2AD06 /* JSKViewStack.h */,
@@ -927,14 +909,6 @@
 				936CDFB5176125DC00C6A4EE /* ServerDelegate.h */,
 			);
 			name = Networking;
-			sourceTree = "<group>";
-		};
-		938144F0178CB694000AA437 /* iOS5 */ = {
-			isa = PBXGroup;
-			children = (
-				938144F1178CB6FA000AA437 /* MissionViewController.xib */,
-			);
-			name = iOS5;
 			sourceTree = "<group>";
 		};
 		93BD6CE917B7DC5000078709 /* Splash */ = {
@@ -1148,8 +1122,6 @@
 				93FFD19217835FF600ADCB44 /* OverlayTesterViewController.xib in Resources */,
 				93FFD1971783635100ADCB44 /* waitOverLay@2x.png in Resources */,
 				93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */,
-				938144F2178CB6FA000AA437 /* MissionViewController.xib in Resources */,
-				93515AF5179992450044E998 /* VoteViewController.xib in Resources */,
 				937C02C2179DD44A00C8FAE2 /* DossierViewController.xib in Resources */,
 				93C1D6F617A564E300EE2878 /* EditCodeView~iphone.xib in Resources */,
 				9392E6D517A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */,
@@ -1162,6 +1134,8 @@
 				93F94AEF17B9416600D5D9A6 /* ScrambleView.xib in Resources */,
 				93F94AF617B9457900D5D9A6 /* p135.png in Resources */,
 				931D116717BBD1FD00068279 /* ScoreViewController.xib in Resources */,
+				93F84AB317C6576A00081906 /* MissionViewController.xib in Resources */,
+				93F84AB417C65B9900081906 /* VoteViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1211,7 +1185,6 @@
 				936510D01741597500F2AD06 /* JSKCommandMessage.m in Sources */,
 				936510D11741597500F2AD06 /* JSKDataMiner.m in Sources */,
 				936510D21741597500F2AD06 /* JSKMenuViewController.m in Sources */,
-				936510D31741597500F2AD06 /* JSKPeerController.m in Sources */,
 				936510D41741597500F2AD06 /* JSKSystemMessage.m in Sources */,
 				936510D51741597500F2AD06 /* JSKViewStack.m in Sources */,
 				936510DC1741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m in Sources */,
@@ -1302,7 +1275,6 @@
 				93FECB1E174547840046529A /* JSKCommandMessage.m in Sources */,
 				93FECB1F174547840046529A /* JSKDataMiner.m in Sources */,
 				93FECB20174547840046529A /* JSKMenuViewController.m in Sources */,
-				93FECB21174547840046529A /* JSKPeerController.m in Sources */,
 				93FECB22174547840046529A /* JSKSystemMessage.m in Sources */,
 				93FECB23174547840046529A /* JSKViewStack.m in Sources */,
 				93FECB24174547840046529A /* NSManagedObjectContext+FetchAdditions.m in Sources */,

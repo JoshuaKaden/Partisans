@@ -11,7 +11,6 @@
 #import "GameEnvoy.h"
 #import "HostFinder.h"
 #import "MissionEnvoy.h"
-#import "JSKOverlayer.h"
 #import "PlayerEnvoy.h"
 #import "SystemMessage.h"
 
@@ -26,16 +25,15 @@
 @property (nonatomic, strong) IBOutlet UISwitch *sabotageSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch *privacySwitch;
 @property (nonatomic, strong) IBOutlet UILabel *privacyLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) IBOutlet UILabel *statusLabel;
 
 @property (nonatomic, strong) GameEnvoy *gameEnvoy;
 @property (nonatomic, strong) MissionEnvoy *missionEnvoy;
 @property (nonatomic, strong) NSString *hostPeerID;
 @property (nonatomic, assign) BOOL shouldSucceed;
-@property (nonatomic, strong) JSKOverlayer *overlayer;
 @property (nonatomic, strong) HostFinder *hostFinder;
 @property (nonatomic, strong) NSString *responseKey;
-@property (nonatomic, assign) BOOL hasActionBeenConfirmed;
-@property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) BOOL isOperative;
 
 - (IBAction)performButtonPressed:(id)sender;
@@ -43,11 +41,13 @@
 - (IBAction)sabotageSwitchFlicked:(id)sender;
 - (IBAction)privacySwitchFlicked:(id)sender;
 
+- (void)invokeMission;
 - (void)performMission:(BOOL)shouldSucceed;
 - (void)performMissionLocally:(BOOL)shouldSucceed;
 - (void)connectAndPerformMission:(BOOL)shouldSucceed;
 - (void)gameChanged:(NSNotification *)notification;
-- (void)timerFired:(id)sender;
+- (BOOL)hasPerformed;
+
 
 @end
 
@@ -66,19 +66,17 @@
 @synthesize missionEnvoy = m_missionEnvoy;
 @synthesize hostPeerID = m_hostPeerID;
 @synthesize shouldSucceed = m_shouldSucceed;
-@synthesize overlayer = m_overlayer;
 @synthesize hostFinder = m_hostFinder;
 @synthesize responseKey = m_responseKey;
-@synthesize hasActionBeenConfirmed = m_hasActionBeenConfirmed;
-@synthesize timer = m_timer;
 @synthesize isOperative = m_isOperative;
+@synthesize statusLabel = m_statusLabel;
+@synthesize spinner = m_spinner;
 
 
 - (void)dealloc
 {
     [self.hostFinder setDelegate:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.timer invalidate];
     
     [m_codenameLabel release];
     [m_performButton release];
@@ -91,10 +89,10 @@
     [m_gameEnvoy release];
     [m_missionEnvoy release];
     [m_hostPeerID release];
-    [m_overlayer release];
     [m_hostFinder release];
     [m_responseKey release];
-    [m_timer release];
+    [m_statusLabel release];
+    [m_spinner release];
     
     [super dealloc];
 }
@@ -132,6 +130,9 @@
     [self.readySwitch setHidden:YES];
     [self.sabotageLabel setHidden:YES];
     [self.sabotageSwitch setHidden:YES];
+    
+    [self.spinner setHidden:YES];
+    [self.statusLabel setText:nil];
 }
 
 
@@ -142,38 +143,45 @@
 }
 
 
-- (void)timerFired:(id)sender
+
+#pragma mark - Mission
+
+
+- (BOOL)hasPerformed
 {
-    static NSUInteger timeoutCount = 0;
-    timeoutCount++;
-    if (timeoutCount == 1)
-    {
-        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Is the Host available?", @"Is the Host available?  --  message")];
-    }
-    else if (timeoutCount == 2)
-    {
-        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Trying one last time...", @"Trying one last time...  --  message")];
-    }
-    else
-    {
-        [self.timer invalidate];
-        self.timer = nil;
-        [self.overlayer removeWaitOverlay];
-        timeoutCount = 0;
-        [self.performButton setEnabled:YES];
-        [self.readySwitch setEnabled:YES];
-        [self.sabotageSwitch setEnabled:YES];
-    }
+    PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
+    return [self.missionEnvoy hasPlayerPerformed:playerEnvoy];
 }
 
 
-#pragma mark - Mission
+- (void)invokeMission
+{
+    [self.performButton setEnabled:NO];
+    [self.readySwitch setEnabled:NO];
+    [self.sabotageSwitch setEnabled:NO];
+    
+    BOOL shouldSucceed = !self.sabotageSwitch.isOn;
+    if ([SystemMessage isHost])
+    {
+        [self performMissionLocally:shouldSucceed];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self connectAndPerformMission:shouldSucceed];
+    }
+}
 
 
 - (void)performMissionLocally:(BOOL)shouldSucceed
 {
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
     self.hostPeerID = playerEnvoy.peerID;
+    
+    // Force a refresh of the locally-referenced objects.
+    self.gameEnvoy = nil;
+    self.missionEnvoy = nil;
+    
     GameEnvoy *gameEnvoy = self.gameEnvoy;
     MissionEnvoy *missionEnvoy = self.missionEnvoy;
     
@@ -187,38 +195,19 @@
     }
     
     [gameEnvoy commitAndSave];
-    
-//    if (![SystemMessage isPlayerOnline])
-//    {
-//        [SystemMessage putPlayerOnline];
-//    }
-//    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.hostPeerID object:[NSArray arrayWithObject:missionEnvoy]];
-//    [SystemMessage sendParcelToPlayers:parcel];
-//    [parcel release];
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
 - (void)connectAndPerformMission:(BOOL)shouldSucceed
 {
-    [self.performButton setEnabled:NO];
-    [self.readySwitch setEnabled:NO];
-    [self.sabotageSwitch setEnabled:NO];
-    
-    if (!self.overlayer)
-    {
-        JSKOverlayer *overlayer = [[JSKOverlayer alloc] initWithView:[SystemMessage rootView]];
-        self.overlayer = overlayer;
-        [overlayer release];
-    }
-    NSString *message = NSLocalizedString(@"Performing mission...", @"Performing mission...  --  message");
-    [self.overlayer createWaitOverlayWithText:message];
+    [self.spinner setHidden:NO];
+    [self.spinner startAnimating];
     
     
     if ([SystemMessage isPlayerOnline])
     {
-        self.hostPeerID = self.gameEnvoy.host.peerID;
+        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+        self.hostPeerID = gameEnvoy.host.peerID;
         [self performMission:shouldSucceed];
         return;
     }
@@ -230,20 +219,19 @@
         self.hostFinder = hostFinder;
         [hostFinder release];
     }
+    NSString *message = NSLocalizedString(@"Connecting...", @"Connecting...  --  message");
+    [self.statusLabel setText:message];
     [self.hostFinder connect];
     
     self.shouldSucceed = shouldSucceed;
-    
-    if (!self.timer)
-    {
-        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
-        self.timer = timer;
-    }
 }
 
 
 - (void)performMission:(BOOL)shouldSucceed
 {
+    NSString *status = NSLocalizedString(@"Performing mission...", @"Performing mission...  --  message");
+    [self.statusLabel setText:status];
+    
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
     
     NSString *hostPeerID = self.hostPeerID;
@@ -270,7 +258,7 @@
         return;
     }
     
-    self.hasActionBeenConfirmed = YES;
+    [self.statusLabel setText:NSLocalizedString(@"Refreshing...", @"Refreshing...  --  message")];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [SystemMessage requestGameUpdate];
 }
@@ -280,9 +268,8 @@
     self.gameEnvoy = nil;
     self.missionEnvoy = nil;
     
-    if (self.hasActionBeenConfirmed)
+    if ([self hasPerformed])
     {
-        [self.overlayer removeWaitOverlay];
         [SystemMessage gameEnvoy].hasScoreBeenShown = YES;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
@@ -304,17 +291,25 @@
     timeoutCount++;
     if (timeoutCount == 1)
     {
-        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Is the Host available?", @"Is the Host available?  --  message")];
+        [self.statusLabel setText:NSLocalizedString(@"Is the Host available?", @"Is the Host available?  --  message")];
     }
     else if (timeoutCount == 2)
     {
-        [self.overlayer updateWaitOverlayText:NSLocalizedString(@"Trying one last time...", @"Trying one last time...  --  message")];
+        [self.statusLabel setText:NSLocalizedString(@"Trying one last time...", @"Trying one last time...  --  message")];
     }
     else
     {
         [hostFinder stop];
         self.hostFinder = nil;
-        [self.overlayer removeWaitOverlay];
+        timeoutCount = 0;
+        
+        [self.statusLabel setText:NSLocalizedString(@"Unable to reach the Host.", @"Unable to reach the Host.  --  message")];
+        [self.spinner stopAnimating];
+        [self.spinner setHidden:YES];
+        
+        [self.performButton setEnabled:YES];
+        [self.readySwitch setEnabled:YES];
+        [self.sabotageSwitch setEnabled:YES];
     }
 }
 
@@ -325,19 +320,7 @@
 
 - (IBAction)performButtonPressed:(id)sender
 {
-    BOOL shouldSucceed = YES;
-    if (self.sabotageSwitch.isOn)
-    {
-        shouldSucceed = NO;
-    }
-    if ([SystemMessage isHost])
-    {
-        [self performMissionLocally:shouldSucceed];
-    }
-    else
-    {
-        [self connectAndPerformMission:shouldSucceed];
-    }
+    [self invokeMission];
 }
 
 - (IBAction)readySwitchFlicked:(id)sender

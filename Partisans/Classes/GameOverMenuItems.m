@@ -52,15 +52,15 @@
     
     if (successfulMissionCount > 2)
     {
-        returnValue = NSLocalizedString(@"Mission Success", @"Mission Success  --  label");
+        returnValue = NSLocalizedString(@"Mission Success!", @"Mission Success!  --  label");
     }
     else if (failedMissionCount > 2)
     {
-        returnValue = NSLocalizedString(@"Sabotage", @"Sabotage  --  label");
+        returnValue = NSLocalizedString(@"Sabotage!", @"Sabotage!  --  label");
     }
     else
     {
-        returnValue = NSLocalizedString(@"Deadlock", @"Deadlock  --  label");
+        returnValue = NSLocalizedString(@"Deadlock!", @"Deadlock!  --  label");
     }
     
     return returnValue;
@@ -245,7 +245,7 @@
         }
             
         case GameOverSectionCommand:
-            returnValue = NSLocalizedString(@"Tap to leave the game.", @"Tap to leave the game.  --  sub label");
+            returnValue = NSLocalizedString(@"Tap to end the game.", @"Tap to end the game.  --  sub label");
             break;
             
         case GameOverSectionPlayers:
