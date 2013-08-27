@@ -22,6 +22,7 @@
 
 #import "DossierDelegate.h"
 #import "DossierViewController.h"
+#import "GameCodeViewController.h"
 #import "GameDirector.h"
 #import "GameEnvoy.h"
 #import "GamePlayerEnvoy.h"
@@ -49,7 +50,7 @@
 - (void)handleStopHostingAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 - (void)handleLeaveGameAlertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 - (void)gameChanged:(NSNotification *)notification;
-- (void)connectedToHost:(NSNotification *)notification;
+- (void)playerUpdated:(NSNotification *)notification;
 - (void)leaveGame;
 - (void)startGame;
 
@@ -96,9 +97,9 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
-- (void)connectedToHost:(NSNotification *)notification
+- (void)playerUpdated:(NSNotification *)notification
 {
-//    [SystemMessage requestGameUpdate];
+    self.players = nil;
 }
 
 - (BOOL)isPlayerHost
@@ -278,7 +279,7 @@
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectedToHost:) name:kPartisansNotificationConnectedToHost object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerUpdated:) name:kJSKNotificationPeerUpdated object:nil];
 }
 
 
@@ -316,6 +317,11 @@
     
     if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowStatus)
     {
+        if (![SystemMessage isWiFiAvailable])
+        {
+            return;
+        }
+        
         if ([self isPlayerHost])
         {
             if (self.players.count >= kPartisansMinPlayers)
@@ -356,14 +362,14 @@
         // call dequeueReusableCellWithIdentifier function and now you will get cell object
         cell = (ProgressCell *)[tableView dequeueReusableCellWithIdentifier:customCellIdentifier];
 
-        NSString *label = NSLocalizedString(@"More players are needed", @"More players are needed  --  label");
+        NSString *label = NSLocalizedString(@"More players are needed.", @"More players are needed.  --  label");
         if (self.players.count == kPartisansMinPlayers - 1)
         {
-            label = NSLocalizedString(@"One more player is needed", @"One more player is needed  --  label");
+            label = NSLocalizedString(@"One more player is needed.", @"One more player is needed.  --  label");
         }
         else if (self.players.count >= kPartisansMinPlayers)
         {
-            NSString *suffix = NSLocalizedString(@"players", @"players  --  label suffix");
+            NSString *suffix = NSLocalizedString(@"players are ready.", @"players are ready.  --  label suffix");
             label = [NSString stringWithFormat:@"%@ %@", [[SystemMessage spellOutInteger:self.players.count] capitalizedString], suffix];
         }
         
@@ -399,43 +405,43 @@
 }
 
 
-- (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController labelColorAtIndexPath:(NSIndexPath *)indexPath
-{
-    UIColor *returnValue = [UIColor blackColor];
-    switch ((SetupGameMenuSection)indexPath.section) {
-            
-            
-        case SetupGameMenuSectionGame:
-        {
-            switch ((SetupGameMenuRow)indexPath.row)
-            {
-                case SetupGameMenuRowHost:
-                case SetupGameMenuRowPlayers:
-                    break;
-                    
-                case SetupGameMenuRowStatus:
-                    returnValue = [UIColor darkGrayColor];
-                    break;
-                    
-                case SetupGameMenuRow_MaxValue:
-                    break;
-            }
-            break;
-        }
-            
-            
-        case SetupGameMenuSectionAwaitingApproval:
-        case SetupGameMenuSectionPlayers:
-            break;
-            
-            
-            
-        case SetupGameMenuSection_MaxValue:
-            break;
-    }
-    
-    return returnValue;
-}
+//- (UIColor *)menuViewController:(JSKMenuViewController *)menuViewController labelColorAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UIColor *returnValue = [UIColor blackColor];
+//    switch ((SetupGameMenuSection)indexPath.section) {
+//            
+//            
+//        case SetupGameMenuSectionGame:
+//        {
+//            switch ((SetupGameMenuRow)indexPath.row)
+//            {
+//                case SetupGameMenuRowHost:
+//                case SetupGameMenuRowPlayers:
+//                    break;
+//                    
+//                case SetupGameMenuRowStatus:
+//                    returnValue = [UIColor darkGrayColor];
+//                    break;
+//                    
+//                case SetupGameMenuRow_MaxValue:
+//                    break;
+//            }
+//            break;
+//        }
+//            
+//            
+//        case SetupGameMenuSectionAwaitingApproval:
+//        case SetupGameMenuSectionPlayers:
+//            break;
+//            
+//            
+//            
+//        case SetupGameMenuSection_MaxValue:
+//            break;
+//    }
+//    
+//    return returnValue;
+//}
 
 
 
@@ -450,14 +456,30 @@
             switch ((SetupGameMenuRow)indexPath.row)
             {
                 case SetupGameMenuRowHost:
-//                    if (![self isPlayerHost])
-//                    {
-//                        returnValue = UITableViewCellAccessoryDisclosureIndicator;
-//                    }
+                    break;
+                    
+                case SetupGameMenuRowCode:
+//                    returnValue = UITableViewCellAccessoryDisclosureIndicator;
                     break;
                     
                 case SetupGameMenuRowPlayers:
+                    break;
+                    
                 case SetupGameMenuRowStatus:
+                    if ([self isPlayerHost])
+                    {
+                        if (self.players.count >= kPartisansMinPlayers)
+                        {
+                            returnValue = UITableViewCellAccessoryDisclosureIndicator;
+                        }
+                    }
+                    else
+                    {
+                        if ([SystemMessage gameEnvoy].startDate)
+                        {
+                            returnValue = UITableViewCellAccessoryDisclosureIndicator;
+                        }
+                    }
                     break;
                     
                 case SetupGameMenuRow_MaxValue:
@@ -559,57 +581,75 @@
                 case SetupGameMenuRowHost:
                     if ([self isPlayerHost])
                     {
-                        returnValue = NSLocalizedString(@"You are the host", @"You are the host  --  menu label");
+                        returnValue = NSLocalizedString(@"You are the host.", @"You are the host.  --  menu label");
                     }
                     else
                     {
                         NSString *prefix = NSLocalizedString(@"Your host is", @"Your host is  --  menu label prefix");
-                        returnValue = [NSString stringWithFormat:@"%@ %@", prefix, gameEnvoy.host.playerName];
+                        returnValue = [NSString stringWithFormat:@"%@ %@.", prefix, gameEnvoy.host.playerName];
                     }
                     break;
+                    
+                case SetupGameMenuRowCode:
+                {
+                    NSString *prefix = NSLocalizedString(@"The Game Code is", @"The Game Code is  --  menu label");
+                    returnValue = [NSString stringWithFormat:@"%@ %d.", prefix, gameEnvoy.gameCode];
+                    break;
+                }
                     
                 case SetupGameMenuRowPlayers:
                     break;
                     
+
                 case SetupGameMenuRowStatus:
-                    if ([self isPlayerHost])
+                    
+                    if (![SystemMessage isWiFiAvailable])
                     {
-                        if (self.players.count < kPartisansMinPlayers)
-                        {
-                            returnValue = NSLocalizedString(@"Waiting for players...", @"Waiting for players...  --  menu label");
-                        }
-                        else
-                        {
-                            if (gameEnvoy.startDate)
-                            {
-                                returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  menu label");
-                            }
-                            else
-                            {
-                                returnValue = NSLocalizedString(@"Tap to start the game.", @"Tap to start the game.  --  menu label");
-                            }
-                        }
+                        returnValue = NSLocalizedString(@"WiFi is required, unfortunately.", @"WiFi is required, unfortunately.  --  header title");
                     }
-                    else
+                    
+                    if (!returnValue)
                     {
-                        if (self.players.count < kPartisansMinPlayers)
+                        if ([self isPlayerHost])
                         {
-                            returnValue = NSLocalizedString(@"Waiting for more players...", @"Waiting for more players...  --  menu label");
-                        }
-                        else
-                        {
-                            if (gameEnvoy.startDate)
+                            if (self.players.count < kPartisansMinPlayers)
                             {
-                                returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  menu label");
+                                returnValue = NSLocalizedString(@"Waiting for players...", @"Waiting for players...  --  menu label");
                             }
                             else
                             {
-                                returnValue = NSLocalizedString(@"Waiting for host...", @"Waiting for host...  --  menu label");
+                                if (gameEnvoy.startDate)
+                                {
+                                    returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  menu label");
+                                }
+                                else
+                                {
+                                    returnValue = NSLocalizedString(@"Tap to start the game.", @"Tap to start the game.  --  menu label");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (self.players.count < kPartisansMinPlayers)
+                            {
+                                returnValue = NSLocalizedString(@"Waiting for more players...", @"Waiting for more players...  --  menu label");
+                            }
+                            else
+                            {
+                                if (gameEnvoy.startDate)
+                                {
+                                    returnValue = NSLocalizedString(@"Tap to continue.", @"Tap to continue.  --  menu label");
+                                }
+                                else
+                                {
+                                    returnValue = NSLocalizedString(@"Waiting for host...", @"Waiting for host...  --  menu label");
+                                }
                             }
                         }
                     }
                     break;
                     
+                
                 case SetupGameMenuRow_MaxValue:
                     break;
             }
@@ -710,6 +750,9 @@
                     returnValue = gameEnvoy.host.smallImage;
                     break;
                     
+                case SetupGameMenuRowCode:
+                    break;
+                    
                 case SetupGameMenuRowPlayers:
                     break;
                     
@@ -770,6 +813,10 @@
 //                    }
                     break;
                     
+                case SetupGameMenuRowCode:
+//                    returnValue = [GameCodeViewController class];
+                    break;
+                    
                 case SetupGameMenuRowPlayers:
                 case SetupGameMenuRowStatus:
                     break;
@@ -823,6 +870,7 @@
                     break;
                 }
                     
+                case SetupGameMenuRowCode:
                 case SetupGameMenuRowPlayers:
                 case SetupGameMenuRowStatus:
                     break;

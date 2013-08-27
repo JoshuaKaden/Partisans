@@ -48,8 +48,8 @@
 
 const BOOL kIsDebugOn = YES;
 
-NSString * const JSKNotificationPeerCreated = @"JSKNotificationPeerCreated";
-NSString * const JSKNotificationPeerUpdated = @"JSKNotificationPeerUpdated";
+NSString * const kJSKNotificationPeerCreated = @"kJSKNotificationPeerCreated";
+NSString * const kJSKNotificationPeerUpdated = @"kJSKNotificationPeerUpdated";
 
 NSUInteger const kPartisansMaxPlayers = 10;
 NSUInteger const kPartisansMinPlayers = 5;
@@ -115,6 +115,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 @synthesize imageCache = m_imageCache;
 @synthesize playerCache = m_playerCache;
 @synthesize hasSplashBeenShown = m_hasSplashBeenShown;
+@synthesize gameCode = m_gameCode;
 
 
 - (void)dealloc
@@ -267,7 +268,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
                 [self sendDigestTo:commandParcel.from];
                 [self broadcastPlayerData:commandParcel.from];
                 // Update the UI.
-                [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:otherEnvoy.peerID];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kJSKNotificationPeerUpdated object:otherEnvoy.peerID];
             });
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
@@ -687,18 +688,18 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         other.isNative = NO;
         other.isDefault = NO;
         
-        BOOL isHost = [SystemMessage isHost];
+//        BOOL isHost = [SystemMessage isHost];
         
         UpdatePlayerOperation *op = [[UpdatePlayerOperation alloc] initWithEnvoy:other];
         [op setCompletionBlock:^(void)
         {
-            if (isHost)
-            {
-                [self broadcastPlayerData:other.peerID];
-            }
+//            if (isHost)
+//            {
+//                [self broadcastPlayerData:other.peerID];
+//            }
             // Update the UI.
             dispatch_async(dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kJSKNotificationPeerUpdated object:other.peerID];
             });
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
@@ -953,7 +954,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
                         [self askToJoinGameDelayed:other.peerID];
                     }
                 }
-                [[NSNotificationCenter defaultCenter] postNotificationName:JSKNotificationPeerUpdated object:other.peerID];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kJSKNotificationPeerUpdated object:other.peerID];
             });
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
@@ -1079,11 +1080,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 - (void)updateServerList
 {
+    NSString *serviceName = [SystemMessage serviceName];
     NSArray *servers = self.serverBrowser.servers;
     debugLog(@"ServerBrowser did find: %@", servers);
     for (NSNetService *service in servers)
     {
-        if ([service.name isEqualToString:kPartisansNetServiceName])
+        if ([service.name isEqualToString:serviceName])
         {
             if (self.netPlayer)
             {
@@ -1189,6 +1191,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         if (!netHost)
         {
             NetHost *netHost = [[NetHost alloc] init];
+            netHost.serviceName = [self serviceName];
             [netHost setDelegate:sharedInstance];
             [sharedInstance setNetHost:netHost];
             [netHost release];
@@ -1248,6 +1251,19 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             }
         }
     }
+}
+
+
++ (NSString *)serviceName
+{
+    NSUInteger gameCode = [self sharedInstance].gameCode;
+    if (gameCode == 0)
+    {
+        GameEnvoy *gameEnvoy = [self sharedInstance].gameEnvoy;
+        gameCode = gameEnvoy.gameCode;
+    }
+    NSString *serviceName = [NSString stringWithFormat:@"%@%d", kPartisansNetServiceName, gameCode];
+    return serviceName;
 }
 
 

@@ -33,7 +33,7 @@
 #import "Server.h"
 #import "Connection.h"
 
-#import "SystemMessage.h"
+//#import "SystemMessage.h"
 
 // Declare some private properties and methods
 @interface Server ()
@@ -54,13 +54,16 @@
 @synthesize delegate;
 @synthesize port;
 @synthesize netService = m_netService;
+@synthesize serviceName = m_serviceName;
 
 // Cleanup
-- (void)dealloc {
-  self.netService = nil;
+- (void)dealloc
+{
+    self.netService = nil;
     [m_netService release];
-  self.delegate = nil;
-  [super dealloc];
+    self.delegate = nil;
+    [m_serviceName release];
+    [super dealloc];
 }
 
 
@@ -228,10 +231,10 @@ static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, 
 
 - (BOOL) publishService {
   // come up with a name for our service
-    NSString* chatRoomName = kPartisansNetServiceName;
+    NSString* serviceName = self.serviceName;
 
   // create new instance of netService
-    NSNetService *netService = [[NSNetService alloc] initWithDomain:@"" type:@"_partisans._tcp." name:chatRoomName port:self.port];
+    NSNetService *netService = [[NSNetService alloc] initWithDomain:@"" type:@"_partisans._tcp." name:serviceName port:self.port];
     self.netService = netService;
     [netService release];
 // 	self.netService = [[NSNetService alloc]

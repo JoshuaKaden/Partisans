@@ -26,7 +26,7 @@ typedef enum
 {
     ToolsMenuRowAbout,
     ToolsMenuRowSplash,
-    ToolsMenuRowTestEditCode,
+//    ToolsMenuRowTestEditCode,
 //    ToolsMenuRowClearRemoteData,
 //    ToolsMenuRowGameTester,
 //    ToolsMenuRowOverlayTester,

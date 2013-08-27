@@ -43,6 +43,11 @@
 }
 
 
+- (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
+{
+    return NSLocalizedString(@"Play a Game", @"Play a Game  --  title");
+}
+
 - (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController
 {
     return YES;
@@ -53,6 +58,18 @@
     return 1;
 }
 
+
+- (NSString *)menuViewController:(JSKMenuViewController *)menuViewController titleForHeaderInSection:(NSInteger)section
+{
+    if (![SystemMessage isWiFiAvailable])
+    {
+        return NSLocalizedString(@"WiFi is required, unfortunately.", @"WiFi is required, unfortunately.  --  header title");
+    }
+    else
+    {
+        return nil;
+    }
+}
 
 - (NSInteger)menuViewController:(JSKMenuViewController *)menuViewController numberOfRowsInSection:(NSInteger)section
 {
@@ -98,6 +115,11 @@
 
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (![SystemMessage isWiFiAvailable])
+    {
+        return nil;
+    }
+    
     Class targetClass = nil;
     
     switch (indexPath.row)
@@ -120,6 +142,11 @@
 
 - (id)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerDelegateAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (![SystemMessage isWiFiAvailable])
+    {
+        return nil;
+    }
+    
     switch (indexPath.row)
     {
         case PlayGameMenuRowHost:
@@ -142,13 +169,6 @@
     }
     
     return nil;
-}
-
-
-
-- (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
-{
-    return NSLocalizedString(@"Play a Game", @"Play a Game  --  title");
 }
 
 @end

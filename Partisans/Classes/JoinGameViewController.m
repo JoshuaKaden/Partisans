@@ -20,19 +20,22 @@
 
 #import "JoinGameViewController.h"
 
+#import "GameCodeViewController.h"
 #import "GameJoiner.h"
 #import "JSKMenuViewController.h"
 #import "JSKViewStack.h"
 #import "SetupGameMenuItems.h"
+#import "SystemMessage.h"
 
 
-@interface JoinGameViewController () <GameJoinerDelegate, UIAlertViewDelegate>
+@interface JoinGameViewController () <GameJoinerDelegate, UIAlertViewDelegate, GameCodeViewControllerDelegate>
 
 @property (nonatomic, strong) JSKViewStack *viewStack;
 @property (nonatomic, assign) BOOL isScanning;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, assign) BOOL isFinished;
 @property (nonatomic, strong) GameJoiner *gameJoiner;
+@property (nonatomic, assign) NSUInteger gameCode;
 
 - (void)addStatusMessage:(NSString *)message;
 - (void)startScanning;
@@ -41,6 +44,7 @@
 - (void)handleTap:(UITapGestureRecognizer *)recognizer;
 - (UIColor *)screenBackgroundColor;
 - (UIColor *)screenTextColor;
+- (void)clearStatusMessages;
 
 @end
 
@@ -52,6 +56,7 @@
 @synthesize tapGesture = m_tapGesture;
 @synthesize isFinished = m_isFinished;
 @synthesize gameJoiner = m_gameJoiner;
+@synthesize gameCode = m_gameCode;
 
 
 #pragma mark - Boilerplate
@@ -104,8 +109,26 @@
     [tapGesture release];
     
     [self.view addGestureRecognizer:self.tapGesture];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self clearStatusMessages];
     
-    NSString *message = NSLocalizedString(@"Tap to start scanning.", @"Tap to start scanning.  --  status message");
+    if (self.gameCode == 0)
+    {
+        NSString *message = NSLocalizedString(@"The Host has the Game Code.", @"The Host has the Game Code.  --  status message");
+        [self addStatusMessage:message];
+        message = NSLocalizedString(@"Tap to enter the Code.", @"Tap to enter the Code.  --  status message");
+        [self addStatusMessage:message];
+        return;
+    }
+    
+    NSString *prefix = NSLocalizedString(@"The Game Code is", @"The Game Code is  --  prefix");
+    NSString *message = [NSString stringWithFormat:@"%@ %d.", prefix, self.gameCode];
+    [self addStatusMessage:message];
+    
+    message = NSLocalizedString(@"Tap to start scanning.", @"Tap to start scanning.  --  status message");
     [self addStatusMessage:message];
 }
 
@@ -140,6 +163,15 @@
         return;
     }
     
+    if (self.gameCode == 0)
+    {
+        GameCodeViewController *vc = [[GameCodeViewController alloc] init];
+        [vc setDelegate:self];
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc release];
+        return;
+    }
+    
     if (self.isScanning)
     {
         [self stopScanning];
@@ -164,6 +196,11 @@
     [label release];
 }
 
+- (void)clearStatusMessages
+{
+    [self.viewStack clearViews];
+}
+
 
 - (void)startScanning {
     
@@ -177,10 +214,15 @@
     
     [self.viewStack clearViews];
     
+    NSString *prefix = NSLocalizedString(@"The Game Code is", @"The Game Code is  --  prefix");
+    NSString *message = [NSString stringWithFormat:@"%@ %d.", prefix, self.gameCode];
+    [self addStatusMessage:message];
+    
     if (!self.gameJoiner)
     {
         GameJoiner *gameJoiner = [[GameJoiner alloc] init];
         [gameJoiner setDelegate:self];
+        gameJoiner.gameCode = self.gameCode;
         self.gameJoiner = gameJoiner;
         [gameJoiner release];
     }
@@ -326,6 +368,13 @@
 //    [self performSelectorOnMainThread:@selector(addStatusMessage:) withObject:message waitUntilDone:NO];
 //}
 
+
+#pragma mark - GameCodeViewController delegate
+
+- (void)gameCodeViewController:(GameCodeViewController *)gameCodeVC gameCodeChanged:(NSUInteger)gameCode
+{
+    self.gameCode = gameCode;
+}
 
 
 #pragma mark - UIAlertViewDelegate

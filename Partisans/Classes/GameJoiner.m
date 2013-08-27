@@ -47,6 +47,8 @@
 @synthesize isScanning = m_isScanning;
 @synthesize hasJoinedGame = m_hasJoinedGame;
 @synthesize timer = m_timer;
+@synthesize gameCode = m_gameCode;
+
 
 - (void)dealloc
 {
@@ -85,6 +87,7 @@
     [self raiseStatusMessage:message];
     
     [SystemMessage sharedInstance].isLookingForGame = YES;
+    [SystemMessage sharedInstance].gameCode = self.gameCode;
     [SystemMessage browseServers];
     
     if (!self.timer)

@@ -20,6 +20,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class GameCodeViewController;
+
+
+@protocol GameCodeViewControllerDelegate <NSObject>
+- (void)gameCodeViewController:(GameCodeViewController *)gameCodeVC gameCodeChanged:(NSUInteger)gameCode;
+@end
+
+
 @interface GameCodeViewController : UIViewController
+
+@property (nonatomic, assign) id <GameCodeViewControllerDelegate> delegate;
 
 @end

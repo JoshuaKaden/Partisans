@@ -33,6 +33,7 @@ typedef enum
 typedef enum
 {
     SetupGameMenuRowHost,
+    SetupGameMenuRowCode,
     SetupGameMenuRowPlayers,
     SetupGameMenuRowStatus,
     SetupGameMenuRow_MaxValue

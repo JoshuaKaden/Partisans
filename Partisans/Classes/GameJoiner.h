@@ -35,6 +35,7 @@
 @property (nonatomic, assign) id <GameJoinerDelegate> delegate;
 @property (readonly) BOOL isScanning;
 @property (readonly) BOOL hasJoinedGame;
+@property (nonatomic, assign) NSUInteger gameCode;
 
 - (void)startScanning;
 - (void)stopScanning;

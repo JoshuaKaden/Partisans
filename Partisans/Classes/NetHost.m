@@ -53,6 +53,7 @@ const BOOL kNetHostIsDebugOn = NO;
 @synthesize clients = m_clients;
 @synthesize stash = m_stash;
 @synthesize hasStarted = m_hasStarted;
+@synthesize serviceName = m_serviceName;
 
 
 - (void)dealloc
@@ -60,6 +61,7 @@ const BOOL kNetHostIsDebugOn = NO;
     [m_server release];
     [m_clients release];
     [m_stash release];
+    [m_serviceName release];
     [super dealloc];
 }
 
@@ -78,6 +80,7 @@ const BOOL kNetHostIsDebugOn = NO;
     }
     
     Server *server = [[Server alloc] init];
+    server.serviceName = self.serviceName;
     [server setDelegate:self];
     self.server = server;
     [server release];

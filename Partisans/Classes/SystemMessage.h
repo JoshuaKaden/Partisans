@@ -28,8 +28,8 @@
 @class GameEnvoy;
 @class PlayerEnvoy;
 
-extern NSString * const JSKNotificationPeerCreated;
-extern NSString * const JSKNotificationPeerUpdated;
+extern NSString * const kJSKNotificationPeerCreated;
+extern NSString * const kJSKNotificationPeerUpdated;
 
 extern NSUInteger const kPartisansMaxPlayers;
 extern NSUInteger const kPartisansMinPlayers;
@@ -47,6 +47,7 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 @property (nonatomic, strong) GameEnvoy *gameEnvoy;
 @property (nonatomic, assign) BOOL isLookingForGame;
 @property (nonatomic, assign) BOOL hasSplashBeenShown;
+@property (nonatomic, assign) NSUInteger gameCode;
 
 + (SystemMessage *)sharedInstance;
 + (PlayerEnvoy *)playerEnvoy;
@@ -73,6 +74,7 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 + (BOOL)isPlayerOnline;
 + (void)putPlayerOnline;
 + (void)putPlayerOffline;
++ (NSString *)serviceName;
 + (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType;
 + (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
 + (void)sendCommandMessage:(JSKCommandMessage *)commandMessage shouldAwaitResponse:(BOOL)shouldAwaitResponse;

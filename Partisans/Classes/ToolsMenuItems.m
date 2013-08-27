@@ -21,7 +21,7 @@
 #import "ToolsMenuItems.h"
 
 #import "AboutMenuItems.h"
-#import "GameCodeViewController.h"
+//#import "GameCodeViewController.h"
 #import "SplashViewController.h"
 
 //#import "TestCodeViewController.h"
@@ -89,9 +89,9 @@
             label = NSLocalizedString(@"About", @"About  --  menu label");
             break;
             
-        case ToolsMenuRowTestEditCode:
-            label = NSLocalizedString(@"Test Edit Code View", @"Test Edit Code View  --  label");
-            break;
+//        case ToolsMenuRowTestEditCode:
+//            label = NSLocalizedString(@"Test Edit Code View", @"Test Edit Code View  --  label");
+//            break;
             
         case ToolsMenuRowSplash:
             label = NSLocalizedString(@"Splash Screen", @"Splash Screen  --  label");
@@ -132,9 +132,9 @@
             targetClass = [JSKMenuViewController class];
             break;
             
-        case ToolsMenuRowTestEditCode:
-            targetClass = [GameCodeViewController class];
-            break;
+//        case ToolsMenuRowTestEditCode:
+//            targetClass = [GameCodeViewController class];
+//            break;
             
         case ToolsMenuRowSplash:
             targetClass = [SplashViewController class];

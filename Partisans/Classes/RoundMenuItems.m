@@ -50,6 +50,7 @@
 - (BOOL)isReadyForVote;
 - (BOOL)isCoordinator;
 - (void)gameChanged:(NSNotification *)notification;
+- (void)playerUpdated:(NSNotification *)notification;
 - (BOOL)hasVoted;
 
 @end
@@ -197,6 +198,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
 
+- (void)playerUpdated:(NSNotification *)notification
+{
+    self.gameEnvoy = nil;
+    self.currentRound = nil;
+    self.currentMission = nil;
+}
+
 
 #pragma mark - Polling Timer
 
@@ -224,7 +232,9 @@
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
     [SystemMessage putPlayerOnline];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerUpdated:) name:kJSKNotificationPeerUpdated object:nil];
 
     // This timer polls the host for game changes.
     if (![self isReadyForVote])

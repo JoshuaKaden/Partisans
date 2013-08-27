@@ -70,6 +70,7 @@
 @synthesize defaultBackButton = m_defaultBackButton;
 @synthesize saveButton = m_saveButton;
 @synthesize spinButton = m_spinButton;
+@synthesize delegate = m_delegate;
 
 
 - (void)dealloc
@@ -99,6 +100,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -106,10 +108,16 @@
     
     self.title = NSLocalizedString(@"Partisans", @"Partisans  --  title");
     
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     [self.gameCodeTitleLabel setText:NSLocalizedString(@"The Game Code", @"The Game Code  --  label")];
-    [self updateCodeLabel:gameEnvoy.gameCode];
-    self.oldGameCode = gameEnvoy.gameCode;
+
+    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+    NSUInteger gameCode = gameEnvoy.gameCode;
+    if (!gameEnvoy)
+    {
+        gameCode = arc4random() % (8999 + 1000);
+    }
+    [self updateCodeLabel:gameCode];
+    self.oldGameCode = gameCode;
     
     [self.spinButton setTitle:NSLocalizedString(@"Spin!", @"Spin!  --  button label")];
     
@@ -216,8 +224,12 @@
 - (void)save
 {
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    gameEnvoy.gameCode = self.newGameCode;
-    [gameEnvoy commitAndSave];
+    if (gameEnvoy)
+    {
+        gameEnvoy.gameCode = self.newGameCode;
+        [gameEnvoy commitAndSave];
+    }
+    [self.delegate gameCodeViewController:self gameCodeChanged:self.newGameCode];
 }
 
 - (void)close
@@ -245,7 +257,7 @@
     frame.origin.y = frame.size.height;
     EditCodeView *editView = [[EditCodeView alloc] initWithFrame:frame];
     [editView setDelegate:self];
-    editView.code = [SystemMessage gameEnvoy].gameCode;
+    editView.code = self.oldGameCode;
     [self.view addSubview:editView];
     self.editView = editView;
     [editView release];
