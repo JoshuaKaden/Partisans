@@ -1082,7 +1082,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 {
     NSString *serviceName = [SystemMessage serviceName];
     NSArray *servers = self.serverBrowser.servers;
-    debugLog(@"ServerBrowser did find: %@", servers);
+//    debugLog(@"ServerBrowser did find: %@", servers);
     for (NSNetService *service in servers)
     {
         if ([service.name isEqualToString:serviceName])

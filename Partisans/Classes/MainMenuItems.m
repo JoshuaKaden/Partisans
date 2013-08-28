@@ -20,6 +20,7 @@
 
 #import "MainMenuItems.h"
 
+#import "DossiersMenuItems.h"
 #import "GameEnvoy.h"
 #import "GameOverMenuItems.h"
 #import "GamePlayerEnvoy.h"
@@ -45,6 +46,7 @@
 @property (nonatomic, strong) SetupGameMenuItems *setupGameMenuItems;
 @property (nonatomic, strong) ToolsMenuItems *toolsMenuItems;
 @property (nonatomic, strong) GameOverMenuItems *gameOverMenuItems;
+@property (nonatomic, strong) DossiersMenuItems *dossiersMenuItems;
 
 @end
 
@@ -56,6 +58,7 @@
 @synthesize setupGameMenuItems = m_setupGameMenuItems;
 @synthesize toolsMenuItems = m_toolsMenuItems;
 @synthesize gameOverMenuItems = m_gameOverMenuItems;
+@synthesize dossiersMenuItems = m_dossiersMenuItems;
 
 
 - (void)dealloc
@@ -65,6 +68,7 @@
     [m_setupGameMenuItems release];
     [m_toolsMenuItems release];
     [m_gameOverMenuItems release];
+    [m_dossiersMenuItems release];
     
     [super dealloc];
 }
@@ -192,13 +196,14 @@
 
 - (NSInteger)menuViewController:(JSKMenuViewController *)menuViewController numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
+    if ([SystemMessage gameEnvoy].startDate)
     {
         return MainMenuRow_MaxValue;
     }
     else
     {
-        return 0;
+        // No Dossiers menu row if the game hasn't started.
+        return MainMenuRow_MaxValue - 1;
     }
 }
 
@@ -224,6 +229,10 @@
             
         case MainMenuRowTools:
             label = NSLocalizedString(@"Tools", @"Tools  --  menu label");
+            break;
+            
+        case MainMenuRowDossiers:
+            label = NSLocalizedString(@"Dossiers", @"Dossiers  -- menu label");
             break;
             
         case MainMenuRow_MaxValue:
@@ -255,6 +264,9 @@
         case MainMenuRowTools:
             break;
 
+        case MainMenuRowDossiers:
+            break;
+            
         case MainMenuRow_MaxValue:
             break;
     }
@@ -297,6 +309,10 @@
             break;
             
         case MainMenuRowTools:
+            targetClass = [JSKMenuViewController class];
+            break;
+            
+        case MainMenuRowDossiers:
             targetClass = [JSKMenuViewController class];
             break;
             
@@ -345,6 +361,15 @@
             self.toolsMenuItems = items;
             [items release];
             return self.toolsMenuItems;
+            break;
+        }
+            
+        case MainMenuRowDossiers:
+        {
+            DossiersMenuItems *items = [[DossiersMenuItems alloc] init];
+            self.dossiersMenuItems = items;
+            [items release];
+            return self.dossiersMenuItems;
             break;
         }
             

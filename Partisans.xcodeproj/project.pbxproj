@@ -186,6 +186,8 @@
 		93F06C7D178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7E178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
+		93F6C29C17CE71E0003705FD /* DossiersMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F6C29B17CE71E0003705FD /* DossiersMenuItems.m */; };
+		93F6C29D17CE71E0003705FD /* DossiersMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F6C29B17CE71E0003705FD /* DossiersMenuItems.m */; };
 		93F84AB317C6576A00081906 /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
 		93F84AB417C65B9900081906 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B37B7217988FA000118CE3 /* VoteViewController.xib */; };
 		93F94AEE17B9416600D5D9A6 /* ScrambleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AED17B9416600D5D9A6 /* ScrambleView.xib */; };
@@ -447,6 +449,8 @@
 		93F06C7A178472B000281B6C /* MissionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MissionViewController.h; path = Classes/MissionViewController.h; sourceTree = "<group>"; };
 		93F06C7B178472B000281B6C /* MissionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MissionViewController.m; path = Classes/MissionViewController.m; sourceTree = "<group>"; };
 		93F06C7C178472B000281B6C /* MissionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MissionViewController.xib; path = Classes/MissionViewController.xib; sourceTree = "<group>"; };
+		93F6C29A17CE71E0003705FD /* DossiersMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DossiersMenuItems.h; path = Classes/DossiersMenuItems.h; sourceTree = "<group>"; };
+		93F6C29B17CE71E0003705FD /* DossiersMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DossiersMenuItems.m; path = Classes/DossiersMenuItems.m; sourceTree = "<group>"; };
 		93F94AED17B9416600D5D9A6 /* ScrambleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ScrambleView.xib; path = Classes/ScrambleView.xib; sourceTree = "<group>"; };
 		93F94AF017B9419000D5D9A6 /* ScrambleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrambleView.h; path = Classes/ScrambleView.h; sourceTree = "<group>"; };
 		93F94AF117B9419000D5D9A6 /* ScrambleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrambleView.m; path = Classes/ScrambleView.m; sourceTree = "<group>"; };
@@ -762,6 +766,8 @@
 			children = (
 				937C02BD179D45DD00C8FAE2 /* DossierDelegate.h */,
 				937C02BE179D45DD00C8FAE2 /* DossierDelegate.m */,
+				93F6C29A17CE71E0003705FD /* DossiersMenuItems.h */,
+				93F6C29B17CE71E0003705FD /* DossiersMenuItems.m */,
 				93BCDD2B179ABEF9002F8E6D /* DossierViewController.h */,
 				93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */,
 				93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */,
@@ -1216,6 +1222,7 @@
 				93BD6CE117B4068800078709 /* SplashViewController.m in Sources */,
 				93F94AF217B9419000D5D9A6 /* ScrambleView.m in Sources */,
 				931D116417BBD1FD00068279 /* ScoreViewController.m in Sources */,
+				93F6C29C17CE71E0003705FD /* DossiersMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,6 +1309,7 @@
 				93BD6CE217B4068800078709 /* SplashViewController.m in Sources */,
 				93F94AF317B9419000D5D9A6 /* ScrambleView.m in Sources */,
 				931D116517BBD1FD00068279 /* ScoreViewController.m in Sources */,
+				93F6C29D17CE71E0003705FD /* DossiersMenuItems.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

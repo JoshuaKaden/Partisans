@@ -157,7 +157,7 @@ static CGFloat kYSlices = 5.0f;
 
 - (IBAction)closeButtonPressed:(id)sender
 {
-    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
