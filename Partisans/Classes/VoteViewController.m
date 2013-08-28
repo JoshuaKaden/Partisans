@@ -39,6 +39,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *voteButton;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) IBOutlet UILabel *statusLabel;
+@property (nonatomic, strong) IBOutlet UIButton *proceedButton;
 
 @property (nonatomic, strong) HostFinder *hostFinder;
 @property (nonatomic, strong) NSString *hostPeerID;
@@ -48,6 +49,7 @@
 - (IBAction)yeaSwitchFlicked:(id)sender;
 - (IBAction)naySwitchFlicked:(id)sender;
 - (IBAction)voteButtonPressed:(id)sender;
+- (IBAction)proceedButtonPressed:(id)sender;
 
 - (void)doneButtonPressed:(id)sender;
 - (void)invokeVote;
@@ -68,6 +70,7 @@
 @synthesize hostPeerID = m_hostPeerID;
 @synthesize thisVote = m_thisVote;
 @synthesize responseKey = m_responseKey;
+@synthesize proceedButton = m_proceedButton;
 
 
 - (void)dealloc
@@ -85,6 +88,7 @@
     [m_hostFinder release];
     [m_hostPeerID release];
     [m_responseKey release];
+    [m_proceedButton release];
     
     [super dealloc];
 }
@@ -107,14 +111,15 @@
     
     [self.yeaLabel setText:NSLocalizedString(@"Yea", @"Yea  --  label")];
     [self.nayLabel setText:NSLocalizedString(@"Nay", @"Nay  --  label")];
-    [self.voteButton.titleLabel setText:NSLocalizedString(@"Vote", @"Vote")];
-    [self.statusLabel setText:@""];
+    [self.voteButton.titleLabel setText:NSLocalizedString(@"Vote", @"Vote  --  label")];
+    [self.proceedButton.titleLabel setText:NSLocalizedString(@"Proceed", @"Proceed  --  label")];
     
     [self.yeaSwitch setOn:NO animated:NO];
     [self.naySwitch setOn:NO animated:NO];
     [self.voteButton setEnabled:NO];
     [self.spinner setHidden:YES];
     [self.statusLabel setText:nil];
+    [self.proceedButton setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -169,6 +174,12 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+- (IBAction)proceedButtonPressed:(id)sender
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
 
 #pragma mark - Voting
 
@@ -176,7 +187,7 @@
 - (BOOL)hasVoted
 {
     return [[[SystemMessage gameEnvoy] currentRound] hasPlayerVoted:nil];
-//    BOOL returnValue = NO;
+//BOOL returnValue = NO;
 //    PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
 //    RoundEnvoy *currentRound = [[SystemMessage gameEnvoy] currentRound];
 //    for (VoteEnvoy *voteEnvoy in currentRound.votes)
@@ -345,9 +356,13 @@
         [self.spinner stopAnimating];
         [self.spinner setHidden:YES];
         
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
-        [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
-        [doneButton release];
+//        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
+//        [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
+//        [doneButton release];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+//        [self.proceedButton setHidden:NO];
     }
 }
 

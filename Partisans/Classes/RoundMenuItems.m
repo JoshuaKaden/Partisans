@@ -548,6 +548,19 @@
     return returnValue;
 }
 
+- (UIFont *)menuViewController:(JSKMenuViewController *)menuViewController labelFontAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIFont *returnValue = nil;
+    if (indexPath.section == RoundMenuSectionCommand)
+    {
+        if ([self isVotingComplete] || [self hasVoted] || [self isReadyForVote])
+        {
+            returnValue = [UIFont fontWithName:@"GillSans" size:25];
+        }
+    }
+    return returnValue;
+}
+
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
     Class returnValue = nil;

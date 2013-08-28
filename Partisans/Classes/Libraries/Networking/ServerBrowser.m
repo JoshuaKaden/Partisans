@@ -43,6 +43,8 @@
 // Private properties and methods
 @interface ServerBrowser ()
 
+@property (nonatomic, assign) BOOL isBrowsing;
+
 // Sort services alphabetically
 - (void)sortServers;
 
@@ -53,6 +55,7 @@
 
 @synthesize servers;
 @synthesize delegate;
+@synthesize isBrowsing = m_isBrowsing;
 
 // Initialize
 - (id)init {
@@ -77,7 +80,9 @@
 
 
 // Start browsing for servers
-- (BOOL)start {
+- (BOOL)start
+{
+    self.isBrowsing = YES;
   // Restarting?
   if ( netServiceBrowser != nil ) {
     [self stop];
@@ -96,7 +101,10 @@
 
 
 // Terminate current service browser and clean up
-- (void)stop {
+- (void)stop
+{
+    self.isBrowsing = NO;
+    
   if ( netServiceBrowser == nil ) {
     return;
   }

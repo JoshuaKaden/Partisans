@@ -1120,15 +1120,21 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     return appDelegate.window.rootViewController.view;
 }
 
+
 + (void)browseServers
 {
     SystemMessage *sharedInstance = [self sharedInstance];
+    if (sharedInstance.serverBrowser)
+    {
+        [self stopBrowsingServers];
+    }
     ServerBrowser *serverBrowser = [[ServerBrowser alloc] init];
     [serverBrowser setDelegate:sharedInstance];
     sharedInstance.serverBrowser = serverBrowser;
     [serverBrowser release];
     [sharedInstance.serverBrowser start];
 }
+
 
 + (void)stopBrowsingServers
 {
