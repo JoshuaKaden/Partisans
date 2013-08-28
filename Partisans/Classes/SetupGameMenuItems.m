@@ -809,6 +809,10 @@
             {
                 returnValue = [UIFont fontWithName:@"GillSans" size:25.0];
             }
+            else if ([self isPlayerHost] && self.players.count >= kPartisansMinPlayers)
+            {
+                returnValue = [UIFont fontWithName:@"GillSans" size:25.0];
+            }
         }
     }
     return returnValue;

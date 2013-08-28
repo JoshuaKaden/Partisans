@@ -25,6 +25,16 @@
 
 #pragma mark - Menu View Controller delegate
 
+- (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == AboutRowWebSite)
+    {
+        NSURL *url = [[NSURL alloc] initWithString:@"http://partisans.kadenspace.com/"];
+        [[UIApplication sharedApplication] openURL:url];
+        [url release];
+    }
+}
+
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
 {
     NSString *title = NSLocalizedString(@"About", @"About  --  title");
@@ -57,6 +67,12 @@
         case AboutRowBuild:
             returnValue = [infoDictionary objectForKey:@"CFBundleVersion"];
             break;
+        case AboutRowAuthor:
+            returnValue = @"Joshua Kaden";
+            break;
+        case AboutRowWebSite:
+            returnValue = @"http://partisans.kadenspace.com/";
+            break;
         case AboutRow_MaxValue:
             break;
     }
@@ -77,6 +93,12 @@
             break;
         case AboutRowBuild:
             returnValue = NSLocalizedString(@"Build", @"Build  --  sub label");
+            break;
+        case AboutRowAuthor:
+            returnValue = NSLocalizedString(@"Author", @"Author  --  sub label");
+            break;
+        case AboutRowWebSite:
+            returnValue = NSLocalizedString(@"Support Site", @"Support Site  --  sub label");
             break;
         case AboutRow_MaxValue:
             break;

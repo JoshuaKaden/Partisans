@@ -340,8 +340,8 @@
     
     [self.statusLabel setText:NSLocalizedString(@"Refreshing...", @"Refreshing...  --  message")];
     
-    [SystemMessage requestGameUpdate];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
+    [SystemMessage requestGameUpdate];
 }
 
 
@@ -372,6 +372,7 @@
 
 - (void)hostFinder:(HostFinder *)hostFinder isConnectedToHost:(NSString *)hostPeerID
 {
+    [self.hostFinder stop];
     self.hostPeerID = hostPeerID;
     [self vote:self.thisVote];
 }

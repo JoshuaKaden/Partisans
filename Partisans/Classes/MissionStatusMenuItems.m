@@ -79,6 +79,12 @@
     {
         self.hasNewRoundStarted = YES;
     }
+    
+    if (gameEnvoy.endDate)
+    {
+        self.hasNewRoundStarted = YES;
+    }
+    
     self.currentMission = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
 }
@@ -136,6 +142,13 @@
     // This timer polls the host for game changes.
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
     self.pollingTimer = timer;
+}
+
+- (void)menuViewController:(JSKMenuViewController *)menuViewController willDisappear:(BOOL)animated
+{
+    [self.pollingTimer invalidate];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.currentMission = nil;
 }
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController

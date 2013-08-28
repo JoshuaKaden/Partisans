@@ -26,6 +26,8 @@ typedef enum
     AboutRowName,
     AboutRowVersion,
     AboutRowBuild,
+    AboutRowAuthor,
+    AboutRowWebSite,
     AboutRow_MaxValue
 } AboutRow;
 

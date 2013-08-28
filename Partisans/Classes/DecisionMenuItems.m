@@ -315,7 +315,7 @@
             progress = (double)yeaVotes / (double)playerCount;
             dualProgress = dualYea;
             [cell setIsDual:YES];
-            progressColor = [UIColor blueColor];
+            progressColor = [UIColor colorWithRed:99.0/255.0 green:132.0/255.0 blue:219.0/255.0 alpha:1.0];
             break;
         case DecisionMenuVotesRowNay:
             cellPrefix = [[SystemMessage spellOutInteger:nayVotes] capitalizedString];
@@ -330,7 +330,7 @@
             progress = (double)nayVotes / (double)playerCount;
             dualProgress = dualNay;
             [cell setIsDual:YES];
-            progressColor = [UIColor redColor];
+            progressColor = [UIColor colorWithRed:102.0/255.0 green:24.0/255.0 blue:114.0/255.0 alpha:1.0];
             break;
         case DecisionMenuVotesRow_MaxValue:
             break;

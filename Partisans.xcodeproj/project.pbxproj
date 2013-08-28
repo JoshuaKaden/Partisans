@@ -8,45 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		9300C7D8175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */; };
-		9300C7D9175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */; };
 		9303BE5117467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
-		9303BE5217467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
 		9303BE551746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
-		9303BE561746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
 		93040365174E7D0900ED169F /* ToolsMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93040364174E7D0900ED169F /* ToolsMenuItems.m */; };
-		93040366174E7D0900ED169F /* ToolsMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93040364174E7D0900ED169F /* ToolsMenuItems.m */; };
 		9307B3D4177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
-		9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B3D3177F8A41003CEC6F /* HostFinder.m */; };
 		931D116417BBD1FD00068279 /* ScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931D116217BBD1FD00068279 /* ScoreViewController.m */; };
-		931D116517BBD1FD00068279 /* ScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 931D116217BBD1FD00068279 /* ScoreViewController.m */; };
 		931D116617BBD1FD00068279 /* ScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931D116317BBD1FD00068279 /* ScoreViewController.xib */; };
-		931D116717BBD1FD00068279 /* ScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931D116317BBD1FD00068279 /* ScoreViewController.xib */; };
 		9327777217A86D4100CFE99B /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777117A86D4100CFE99B /* Game.m */; };
-		9327777317A86D4100CFE99B /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777117A86D4100CFE99B /* Game.m */; };
 		9327777717A86FAD00CFE99B /* GameCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777517A86FAD00CFE99B /* GameCodeViewController.m */; };
-		9327777817A86FAD00CFE99B /* GameCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9327777517A86FAD00CFE99B /* GameCodeViewController.m */; };
 		9327777917A86FAD00CFE99B /* GameCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9327777617A86FAD00CFE99B /* GameCodeViewController.xib */; };
-		9327777A17A86FAD00CFE99B /* GameCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9327777617A86FAD00CFE99B /* GameCodeViewController.xib */; };
 		9351AA7A177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
-		9351AA7B177E2A0B00D4C843 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA79177E2A0B00D4C843 /* Vote.m */; };
 		9351AA82177E2A0C00D4C843 /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA81177E2A0C00D4C843 /* Round.m */; };
-		9351AA83177E2A0C00D4C843 /* Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA81177E2A0C00D4C843 /* Round.m */; };
 		9351AA86177E2A4D00D4C843 /* VoteEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA85177E2A4D00D4C843 /* VoteEnvoy.m */; };
-		9351AA87177E2A4D00D4C843 /* VoteEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA85177E2A4D00D4C843 /* VoteEnvoy.m */; };
 		9351AA8A177E48CD00D4C843 /* CoordinatorVote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA89177E48CD00D4C843 /* CoordinatorVote.m */; };
-		9351AA8B177E48CD00D4C843 /* CoordinatorVote.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA89177E48CD00D4C843 /* CoordinatorVote.m */; };
 		9351AA92177E52C200D4C843 /* DecisionMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA91177E52C200D4C843 /* DecisionMenuItems.m */; };
-		9351AA93177E52C200D4C843 /* DecisionMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351AA91177E52C200D4C843 /* DecisionMenuItems.m */; };
 		9351AA97177E540E00D4C843 /* black_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351AA96177E540E00D4C843 /* black_mask.png */; };
-		9351AA98177E540E00D4C843 /* black_mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 9351AA96177E540E00D4C843 /* black_mask.png */; };
 		9358BFDE17747C1F00FA2DAF /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 9358BFDD17747C1F00FA2DAF /* mask.png */; };
-		9358BFDF17747C1F00FA2DAF /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 9358BFDD17747C1F00FA2DAF /* mask.png */; };
 		9358BFE217747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */; };
-		9358BFE317747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9358BFE117747E5400FA2DAF /* OperativeAlertMenuItems.m */; };
 		935FC548178C2B1F00F0DC8E /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FC547178C2B1F00F0DC8E /* GamePlayer.m */; };
-		935FC549178C2B1F00F0DC8E /* GamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FC547178C2B1F00F0DC8E /* GamePlayer.m */; };
 		935FC54C178C2B1F00F0DC8E /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FC54B178C2B1F00F0DC8E /* Mission.m */; };
-		935FC54D178C2B1F00F0DC8E /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FC54B178C2B1F00F0DC8E /* Mission.m */; };
 		936510931741578C00F2AD06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510921741578C00F2AD06 /* UIKit.framework */; };
 		936510951741578C00F2AD06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510941741578C00F2AD06 /* Foundation.framework */; };
 		936510971741578C00F2AD06 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510961741578C00F2AD06 /* CoreGraphics.framework */; };
@@ -89,170 +69,67 @@
 		9365111C17415B8600F2AD06 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
 		9365111F17415D0A00F2AD06 /* JSKCommandParcel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */; };
 		936CDFB6176125DC00C6A4EE /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFAE176125DC00C6A4EE /* Connection.m */; };
-		936CDFB7176125DC00C6A4EE /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFAE176125DC00C6A4EE /* Connection.m */; };
 		936CDFB8176125DC00C6A4EE /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFB1176125DC00C6A4EE /* Server.m */; };
-		936CDFB9176125DC00C6A4EE /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFB1176125DC00C6A4EE /* Server.m */; };
 		936CDFBA176125DC00C6A4EE /* ServerBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFB3176125DC00C6A4EE /* ServerBrowser.m */; };
-		936CDFBB176125DC00C6A4EE /* ServerBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFB3176125DC00C6A4EE /* ServerBrowser.m */; };
 		936CDFBE1761276900C6A4EE /* NetHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFBD1761276900C6A4EE /* NetHost.m */; };
-		936CDFBF1761276900C6A4EE /* NetHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFBD1761276900C6A4EE /* NetHost.m */; };
 		936CDFC2176202E500C6A4EE /* NetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFC1176202E500C6A4EE /* NetPlayer.m */; };
-		936CDFC3176202E500C6A4EE /* NetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFC1176202E500C6A4EE /* NetPlayer.m */; };
 		93761EDD174A9A3600DFE1F5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDC174A9A3600DFE1F5 /* Icon.png */; };
 		93761EDF174A9A4000DFE1F5 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDE174A9A4000DFE1F5 /* Icon@2x.png */; };
 		93761EE1174A9A7300DFE1F5 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE0174A9A7300DFE1F5 /* Icon-72.png */; };
 		93761EE3174A9A7700DFE1F5 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE2174A9A7700DFE1F5 /* Icon-72@2x.png */; };
 		93761EE8174A9B1B00DFE1F5 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE4174A9B1B00DFE1F5 /* Icon-Small-50.png */; };
-		93761EE9174A9B1B00DFE1F5 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE4174A9B1B00DFE1F5 /* Icon-Small-50.png */; };
 		93761EEA174A9B1B00DFE1F5 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE5174A9B1B00DFE1F5 /* Icon-Small-50@2x.png */; };
-		93761EEB174A9B1B00DFE1F5 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE5174A9B1B00DFE1F5 /* Icon-Small-50@2x.png */; };
 		93761EEC174A9B1B00DFE1F5 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE6174A9B1B00DFE1F5 /* Icon-Small.png */; };
-		93761EED174A9B1B00DFE1F5 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE6174A9B1B00DFE1F5 /* Icon-Small.png */; };
 		93761EEE174A9B1B00DFE1F5 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE7174A9B1B00DFE1F5 /* Icon-Small@2x.png */; };
-		93761EEF174A9B1B00DFE1F5 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE7174A9B1B00DFE1F5 /* Icon-Small@2x.png */; };
-		93761EF0174A9B2400DFE1F5 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE2174A9A7700DFE1F5 /* Icon-72@2x.png */; };
-		93761EF1174A9B2400DFE1F5 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EE0174A9A7300DFE1F5 /* Icon-72.png */; };
-		93761EF2174A9B2400DFE1F5 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDE174A9A4000DFE1F5 /* Icon@2x.png */; };
-		93761EF3174A9B2400DFE1F5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 93761EDC174A9A3600DFE1F5 /* Icon.png */; };
 		93761EF6174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93761EF5174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m */; };
-		93761EF7174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93761EF5174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m */; };
 		937BC0BF1747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
-		937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */; };
 		937BC0C31747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
-		937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 937BC0C21747D86D003F42D6 /* GamePlayerEnvoy.m */; };
 		937C02BF179D45DD00C8FAE2 /* DossierDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C02BE179D45DD00C8FAE2 /* DossierDelegate.m */; };
-		937C02C0179D45DD00C8FAE2 /* DossierDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C02BE179D45DD00C8FAE2 /* DossierDelegate.m */; };
-		937C02C1179DD43E00C8FAE2 /* DossierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */; };
-		937C02C2179DD44A00C8FAE2 /* DossierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */; };
 		937ED0E11791B28100A95231 /* GameOverMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 937ED0E01791B28100A95231 /* GameOverMenuItems.m */; };
-		937ED0E21791B28100A95231 /* GameOverMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 937ED0E01791B28100A95231 /* GameOverMenuItems.m */; };
 		938429341746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
-		938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 938429331746C0D30037563D /* AddGamePlayerOperation.m */; };
 		9392E6D217A66F5E00FE6B9C /* TestCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392E6D017A66F5E00FE6B9C /* TestCodeViewController.m */; };
-		9392E6D317A66F5E00FE6B9C /* TestCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9392E6D017A66F5E00FE6B9C /* TestCodeViewController.m */; };
 		9392E6D417A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9392E6D117A66F5E00FE6B9C /* TestCodeViewController.xib */; };
-		9392E6D517A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9392E6D117A66F5E00FE6B9C /* TestCodeViewController.xib */; };
 		9392E6DA17A6767100FE6B9C /* EditCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9392E6D917A6767100FE6B9C /* EditCodeView.xib */; };
-		9392E6DB17A6767100FE6B9C /* EditCodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9392E6D917A6767100FE6B9C /* EditCodeView.xib */; };
 		939697E717732A110013B125 /* RoundEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 939697E617732A110013B125 /* RoundEnvoy.m */; };
-		939697E817732A110013B125 /* RoundEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 939697E617732A110013B125 /* RoundEnvoy.m */; };
 		9398A9C6177224EE00E5D31C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9C5177224EE00E5D31C /* Image.m */; };
-		9398A9C7177224EE00E5D31C /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9C5177224EE00E5D31C /* Image.m */; };
 		9398A9CA177224EE00E5D31C /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9C9177224EE00E5D31C /* Player.m */; };
-		9398A9CB177224EE00E5D31C /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9C9177224EE00E5D31C /* Player.m */; };
 		9398A9D2177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
-		9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9398A9D1177224EF00E5D31C /* Scorecard.m */; };
 		939F36881779FEEE00A7B766 /* RoundMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F36871779FEEE00A7B766 /* RoundMenuItems.m */; };
-		939F36891779FEEE00A7B766 /* RoundMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F36871779FEEE00A7B766 /* RoundMenuItems.m */; };
 		93B2DE4E1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE4D1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m */; };
-		93B2DE4F1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE4D1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m */; };
 		93B2DE5217958E2200FFC1D5 /* GamePrecis.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE5117958E2200FFC1D5 /* GamePrecis.m */; };
-		93B2DE5317958E2200FFC1D5 /* GamePrecis.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B2DE5117958E2200FFC1D5 /* GamePrecis.m */; };
 		93B37B7317988FA000118CE3 /* VoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B37B7117988FA000118CE3 /* VoteViewController.m */; };
-		93B37B7417988FA000118CE3 /* VoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B37B7117988FA000118CE3 /* VoteViewController.m */; };
 		93B37B7517988FA000118CE3 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B37B7217988FA000118CE3 /* VoteViewController.xib */; };
 		93BCDD2E179ABEF9002F8E6D /* DossierViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */; };
 		93BCDD2F179ABEF9002F8E6D /* DossierViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */; };
 		93BD6CDC17B4062500078709 /* bigP.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CDB17B4062500078709 /* bigP.png */; };
-		93BD6CDD17B4062500078709 /* bigP.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CDB17B4062500078709 /* bigP.png */; };
 		93BD6CE117B4068800078709 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BD6CDF17B4068800078709 /* SplashViewController.m */; };
-		93BD6CE217B4068800078709 /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BD6CDF17B4068800078709 /* SplashViewController.m */; };
 		93BD6CE317B4068800078709 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE017B4068800078709 /* SplashViewController.xib */; };
-		93BD6CE417B4068800078709 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE017B4068800078709 /* SplashViewController.xib */; };
-		93BD6CEA17B7E92800078709 /* SplashViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE617B7DC3000078709 /* SplashViewController~iphone.xib */; };
 		93BD6CEB17B7E92900078709 /* SplashViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CE617B7DC3000078709 /* SplashViewController~iphone.xib */; };
 		93BD6CED17B7E9C900078709 /* p320.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CEC17B7E9C900078709 /* p320.png */; };
-		93BD6CEE17B7E9C900078709 /* p320.png in Resources */ = {isa = PBXBuildFile; fileRef = 93BD6CEC17B7E9C900078709 /* p320.png */; };
 		93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
-		93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B521771CABF00B20A71 /* GameDirector.m */; };
 		93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
-		93BF3B581771CEA500B20A71 /* MissionEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BF3B561771CEA500B20A71 /* MissionEnvoy.m */; };
 		93C10B461743A52600B47095 /* Partisans.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B441743A52600B47095 /* Partisans.xcdatamodeld */; };
 		93C10B9D1744028300B47095 /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
 		93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
 		93C10BC8174439B300B47095 /* SetupGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BC7174439B300B47095 /* SetupGameMenuItems.m */; };
 		93C1D6F217A564B400EE2878 /* EditCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1D6F117A564B400EE2878 /* EditCodeView.m */; };
-		93C1D6F317A564B400EE2878 /* EditCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1D6F117A564B400EE2878 /* EditCodeView.m */; };
 		93C1D6F517A564E300EE2878 /* EditCodeView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C1D6F417A564E300EE2878 /* EditCodeView~iphone.xib */; };
-		93C1D6F617A564E300EE2878 /* EditCodeView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C1D6F417A564E300EE2878 /* EditCodeView~iphone.xib */; };
 		93C442E917511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
-		93C442EA17511B15000DEC63 /* UpdateGameOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C442E817511B15000DEC63 /* UpdateGameOperation.m */; };
 		93D124011790363D003523F9 /* AboutMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D124001790363D003523F9 /* AboutMenuItems.m */; };
-		93D124021790363D003523F9 /* AboutMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D124001790363D003523F9 /* AboutMenuItems.m */; };
 		93D461C7178B72A700580E9B /* MissionStatusMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */; };
-		93D461C8178B72A700580E9B /* MissionStatusMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D461C6178B72A700580E9B /* MissionStatusMenuItems.m */; };
 		93E65480177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
-		93E65481177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6547F177C6A95003C73C2 /* CandidatePickerMenuItems.m */; };
 		93F06C7D178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
-		93F06C7E178472B000281B6C /* MissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F06C7B178472B000281B6C /* MissionViewController.m */; };
 		93F06C7F178472B000281B6C /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
 		93F6C29C17CE71E0003705FD /* DossiersMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F6C29B17CE71E0003705FD /* DossiersMenuItems.m */; };
-		93F6C29D17CE71E0003705FD /* DossiersMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F6C29B17CE71E0003705FD /* DossiersMenuItems.m */; };
-		93F84AB317C6576A00081906 /* MissionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F06C7C178472B000281B6C /* MissionViewController.xib */; };
-		93F84AB417C65B9900081906 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B37B7217988FA000118CE3 /* VoteViewController.xib */; };
 		93F94AEE17B9416600D5D9A6 /* ScrambleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AED17B9416600D5D9A6 /* ScrambleView.xib */; };
-		93F94AEF17B9416600D5D9A6 /* ScrambleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AED17B9416600D5D9A6 /* ScrambleView.xib */; };
 		93F94AF217B9419000D5D9A6 /* ScrambleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F94AF117B9419000D5D9A6 /* ScrambleView.m */; };
-		93F94AF317B9419000D5D9A6 /* ScrambleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F94AF117B9419000D5D9A6 /* ScrambleView.m */; };
 		93F94AF517B9457900D5D9A6 /* p135.png in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AF417B9457900D5D9A6 /* p135.png */; };
-		93F94AF617B9457900D5D9A6 /* p135.png in Resources */ = {isa = PBXBuildFile; fileRef = 93F94AF417B9457900D5D9A6 /* p135.png */; };
 		93FECAB1174521A40046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
 		93FECAB2174521A40046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
 		93FECAB3174521A40046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
 		93FECAB4174521A40046529A /* ProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAB0174521A40046529A /* ProgressCell.xib */; };
-		93FECB17174547840046529A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365109E1741578C00F2AD06 /* main.m */; };
-		93FECB18174547840046529A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510A21741578C00F2AD06 /* AppDelegate.m */; };
-		93FECB19174547840046529A /* ILColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510B61741596200F2AD06 /* ILColorPickerView.m */; };
-		93FECB1A174547840046529A /* ILHuePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510B81741596200F2AD06 /* ILHuePickerView.m */; };
-		93FECB1B174547840046529A /* ILSaturationBrightnessPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BA1741596200F2AD06 /* ILSaturationBrightnessPickerView.m */; };
-		93FECB1C174547840046529A /* ILView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BC1741596200F2AD06 /* ILView.m */; };
-		93FECB1D174547840046529A /* UIColor+GetHSB.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510BE1741596200F2AD06 /* UIColor+GetHSB.m */; };
-		93FECB1E174547840046529A /* JSKCommandMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C51741597500F2AD06 /* JSKCommandMessage.m */; };
-		93FECB1F174547840046529A /* JSKDataMiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C71741597500F2AD06 /* JSKDataMiner.m */; };
-		93FECB20174547840046529A /* JSKMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510C91741597500F2AD06 /* JSKMenuViewController.m */; };
-		93FECB22174547840046529A /* JSKSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CD1741597500F2AD06 /* JSKSystemMessage.m */; };
-		93FECB23174547840046529A /* JSKViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CF1741597500F2AD06 /* JSKViewStack.m */; };
-		93FECB24174547840046529A /* NSManagedObjectContext+FetchAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */; };
-		93FECB25174547840046529A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510DB1741598800F2AD06 /* Reachability.m */; };
-		93FECB26174547840046529A /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E0174159C900F2AD06 /* RootViewController.m */; };
-		93FECB27174547840046529A /* SystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E2174159C900F2AD06 /* SystemMessage.m */; };
-		93FECB29174547840046529A /* MainMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510EA17415A1000F2AD06 /* MainMenuItems.m */; };
-		93FECB2A174547840046529A /* ColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510EE17415A4E00F2AD06 /* ColorPickerViewController.m */; };
-		93FECB2B174547840046529A /* SlickEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510F117415A4E00F2AD06 /* SlickEditView.m */; };
-		93FECB2C174547840046529A /* PlayerPicklistItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */; };
-		93FECB2D174547840046529A /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510FC17415A9D00F2AD06 /* PlayerViewController.m */; };
-		93FECB2E174547840046529A /* CreatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */; };
-		93FECB2F174547840046529A /* UpdatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */; };
-		93FECB30174547840046529A /* ImageEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110E17415B2000F2AD06 /* ImageEnvoy.m */; };
-		93FECB31174547840046529A /* PlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111017415B2000F2AD06 /* PlayerEnvoy.m */; };
-		93FECB32174547840046529A /* JSKCommandParcel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */; };
-		93FECB33174547840046529A /* Partisans.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B441743A52600B47095 /* Partisans.xcdatamodeld */; };
-		93FECB34174547840046529A /* GameEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10B9C1744028300B47095 /* GameEnvoy.m */; };
-		93FECB35174547840046529A /* PlayGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BB917440C4500B47095 /* PlayGameMenuItems.m */; };
-		93FECB36174547840046529A /* SetupGameMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C10BC7174439B300B47095 /* SetupGameMenuItems.m */; };
-		93FECB40174547840046529A /* LabelProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAC174521A40046529A /* LabelProgressView.m */; };
-		93FECB41174547840046529A /* ProgressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FECAAF174521A40046529A /* ProgressCell.m */; };
-		93FECB43174547840046529A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
-		93FECB44174547840046529A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111917415B7B00F2AD06 /* QuartzCore.framework */; };
-		93FECB45174547840046529A /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111717415B6B00F2AD06 /* GameKit.framework */; };
-		93FECB46174547840046529A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510961741578C00F2AD06 /* CoreGraphics.framework */; };
-		93FECB47174547840046529A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111517415B5600F2AD06 /* CoreData.framework */; };
-		93FECB48174547840046529A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111317415B4E00F2AD06 /* CoreBluetooth.framework */; };
-		93FECB49174547840046529A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510921741578C00F2AD06 /* UIKit.framework */; };
-		93FECB4A174547840046529A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 936510941741578C00F2AD06 /* Foundation.framework */; };
-		93FECB4C174547840046529A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9365109B1741578C00F2AD06 /* InfoPlist.strings */; };
-		93FECB4D174547840046529A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A41741578C00F2AD06 /* Default.png */; };
-		93FECB4E174547840046529A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A61741578C00F2AD06 /* Default@2x.png */; };
-		93FECB4F174547840046529A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 936510A81741578C00F2AD06 /* Default-568h@2x.png */; };
-		93FECB53174547840046529A /* LabelProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAAD174521A40046529A /* LabelProgressView.xib */; };
-		93FECB54174547840046529A /* ProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECAB0174521A40046529A /* ProgressCell.xib */; };
-		93FECB5D174548AD0046529A /* ColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB5B174548AD0046529A /* ColorPickerViewController.xib */; };
-		93FECB5E174548AD0046529A /* SlickEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB5C174548AD0046529A /* SlickEditView.xib */; };
-		93FECB61174549D40046529A /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FECB60174549D40046529A /* PlayerViewController.xib */; };
 		93FFD1961783635100ADCB44 /* waitOverLay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD1941783635100ADCB44 /* waitOverLay@2x.png */; };
-		93FFD1971783635100ADCB44 /* waitOverLay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD1941783635100ADCB44 /* waitOverLay@2x.png */; };
 		93FFD1981783635100ADCB44 /* waitOverLay.png in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD1951783635100ADCB44 /* waitOverLay.png */; };
-		93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */ = {isa = PBXBuildFile; fileRef = 93FFD1951783635100ADCB44 /* waitOverLay.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -461,11 +338,7 @@
 		93FECAAE174521A40046529A /* ProgressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProgressCell.h; path = Classes/ProgressCell.h; sourceTree = "<group>"; };
 		93FECAAF174521A40046529A /* ProgressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProgressCell.m; path = Classes/ProgressCell.m; sourceTree = "<group>"; };
 		93FECAB0174521A40046529A /* ProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProgressCell.xib; path = Classes/ProgressCell.xib; sourceTree = "<group>"; };
-		93FECB58174547840046529A /* Partisans iOS5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Partisans iOS5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93FECB59174547850046529A /* Partisans copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Partisans copy-Info.plist"; path = "/Users/jkaden/work/ObjC Apps/Partisans/Partisans/Partisans copy-Info.plist"; sourceTree = "<absolute>"; };
-		93FECB5B174548AD0046529A /* ColorPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ColorPickerViewController.xib; path = Classes/iOS5/ColorPickerViewController.xib; sourceTree = "<group>"; };
-		93FECB5C174548AD0046529A /* SlickEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SlickEditView.xib; path = Classes/iOS5/SlickEditView.xib; sourceTree = "<group>"; };
-		93FECB60174549D40046529A /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerViewController.xib; path = Classes/iOS5/PlayerViewController.xib; sourceTree = "<group>"; };
 		93FFD1941783635100ADCB44 /* waitOverLay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "waitOverLay@2x.png"; path = "Arts/waitOverLay@2x.png"; sourceTree = "<group>"; };
 		93FFD1951783635100ADCB44 /* waitOverLay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = waitOverLay.png; path = Arts/waitOverLay.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -483,21 +356,6 @@
 				9365111417415B4E00F2AD06 /* CoreBluetooth.framework in Frameworks */,
 				936510931741578C00F2AD06 /* UIKit.framework in Frameworks */,
 				936510951741578C00F2AD06 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		93FECB42174547840046529A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93FECB43174547840046529A /* SystemConfiguration.framework in Frameworks */,
-				93FECB44174547840046529A /* QuartzCore.framework in Frameworks */,
-				93FECB45174547840046529A /* GameKit.framework in Frameworks */,
-				93FECB46174547840046529A /* CoreGraphics.framework in Frameworks */,
-				93FECB47174547840046529A /* CoreData.framework in Frameworks */,
-				93FECB48174547840046529A /* CoreBluetooth.framework in Frameworks */,
-				93FECB49174547840046529A /* UIKit.framework in Frameworks */,
-				93FECB4A174547840046529A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,7 +434,6 @@
 			isa = PBXGroup;
 			children = (
 				9365108F1741578C00F2AD06 /* Partisans.app */,
-				93FECB58174547840046529A /* Partisans iOS5.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -753,7 +610,6 @@
 				93C1D6F117A564B400EE2878 /* EditCodeView.m */,
 				9392E6D917A6767100FE6B9C /* EditCodeView.xib */,
 				93C1D6F417A564E300EE2878 /* EditCodeView~iphone.xib */,
-				93FECB5A174547E60046529A /* iOS5 */,
 				936510F017415A4E00F2AD06 /* SlickEditView.h */,
 				936510F117415A4E00F2AD06 /* SlickEditView.m */,
 				936510F217415A4E00F2AD06 /* SlickEditView.xib */,
@@ -771,7 +627,6 @@
 				93BCDD2B179ABEF9002F8E6D /* DossierViewController.h */,
 				93BCDD2C179ABEF9002F8E6D /* DossierViewController.m */,
 				93BCDD2D179ABEF9002F8E6D /* DossierViewController.xib */,
-				93FECB5F174549C10046529A /* iOS5 */,
 				936510F917415A9D00F2AD06 /* PlayerPicklistItems.h */,
 				936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */,
 				936510FB17415A9D00F2AD06 /* PlayerViewController.h */,
@@ -924,23 +779,6 @@
 			name = Game;
 			sourceTree = "<group>";
 		};
-		93FECB5A174547E60046529A /* iOS5 */ = {
-			isa = PBXGroup;
-			children = (
-				93FECB5B174548AD0046529A /* ColorPickerViewController.xib */,
-				93FECB5C174548AD0046529A /* SlickEditView.xib */,
-			);
-			name = iOS5;
-			sourceTree = "<group>";
-		};
-		93FECB5F174549C10046529A /* iOS5 */ = {
-			isa = PBXGroup;
-			children = (
-				93FECB60174549D40046529A /* PlayerViewController.xib */,
-			);
-			name = iOS5;
-			sourceTree = "<group>";
-		};
 		93FFD19A1783635D00ADCB44 /* Icon */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,24 +815,6 @@
 			productReference = 9365108F1741578C00F2AD06 /* Partisans.app */;
 			productType = "com.apple.product-type.application";
 		};
-		93FECB15174547840046529A /* Partisans iOS5 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 93FECB55174547840046529A /* Build configuration list for PBXNativeTarget "Partisans iOS5" */;
-			buildPhases = (
-				93FECB16174547840046529A /* Sources */,
-				93FECB42174547840046529A /* Frameworks */,
-				93FECB4B174547840046529A /* Resources */,
-				93D1240517903BD9003523F9 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Partisans iOS5";
-			productName = Partisans;
-			productReference = 93FECB58174547840046529A /* Partisans iOS5.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1017,7 +837,6 @@
 			projectRoot = "";
 			targets = (
 				9365108E1741578C00F2AD06 /* Partisans */,
-				93FECB15174547840046529A /* Partisans iOS5 */,
 			);
 		};
 /* End PBXProject section */
@@ -1065,65 +884,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		93FECB4B174547840046529A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93FECB4C174547840046529A /* InfoPlist.strings in Resources */,
-				93FECB4D174547840046529A /* Default.png in Resources */,
-				93FECB4E174547840046529A /* Default@2x.png in Resources */,
-				93FECB4F174547840046529A /* Default-568h@2x.png in Resources */,
-				93FECB53174547840046529A /* LabelProgressView.xib in Resources */,
-				93FECB54174547840046529A /* ProgressCell.xib in Resources */,
-				93FECB5D174548AD0046529A /* ColorPickerViewController.xib in Resources */,
-				93FECB5E174548AD0046529A /* SlickEditView.xib in Resources */,
-				93FECB61174549D40046529A /* PlayerViewController.xib in Resources */,
-				93761EE9174A9B1B00DFE1F5 /* Icon-Small-50.png in Resources */,
-				93761EEB174A9B1B00DFE1F5 /* Icon-Small-50@2x.png in Resources */,
-				93761EED174A9B1B00DFE1F5 /* Icon-Small.png in Resources */,
-				93761EEF174A9B1B00DFE1F5 /* Icon-Small@2x.png in Resources */,
-				93761EF0174A9B2400DFE1F5 /* Icon-72@2x.png in Resources */,
-				93761EF1174A9B2400DFE1F5 /* Icon-72.png in Resources */,
-				93761EF2174A9B2400DFE1F5 /* Icon@2x.png in Resources */,
-				93761EF3174A9B2400DFE1F5 /* Icon.png in Resources */,
-				9358BFDF17747C1F00FA2DAF /* mask.png in Resources */,
-				9351AA98177E540E00D4C843 /* black_mask.png in Resources */,
-				93FFD1971783635100ADCB44 /* waitOverLay@2x.png in Resources */,
-				93FFD1991783635100ADCB44 /* waitOverLay.png in Resources */,
-				937C02C2179DD44A00C8FAE2 /* DossierViewController.xib in Resources */,
-				93C1D6F617A564E300EE2878 /* EditCodeView~iphone.xib in Resources */,
-				9392E6D517A66F5E00FE6B9C /* TestCodeViewController.xib in Resources */,
-				9392E6DB17A6767100FE6B9C /* EditCodeView.xib in Resources */,
-				9327777A17A86FAD00CFE99B /* GameCodeViewController.xib in Resources */,
-				93BD6CDD17B4062500078709 /* bigP.png in Resources */,
-				93BD6CE417B4068800078709 /* SplashViewController.xib in Resources */,
-				93BD6CEA17B7E92800078709 /* SplashViewController~iphone.xib in Resources */,
-				93BD6CEE17B7E9C900078709 /* p320.png in Resources */,
-				93F94AEF17B9416600D5D9A6 /* ScrambleView.xib in Resources */,
-				93F94AF617B9457900D5D9A6 /* p135.png in Resources */,
-				931D116717BBD1FD00068279 /* ScoreViewController.xib in Resources */,
-				93F84AB317C6576A00081906 /* MissionViewController.xib in Resources */,
-				93F84AB417C65B9900081906 /* VoteViewController.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		93D1240417903B61003523F9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "";
-		};
-		93D1240517903BD9003523F9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1226,93 +990,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		93FECB16174547840046529A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				93FECB17174547840046529A /* main.m in Sources */,
-				93FECB18174547840046529A /* AppDelegate.m in Sources */,
-				93FECB19174547840046529A /* ILColorPickerView.m in Sources */,
-				93FECB1A174547840046529A /* ILHuePickerView.m in Sources */,
-				93FECB1B174547840046529A /* ILSaturationBrightnessPickerView.m in Sources */,
-				93FECB1C174547840046529A /* ILView.m in Sources */,
-				93FECB1D174547840046529A /* UIColor+GetHSB.m in Sources */,
-				93FECB1E174547840046529A /* JSKCommandMessage.m in Sources */,
-				93FECB1F174547840046529A /* JSKDataMiner.m in Sources */,
-				93FECB20174547840046529A /* JSKMenuViewController.m in Sources */,
-				93FECB22174547840046529A /* JSKSystemMessage.m in Sources */,
-				93FECB23174547840046529A /* JSKViewStack.m in Sources */,
-				93FECB24174547840046529A /* NSManagedObjectContext+FetchAdditions.m in Sources */,
-				93FECB25174547840046529A /* Reachability.m in Sources */,
-				93FECB26174547840046529A /* RootViewController.m in Sources */,
-				93FECB27174547840046529A /* SystemMessage.m in Sources */,
-				93FECB29174547840046529A /* MainMenuItems.m in Sources */,
-				93FECB2A174547840046529A /* ColorPickerViewController.m in Sources */,
-				93FECB2B174547840046529A /* SlickEditView.m in Sources */,
-				93FECB2C174547840046529A /* PlayerPicklistItems.m in Sources */,
-				93FECB2D174547840046529A /* PlayerViewController.m in Sources */,
-				93FECB2E174547840046529A /* CreatePlayerOperation.m in Sources */,
-				93FECB2F174547840046529A /* UpdatePlayerOperation.m in Sources */,
-				93FECB30174547840046529A /* ImageEnvoy.m in Sources */,
-				93FECB31174547840046529A /* PlayerEnvoy.m in Sources */,
-				93FECB32174547840046529A /* JSKCommandParcel.m in Sources */,
-				93FECB33174547840046529A /* Partisans.xcdatamodeld in Sources */,
-				93FECB34174547840046529A /* GameEnvoy.m in Sources */,
-				93FECB35174547840046529A /* PlayGameMenuItems.m in Sources */,
-				93FECB36174547840046529A /* SetupGameMenuItems.m in Sources */,
-				93FECB40174547840046529A /* LabelProgressView.m in Sources */,
-				93FECB41174547840046529A /* ProgressCell.m in Sources */,
-				9303BE5217467CAE0065ADD2 /* JoinGameViewController.m in Sources */,
-				9303BE561746836A0065ADD2 /* GameJoiner.m in Sources */,
-				938429351746C0D30037563D /* AddGamePlayerOperation.m in Sources */,
-				937BC0C01747D2E3003F42D6 /* CreateGameOperation.m in Sources */,
-				937BC0C41747D86D003F42D6 /* GamePlayerEnvoy.m in Sources */,
-				93761EF7174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m in Sources */,
-				93040366174E7D0900ED169F /* ToolsMenuItems.m in Sources */,
-				93C442EA17511B15000DEC63 /* UpdateGameOperation.m in Sources */,
-				9300C7D9175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */,
-				936CDFB7176125DC00C6A4EE /* Connection.m in Sources */,
-				936CDFB9176125DC00C6A4EE /* Server.m in Sources */,
-				936CDFBB176125DC00C6A4EE /* ServerBrowser.m in Sources */,
-				936CDFBF1761276900C6A4EE /* NetHost.m in Sources */,
-				936CDFC3176202E500C6A4EE /* NetPlayer.m in Sources */,
-				93BF3B541771CABF00B20A71 /* GameDirector.m in Sources */,
-				93BF3B581771CEA500B20A71 /* MissionEnvoy.m in Sources */,
-				9398A9C7177224EE00E5D31C /* Image.m in Sources */,
-				9398A9CB177224EE00E5D31C /* Player.m in Sources */,
-				9398A9D3177224EF00E5D31C /* Scorecard.m in Sources */,
-				939697E817732A110013B125 /* RoundEnvoy.m in Sources */,
-				9358BFE317747E5400FA2DAF /* OperativeAlertMenuItems.m in Sources */,
-				939F36891779FEEE00A7B766 /* RoundMenuItems.m in Sources */,
-				93E65481177C6A95003C73C2 /* CandidatePickerMenuItems.m in Sources */,
-				9351AA7B177E2A0B00D4C843 /* Vote.m in Sources */,
-				9351AA83177E2A0C00D4C843 /* Round.m in Sources */,
-				9351AA87177E2A4D00D4C843 /* VoteEnvoy.m in Sources */,
-				9351AA8B177E48CD00D4C843 /* CoordinatorVote.m in Sources */,
-				9351AA93177E52C200D4C843 /* DecisionMenuItems.m in Sources */,
-				9307B3D5177F8A41003CEC6F /* HostFinder.m in Sources */,
-				93F06C7E178472B000281B6C /* MissionViewController.m in Sources */,
-				93D461C8178B72A700580E9B /* MissionStatusMenuItems.m in Sources */,
-				935FC549178C2B1F00F0DC8E /* GamePlayer.m in Sources */,
-				935FC54D178C2B1F00F0DC8E /* Mission.m in Sources */,
-				93D124021790363D003523F9 /* AboutMenuItems.m in Sources */,
-				937ED0E21791B28100A95231 /* GameOverMenuItems.m in Sources */,
-				93B2DE4F1794C0DA00FFC1D5 /* UpdateEnvoysOperation.m in Sources */,
-				93B2DE5317958E2200FFC1D5 /* GamePrecis.m in Sources */,
-				93B37B7417988FA000118CE3 /* VoteViewController.m in Sources */,
-				937C02C0179D45DD00C8FAE2 /* DossierDelegate.m in Sources */,
-				937C02C1179DD43E00C8FAE2 /* DossierViewController.m in Sources */,
-				93C1D6F317A564B400EE2878 /* EditCodeView.m in Sources */,
-				9392E6D317A66F5E00FE6B9C /* TestCodeViewController.m in Sources */,
-				9327777317A86D4100CFE99B /* Game.m in Sources */,
-				9327777817A86FAD00CFE99B /* GameCodeViewController.m in Sources */,
-				93BD6CE217B4068800078709 /* SplashViewController.m in Sources */,
-				93F94AF317B9419000D5D9A6 /* ScrambleView.m in Sources */,
-				931D116517BBD1FD00068279 /* ScoreViewController.m in Sources */,
-				93F6C29D17CE71E0003705FD /* DossiersMenuItems.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -1389,6 +1066,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
 				INFOPLIST_FILE = "Partisans/Partisans-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1402,35 +1080,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
 				INFOPLIST_FILE = "Partisans/Partisans-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		93FECB56174547840046529A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Partisans/Partisans copy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				PRODUCT_NAME = "Partisans iOS5";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		93FECB57174547840046529A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Partisans/Partisans copy-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				PRODUCT_NAME = "Partisans iOS5";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -1454,15 +1105,6 @@
 			buildConfigurations = (
 				936510AD1741578C00F2AD06 /* Debug */,
 				936510AE1741578C00F2AD06 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		93FECB55174547840046529A /* Build configuration list for PBXNativeTarget "Partisans iOS5" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				93FECB56174547840046529A /* Debug */,
-				93FECB57174547840046529A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
