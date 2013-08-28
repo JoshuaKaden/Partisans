@@ -266,17 +266,20 @@
             // This is the game creation code.
             GameEnvoy *newEnvoy = [[GameEnvoy alloc] init];
             [newEnvoy addHost:[SystemMessage playerEnvoy]];
-            NSUInteger gameCode = arc4random() % (8999 + 1000);
+            NSUInteger gameCode = [SystemMessage sharedInstance].gameCode;
+            if (gameCode == 0)
+            {
+                gameCode = (arc4random() % 8999) + 1000;
+                [SystemMessage sharedInstance].gameCode = gameCode;
+            }
             [newEnvoy setGameCode:gameCode];
             [newEnvoy commitAndSave];
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
             [newEnvoy release];
         }
     }
-    if (![SystemMessage isPlayerOnline])
-    {
-        [SystemMessage putPlayerOnline];
-    }
+    [SystemMessage putPlayerOffline];
+    [SystemMessage putPlayerOnline];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerUpdated:) name:kJSKNotificationPeerUpdated object:nil];
@@ -793,6 +796,23 @@
     return returnValue;
 }
 
+
+- (UIFont *)menuViewController:(JSKMenuViewController *)menuViewController labelFontAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIFont *returnValue = nil;
+    if (indexPath.section == SetupGameMenuSectionGame && indexPath.row == SetupGameMenuRowStatus)
+    {
+        if ([SystemMessage isWiFiAvailable])
+        {
+            GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+            if (gameEnvoy.startDate)
+            {
+                returnValue = [UIFont fontWithName:@"GillSans" size:25.0];
+            }
+        }
+    }
+    return returnValue;
+}
 
 
 

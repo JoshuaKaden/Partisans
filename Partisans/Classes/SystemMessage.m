@@ -1221,6 +1221,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         {
             [sharedInstance.netHost stop];
         }
+        sharedInstance.netHost.delegate = nil;
+        sharedInstance.netHost = nil;
     }
     else
     {
@@ -1228,11 +1230,17 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         {
             [sharedInstance.netPlayer stop];
         }
+        sharedInstance.netPlayer.delegate = nil;
+        sharedInstance.netPlayer = nil;
     }
 }
 
 + (void)putPlayerOnline
 {
+    if ([self isPlayerOnline])
+    {
+        return;
+    }
     SystemMessage *sharedInstance = [self sharedInstance];
     if ([self isHost])
     {
@@ -1261,6 +1269,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     {
         GameEnvoy *gameEnvoy = [self sharedInstance].gameEnvoy;
         gameCode = gameEnvoy.gameCode;
+        [self sharedInstance].gameCode = gameCode;
     }
     NSString *serviceName = [NSString stringWithFormat:@"%@%d", kPartisansNetServiceName, gameCode];
     return serviceName;

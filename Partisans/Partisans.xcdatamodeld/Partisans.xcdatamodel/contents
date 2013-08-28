@@ -92,13 +92,13 @@
         <relationship name="round" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Round" inverseName="votes" inverseEntity="Round" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Game" positionX="-1802" positionY="-1071" width="128" height="180"/>
-        <element name="GamePlayer" positionX="-1854" positionY="-549" width="128" height="240"/>
+        <element name="Game" positionX="-1514" positionY="-936" width="128" height="180"/>
+        <element name="GamePlayer" positionX="-1296" positionY="-1221" width="128" height="240"/>
         <element name="Image" positionX="-2270" positionY="-648" width="128" height="165"/>
-        <element name="Mission" positionX="-1053" positionY="-924" width="128" height="240"/>
+        <element name="Mission" positionX="-909" positionY="-837" width="128" height="240"/>
         <element name="Player" positionX="-2052" positionY="-1053" width="128" height="225"/>
-        <element name="Round" positionX="-1532" positionY="-909" width="128" height="150"/>
+        <element name="Round" positionX="-1998" positionY="-672" width="128" height="150"/>
         <element name="Scorecard" positionX="-2315" positionY="-930" width="128" height="165"/>
-        <element name="Vote" positionX="-1541" positionY="-579" width="128" height="120"/>
+        <element name="Vote" positionX="-1809" positionY="-1188" width="128" height="120"/>
     </elements>
 </model>

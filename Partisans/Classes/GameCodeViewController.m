@@ -34,6 +34,7 @@
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *saveButton;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *spinButton;
+@property (nonatomic, strong) IBOutlet UIButton *OKButton;
 
 @property (nonatomic, strong) EditCodeView *editView;
 @property (nonatomic, assign) NSUInteger oldGameCode;
@@ -45,6 +46,7 @@
 - (IBAction)doneButtonPressed:(id)sender;
 - (IBAction)saveButtonPressed:(id)sender;
 - (IBAction)spinButtonPressed:(id)sender;
+- (IBAction)OKButtonPressed:(id)sender;
 
 - (void)showEditView;
 - (void)hideEditView;
@@ -70,6 +72,7 @@
 @synthesize defaultBackButton = m_defaultBackButton;
 @synthesize saveButton = m_saveButton;
 @synthesize spinButton = m_spinButton;
+@synthesize OKButton = m_OKButton;
 @synthesize delegate = m_delegate;
 
 
@@ -86,6 +89,7 @@
     [m_defaultBackButton release];
     [m_saveButton release];
     [m_spinButton release];
+    [m_OKButton release];
     
     [super dealloc];
 }
@@ -110,16 +114,23 @@
     
     [self.gameCodeTitleLabel setText:NSLocalizedString(@"The Game Code", @"The Game Code  --  label")];
 
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    NSUInteger gameCode = gameEnvoy.gameCode;
-    if (!gameEnvoy)
+    NSUInteger gameCode = [SystemMessage sharedInstance].gameCode;
+    if (gameCode == 0)
     {
-        gameCode = arc4random() % (8999 + 1000);
+        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+        gameCode = gameEnvoy.gameCode;
+        if (!gameEnvoy)
+        {
+            gameCode = (arc4random() % 8999) + 1000;
+        }
     }
+    
     [self updateCodeLabel:gameCode];
     self.oldGameCode = gameCode;
     
     [self.spinButton setTitle:NSLocalizedString(@"Spin!", @"Spin!  --  button label")];
+    
+    [self.OKButton setTitle:NSLocalizedString(@"Proceed", @"Proceed  --  title") forState:UIControlStateNormal];
     
     self.defaultBackButton = self.navigationItem.backBarButtonItem;
     [self.navigationItem setRightBarButtonItem:self.editButton animated:NO];
@@ -192,6 +203,17 @@
     [self spin];
 }
 
+- (IBAction)OKButtonPressed:(id)sender
+{
+    if (self.newGameCode == 0)
+    {
+        self.newGameCode = self.oldGameCode;
+    }
+    [self saveAndClose];
+}
+
+
+
 #pragma mark - Private
 
 
@@ -206,7 +228,7 @@
     {
         return;
     }
-    NSUInteger gameCode = arc4random() % (8999 + 1000);
+    NSUInteger gameCode = (arc4random() % 8999) + 1000;
     editView.code = gameCode;
     [editView updatePicker];
     
@@ -223,6 +245,7 @@
 
 - (void)save
 {
+    [SystemMessage sharedInstance].gameCode = self.newGameCode;
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     if (gameEnvoy)
     {

@@ -190,7 +190,7 @@
     {
         if (indexPath.section == OperativeAlertMenuSectionStatus)
         {
-            return NSLocalizedString(@"Hide your screen", @"Hide your screen  --  label");
+            return NSLocalizedString(@"Hide your screen.", @"Hide your screen.  --  label");
         }
         else
         {
@@ -205,11 +205,11 @@
         case OperativeAlertMenuSectionStatus:
             if (self.isOperative)
             {
-                returnValue = NSLocalizedString(@"You are an Operative", @"You are an Operative  --  label");
+                returnValue = NSLocalizedString(@"You are an Operative.", @"You are an Operative.  --  label");
             }
             else
             {
-                returnValue = NSLocalizedString(@"Operatives are in our midst", @"Operatives are in our midst  --  label");
+                returnValue = NSLocalizedString(@"Operatives are in our midst.", @"Operatives are in our midst.  --  label");
             }
             break;
         case OperativeAlertMenuSectionList:

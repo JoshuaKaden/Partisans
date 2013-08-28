@@ -560,12 +560,47 @@
 
 - (NSArray *)generateMissionNames
 {
-    NSString *name1 = NSLocalizedString(@"Scrambled Eggs", @"Scrambled Eggs  --  mission name");
-    NSString *name2 = NSLocalizedString(@"Lemon Difficult", @"Lemon Difficult  --  mission name");
-    NSString *name3 = NSLocalizedString(@"Blue Ant", @"Blue Ant  --  mission name");
-    NSString *name4 = NSLocalizedString(@"Hollow Hills", @"Hollow Hills  --  mission name");
-    NSString *name5 = NSLocalizedString(@"Long Nines", @"Long Nines  --  mission name");
-    return [NSArray arrayWithObjects:name1, name2, name3, name4, name5, nil];
+    NSString *name01 = NSLocalizedString(@"Scrambled Eggs", @"Scrambled Eggs  --  mission name");
+    NSString *name02 = NSLocalizedString(@"Lemon Difficult", @"Lemon Difficult  --  mission name");
+    NSString *name03 = NSLocalizedString(@"Blue Ant", @"Blue Ant  --  mission name");
+    NSString *name04 = NSLocalizedString(@"Hollow Hills", @"Hollow Hills  --  mission name");
+    NSString *name05 = NSLocalizedString(@"Long Nines", @"Long Nines  --  mission name");
+    NSString *name06 = NSLocalizedString(@"Marthambles", @"Marthambles  --  mission name");
+    NSString *name07 = NSLocalizedString(@"Woundwort", @"Woundwort  --  mission name");
+    NSString *name08 = NSLocalizedString(@"That Child", @"That Child  --  mission name");
+    NSString *name09 = NSLocalizedString(@"Barchester", @"Barchester  --  mission name");
+    NSString *name10 = NSLocalizedString(@"Steel Birds", @"Steel Birds  --  mission name");
+    NSString *name11 = NSLocalizedString(@"Hat Creek", @"Hat Creek  --  mission name");
+    NSString *name12 = NSLocalizedString(@"Gentleman Ghost", @"Gentleman Ghost  --  mission name");
+    NSString *name13 = NSLocalizedString(@"Perfect Blue", @"Perfect Blue  --  mission name");
+    NSString *name14 = NSLocalizedString(@"Shooting Star", @"Shooting Star  --  mission name");
+    NSString *name15 = NSLocalizedString(@"Vanilla Chicken", @"Vanilla Chicken  --  mission name");
+    NSString *name16 = NSLocalizedString(@"Poor Swab", @"Poor Swab  --  mission name");
+    NSString *name17 = NSLocalizedString(@"Magic Dragon", @"Magic Dragon  --  mission name");
+    NSString *name18 = NSLocalizedString(@"Sunnydale", @"Sunnydale  --  mission name");
+    NSString *name19 = NSLocalizedString(@"Browncoat", @"Browncoat  --  mission name");
+    NSString *name20 = NSLocalizedString(@"Harum-scarum", @"Harum-scarum  --  mission name");
+    NSArray *unshuffled = [NSArray arrayWithObjects:name01, name02, name03, name04, name05, name06, name07, name08, name09, name10, name11, name12, name13, name14, name15, name16, name17, name18, name19, name20, nil];
+
+    NSMutableArray *shuffledList = [[NSMutableArray alloc] initWithArray:unshuffled];
+    NSUInteger count = [shuffledList count];
+    for (NSUInteger i = 0; i < count; i++)
+    {
+        // Select a random element between i and end of array to swap with.
+        int nElements = count - i;
+        int n = (arc4random() % nElements) + i;
+        [shuffledList exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
+    NSArray *shuffled = [[NSArray alloc] initWithArray:shuffledList];
+    [shuffledList release];
+    
+    NSRange range = NSRangeFromString(@"{0,5}");
+    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndexesInRange:range];
+    NSArray *returnValue = [shuffled objectsAtIndexes:indexSet];
+    [indexSet release];
+    [shuffled release];
+    
+    return returnValue;
 }
 
 - (void)createRound
