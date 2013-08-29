@@ -27,13 +27,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class Connection;
+@class NetConnection;
 
 @protocol ConnectionDelegate
 
-- (void) connectionAttemptFailed:(Connection*)connection;
-- (void) connectionTerminated:(Connection*)connection;
-- (void) receivedNetworkPacket:(NSObject <NSCoding> *)message viaConnection:(Connection*)connection;
-- (void) netServiceDidResolveAddress:(Connection *)connection;
+- (void) connectionAttemptFailed:(NetConnection*)connection;
+- (void) connectionTerminated:(NetConnection*)connection;
+- (void) receivedNetworkPacket:(NSObject <NSCoding> *)message viaConnection:(NetConnection*)connection;
+- (void) netServiceDidResolveAddress:(NetConnection *)connection;
 
 @end

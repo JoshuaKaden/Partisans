@@ -30,7 +30,7 @@
 #import "ConnectionDelegate.h"
 
 
-@interface Connection : NSObject {
+@interface NetConnection : NSObject {
   id<ConnectionDelegate> delegate;
   
   // Connection info: host address and port

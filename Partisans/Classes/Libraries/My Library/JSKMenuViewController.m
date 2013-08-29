@@ -33,6 +33,7 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 @property (nonatomic, strong) UIBarButtonItem *rightButtonItem;
 @property (nonatomic, assign) BOOL hasDataBeenPresented;
 @property (nonatomic, assign) BOOL isRefreshing;
+@property (nonatomic, assign) BOOL isVisible;
 
 - (void)refreshButtonPressed:(id)sender;
 - (void)createRows:(BOOL)animated;
@@ -55,6 +56,7 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 @synthesize rightButtonItem = m_rightButtonItem;
 @synthesize hasDataBeenPresented = m_hasDataBeenPresented;
 @synthesize isRefreshing = m_isRefreshing;
+@synthesize isVisible = m_isVisible;
 
 
 
@@ -195,6 +197,8 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 {
     [super viewDidAppear:animated];
     
+    self.isVisible = YES;
+    
     // On the iPad, if started in landscape, the menu sits at portrait width.
     // Let's fix that.
     if ([self isPad])
@@ -227,6 +231,7 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 {
     [super viewWillDisappear:animated];
     
+    self.isVisible = NO;
 //    if ([self.delegate respondsToSelector:@selector(menuViewController:willDisappear:)])
 //    {
 //        [self.delegate menuViewController:self willDisappear:animated];
@@ -264,6 +269,10 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 
 - (void)shouldRefreshNotificationFired:(NSNotification *)notification
 {
+    if (!self.isVisible)
+    {
+        return;
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self refreshData:NO];
     });

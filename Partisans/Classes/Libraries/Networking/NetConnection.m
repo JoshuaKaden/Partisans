@@ -25,7 +25,7 @@
 //  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
 
-#import "Connection.h"
+#import "NetConnection.h"
 
 #import "SystemMessage.h"
 
@@ -36,7 +36,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 
 // Private properties and methods
-@interface Connection ()
+@interface NetConnection ()
 
 // Properties
 @property(nonatomic,assign) int port;
@@ -64,7 +64,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 @end
 
 
-@implementation Connection
+@implementation NetConnection
 
 @synthesize delegate;
 @synthesize host, port;
@@ -287,7 +287,7 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
                             void *info) {
     dispatch_async(dispatch_get_main_queue(), ^(void)
     {
-        Connection* connection = (Connection*)info;
+        NetConnection* connection = (NetConnection*)info;
         [connection readStreamHandleEvent:eventType];
     });
 }
@@ -393,7 +393,7 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
 void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventType, void *info) {
     dispatch_async(dispatch_get_main_queue(), ^(void)
     {
-        Connection* connection = (Connection*)info;
+        NetConnection* connection = (NetConnection*)info;
         [connection writeStreamHandleEvent:eventType];
     });
 }

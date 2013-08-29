@@ -31,7 +31,7 @@
 #include <CFNetwork/CFSocketStream.h>
 
 #import "Server.h"
-#import "Connection.h"
+#import "NetConnection.h"
 
 //#import "SystemMessage.h"
 
@@ -95,7 +95,7 @@
 
 // Handle new connections
 - (void)handleNewNativeSocket:(CFSocketNativeHandle)nativeSocketHandle {
-  Connection* connection = [[[Connection alloc] initWithNativeSocketHandle:nativeSocketHandle] autorelease];
+  NetConnection* connection = [[[NetConnection alloc] initWithNativeSocketHandle:nativeSocketHandle] autorelease];
   
   // In case of errors, close native socket handle
   if ( connection == nil ) {

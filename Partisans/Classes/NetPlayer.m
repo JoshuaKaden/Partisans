@@ -20,7 +20,7 @@
 
 #import "NetPlayer.h"
 
-#import "Connection.h"
+#import "NetConnection.h"
 #import "ConnectionDelegate.h"
 #import "SystemMessage.h"
 
@@ -31,15 +31,15 @@ const BOOL kNetPlayerIsDebugOn = NO;
 
 @interface NetPlayer () <ConnectionDelegate>
 
-@property (nonatomic, strong) Connection *connection;
+@property (nonatomic, strong) NetConnection *connection;
 @property (nonatomic, strong) NSDictionary *stash;
 @property (readwrite) BOOL hasStarted;
 @property (nonatomic, assign) BOOL hasAddressBeenResolved;
 @property (nonatomic, strong) NSString *hostPeerID;
 
 - (void)sendObject:(NSObject<NSCoding> *)object;
-- (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection;
-- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(Connection *)connection;
+- (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(NetConnection *)connection;
+- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(NetConnection *)connection;
 - (void)sendID;
 
 @end
@@ -68,7 +68,7 @@ const BOOL kNetPlayerIsDebugOn = NO;
     self = [super init];
     if (self)
     {
-        Connection *connection = [[Connection alloc] initWithHostAddress:host andPort:port];
+        NetConnection *connection = [[NetConnection alloc] initWithHostAddress:host andPort:port];
         self.connection = connection;
         [connection release];
     }
@@ -80,7 +80,7 @@ const BOOL kNetPlayerIsDebugOn = NO;
     self = [super init];
     if (self)
     {
-        Connection *connection = [[Connection alloc] initWithNetService:netService];
+        NetConnection *connection = [[NetConnection alloc] initWithNetService:netService];
         self.connection = connection;
         [connection release];
     }
@@ -257,7 +257,7 @@ const BOOL kNetPlayerIsDebugOn = NO;
 
 #pragma mark - Data Handlers
 
-- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(Connection *)connection
+- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(NetConnection *)connection
 {
     if (commandParcel.responseKey)
     {
@@ -284,7 +284,7 @@ const BOOL kNetPlayerIsDebugOn = NO;
     [self.delegate netPlayer:self receivedCommandParcel:commandParcel];
 }
 
-- (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection
+- (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(NetConnection *)connection
 {
     // We'll handle an ID message ourselves.
     if (commandMessage.commandMessageType == JSKCommandMessageTypeIdentification)
@@ -322,21 +322,21 @@ const BOOL kNetPlayerIsDebugOn = NO;
 
 #pragma mark - Connection delegate
 
-- (void)connectionAttemptFailed:(Connection *)connection
+- (void)connectionAttemptFailed:(NetConnection *)connection
 {
     NSString *reason = NSLocalizedString(@"Unable to connect to the host.", @"Unable to connect to the host.  --  alert message");
     [self.delegate netPlayer:self terminated:reason];
 }
 
 
-- (void)connectionTerminated:(Connection *)connection
+- (void)connectionTerminated:(NetConnection *)connection
 {
     NSString *reason = NSLocalizedString(@"The connection to the host was closed.", @"The connection to the host was closed.  --  alert message");
     [self.delegate netPlayer:self terminated:reason];
 }
 
 
-- (void)receivedNetworkPacket:(NSDictionary *)packet viaConnection:(Connection *)connection
+- (void)receivedNetworkPacket:(NSDictionary *)packet viaConnection:(NetConnection *)connection
 {
     if (kNetPlayerIsDebugOn)
     {
@@ -358,7 +358,7 @@ const BOOL kNetPlayerIsDebugOn = NO;
     }
 }
 
-- (void)netServiceDidResolveAddress:(Connection *)connection
+- (void)netServiceDidResolveAddress:(NetConnection *)connection
 {
     self.hasAddressBeenResolved = YES;
     [self.delegate netPlayerDidResolveAddress:self];

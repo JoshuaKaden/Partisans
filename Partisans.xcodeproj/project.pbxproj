@@ -68,7 +68,7 @@
 		9365111A17415B7B00F2AD06 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111917415B7B00F2AD06 /* QuartzCore.framework */; };
 		9365111C17415B8600F2AD06 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9365111B17415B8600F2AD06 /* SystemConfiguration.framework */; };
 		9365111F17415D0A00F2AD06 /* JSKCommandParcel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */; };
-		936CDFB6176125DC00C6A4EE /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFAE176125DC00C6A4EE /* Connection.m */; };
+		936CDFB6176125DC00C6A4EE /* NetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFAE176125DC00C6A4EE /* NetConnection.m */; };
 		936CDFB8176125DC00C6A4EE /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFB1176125DC00C6A4EE /* Server.m */; };
 		936CDFBA176125DC00C6A4EE /* ServerBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFB3176125DC00C6A4EE /* ServerBrowser.m */; };
 		936CDFBE1761276900C6A4EE /* NetHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 936CDFBD1761276900C6A4EE /* NetHost.m */; };
@@ -238,8 +238,8 @@
 		9365111B17415B8600F2AD06 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9365111D17415D0A00F2AD06 /* JSKCommandParcel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSKCommandParcel.h; path = "Classes/Libraries/My Library/JSKCommandParcel.h"; sourceTree = "<group>"; };
 		9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKCommandParcel.m; path = "Classes/Libraries/My Library/JSKCommandParcel.m"; sourceTree = "<group>"; };
-		936CDFAD176125DC00C6A4EE /* Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Connection.h; path = Classes/Libraries/Networking/Connection.h; sourceTree = "<group>"; };
-		936CDFAE176125DC00C6A4EE /* Connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Connection.m; path = Classes/Libraries/Networking/Connection.m; sourceTree = "<group>"; };
+		936CDFAD176125DC00C6A4EE /* NetConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetConnection.h; path = Classes/Libraries/Networking/NetConnection.h; sourceTree = "<group>"; };
+		936CDFAE176125DC00C6A4EE /* NetConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetConnection.m; path = Classes/Libraries/Networking/NetConnection.m; sourceTree = "<group>"; };
 		936CDFAF176125DC00C6A4EE /* ConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConnectionDelegate.h; path = Classes/Libraries/Networking/ConnectionDelegate.h; sourceTree = "<group>"; };
 		936CDFB0176125DC00C6A4EE /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = Classes/Libraries/Networking/Server.h; sourceTree = "<group>"; };
 		936CDFB1176125DC00C6A4EE /* Server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Server.m; path = Classes/Libraries/Networking/Server.m; sourceTree = "<group>"; };
@@ -723,8 +723,8 @@
 		936CDFAC176125C500C6A4EE /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				936CDFAD176125DC00C6A4EE /* Connection.h */,
-				936CDFAE176125DC00C6A4EE /* Connection.m */,
+				936CDFAD176125DC00C6A4EE /* NetConnection.h */,
+				936CDFAE176125DC00C6A4EE /* NetConnection.m */,
 				936CDFAF176125DC00C6A4EE /* ConnectionDelegate.h */,
 				936CDFB0176125DC00C6A4EE /* Server.h */,
 				936CDFB1176125DC00C6A4EE /* Server.m */,
@@ -948,7 +948,7 @@
 				93040365174E7D0900ED169F /* ToolsMenuItems.m in Sources */,
 				93C442E917511B15000DEC63 /* UpdateGameOperation.m in Sources */,
 				9300C7D8175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */,
-				936CDFB6176125DC00C6A4EE /* Connection.m in Sources */,
+				936CDFB6176125DC00C6A4EE /* NetConnection.m in Sources */,
 				936CDFB8176125DC00C6A4EE /* Server.m in Sources */,
 				936CDFBA176125DC00C6A4EE /* ServerBrowser.m in Sources */,
 				936CDFBE1761276900C6A4EE /* NetHost.m in Sources */,

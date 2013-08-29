@@ -20,7 +20,7 @@
 
 #import "NetHost.h"
 
-#import "Connection.h"
+#import "NetConnection.h"
 #import "ConnectionDelegate.h"
 #import "JSKCommandParcel.h"
 #import "Server.h"
@@ -40,8 +40,8 @@ const BOOL kNetHostIsDebugOn = NO;
 @property (assign) BOOL hasStarted;
 
 - (void)sendObject:(NSObject<NSCoding> *)object to:(NSString *)peerID;
-- (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection;
-- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(Connection *)connection;
+- (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(NetConnection *)connection;
+- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(NetConnection *)connection;
 
 @end
 
@@ -104,7 +104,7 @@ const BOOL kNetHostIsDebugOn = NO;
     self.server = nil;
     
     // Close all connections
-    for (Connection *connection in self.clients)
+    for (NetConnection *connection in self.clients)
     {
         [connection close];
         [connection setDelegate:nil];
@@ -138,8 +138,8 @@ const BOOL kNetHostIsDebugOn = NO;
     
     // The "to" parameter is our system's Peer ID.
     // We need to match that to a connection.
-    Connection *target = nil;
-    for (Connection *connection in self.clients)
+    NetConnection *target = nil;
+    for (NetConnection *connection in self.clients)
     {
         if ([connection.peerID isEqualToString:peerID])
         {
@@ -273,7 +273,7 @@ const BOOL kNetHostIsDebugOn = NO;
 - (void)broadcastCommandMessageType:(JSKCommandMessageType)commandMessageType
 {
     NSString *myPeerID = [self.delegate netHostPeerID:self];
-    for (Connection *connection in self.clients)
+    for (NetConnection *connection in self.clients)
     {
         JSKCommandMessage *newCommandMessage = [[JSKCommandMessage alloc] initWithType:commandMessageType to:connection.peerID from:myPeerID];
         [connection sendNetworkPacket:newCommandMessage];
@@ -283,7 +283,7 @@ const BOOL kNetHostIsDebugOn = NO;
 
 - (void)broadcastCommandParcel:(JSKCommandParcel *)commandParcel
 {
-    for (Connection *connection in self.clients)
+    for (NetConnection *connection in self.clients)
     {
         commandParcel.to = connection.peerID;
         [self sendObject:commandParcel to:commandParcel.to];
@@ -293,7 +293,7 @@ const BOOL kNetHostIsDebugOn = NO;
 
 #pragma mark - Data Handlers
 
-- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(Connection *)connection
+- (void)handleCommandParcel:(JSKCommandParcel *)commandParcel viaConnection:(NetConnection *)connection
 {
     if (commandParcel.responseKey)
     {
@@ -320,7 +320,7 @@ const BOOL kNetHostIsDebugOn = NO;
     [self.delegate netHost:self receivedCommandParcel:commandParcel];
 }
 
-- (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(Connection *)connection
+- (void)handleCommandMessage:(JSKCommandMessage *)commandMessage viaConnection:(NetConnection *)connection
 {
     NSString *peerID = connection.peerID;
     // Special case for Identification messages:
@@ -356,7 +356,7 @@ const BOOL kNetHostIsDebugOn = NO;
 
 
 // New client connected to our server. Add it.
-- (void)handleNewConnection:(Connection *)connection
+- (void)handleNewConnection:(NetConnection *)connection
 {
     if (kNetHostIsDebugOn)
     {
@@ -374,19 +374,19 @@ const BOOL kNetHostIsDebugOn = NO;
 #pragma mark - ConnectionDelegate Method Implementations
 
 // We won't be initiating connections, so this is not important
-- (void)connectionAttemptFailed:(Connection *)connection {
+- (void)connectionAttemptFailed:(NetConnection *)connection {
 }
 
 
 // One of the clients disconnected, remove it from our list
-- (void)connectionTerminated:(Connection *)connection
+- (void)connectionTerminated:(NetConnection *)connection
 {
     [connection setDelegate:nil];
     [self.clients removeObject:connection];
 }
 
 
-- (void)receivedNetworkPacket:(NSObject <NSCoding> *)packet viaConnection:(Connection *)connection
+- (void)receivedNetworkPacket:(NSObject <NSCoding> *)packet viaConnection:(NetConnection *)connection
 {
     if (kNetHostIsDebugOn)
     {
@@ -414,7 +414,7 @@ const BOOL kNetHostIsDebugOn = NO;
 //    [self.clients makeObjectsPerformSelector:@selector(sendNetworkPacket:) withObject:packet];
 }
 
-- (void)netServiceDidResolveAddress:(Connection *)connection
+- (void)netServiceDidResolveAddress:(NetConnection *)connection
 {
     
 }
