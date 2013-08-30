@@ -20,6 +20,7 @@
 
 #import "MainMenuItems.h"
 
+#import "AboutMenuItems.h"
 #import "DossiersMenuItems.h"
 #import "GameEnvoy.h"
 #import "GameOverMenuItems.h"
@@ -36,7 +37,6 @@
 #import "ScoreViewController.h"
 #import "SetupGameMenuItems.h"
 #import "SystemMessage.h"
-#import "ToolsMenuItems.h"
 
 
 @interface MainMenuItems ()
@@ -44,9 +44,9 @@
 @property (nonatomic, strong) MissionStatusMenuItems *missionStatusMenuItems;
 @property (nonatomic, strong) PlayGameMenuItems *playGameMenuItems;
 @property (nonatomic, strong) SetupGameMenuItems *setupGameMenuItems;
-@property (nonatomic, strong) ToolsMenuItems *toolsMenuItems;
 @property (nonatomic, strong) GameOverMenuItems *gameOverMenuItems;
 @property (nonatomic, strong) DossiersMenuItems *dossiersMenuItems;
+@property (nonatomic, strong) AboutMenuItems *aboutMenuItems;
 
 @end
 
@@ -56,9 +56,9 @@
 @synthesize missionStatusMenuItems = m_missionStatusMenuItems;
 @synthesize playGameMenuItems = m_playGameMenuItems;
 @synthesize setupGameMenuItems = m_setupGameMenuItems;
-@synthesize toolsMenuItems = m_toolsMenuItems;
 @synthesize gameOverMenuItems = m_gameOverMenuItems;
 @synthesize dossiersMenuItems = m_dossiersMenuItems;
+@synthesize aboutMenuItems = m_aboutMenuItems;
 
 
 - (void)dealloc
@@ -66,9 +66,9 @@
     [m_missionStatusMenuItems release];
     [m_playGameMenuItems release];
     [m_setupGameMenuItems release];
-    [m_toolsMenuItems release];
     [m_gameOverMenuItems release];
     [m_dossiersMenuItems release];
+    [m_aboutMenuItems release];
     
     [super dealloc];
 }
@@ -177,6 +177,18 @@
     }
 }
 
+
+- (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
+{
+    return NSLocalizedString(@"Partisans", @"Partisans  --  title");
+}
+
+
+- (BOOL)menuViewControllerHidesBackButton:(JSKMenuViewController *)menuViewController
+{
+    return YES;
+}
+
 - (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController
 {
     return YES;
@@ -227,8 +239,8 @@
             label = NSLocalizedString(@"Game", @"Game  --  menu label");
             break;
             
-        case MainMenuRowTools:
-            label = NSLocalizedString(@"Tools", @"Tools  --  menu label");
+        case MainMenuRowAbout:
+            label = NSLocalizedString(@"About", @"About  --  menu label");
             break;
             
         case MainMenuRowDossiers:
@@ -261,7 +273,7 @@
         case MainMenuRowGame:
             break;
             
-        case MainMenuRowTools:
+        case MainMenuRowAbout:
             break;
 
         case MainMenuRowDossiers:
@@ -308,7 +320,7 @@
             }
             break;
             
-        case MainMenuRowTools:
+        case MainMenuRowAbout:
             targetClass = [JSKMenuViewController class];
             break;
             
@@ -355,12 +367,12 @@
             break;
         }
             
-        case MainMenuRowTools:
+        case MainMenuRowAbout:
         {
-            ToolsMenuItems *items = [[ToolsMenuItems alloc] init];
-            self.toolsMenuItems = items;
+            AboutMenuItems *items = [[AboutMenuItems alloc] init];
+            self.aboutMenuItems = items;
             [items release];
-            return self.toolsMenuItems;
+            return self.aboutMenuItems;
             break;
         }
             
@@ -380,19 +392,5 @@
     
     return nil;
 }
-
-
-- (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
-{
-    return NSLocalizedString(@"Partisans", @"Partisans  --  title");
-}
-
-
-- (BOOL)menuViewControllerHidesBackButton:(JSKMenuViewController *)menuViewController
-{
-    return YES;
-}
-
-
 
 @end

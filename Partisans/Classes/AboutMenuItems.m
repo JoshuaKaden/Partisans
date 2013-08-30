@@ -141,7 +141,14 @@
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
-    return UITableViewCellAccessoryNone;
+    if (indexPath.row == AboutRowWebSite)
+    {
+        return UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else
+    {
+        return UITableViewCellAccessoryNone;
+    }
 }
 
 @end
