@@ -26,7 +26,6 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 
 #import "NetConnection.h"
-
 #import "SystemMessage.h"
 
 
@@ -39,17 +38,22 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 @interface NetConnection ()
 
 // Properties
-@property(nonatomic,assign) int port;
-@property(nonatomic,assign) CFSocketNativeHandle connectedSocketHandle;
-@property(nonatomic,retain) NSNetService* netService;
+@property (nonatomic, assign) int port;
+@property (nonatomic, assign) CFSocketNativeHandle connectedSocketHandle;
+@property (nonatomic, retain) NSNetService *netService;
 @property (nonatomic, strong) NSMutableData *outgoingDataBuffer;
 @property (nonatomic, strong) NSMutableData *incomingDataBuffer;
+@property (nonatomic, assign) CFReadStreamRef readStream;
+@property (nonatomic, assign) BOOL isReadStreamOpen;
+@property (nonatomic, assign) int packetBodySize;
+@property (nonatomic, assign) CFWriteStreamRef writeStream;
+@property (nonatomic, assign) BOOL isWriteStreamOpen;
 
 // Initialize
 - (void)clean;
 
 // Further setup streams created by one of the 'init' methods
-- (BOOL)setupSocketStreams;
+- (BOOL)setupSocketStreamsRead:(CFReadStreamRef)readStream write:(CFWriteStreamRef)writeStream;
 
 // Stream event handlers
 - (void)readStreamHandleEvent:(CFStreamEventType)event;
@@ -66,35 +70,43 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 @implementation NetConnection
 
-@synthesize delegate;
-@synthesize host, port;
-@synthesize connectedSocketHandle;
-@synthesize netService;
+@synthesize delegate = m_delegate;
+@synthesize host = m_host;
+@synthesize port = m_port;
+@synthesize connectedSocketHandle = m_connectedSocketHandle;
+@synthesize netService = m_netService;
 @synthesize outgoingDataBuffer = m_outgoingDataBuffer;
 @synthesize incomingDataBuffer = m_incomingDataBuffer;
 @synthesize peerID = m_peerID;
+@synthesize readStream = m_readStream;
+@synthesize isReadStreamOpen = m_isReadStreamOpen;
+@synthesize packetBodySize = m_packetBodySize;
+@synthesize writeStream = m_writeStream;
+@synthesize isWriteStreamOpen = m_isWriteStreamOpen;
 
 
 // Initialize, empty
-- (void)clean {
-    readStream = nil;
-    readStreamOpen = NO;
+- (void)clean
+{
+    self.readStream = nil;
+    self.isReadStreamOpen = NO;
     
-    writeStream = nil;
-    writeStreamOpen = NO;
+    self.writeStream = nil;
+    self.isWriteStreamOpen = NO;
     
     self.incomingDataBuffer = nil;
     self.outgoingDataBuffer = nil;
     
     self.netService = nil;
     self.host = nil;
-    connectedSocketHandle = -1;
-    packetBodySize = -1;
+    self.connectedSocketHandle = -1;
+    self.packetBodySize = -1;
 }
 
 
 // cleanup
-- (void)dealloc {
+- (void)dealloc
+{
     self.netService = nil;
     self.host = nil;
     self.delegate = nil;
@@ -107,17 +119,19 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 
 // Initialize and store connection information until 'connect' is called
-- (id)initWithHostAddress:(NSString*)_host andPort:(int)_port {
+- (id)initWithHostAddress:(NSString*)host andPort:(int)port
+{
     [self clean];
     
-    self.host = _host;
-    self.port = _port;
+    self.host = host;
+    self.port = port;
     return self;
 }
 
 
 // Initialize using a native socket handle, assuming connection is open
-- (id)initWithNativeSocketHandle:(CFSocketNativeHandle)nativeSocketHandle {
+- (id)initWithNativeSocketHandle:(CFSocketNativeHandle)nativeSocketHandle
+{
     [self clean];
     
     self.connectedSocketHandle = nativeSocketHandle;
@@ -126,48 +140,57 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 
 // Initialize using an instance of NSNetService
-- (id)initWithNetService:(NSNetService*)_netService {
+- (id)initWithNetService:(NSNetService*)netService
+{
     [self clean];
     
     // Has it been resolved?
-    if ( _netService.hostName != nil ) {
-        return [self initWithHostAddress:_netService.hostName andPort:_netService.port];
+    if ( netService.hostName != nil ) {
+        return [self initWithHostAddress:netService.hostName andPort:netService.port];
     }
     
-    self.netService = _netService;
+    self.netService = netService;
     return self;
 }
 
 
 // Connect using whatever connection info that was passed during initialization
-- (BOOL)connect {
-    if ( self.host != nil ) {
+- (BOOL)connect
+{
+    CFReadStreamRef readStream = self.readStream;
+    CFWriteStreamRef writeStream = self.writeStream;
+    
+    if (self.host)
+    {
         // Bind read/write streams to a new socket
         CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (CFStringRef)self.host,
                                            self.port, &readStream, &writeStream);
         
         // Do the rest
-        return [self setupSocketStreams];
+        return [self setupSocketStreamsRead:readStream write:writeStream];
     }
-    else if ( self.connectedSocketHandle != -1 ) {
+    else if ( self.connectedSocketHandle != -1 )
+    {
         // Bind read/write streams to a socket represented by a native socket handle
         CFStreamCreatePairWithSocket(kCFAllocatorDefault, self.connectedSocketHandle,
                                      &readStream, &writeStream);
         
         // Do the rest
-        return [self setupSocketStreams];
+        return [self setupSocketStreamsRead:readStream write:writeStream];
     }
-    else if ( netService != nil ) {
+    else if (self.netService)
+    {
         // Still need to resolve?
-        if ( netService.hostName != nil ) {
+        if ( self.netService.hostName != nil )
+        {
             CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault,
-                                               (CFStringRef)netService.hostName, netService.port, &readStream, &writeStream);
-            return [self setupSocketStreams];
+                                               (CFStringRef)self.netService.hostName, self.netService.port, &readStream, &writeStream);
+            return [self setupSocketStreamsRead:readStream write:writeStream];
         }
         
         // Start resolving
-        netService.delegate = (id<NSNetServiceDelegate>)self;
-        [netService resolveWithTimeout:5.0];
+        self.netService.delegate = (id<NSNetServiceDelegate>)self;
+        [self.netService resolveWithTimeout:5.0];
         return YES;
     }
     
@@ -177,12 +200,16 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 
 // Further setup socket streams that were created by one of our 'init' methods
-- (BOOL)setupSocketStreams {
+- (BOOL)setupSocketStreamsRead:(CFReadStreamRef)readStream write:(CFWriteStreamRef)writeStream
+{
     // Make sure streams were created correctly
     if ( readStream == nil || writeStream == nil ) {
         [self close];
         return NO;
     }
+    
+    self.readStream = readStream;
+    self.writeStream = writeStream;
     
     // Create buffers
     NSMutableData *incomingDataBuffer = [[NSMutableData alloc] init];
@@ -193,9 +220,9 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     [outgoingDataBuffer release];
     
     // Indicate that we want socket to be closed whenever streams are closed
-    CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket,
+    CFReadStreamSetProperty(self.readStream, kCFStreamPropertyShouldCloseNativeSocket,
                             kCFBooleanTrue);
-    CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket,
+    CFWriteStreamSetProperty(self.writeStream, kCFStreamPropertyShouldCloseNativeSocket,
                              kCFBooleanTrue);
     
     // We will be handling the following stream events
@@ -207,17 +234,17 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     CFStreamClientContext ctx = {0, self, NULL, NULL, NULL};
     
     // Specify callbacks that will be handling stream events
-    CFReadStreamSetClient(readStream, registeredEvents, readStreamEventHandler, &ctx);
-    CFWriteStreamSetClient(writeStream, registeredEvents, writeStreamEventHandler, &ctx);
+    CFReadStreamSetClient(self.readStream, registeredEvents, readStreamEventHandler, &ctx);
+    CFWriteStreamSetClient(self.writeStream, registeredEvents, writeStreamEventHandler, &ctx);
     
     // Schedule streams with current run loop
-    CFReadStreamScheduleWithRunLoop(readStream, CFRunLoopGetCurrent(),
+    CFReadStreamScheduleWithRunLoop(self.readStream, CFRunLoopGetCurrent(),
                                     kCFRunLoopCommonModes);
-    CFWriteStreamScheduleWithRunLoop(writeStream, CFRunLoopGetCurrent(),
+    CFWriteStreamScheduleWithRunLoop(self.writeStream, CFRunLoopGetCurrent(),
                                      kCFRunLoopCommonModes);
     
     // Open both streams
-    if ( ! CFReadStreamOpen(readStream) || ! CFWriteStreamOpen(writeStream)) {
+    if ( ! CFReadStreamOpen(self.readStream) || ! CFWriteStreamOpen(self.writeStream)) {
         [self close];
         return NO;
     }
@@ -227,21 +254,22 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 
 // Close connection
-- (void)close {
+- (void)close
+{
     // Cleanup read stream
-    if ( readStream != nil ) {
-        CFReadStreamUnscheduleFromRunLoop(readStream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
-        CFReadStreamClose(readStream);
-        CFRelease(readStream);
-        readStream = NULL;
+    if ( self.readStream != nil ) {
+        CFReadStreamUnscheduleFromRunLoop(self.readStream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+        CFReadStreamClose(self.readStream);
+//        CFRelease(self.readStream);
+        self.readStream = NULL;
     }
     
     // Cleanup write stream
-    if ( writeStream != nil ) {
-        CFWriteStreamUnscheduleFromRunLoop(writeStream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
-        CFWriteStreamClose(writeStream);
-        CFRelease(writeStream);
-        writeStream = NULL;
+    if ( self.writeStream != nil ) {
+        CFWriteStreamUnscheduleFromRunLoop(self.writeStream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+        CFWriteStreamClose(self.writeStream);
+//        CFRelease(self.writeStream);
+        self.writeStream = NULL;
     }
     
     // Cleanup buffers
@@ -251,8 +279,8 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     self.outgoingDataBuffer = nil;
     
     // Stop net service?
-    if ( netService != nil ) {
-        [netService stop];
+    if ( self.netService != nil ) {
+        [self.netService stop];
         self.netService = nil;
     }
     
@@ -262,7 +290,8 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 
 // Send network message
-- (void)sendNetworkPacket:(NSObject <NSCoding> *)packet {
+- (void)sendNetworkPacket:(NSObject <NSCoding> *)packet
+{
     // Encode packet
     NSData* rawPacket = [NSKeyedArchiver archivedDataWithRootObject:packet];
     
@@ -294,10 +323,11 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
 
 
 // Handle events from the read stream
-- (void)readStreamHandleEvent:(CFStreamEventType)event {
+- (void)readStreamHandleEvent:(CFStreamEventType)event
+{
     // Stream successfully opened
     if ( event == kCFStreamEventOpenCompleted ) {
-        readStreamOpen = YES;
+        self.isReadStreamOpen = YES;
     }
     // New data has arrived
     else if ( event == kCFStreamEventHasBytesAvailable ) {
@@ -310,28 +340,29 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
         [self close];
         
         // If we haven't connected yet then our connection attempt has failed
-        if ( !readStreamOpen || !writeStreamOpen ) {
-            [delegate connectionAttemptFailed:self];
+        if ( !self.isReadStreamOpen || !self.isWriteStreamOpen ) {
+            [self.delegate connectionAttemptFailed:self];
         }
         else {
-            [delegate connectionTerminated:self];
+            [self.delegate connectionTerminated:self];
         }
     }
 }
 
 
 // Read as many bytes from the stream as possible and try to extract meaningful packets
-- (void)readFromStreamIntoIncomingBuffer {
+- (void)readFromStreamIntoIncomingBuffer
+{
     // Temporary buffer to read data into
     UInt8 buf[1024];
     
     // Try reading while there is data
-    while( CFReadStreamHasBytesAvailable(readStream) ) {
-        CFIndex len = CFReadStreamRead(readStream, buf, sizeof(buf));
+    while( CFReadStreamHasBytesAvailable(self.readStream) ) {
+        CFIndex len = CFReadStreamRead(self.readStream, buf, sizeof(buf));
         if ( len <= 0 ) {
             // Either stream was closed or error occurred. Close everything up and treat this as "connection terminated"
             [self close];
-            [delegate connectionTerminated:self];
+            [self.delegate connectionTerminated:self];
             return;
         }
         
@@ -345,13 +376,16 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
     //  body: bytes that represent encoded NSDictionary
     
     // We might have more than one message in the buffer - that's why we'll be reading it inside the while loop
-    while( YES ) {
+    while( YES )
+    {
+        int packetBodySize = self.packetBodySize;
         // Did we read the header yet?
         if ( packetBodySize == -1 ) {
             // Do we have enough bytes in the buffer to read the header?
             if ( [self.incomingDataBuffer length] >= sizeof(int) ) {
                 // extract length
                 memcpy(&packetBodySize, [self.incomingDataBuffer bytes], sizeof(int));
+                self.packetBodySize = packetBodySize;
                 
                 // remove that chunk from buffer
                 NSRange rangeToDelete = {0, sizeof(int)};
@@ -370,7 +404,7 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
             NSObject <NSCoding> *packet = [NSKeyedUnarchiver unarchiveObjectWithData:raw];
             
             // Tell our delegate about it
-            [delegate receivedNetworkPacket:packet viaConnection:self];
+            [self.delegate receivedNetworkPacket:packet viaConnection:self];
             
             // Remove that chunk from buffer
             NSRange rangeToDelete = {0, packetBodySize};
@@ -378,6 +412,7 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
             
             // We have processed the packet. Resetting the state.
             packetBodySize = -1;
+            self.packetBodySize = packetBodySize;
         }
         else {
             // Not enough data yet. Will wait.
@@ -390,7 +425,8 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
 #pragma mark Write stream methods
 
 // Dispatch writeStream event handling
-void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventType, void *info) {
+void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventType, void *info)
+{
     dispatch_async(dispatch_get_main_queue(), ^(void)
     {
         NetConnection* connection = (NetConnection*)info;
@@ -400,10 +436,11 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 
 // Handle events from the write stream
-- (void)writeStreamHandleEvent:(CFStreamEventType)event {
+- (void)writeStreamHandleEvent:(CFStreamEventType)event
+{
     // Stream successfully opened
     if ( event == kCFStreamEventOpenCompleted ) {
-        writeStreamOpen = YES;
+        self.isWriteStreamOpen = YES;
     }
     // Stream has space for more data to be written
     else if ( event == kCFStreamEventCanAcceptBytes ) {
@@ -416,20 +453,21 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
         [self close];
         
         // If we haven't connected yet then our connection attempt has failed
-        if ( !readStreamOpen || !writeStreamOpen ) {
-            [delegate connectionAttemptFailed:self];
+        if ( !self.isReadStreamOpen || !self.isWriteStreamOpen ) {
+            [self.delegate connectionAttemptFailed:self];
         }
         else {
-            [delegate connectionTerminated:self];
+            [self.delegate connectionTerminated:self];
         }
     }
 }
 
 
 // Write whatever data we have, as much of it as stream can handle
-- (void)writeOutgoingBufferToStream {
+- (void)writeOutgoingBufferToStream
+{
     // Is connection open?
-    if ( !readStreamOpen || !writeStreamOpen ) {
+    if ( !self.isReadStreamOpen || !self.isWriteStreamOpen ) {
         // No, wait until everything is operational before pushing data through
         return;
     }
@@ -440,17 +478,18 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     }
     
     // Can stream take any data in?
-    if ( !CFWriteStreamCanAcceptBytes(writeStream) ) {
+    if ( !CFWriteStreamCanAcceptBytes(self.writeStream) ) {
         return;
     }
     
     // Write as much as we can
-    CFIndex writtenBytes = CFWriteStreamWrite(writeStream, [self.outgoingDataBuffer bytes], [self.outgoingDataBuffer length]);
+    CFIndex writtenBytes = CFWriteStreamWrite(self.writeStream, [self.outgoingDataBuffer bytes], [self.outgoingDataBuffer length]);
     
-    if ( writtenBytes == -1 ) {
+    if ( writtenBytes == -1 )
+    {
         // Error occurred. Close everything up.
         [self close];
-        [delegate connectionTerminated:self];
+        [self.delegate connectionTerminated:self];
         return;
     }
     
@@ -463,38 +502,41 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 #pragma mark NSNetService Delegate Method Implementations
 
 // Called if we weren't able to resolve net service
-- (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict {
-    if ( sender != netService ) {
+- (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict
+{
+    if ( sender != self.netService )
+    {
         return;
     }
     
     // Close everything and tell delegate that we have failed
-    [delegate connectionAttemptFailed:self];
+    [self.delegate connectionAttemptFailed:self];
     [self close];
 }
 
 
 // Called when net service has been successfully resolved
-- (void)netServiceDidResolveAddress:(NSNetService *)sender {
-    if ( sender != netService ) {
+- (void)netServiceDidResolveAddress:(NSNetService *)sender
+{
+    if ( sender != self.netService ) {
         return;
     }
     
     // Save connection info
-    self.host = netService.hostName;
-    self.port = netService.port;
+    self.host = self.netService.hostName;
+    self.port = self.netService.port;
     
     // Don't need the service anymore
     self.netService = nil;
     
     // Connect!
     if ( ![self connect] ) {
-        [delegate connectionAttemptFailed:self];
+        [self.delegate connectionAttemptFailed:self];
         [self close];
     }
     else
     {
-        [delegate netServiceDidResolveAddress:self];
+        [self.delegate netServiceDidResolveAddress:self];
     }
 }
 

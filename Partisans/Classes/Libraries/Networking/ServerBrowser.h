@@ -29,14 +29,10 @@
 #import "ServerBrowserDelegate.h"
 
 
-@interface ServerBrowser : NSObject {
-  NSNetServiceBrowser* netServiceBrowser;
-  NSMutableArray* servers;
-  id<ServerBrowserDelegate> delegate;
-}
+@interface ServerBrowser : NSObject
 
-@property (nonatomic, readonly) NSArray* servers;
-@property (nonatomic, retain) id <ServerBrowserDelegate> delegate;
+@property (nonatomic, readonly) NSArray *servers;
+@property (nonatomic, assign) id <ServerBrowserDelegate> delegate;
 @property (nonatomic, readonly) BOOL isBrowsing;
 
 // Start browsing for Bonjour services

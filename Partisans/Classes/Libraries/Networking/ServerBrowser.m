@@ -41,8 +41,10 @@
 
 
 // Private properties and methods
-@interface ServerBrowser ()
+@interface ServerBrowser () <NSNetServiceBrowserDelegate>
 
+@property (nonatomic, strong) NSMutableArray *serverList;
+@property (nonatomic, strong) NSNetServiceBrowser *netServiceBrowser;
 @property (nonatomic, assign) BOOL isBrowsing;
 
 // Sort services alphabetically
@@ -53,29 +55,41 @@
 
 @implementation ServerBrowser
 
-@synthesize servers;
-@synthesize delegate;
+@synthesize serverList = m_serverList;
+@synthesize delegate = m_delegate;
+@synthesize netServiceBrowser = m_netServiceBrowser;
 @synthesize isBrowsing = m_isBrowsing;
 
 // Initialize
-- (id)init {
+- (id)init
+{
     self = [super init];
     if (self)
     {
-        servers = [[NSMutableArray alloc] init];
+        NSMutableArray *servers = [[NSMutableArray alloc] init];
+        self.serverList = servers;
+        [servers release];
     }
   return self;
 }
 
 
 // Cleanup
-- (void)dealloc {
-  if ( servers != nil ) {
-    [servers release];
-    servers = nil;
-  }
-  self.delegate = nil;
-  [super dealloc];
+- (void)dealloc
+{
+    self.netServiceBrowser.delegate = nil;
+    
+    [m_serverList release];
+    [m_netServiceBrowser release];
+    
+    [super dealloc];
+}
+
+
+// Public server list
+- (NSArray *)servers
+{
+    return [NSArray arrayWithArray:self.serverList];
 }
 
 
@@ -83,20 +97,26 @@
 - (BOOL)start
 {
     self.isBrowsing = YES;
-  // Restarting?
-  if ( netServiceBrowser != nil ) {
-    [self stop];
-  }
+    
+    // Restarting?
+    if (self.netServiceBrowser)
+    {
+        [self stop];
+    }
 
-	netServiceBrowser = [[NSNetServiceBrowser alloc] init];
-	if( !netServiceBrowser ) {
-		return NO;
-	}
+    NSNetServiceBrowser *netServiceBrowser = [[NSNetServiceBrowser alloc] init];
+    self.netServiceBrowser = netServiceBrowser;
+    [netServiceBrowser release];
+    if (!self.netServiceBrowser)
+    {
+        return NO;
+    }
 
-	netServiceBrowser.delegate = (id<NSNetServiceBrowserDelegate>)self;
-	[netServiceBrowser searchForServicesOfType:@"_partisans._tcp." inDomain:@""];
-  
-  return YES;
+    self.netServiceBrowser.delegate = self;
+    
+    [self.netServiceBrowser searchForServicesOfType:@"_partisans._tcp." inDomain:@""];
+
+    return YES;
 }
 
 
@@ -105,60 +125,65 @@
 {
     self.isBrowsing = NO;
     
-  if ( netServiceBrowser == nil ) {
-    return;
-  }
-  
-  [netServiceBrowser stop];
-  [netServiceBrowser release];
-  [netServiceBrowser setDelegate:nil];
-  netServiceBrowser = nil;
-  
-  [servers removeAllObjects];
+    if (!self.netServiceBrowser)
+    {
+        return;
+    }
+
+    [self.netServiceBrowser stop];
+    [self.netServiceBrowser setDelegate:nil];
+    self.netServiceBrowser = nil;
+
+    [self.serverList removeAllObjects];
 }
 
 
 // Sort servers array by service names
-- (void)sortServers {
-  [servers sortUsingSelector:@selector(localizedCaseInsensitiveCompareByName:)];
+- (void)sortServers
+{
+    [self.serverList sortUsingSelector:@selector(localizedCaseInsensitiveCompareByName:)];
 }
 
 
-#pragma mark -
-#pragma mark NSNetServiceBrowser Delegate Method Implementations
+#pragma mark - NSNetServiceBrowser Delegate
 
 // New service was found
-- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing {
-  // Make sure that we don't have such service already (why would this happen? not sure)
-  if ( ! [servers containsObject:netService] ) {
-    // Add it to our list
-    [servers addObject:netService];
-  }
+- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didFindService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing
+{
+    // Make sure that we don't have such service already (why would this happen? not sure)
+    if (![self.serverList containsObject:netService])
+    {
+        // Add it to our list
+        [self.serverList addObject:netService];
+    }
 
-  // If more entries are coming, no need to update UI just yet
-  if ( moreServicesComing ) {
-    return;
-  }
-  
-  // Sort alphabetically and let our delegate know
-  [self sortServers];
-  [delegate updateServerList];
+    // If more entries are coming, no need to update UI just yet
+    if (moreServicesComing)
+    {
+        return;
+    }
+
+    // Sort alphabetically and let our delegate know
+    [self sortServers];
+    [self.delegate updateServerList];
 }
 
 
 // Service was removed
-- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didRemoveService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing {
-  // Remove from list
-  [servers removeObject:netService];
+- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didRemoveService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing
+{
+    // Remove from list
+    [self.serverList removeObject:netService];
 
-  // If more entries are coming, no need to update UI just yet
-  if ( moreServicesComing ) {
-    return;
-  }
-  
-  // Sort alphabetically and let our delegate know
-  [self sortServers];
-  [delegate updateServerList];
+    // If more entries are coming, no need to update UI just yet
+    if (moreServicesComing)
+    {
+        return;
+    }
+
+    // Sort alphabetically and let our delegate know
+    [self sortServers];
+    [self.delegate updateServerList];
 }
 
 @end

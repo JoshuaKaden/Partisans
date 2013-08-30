@@ -578,7 +578,7 @@
     NSString *name16 = NSLocalizedString(@"Poor Swab", @"Poor Swab  --  mission name");
     NSString *name17 = NSLocalizedString(@"Magic Dragon", @"Magic Dragon  --  mission name");
     NSString *name18 = NSLocalizedString(@"Sunnydale", @"Sunnydale  --  mission name");
-    NSString *name19 = NSLocalizedString(@"Browncoat", @"Browncoat  --  mission name");
+    NSString *name19 = NSLocalizedString(@"Browncoats", @"Browncoats  --  mission name");
     NSString *name20 = NSLocalizedString(@"Harum-scarum", @"Harum-scarum  --  mission name");
     NSArray *unshuffled = [NSArray arrayWithObjects:name01, name02, name03, name04, name05, name06, name07, name08, name09, name10, name11, name12, name13, name14, name15, name16, name17, name18, name19, name20, nil];
 

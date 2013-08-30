@@ -203,14 +203,15 @@
         case 1:
         {
             // Yes -- stop hosting and end the game.
-            // When the players get this message they know that the game is over.
-            [SystemMessage broadcastCommandMessage:JSKCommandMessageTypeLeaveGame];
+            
+//            // When the players get this message they know that the game is over.
+//            [SystemMessage broadcastCommandMessage:JSKCommandMessageTypeLeaveGame];
             
             
+            [SystemMessage putPlayerOffline];
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             [gameEnvoy deleteGame];
             [[SystemMessage sharedInstance] setGameEnvoy:nil];
-            [SystemMessage putPlayerOffline];
             [self.menuViewController invokePop:YES];
             break;
         }
@@ -246,10 +247,10 @@
 {
     [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame shouldAwaitResponse:YES];
     
+    [SystemMessage putPlayerOffline];
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     [gameEnvoy deleteGame];
     [[SystemMessage sharedInstance] setGameEnvoy:nil];
-//    [SystemMessage putPlayerOffline];
     [self.menuViewController invokePop:YES];
 }
 
@@ -266,7 +267,7 @@
             // This is the game creation code.
             GameEnvoy *newEnvoy = [[GameEnvoy alloc] init];
             [newEnvoy addHost:[SystemMessage playerEnvoy]];
-            NSUInteger gameCode = [SystemMessage sharedInstance].gameCode;
+            NSUInteger gameCode = 0; //[SystemMessage sharedInstance].gameCode;
             if (gameCode == 0)
             {
                 gameCode = (arc4random() % 8999) + 1000;

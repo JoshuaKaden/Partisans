@@ -30,42 +30,20 @@
 #import "ConnectionDelegate.h"
 
 
-@interface NetConnection : NSObject {
-  id<ConnectionDelegate> delegate;
-  
-  // Connection info: host address and port
-  NSString* host;
-  int port;
-  
-  // Connection info: native socket handle
-  CFSocketNativeHandle connectedSocketHandle;
-  
-  // Connection info: NSNetService
-  NSNetService* netService;
-  
-  // Read stream
-  CFReadStreamRef readStream;
-  bool readStreamOpen;
-//  NSMutableData* incomingDataBuffer;
-  int packetBodySize;
-  
-  // Write stream
-  CFWriteStreamRef writeStream;
-  bool writeStreamOpen;
-}
+@interface NetConnection : NSObject
 
-@property(nonatomic,retain) id<ConnectionDelegate> delegate;
-@property(nonatomic,retain) NSString* host;
+@property (nonatomic, assign) id<ConnectionDelegate> delegate;
+@property (nonatomic, strong) NSString *host;
 @property (nonatomic, strong) NSString *peerID;
 
 // Initialize and store connection information until 'connect' is called
-- (id)initWithHostAddress:(NSString*)host andPort:(int)port;
+- (id)initWithHostAddress:(NSString *)host andPort:(int)port;
 
 // Initialize using a native socket handle, assuming connection is open
 - (id)initWithNativeSocketHandle:(CFSocketNativeHandle)nativeSocketHandle;
 
 // Initialize using an instance of NSNetService
-- (id)initWithNetService:(NSNetService*)netService;
+- (id)initWithNetService:(NSNetService *)netService;
 
 // Connect using whatever connection info that was passed during initialization
 - (BOOL)connect;

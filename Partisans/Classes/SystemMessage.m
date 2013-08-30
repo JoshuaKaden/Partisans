@@ -619,6 +619,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 // The will check the local data and ask for new data as needed.
 - (void)processDigest:(NSDictionary *)digest
 {
+    // Crash prevention when hosting after joining.
+    if (digest.count == 0)
+    {
+        return;
+    }
+    
     BOOL wasNewDataRequested = NO;
     // The digest is a dictionary of Player.modifiedDate values, keyed on peerID.
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
