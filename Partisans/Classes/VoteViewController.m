@@ -109,8 +109,8 @@
     
     self.title = NSLocalizedString(@"Voting Booth", @"Voting Booth  --  title");
     
-    [self.yeaLabel setText:NSLocalizedString(@"Yea", @"Yea  --  label")];
-    [self.nayLabel setText:NSLocalizedString(@"Nay", @"Nay  --  label")];
+    [self.yeaLabel setText:NSLocalizedString(@"Vote YEA", @"Vote YEA  --  label")];
+    [self.nayLabel setText:NSLocalizedString(@"Vote NAY", @"Vote NAY  --  label")];
     [self.voteButton.titleLabel setText:NSLocalizedString(@"Vote", @"Vote  --  label")];
     [self.proceedButton.titleLabel setText:NSLocalizedString(@"Proceed", @"Proceed  --  label")];
     

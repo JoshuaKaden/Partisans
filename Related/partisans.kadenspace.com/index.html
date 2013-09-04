@@ -20,7 +20,7 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 50px;
-	margin-bottom: 75px;
+	margin-bottom: 10px;
 	clear: both;
 }
 
@@ -38,6 +38,53 @@ body div {
 	margin: 0;
 	margin-top: 25px;
 	padding: 0;
+}
+
+h1 {
+	font-size: 4em;
+	font-weight: normal;
+	color: #555555;
+}
+
+h2 {
+	font-size: 2em;
+	font-weight: normal;
+	color: #555555;
+}
+
+a {
+	text-decoration: none;
+	font-weight: normal;
+	color: #555555;
+}
+
+a:hover {
+	color: #b32523;
+}
+
+a.active {
+	color: #b32523;
+}
+
+a.active:hover {
+	color: #b32523;
+}
+
+dl {
+	margin: 0;
+	padding: 0;
+}
+
+dl dt {
+	margin: 0;
+	padding: 0;
+	font-size:1.3em;
+}
+
+dl dd {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 10px;
 }
 
 div.header {
@@ -59,20 +106,12 @@ div.precis {
 	padding-top: 0px;
 }
 
-h1 {
-	font-size: 4em;
-	font-weight: normal;
-	color: #555555;
+div.section {
+	padding-top: 10px;
 }
 
-h2 {
-	font-size: 2em;
-	font-weight: normal;
-	color: #555555;
-}
-
-div.summary p {
-	margin-bottom: 7px;
+div.section p {
+	margin-bottom: 10px;
 }
 
 table {
@@ -116,6 +155,11 @@ div.closing {
 	margin-top: 40px;
 }
 
+#finePrint {
+	margin-top: 40px;
+	font-size: 0.7em;
+}
+
 </style>
 </head>
 
@@ -153,10 +197,10 @@ div.closing {
 </div>
 
 
-<div class="summary">
+<div class="section">
 	<h2>The Rules</h2>
 	<p>Partisans is a game of trust for five to ten players. Your goal as a player is to gain the trust of the group, so that you are selected to perform missions.</p>
-	<p>The players are all members of a secret organization, called Partisans, attempting to gain power. In order to succeed, the group must perform three missions. Unfortunately the group has been infiltrated by undercover agents known as Operatives, who are bent on subverting the missions.</p>
+	<p>The players are all members of a secret organization, called Partisans, which is attempting to gain power. In order to succeed, the group must perform three missions. Unfortunately the group has been infiltrated by undercover agents known as Operatives, who are bent on subverting the missions.</p>
 	<p>The group knows how many Operatives there are, but not their identities. The Operatives, on the other hand, are aware of each others' identities.</p>
 	<p>The game is divided into rounds. At the start of each round, a Mission Coordinator is chosen at random. The Coordinator is in charge of selecting team members for the current mission. The Coordinator can select herself.</p>
 	<p>The group then votes on the selected team candidates. The vote is yea or nay, with a yea vote requiring a majority to prevail. Please note that the vote is for the entire mission team; you cannot vote yea for one team member and nay for another. Any wrangling about a particular team member should be handled verbally before the vote is taken.</p>
@@ -169,8 +213,23 @@ div.closing {
 </div>
 
 
-<div class="howtoplay">
-	<h2>How to Play</h2>
+<div class="section">
+	<h2>Questions and Answers</h2>
+	<dl>
+		
+		<dt>To start a game, should I Host or Join?</dt>
+		<dd>Only one player needs to be the Host. Everyone else should Join.</dd>
+		
+		<dt>If I am the Host, what do I have to do?</dt>
+		<dd>Once you Host a game, you will be shown a Game Code that you'll need to share with the players so that they can join. Your device will need to be awake and running Partisans to allow the other players to take certain actions, like joining the game, casting a vote, or performing a mission. As Host, you are also responsible for moving the game forward at certain points; the game will prompt you to start a new round or initiate a mission, as needed.</dd>
+		
+		<dt>I'm unable to join a game. What should I do?</dt>
+		<dd>First, check that the Host's device is awake and running Partisans. Next, verify that you and the Host are on the same WiFi network. Then, make sure that you have the correct Game Code; you can clear out the current Game Code by going back to the Partisans menu and re-entering the Join Game screen. If all else fails, try a controlled setup: Have the Host hosting, and all players leave the game. Then stop the app by double-tapping the device's Home button and closing Partisans on the multitasking menu. Have the Host start Partisans and Host a new game. Then, one by one, have each player join the game.</dd>
+		
+		<dt>How do I perform a mission?</dt>
+		<dd>If you have been selected as a team member for a mission, then you will be brought to the Perform Mission screen once the Host initiates the mission.</dd>
+		
+	</dl>
 </div>
 
 
@@ -178,6 +237,18 @@ div.closing {
 <div class="closing">
 	<p>Thank you for playing!</p>
 </div>
+
+
+<div id="finePrint">
+	<hr />
+	<p>Copyright &copy; 2013 Joshua Kaden</p>
+	<p>Valid 
+		<a href="http://validator.w3.org/check/referer" title="Web validation, web valida-a-tion; it's making me late">XHTML</a> and  
+		<a href="http://jigsaw.w3.org/css-validator/check/referer" title="it's keeping me wai-ai-ai-ai-ai-aiting">CSS</a>
+	</p>
+  <p>The <a href="mailto:&#106;&#107;&#097;&#100;&#101;&#110;&#064;&#107;&#097;&#100;&#101;&#110;&#115;&#112;&#097;&#099;&#101;&#046;&#099;&#111;&#109;" title="jkaden at kadenspace dot com">Webmaster</a> <span title="(probably)">welcomes</span> your comments</p>
+</div>
+
 
 </body>
 </html>

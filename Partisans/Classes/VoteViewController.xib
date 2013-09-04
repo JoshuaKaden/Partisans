@@ -41,7 +41,7 @@
 					<object class="IBUISwitch" id="16720913">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{55, 14}, {94, 27}}</string>
+						<string key="NSFrame">{{113, 55}, {94, 27}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="223037696"/>
@@ -54,7 +54,7 @@
 					<object class="IBUISwitch" id="422666273">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{55, 49}, {94, 27}}</string>
+						<string key="NSFrame">{{113, 93}, {94, 27}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="979121086"/>
@@ -67,7 +67,7 @@
 					<object class="IBUILabel" id="235431659">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 20}, {42, 21}}</string>
+						<string key="NSFrame">{{20, 61}, {100, 21}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="16720913"/>
@@ -77,7 +77,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Yea</string>
+						<string key="IBUIText">Vote YEA</string>
 						<object class="NSColor" key="IBUITextColor" id="715550">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAAA</bytes>
@@ -101,7 +101,7 @@
 					<object class="IBUILabel" id="223037696">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 55}, {42, 21}}</string>
+						<string key="NSFrame">{{20, 99}, {100, 21}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="422666273"/>
@@ -111,7 +111,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Nay</string>
+						<string key="IBUIText">Vote NAY</string>
 						<reference key="IBUITextColor" ref="715550"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
@@ -122,7 +122,7 @@
 					<object class="IBUIButton" id="979121086">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 101}, {728, 44}}</string>
+						<string key="NSFrame">{{20, 145}, {728, 44}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1020693673"/>
@@ -164,7 +164,7 @@
 					<object class="IBUILabel" id="744891342">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 228}, {728, 21}}</string>
+						<string key="NSFrame">{{20, 272}, {728, 21}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="177949692"/>
@@ -189,7 +189,7 @@
 					<object class="IBUIActivityIndicatorView" id="1020693673">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">293</int>
-						<string key="NSFrame">{{366, 183}, {37, 37}}</string>
+						<string key="NSFrame">{{366, 227}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="744891342"/>
@@ -202,7 +202,7 @@
 					<object class="IBUIButton" id="177949692">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 257}, {728, 44}}</string>
+						<string key="NSFrame">{{20, 301}, {728, 44}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -223,11 +223,32 @@
 						<reference key="IBUIFontDescription" ref="687184284"/>
 						<reference key="IBUIFont" ref="460160920"/>
 					</object>
+					<object class="IBUILabel" id="485400582">
+						<reference key="NSNextResponder" ref="766721923"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{20, 20}, {185, 21}}</string>
+						<reference key="NSSuperview" ref="766721923"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="235431659"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<bool key="IBUIClipsSubviews">YES</bool>
+						<int key="IBUIContentMode">7</int>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<string key="IBUIText">Cast Your Vote</string>
+						<reference key="IBUITextColor" ref="715550"/>
+						<nil key="IBUIHighlightedColor"/>
+						<int key="IBUIBaselineAdjustment">0</int>
+						<reference key="IBUIFontDescription" ref="687184284"/>
+						<reference key="IBUIFont" ref="460160920"/>
+						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+					</object>
 				</array>
 				<string key="NSFrame">{{0, 64}, {768, 960}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="235431659"/>
+				<reference key="NSNextKeyView" ref="485400582"/>
 				<reference key="IBUIBackgroundColor" ref="764780255"/>
 				<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
@@ -374,13 +395,14 @@
 						<reference key="object" ref="766721923"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="979121086"/>
-							<reference ref="1020693673"/>
 							<reference ref="744891342"/>
-							<reference ref="235431659"/>
-							<reference ref="223037696"/>
-							<reference ref="16720913"/>
-							<reference ref="422666273"/>
+							<reference ref="1020693673"/>
 							<reference ref="177949692"/>
+							<reference ref="223037696"/>
+							<reference ref="235431659"/>
+							<reference ref="485400582"/>
+							<reference ref="422666273"/>
+							<reference ref="16720913"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -436,6 +458,11 @@
 						<reference key="parent" ref="766721923"/>
 						<string key="objectName">Proceed button</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">96</int>
+						<reference key="object" ref="485400582"/>
+						<reference key="parent" ref="766721923"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -453,12 +480,13 @@
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="93.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="96.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">95</int>
+			<int key="maxID">96</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
