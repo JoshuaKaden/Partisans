@@ -58,7 +58,6 @@
 		936510FE17415A9D00F2AD06 /* PlayerPicklistItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510FA17415A9D00F2AD06 /* PlayerPicklistItems.m */; };
 		936510FF17415A9D00F2AD06 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510FC17415A9D00F2AD06 /* PlayerViewController.m */; };
 		9365110017415A9D00F2AD06 /* PlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936510FD17415A9D00F2AD06 /* PlayerViewController.xib */; };
-		9365110B17415B0C00F2AD06 /* CreatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */; };
 		9365110C17415B0C00F2AD06 /* UpdatePlayerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */; };
 		9365111117415B2000F2AD06 /* ImageEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365110E17415B2000F2AD06 /* ImageEnvoy.m */; };
 		9365111217415B2000F2AD06 /* PlayerEnvoy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9365111017415B2000F2AD06 /* PlayerEnvoy.m */; };
@@ -223,8 +222,6 @@
 		936510FB17415A9D00F2AD06 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerViewController.h; path = Classes/PlayerViewController.h; sourceTree = "<group>"; };
 		936510FC17415A9D00F2AD06 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerViewController.m; path = Classes/PlayerViewController.m; sourceTree = "<group>"; };
 		936510FD17415A9D00F2AD06 /* PlayerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayerViewController.xib; path = Classes/PlayerViewController.xib; sourceTree = "<group>"; };
-		9365110717415B0C00F2AD06 /* CreatePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreatePlayerOperation.h; path = Classes/CreatePlayerOperation.h; sourceTree = "<group>"; };
-		9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreatePlayerOperation.m; path = Classes/CreatePlayerOperation.m; sourceTree = "<group>"; };
 		9365110917415B0C00F2AD06 /* UpdatePlayerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdatePlayerOperation.h; path = Classes/UpdatePlayerOperation.h; sourceTree = "<group>"; };
 		9365110A17415B0C00F2AD06 /* UpdatePlayerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdatePlayerOperation.m; path = Classes/UpdatePlayerOperation.m; sourceTree = "<group>"; };
 		9365110D17415B2000F2AD06 /* ImageEnvoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageEnvoy.h; path = Classes/ImageEnvoy.h; sourceTree = "<group>"; };
@@ -706,8 +703,6 @@
 				938429331746C0D30037563D /* AddGamePlayerOperation.m */,
 				937BC0BD1747D2E3003F42D6 /* CreateGameOperation.h */,
 				937BC0BE1747D2E3003F42D6 /* CreateGameOperation.m */,
-				9365110717415B0C00F2AD06 /* CreatePlayerOperation.h */,
-				9365110817415B0C00F2AD06 /* CreatePlayerOperation.m */,
 				93761EF4174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.h */,
 				93761EF5174AA7AD00DFE1F5 /* RemoveGamePlayerOperation.m */,
 				93C442E717511B15000DEC63 /* UpdateGameOperation.h */,
@@ -928,7 +923,6 @@
 				936510F517415A4E00F2AD06 /* SlickEditView.m in Sources */,
 				936510FE17415A9D00F2AD06 /* PlayerPicklistItems.m in Sources */,
 				936510FF17415A9D00F2AD06 /* PlayerViewController.m in Sources */,
-				9365110B17415B0C00F2AD06 /* CreatePlayerOperation.m in Sources */,
 				9365110C17415B0C00F2AD06 /* UpdatePlayerOperation.m in Sources */,
 				9365111117415B2000F2AD06 /* ImageEnvoy.m in Sources */,
 				9365111217415B2000F2AD06 /* PlayerEnvoy.m in Sources */,

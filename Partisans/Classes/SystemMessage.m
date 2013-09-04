@@ -24,7 +24,6 @@
 #import "AppDelegate.h"
 #import "CoordinatorVote.h"
 #import "CreateGameOperation.h"
-#import "CreatePlayerOperation.h"
 #import "GameDirector.h"
 #import "GameEnvoy.h"
 #import "GamePrecis.h"

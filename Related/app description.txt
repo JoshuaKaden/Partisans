@@ -1,0 +1,7 @@
+Partisans is a game of trust for five to ten players. It is similar to party games like Mafia and The Resistance.
+
+Gather the players on the same WiFi network, and become members of the Partisans, an imaginary group attempting to gain power. But beware: Your group has been infiltrated by undercover Operatives, who are bent on subverting your efforts.
+
+As a Partisan, you must do your best to discover the identities of the Operatives, and prevent them from sabotaging your missions. If you are an Operative, then you must do your best to avoid detection while secretly thwarting the group's plans.
+
+Please visit the support site for further details.
