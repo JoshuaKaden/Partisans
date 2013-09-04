@@ -43,6 +43,7 @@
 @property (nonatomic, strong) UIAlertView *leaveGameAlertView;
 @property (nonatomic, assign) JSKMenuViewController *menuViewController;
 @property (nonatomic, strong) RoundMenuItems *playerRoundMenuItems;
+@property (nonatomic, strong) NSTimer *pollingTimer;
 
 - (BOOL)isPlayerHost;
 - (void)confirmStopHosting;
@@ -67,12 +68,15 @@
 @synthesize leaveGameAlertView = m_leaveGameAlertView;
 @synthesize menuViewController = m_menuViewController;
 @synthesize playerRoundMenuItems = m_playerRoundMenuItems;
+@synthesize pollingTimer = m_pollingTimer;
+
 
 - (void)dealloc
 {
     [m_stopHostingAlertView setDelegate:nil];
     [m_leaveGameAlertView setDelegate:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.pollingTimer invalidate];
     
     [m_awaitingApproval release];
     [m_players release];
@@ -80,6 +84,7 @@
     [m_stopHostingAlertView release];
     [m_leaveGameAlertView release];
     [m_playerRoundMenuItems release];
+    [m_pollingTimer release];
     
     [super dealloc];
 }
@@ -134,6 +139,24 @@
     }
     return m_players;
 }
+
+
+#pragma mark - Polling Timer
+
+- (void)pollingTimerFired:(id)sender
+{
+    // Stop polling if the game has started.
+    if ([SystemMessage gameEnvoy].startDate)
+    {
+        [self.pollingTimer invalidate];
+        [[NSNotificationCenter defaultCenter] postNotificationName:JSKMenuViewControllerShouldRefresh object:nil];
+    }
+    else
+    {
+        [SystemMessage requestGameUpdate];
+    }
+}
+
 
 
 #pragma mark - Confirm dialogs
@@ -284,11 +307,19 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerUpdated:) name:kJSKNotificationPeerUpdated object:nil];
+    
+    // This timer polls the host for game changes.
+    if (![SystemMessage gameEnvoy].startDate)
+    {
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(pollingTimerFired:) userInfo:nil repeats:YES];
+        self.pollingTimer = timer;
+    }
 }
 
 
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
 {
+    self.players = nil;
     if ([SystemMessage isPlayerOnline])
     {
         if (![self isPlayerHost])

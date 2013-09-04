@@ -245,12 +245,12 @@
                 }
                 else
                 {
-                    returnValue = NSLocalizedString(@"Failed!", @"Failed!  --  label");
+                    returnValue = NSLocalizedString(@"Sabotage!", @"Sabotage!  --  label");
                 }
             }
             else
             {
-                returnValue = NSLocalizedString(@"In progress...", @"In progress  --  label");
+                returnValue = NSLocalizedString(@"In progress...", @"In progress...  --  label");
             }
             break;
         case MissionStatusSectionTeam:
@@ -315,6 +315,20 @@
     return returnValue;
 }
 
+- (UIFont *)menuViewController:(JSKMenuViewController *)menuViewController labelFontAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIFont *returnValue = nil;
+    if (indexPath.section == MissionStatusSectionStatus)
+    {
+        MissionEnvoy *mission = self.currentMission;
+        if (mission.isComplete)
+        {
+            returnValue = [UIFont fontWithName:@"GillSans-Bold" size:18.0f];
+        }
+    }
+    return returnValue;
+}
+
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
     Class returnValue = nil;
@@ -358,14 +372,29 @@
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == MissionStatusSectionTeam)
+    UITableViewCellAccessoryType returnValue = UITableViewCellAccessoryNone;
+    
+    if (indexPath.section == MissionStatusSectionStatus)
     {
-        return UITableViewCellAccessoryDisclosureIndicator;
+        MissionEnvoy *mission = self.currentMission;
+        if (mission.isComplete)
+        {
+            if ([SystemMessage isHost])
+            {
+                returnValue = UITableViewCellAccessoryDisclosureIndicator;
+            }
+            else if (self.hasNewRoundStarted || [SystemMessage gameEnvoy].endDate)
+            {
+                returnValue = UITableViewCellAccessoryDisclosureIndicator;
+            }
+        }
     }
-    else
+    else if (indexPath.section == MissionStatusSectionTeam)
     {
-        return UITableViewCellAccessoryNone;
+        returnValue = UITableViewCellAccessoryDisclosureIndicator;
     }
+    
+    return returnValue;
 }
 
 @end

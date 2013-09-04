@@ -65,8 +65,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 @interface SystemMessage () <NetHostDelegate, NetPlayerDelegate, ServerBrowserDelegate>
 
-@property (atomic, strong) NetHost *netHost;
-@property (atomic, strong) NetPlayer *netPlayer;
+@property (nonatomic, strong) NetHost *netHost;
+@property (nonatomic, strong) NetPlayer *netPlayer;
 @property (nonatomic, strong) NSMutableArray *stash;
 @property (nonatomic, strong) NSMutableArray *peerIDs;
 @property (nonatomic, strong) NSDictionary *playerDigest;
@@ -266,7 +266,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             dispatch_async(dispatch_get_main_queue(), ^
             {
                 [self sendDigestTo:commandParcel.from];
-                [self broadcastPlayerData:commandParcel.from];
+//                [self broadcastPlayerData:commandParcel.from];
                 // Update the UI.
                 [[NSNotificationCenter defaultCenter] postNotificationName:kJSKNotificationPeerUpdated object:otherEnvoy.peerID];
             });
@@ -369,24 +369,37 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         return;
     }
     
+    
+    NSString *peerID = playerEnvoy.peerID;
+    NSString *hostID = self.playerEnvoy.peerID;
+    
+    
     // Add this player to the game.
     AddGamePlayerOperation *op = [[AddGamePlayerOperation alloc] initWithPlayerEnvoy:playerEnvoy gameEnvoy:gameEnvoy];
 //    [gameEnvoy addPlayer:playerEnvoy];
 //    UpdateGameOperation *op = [[UpdateGameOperation alloc] initWithEnvoy:gameEnvoy];
-    [op setCompletionBlock:^(void) {
+    [op setCompletionBlock:^(void)
+    {
+        
         dispatch_async(dispatch_get_main_queue(), ^(void)
-       {
-           [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
-       });
-        // Then, once we've saved, send the game envoy to all players. All players need to know!
-        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
-                                                                       to:nil
-                                                                     from:self.playerEnvoy.peerID
-                                                                   object:gameEnvoy
-                                                              responseKey:responseKey];
-        [self.netHost broadcastCommandParcel:parcel];
-//        [SystemMessage sendParcelToPlayers:parcel];
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
+        });
+        
+        
+        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse to:peerID from:hostID object:gameEnvoy responseKey:responseKey];
+        [self.netHost sendCommandParcel:parcel];
         [parcel release];
+        
+        
+//        // Then, once we've saved, send the game envoy to all players. All players need to know!
+//        JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse
+//                                                                       to:nil
+//                                                                     from:self.playerEnvoy.peerID
+//                                                                   object:gameEnvoy
+//                                                              responseKey:responseKey];
+//        [self.netHost broadcastCommandParcel:parcel];
+//        [parcel release];
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];

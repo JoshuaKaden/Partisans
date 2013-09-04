@@ -260,7 +260,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     if ( self.readStream != nil ) {
         CFReadStreamUnscheduleFromRunLoop(self.readStream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
         CFReadStreamClose(self.readStream);
-//        CFRelease(self.readStream);
+        CFRelease(m_readStream);
         self.readStream = NULL;
     }
     
@@ -268,7 +268,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     if ( self.writeStream != nil ) {
         CFWriteStreamUnscheduleFromRunLoop(self.writeStream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
         CFWriteStreamClose(self.writeStream);
-//        CFRelease(self.writeStream);
+        CFRelease(m_writeStream);
         self.writeStream = NULL;
     }
     

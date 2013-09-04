@@ -48,7 +48,14 @@
     return NSLocalizedString(@"Play a Game", @"Play a Game  --  title");
 }
 
+
+
 - (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController
+{
+    return YES;
+}
+
+- (BOOL)menuViewControllerShouldAutoRefresh:(JSKMenuViewController *)menuViewController
 {
     return YES;
 }
@@ -65,6 +72,10 @@
     {
         return NSLocalizedString(@"WiFi is required, unfortunately.", @"WiFi is required, unfortunately.  --  header title");
     }
+    else if ([SystemMessage gameEnvoy])
+    {
+        return NSLocalizedString(@"There is a game in progress.", @"There is a game in progress.  --  header title");
+    }
     else
     {
         return nil;
@@ -75,7 +86,14 @@
 {
     if (section == 0)
     {
-        return PlayGameMenuRow_MaxValue;
+        if ([SystemMessage gameEnvoy])
+        {
+            return 0;
+        }
+        else
+        {
+            return PlayGameMenuRow_MaxValue;
+        }
     }
     else
     {

@@ -114,14 +114,15 @@
     
     [self.gameCodeTitleLabel setText:NSLocalizedString(@"The Game Code", @"The Game Code  --  label")];
 
-    NSUInteger gameCode = [SystemMessage sharedInstance].gameCode;
+    NSUInteger gameCode = 0; //[SystemMessage sharedInstance].gameCode;
     if (gameCode == 0)
     {
         GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
         gameCode = gameEnvoy.gameCode;
         if (!gameEnvoy)
         {
-            gameCode = (arc4random() % 8999) + 1000;
+            gameCode = 1000;
+//            gameCode = (arc4random() % 8999) + 1000;
         }
     }
     

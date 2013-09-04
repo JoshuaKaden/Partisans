@@ -35,26 +35,32 @@
 
 //#import "SystemMessage.h"
 
+
 // Declare some private properties and methods
 @interface Server ()
-@property(nonatomic,assign) uint16_t port;
-@property(nonatomic,retain) NSNetService* netService;
+
+@property (nonatomic, assign) uint16_t port;
+@property (nonatomic, assign) CFSocketRef listeningSocket;
+@property (nonatomic, retain) NSNetService *netService;
 
 - (BOOL)createServer;
 - (void)terminateServer;
 
 - (BOOL)publishService;
 - (void)unpublishService;
+
 @end
 
 
 // Implementation of the Server interface
 @implementation Server
 
-@synthesize delegate;
-@synthesize port;
+@synthesize delegate = m_delegate;
+@synthesize port = m_port;
+@synthesize listeningSocket = m_listeningSocket;
 @synthesize netService = m_netService;
 @synthesize serviceName = m_serviceName;
+
 
 // Cleanup
 - (void)dealloc
@@ -68,75 +74,91 @@
 
 
 // Create server and announce it
-- (BOOL)start {
-  // Start the socket server
-  if ( ! [self createServer] ) {
-    return NO;
-  }
-  
-  // Announce the server via Bonjour
-  if ( ! [self publishService] ) {
-    [self terminateServer];
-    return NO;
-  }
-  
-  return YES;
+- (BOOL)start
+{
+    // Start the socket server
+    if ( ! [self createServer] )
+    {
+        return NO;
+    }
+
+    // Announce the server via Bonjour
+    if ( ! [self publishService] )
+    {
+        [self terminateServer];
+        return NO;
+    }
+
+    return YES;
 }
 
 
 // Close everything
-- (void)stop {
-  [self terminateServer];
-  [self unpublishService];
+- (void)stop
+{
+    [self terminateServer];
+    [self unpublishService];
 }
 
 
 #pragma mark Callbacks
 
 // Handle new connections
-- (void)handleNewNativeSocket:(CFSocketNativeHandle)nativeSocketHandle {
-  NetConnection* connection = [[[NetConnection alloc] initWithNativeSocketHandle:nativeSocketHandle] autorelease];
-  
-  // In case of errors, close native socket handle
-  if ( connection == nil ) {
-    close(nativeSocketHandle);
-    return;
-  }
-  
-  // finish connecting
-  if ( ! [connection connect] ) {
-    [connection close];
-    return;
-  }
-  
-  // Pass this on to our delegate
-  [delegate handleNewConnection:connection];
+- (void)handleNewNativeSocket:(CFSocketNativeHandle)nativeSocketHandle
+{
+    NetConnection *connection = [[NetConnection alloc] initWithNativeSocketHandle:nativeSocketHandle];
+    
+    BOOL shouldPassToDelegate = YES;
+    
+    // In case of errors, close native socket handle
+    if ( connection == nil )
+    {
+        close(nativeSocketHandle);
+        shouldPassToDelegate = NO;
+    }
+
+    // finish connecting
+    if ( ! [connection connect] )
+    {
+        [connection close];
+        shouldPassToDelegate = NO;
+    }
+
+    // Pass this on to our delegate
+    if (shouldPassToDelegate)
+    {
+        [self.delegate handleNewConnection:connection];
+    }
+    
+    [connection release];
 }
 
 
 // This function will be used as a callback while creating our listening socket via 'CFSocketCreate'
-static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, CFDataRef address, const void *data, void *info) {
-  Server *server = (Server*)info;
-  
-  // We can only process "connection accepted" calls here
-  if ( type != kCFSocketAcceptCallBack ) {
-    return;
-  }
-  
-  // for an AcceptCallBack, the data parameter is a pointer to a CFSocketNativeHandle
-  CFSocketNativeHandle nativeSocketHandle = *(CFSocketNativeHandle*)data;
+static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, CFDataRef address, const void *data, void *info)
+{
+    Server *server = (Server*)info;
 
-  [server handleNewNativeSocket:nativeSocketHandle];
+    // We can only process "connection accepted" calls here
+    if ( type != kCFSocketAcceptCallBack )
+    {
+        return;
+    }
+
+    // for an AcceptCallBack, the data parameter is a pointer to a CFSocketNativeHandle
+    CFSocketNativeHandle nativeSocketHandle = *(CFSocketNativeHandle*)data;
+
+    [server handleNewNativeSocket:nativeSocketHandle];
 }
 
 
 #pragma mark Sockets and streams
 
-- (BOOL)createServer {
+- (BOOL)createServer
+{
+    //// PART 1: Create a socket that can accept connections
 
-  //// PART 1: Create a socket that can accept connections
-
-  // Socket context
+    // Socket context
     //  struct CFSocketContext {
     //   CFIndex version;
     //   void *info;
@@ -144,145 +166,154 @@ static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, 
     //   CFAllocatorReleaseCallBack release;
     //   CFAllocatorCopyDescriptionCallBack copyDescription;
     //  };
-  CFSocketContext socketCtxt = {0, self, NULL, NULL, NULL};
+    CFSocketContext socketCtxt = {0, self, NULL, NULL, NULL};
 
-  listeningSocket = CFSocketCreate(
-    kCFAllocatorDefault,
-    PF_INET,        // The protocol family for the socket
-    SOCK_STREAM,    // The socket type to create
-    IPPROTO_TCP,    // The protocol for the socket. TCP vs UDP.
-    kCFSocketAcceptCallBack,  // New connections will be automatically accepted and the callback is called with the data argument being a pointer to a CFSocketNativeHandle of the child socket.
-    (CFSocketCallBack)&serverAcceptCallback,
-    &socketCtxt );
-   
-  // Previous call might have failed
-  if ( listeningSocket == NULL ) {
-    return NO;
-  }
+    self.listeningSocket = CFSocketCreate(
+        kCFAllocatorDefault,
+        PF_INET,        // The protocol family for the socket
+        SOCK_STREAM,    // The socket type to create
+        IPPROTO_TCP,    // The protocol for the socket. TCP vs UDP.
+        kCFSocketAcceptCallBack,  // New connections will be automatically accepted and the callback is called with the data argument being a pointer to a CFSocketNativeHandle of the child socket.
+        (CFSocketCallBack)&serverAcceptCallback,
+        &socketCtxt );
 
-  // getsockopt will return existing socket option value via this variable
-  int existingValue = 1;
-
-  // Make sure that same listening socket address gets reused after every connection
-  setsockopt( CFSocketGetNative(listeningSocket),
-    SOL_SOCKET, SO_REUSEADDR, (void *)&existingValue,
-    sizeof(existingValue));
-
-
-  //// PART 2: Bind our socket to an endpoint.
-  // We will be listening on all available interfaces/addresses.
-  // Port will be assigned automatically by kernel.
-  struct sockaddr_in socketAddress;
-  memset(&socketAddress, 0, sizeof(socketAddress));
-  socketAddress.sin_len = sizeof(socketAddress);
-  socketAddress.sin_family = AF_INET;   // Address family (IPv4 vs IPv6)
-  socketAddress.sin_port = 0;           // Actual port will get assigned automatically by kernel
-  socketAddress.sin_addr.s_addr = htonl(INADDR_ANY);    // We must use "network byte order" format (big-endian) for the value here
-  
-  // Convert the endpoint data structure into something that CFSocket can use
-  NSData *socketAddressData =
-    [NSData dataWithBytes:&socketAddress length:sizeof(socketAddress)];
-  
-  // Bind our socket to the endpoint. Check if successful.
-  if ( CFSocketSetAddress(listeningSocket,
-      (CFDataRef)socketAddressData) != kCFSocketSuccess ) {
-    // Cleanup
-    if ( listeningSocket != NULL ) {
-      CFRelease(listeningSocket);
-      listeningSocket = NULL;
+    // Previous call might have failed
+    if ( self.listeningSocket == NULL )
+    {
+        return NO;
     }
-    
-    return NO;
-  }
-  
 
-  //// PART 3: Find out what port kernel assigned to our socket
-  // We need it to advertise our service via Bonjour
-  NSData *socketAddressActualData = 
-      [(NSData *)CFSocketCopyAddress(listeningSocket) autorelease];
+    // getsockopt will return existing socket option value via this variable
+    int existingValue = 1;
 
-  // Convert socket data into a usable structure
-  struct sockaddr_in socketAddressActual;
-  memcpy(&socketAddressActual, [socketAddressActualData bytes],
+    // Make sure that same listening socket address gets reused after every connection
+    setsockopt( CFSocketGetNative(self.listeningSocket),
+               SOL_SOCKET, SO_REUSEADDR, (void *)&existingValue,
+               sizeof(existingValue));
+
+
+    //// PART 2: Bind our socket to an endpoint.
+    // We will be listening on all available interfaces/addresses.
+    // Port will be assigned automatically by kernel.
+    struct sockaddr_in socketAddress;
+    memset(&socketAddress, 0, sizeof(socketAddress));
+    socketAddress.sin_len = sizeof(socketAddress);
+    socketAddress.sin_family = AF_INET;   // Address family (IPv4 vs IPv6)
+    socketAddress.sin_port = 0;           // Actual port will get assigned automatically by kernel
+    socketAddress.sin_addr.s_addr = htonl(INADDR_ANY);    // We must use "network byte order" format (big-endian) for the value here
+
+    // Convert the endpoint data structure into something that CFSocket can use
+    NSData *socketAddressData =
+    [NSData dataWithBytes:&socketAddress length:sizeof(socketAddress)];
+
+    // Bind our socket to the endpoint. Check if successful.
+    if ( CFSocketSetAddress(self.listeningSocket, (CFDataRef)socketAddressData) != kCFSocketSuccess )
+    {
+        // Cleanup
+        if ( self.listeningSocket != NULL )
+        {
+            CFRelease(m_listeningSocket);
+            self.listeningSocket = NULL;
+        }
+
+        return NO;
+    }
+
+
+    //// PART 3: Find out what port kernel assigned to our socket
+    // We need it to advertise our service via Bonjour
+    NSData *socketAddressActualData = (NSData *)CFSocketCopyAddress(self.listeningSocket);
+
+    // Convert socket data into a usable structure
+    struct sockaddr_in socketAddressActual;
+    memcpy(&socketAddressActual, [socketAddressActualData bytes],
       [socketAddressActualData length]);
       
-  self.port = ntohs(socketAddressActual.sin_port);
-  
-  //// PART 4: Hook up our socket to the current run loop
-  CFRunLoopRef currentRunLoop = CFRunLoopGetCurrent();
-  CFRunLoopSourceRef runLoopSource = CFSocketCreateRunLoopSource(kCFAllocatorDefault, listeningSocket, 0);
-  CFRunLoopAddSource(currentRunLoop, runLoopSource, kCFRunLoopCommonModes);
-  CFRelease(runLoopSource);
-  
-  return YES;
+    self.port = ntohs(socketAddressActual.sin_port);
+
+    //// PART 4: Hook up our socket to the current run loop
+    CFRunLoopRef currentRunLoop = CFRunLoopGetCurrent();
+    CFRunLoopSourceRef runLoopSource = CFSocketCreateRunLoopSource(kCFAllocatorDefault, self.listeningSocket, 0);
+    CFRunLoopAddSource(currentRunLoop, runLoopSource, kCFRunLoopCommonModes);
+    CFRelease(runLoopSource);
+
+    [socketAddressActualData release];
+    
+    return YES;
 }
 
 
-- (void) terminateServer {
-  if ( listeningSocket != nil ) {
-    CFSocketInvalidate(listeningSocket);
-		CFRelease(listeningSocket);
-		listeningSocket = nil;
+- (void) terminateServer
+{
+  if ( self.listeningSocket != nil )
+  {
+      CFSocketInvalidate(self.listeningSocket);
+      CFRelease(m_listeningSocket);
+      self.listeningSocket = nil;
   }
 }
 
 
 #pragma mark Bonjour
 
-- (BOOL) publishService {
-  // come up with a name for our service
+- (BOOL) publishService
+{
+    // come up with a name for our service
     NSString* serviceName = self.serviceName;
 
-  // create new instance of netService
+    // create new instance of netService
     NSNetService *netService = [[NSNetService alloc] initWithDomain:@"" type:@"_partisans._tcp." name:serviceName port:self.port];
     self.netService = netService;
     [netService release];
-// 	self.netService = [[NSNetService alloc]
-//      initWithDomain:@"" type:@"_partisans._tcp."
-//      name:chatRoomName port:self.port];
-	if (!self.netService)
-		return NO;
+    // 	self.netService = [[NSNetService alloc]
+    //      initWithDomain:@"" type:@"_partisans._tcp."
+    //      name:chatRoomName port:self.port];
+    if (!self.netService)
+    return NO;
 
-  // Add service to current run loop
-	[self.netService scheduleInRunLoop:[NSRunLoop currentRunLoop]
-      forMode:NSRunLoopCommonModes];
+    // Add service to current run loop
+    [self.netService scheduleInRunLoop:[NSRunLoop currentRunLoop]
+    forMode:NSRunLoopCommonModes];
 
-  // NetService will let us know about what's happening via delegate methods
-	[self.netService setDelegate:(id<NSNetServiceDelegate>)self];
-  
-  // Publish the service
-	[self.netService publish];
-  
-  return YES;
+    // NetService will let us know about what's happening via delegate methods
+    [self.netService setDelegate:(id<NSNetServiceDelegate>)self];
+
+    // Publish the service
+    [self.netService publish];
+
+    return YES;
 }
 
 
-- (void) unpublishService {
-  if ( self.netService ) {
-		[self.netService stop];
-		[self.netService removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-		self.netService = nil;
-	}
+- (void) unpublishService
+{
+    if ( self.netService )
+    {
+        [self.netService stop];
+        [self.netService removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+        self.netService = nil;
+    }
 }
 
 
-#pragma mark -
-#pragma mark NSNetService Delegate Method Implementations
+#pragma mark - NSNetService Delegate Method Implementations
 
 // Delegate method, called by NSNetService in case service publishing fails for whatever reason
-- (void)netService:(NSNetService*)sender didNotPublish:(NSDictionary*)errorDict {
-  if ( sender != self.netService ) {
-    return;
-  }
-  
-  // Stop socket server
-  [self terminateServer];
-  
-  // Stop Bonjour
-  [self unpublishService];
-  
-  // Let delegate know about failure
-  [delegate serverFailed:self reason:@"Failed to publish service via Bonjour (duplicate server name?)"];
+- (void)netService:(NSNetService*)sender didNotPublish:(NSDictionary*)errorDict
+{
+    if ( sender != self.netService )
+    {
+        return;
+    }
+
+    // Stop socket server
+    [self terminateServer];
+
+    // Stop Bonjour
+    [self unpublishService];
+
+    // Let delegate know about failure
+    [self.delegate serverFailed:self reason:@"Failed to publish service via Bonjour (duplicate server name?)"];
 }
 
 @end

@@ -69,11 +69,12 @@ NSString * const JSKSymbolDown  = @"▼";
 }
 
 
-- (id)init {
+- (id)init
+{
 	if ((self = [super init]))
 	{
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        [queue setName:@"com.chadfordsoftware.questPlayerQueue"];
+        [queue setName:@"com.chadfordsoftware.mainQueue"];
         [queue setMaxConcurrentOperationCount:1];
         self.queue = queue;
         [queue release];

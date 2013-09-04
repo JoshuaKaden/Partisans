@@ -438,6 +438,25 @@
     return nil;
 }
 
+
+- (UIFont *)menuViewController:(JSKMenuViewController *)menuViewController labelFontAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == DecisionMenuSectionStatus)
+    {
+        RoundEnvoy *roundEnvoy = self.currentRound;
+        UIFont *returnValue = nil;
+        if ([roundEnvoy isVotingComplete])
+        {
+            returnValue = [UIFont fontWithName:@"GillSans-Bold" size:18.0f];
+        }
+        return returnValue;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 - (Class)menuViewController:(JSKMenuViewController *)menuViewController targetViewControllerClassAtIndexPath:(NSIndexPath *)indexPath
 {
     Class returnValue = nil;
@@ -470,13 +489,21 @@
 
 - (UITableViewCellAccessoryType)menuViewController:(JSKMenuViewController *)menuViewController cellAccessoryTypeForIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.section == DecisionMenuSectionStatus)
-//    {
-//        if ([[self currentRound] isVotingComplete])
-//        {
-//            return UITableViewCellAccessoryDisclosureIndicator;
-//        }
-//    }
+    if (indexPath.section == DecisionMenuSectionStatus)
+    {
+        RoundEnvoy *round = [self currentRound];
+        if ([round isVotingComplete])
+        {
+            if ([SystemMessage isHost])
+            {
+                return UITableViewCellAccessoryDisclosureIndicator;
+            }
+            else if (self.hasNewRoundStarted || self.hasMissionStarted || [SystemMessage gameEnvoy].endDate)
+            {
+                return UITableViewCellAccessoryDisclosureIndicator;
+            }
+        }
+    }
     return UITableViewCellAccessoryNone;
 }
 
