@@ -818,6 +818,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Chadford Software";
+				TargetAttributes = {
+					9365108E1741578C00F2AD06 = {
+						DevelopmentTeam = NF2C9YRD83;
+					};
+				};
 			};
 			buildConfigurationList = 9365108A1741578B00F2AD06 /* Build configuration list for PBXProject "Partisans" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1057,10 +1062,11 @@
 		936510AD1741578C00F2AD06 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
 				INFOPLIST_FILE = "Partisans/Partisans-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1069,12 +1075,12 @@
 		936510AE1741578C00F2AD06 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
 				INFOPLIST_FILE = "Partisans/Partisans-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
