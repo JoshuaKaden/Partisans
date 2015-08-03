@@ -44,14 +44,6 @@
 @synthesize shouldNotShrinkToFit = m_shouldNotShrinkToFit;
 
 
-- (void)dealloc {
-    
-    [m_views release];
-    [m_borderColor release];
-    [m_textColor release];
-    [m_backgroundColor release];
-    [super dealloc];
-}
 
 
 
@@ -76,7 +68,6 @@
     if (!self.views) {
         NSMutableArray *views = [[NSMutableArray alloc] init];
         self.views = views;
-        [views release];
     }
     
     if (self.views.count == 0) {
@@ -153,8 +144,7 @@
 - (void)setTextColor:(UIColor *)textColor {
     
     if (m_textColor != textColor) {
-        [m_textColor release];
-        m_textColor = [textColor retain];
+        m_textColor = textColor;
     }
     
     for (UIView *view in self.views) {
@@ -168,8 +158,7 @@
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
     
     if (m_backgroundColor != backgroundColor) {
-        [m_backgroundColor release];
-        m_backgroundColor = [backgroundColor retain];
+        m_backgroundColor = backgroundColor;
     }
     
     for (UIView *view in self.views) {

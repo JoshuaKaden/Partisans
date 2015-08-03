@@ -36,11 +36,6 @@
 
 
 
-- (void)dealloc
-{
-    [m_labelProgressView release];
-    [super dealloc];
-}
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

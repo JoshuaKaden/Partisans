@@ -58,10 +58,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.pollingTimer invalidate];
     
-    [m_currentRound release];
-    [m_pollingTimer release];
     
-    [super dealloc];
 }
 
 

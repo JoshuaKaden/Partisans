@@ -33,6 +33,6 @@
 
 @interface DossierViewController : UIViewController
 
-@property (nonatomic, assign) id <DossierViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <DossierViewControllerDelegate> delegate;
 
 @end

@@ -111,19 +111,7 @@
     [m_confirmDeleteAlertView setDelegate:nil];
     [m_popover setDelegate:nil];
     
-    [m_editView release];
-    [m_playerEnvoy release];
-    [m_changePictureAlertView release];
-    [m_confirmDeleteAlertView release];
-    [m_oldName release];
-    [m_oldFavoriteColor release];
-    [m_oldPicture release];
-    [m_playerPicklistItems release];
-    [m_popover release];
-    [m_cancelEditBarButton release];
-    [m_defaultBackButtonItem release];
     
-    [super dealloc];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -278,7 +266,6 @@
     {
         UIBarButtonItem *cancelEditBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(hideEditView:)];
         self.cancelEditBarButton = cancelEditBarButton;
-        [cancelEditBarButton release];
     }
 //    if (!self.defaultBackButtonItem)
 //    {
@@ -297,7 +284,6 @@
     [editView setPlaceholder:NSLocalizedString(@"What's your name?", @"What's your name?  --  placeholder text")];
     [self.view addSubview:editView];
     self.editView = editView;
-    [editView release];
     
     [UIView animateWithDuration:0.2f
                      animations:^ {
@@ -358,7 +344,6 @@
     {
         ImageEnvoy *imageEnvoy = [[ImageEnvoy alloc] init];
         playerEnvoy.picture = imageEnvoy;
-        [imageEnvoy release];
     }
     
     if (!playerEnvoy.picture.image)
@@ -405,7 +390,6 @@
                                   @"Photo Library",
                                   @"Clear", nil];
         self.changePictureAlertView = alertView;
-        [alertView release];
     }
     
     [self.changePictureAlertView show];
@@ -465,7 +449,6 @@
                 [vc setSourceType:UIImagePickerControllerSourceTypeCamera];
                 
                 [self.navigationController presentViewController:vc animated:YES completion:nil];
-                [vc release];
             }
             break;
             
@@ -485,7 +468,6 @@
                     UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:vc];
                     [popover setDelegate:self];
                     self.popover = popover;
-                    [popover release];
                     CGRect popoverRect = self.changePictureButton.frame;
                     [self.popover presentPopoverFromRect:popoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionRight animated:YES];
                 }
@@ -494,7 +476,6 @@
                     [self.navigationController presentViewController:vc animated:YES completion:nil];
                 }
                 
-                [vc release];
             }
             break;
         }
@@ -514,7 +495,6 @@
                     UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:vc];
                     [popover setDelegate:self];
                     self.popover = popover;
-                    [popover release];
                     CGRect popoverRect = self.changePictureButton.frame;
                     [self.popover presentPopoverFromRect:popoverRect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionRight animated:YES];
                 }
@@ -523,7 +503,6 @@
                     [self.navigationController presentViewController:vc animated:YES completion:nil];
                 }
                 
-                [vc release];
             }
             break;
             
@@ -546,7 +525,6 @@
     [vc setTitle:NSLocalizedString(@"Favorite Color", @"Favorite Color  --  title")];
         
     [self.navigationController pushViewController:vc animated:YES];
-    [vc release];
 }
 
 - (IBAction)saveButtonPressed:(id)sender
@@ -579,7 +557,6 @@
                                                                      from:self.playerEnvoy.peerID
                                                                    object:self.playerEnvoy];
         [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:NO];
-        [parcel release];
     }
 }
 
@@ -592,10 +569,8 @@
     JSKMenuViewController *menuViewController = [[JSKMenuViewController alloc] init];
     [menuViewController setDelegate:picklistItems];
     self.playerPicklistItems = picklistItems;
-    [picklistItems release];
     
     [self.navigationController pushViewController:menuViewController animated:YES];
-    [menuViewController release];
 }
 
 - (IBAction)deleteButtonPressed:(id)sender
@@ -608,7 +583,6 @@
                                                   cancelButtonTitle:@"Cancel"
                                                   otherButtonTitles:@"Yes", nil];
         self.confirmDeleteAlertView = alertView;
-        [alertView release];
     }
     
     [self.confirmDeleteAlertView show];
@@ -686,7 +660,6 @@
         imageEnvoy.image = smallerImage;
         playerEnvoy.picture = imageEnvoy;
         playerEnvoy.isDefaultPicture = NO;
-        [imageEnvoy release];
     }
     imageEnvoy.image = smallerImage;
     playerEnvoy.isDefaultPicture = NO;

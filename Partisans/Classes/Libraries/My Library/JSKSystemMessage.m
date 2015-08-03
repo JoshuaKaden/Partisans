@@ -49,14 +49,6 @@ NSString * const JSKSymbolDown  = @"▼";
 @synthesize myPeerID = m_myPeerID;
 
 
-- (void)dealloc {
-    
-    [m_queue release];
-    [m_dataFileSharingDirectory release];
-    [m_myPeerID release];
-    
-    [super dealloc];
-}
 
 
 + (JSKSystemMessage *)sharedInstance {
@@ -77,7 +69,6 @@ NSString * const JSKSymbolDown  = @"▼";
         [queue setName:@"com.chadfordsoftware.mainQueue"];
         [queue setMaxConcurrentOperationCount:1];
         self.queue = queue;
-        [queue release];
         
         // This is the place where we'll put export files and look for import files if we're using iTunes File Sharing.
         self.dataFileSharingDirectoryURL = [self applicationDocumentsDirectory];

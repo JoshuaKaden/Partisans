@@ -25,13 +25,13 @@
 
 @interface Scorecard : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * gamesPlayed;
-@property (nonatomic, retain) NSNumber * gamesWon;
-@property (nonatomic, retain) NSNumber * missionsLed;
-@property (nonatomic, retain) NSNumber * missionsPerformed;
-@property (nonatomic, retain) NSNumber * missionsSabotaged;
-@property (nonatomic, retain) NSNumber * successfulMissionsLed;
-@property (nonatomic, retain) Player *operativePlayer;
-@property (nonatomic, retain) Player *partisanPlayer;
+@property (nonatomic, strong) NSNumber * gamesPlayed;
+@property (nonatomic, strong) NSNumber * gamesWon;
+@property (nonatomic, strong) NSNumber * missionsLed;
+@property (nonatomic, strong) NSNumber * missionsPerformed;
+@property (nonatomic, strong) NSNumber * missionsSabotaged;
+@property (nonatomic, strong) NSNumber * successfulMissionsLed;
+@property (nonatomic, strong) Player *operativePlayer;
+@property (nonatomic, strong) Player *partisanPlayer;
 
 @end

@@ -35,7 +35,7 @@ typedef enum
 
 @property (nonatomic, assign)   JSKCommandParcelType commandParcelType;
 @property (nonatomic, strong)   NSString *responseKey;
-@property (readonly, nonatomic) NSString *commandParcelTypeName;
+@property (weak, readonly, nonatomic) NSString *commandParcelTypeName;
 @property (nonatomic, strong)   NSString *to;
 @property (nonatomic, strong)   NSString *from;
 @property (nonatomic, strong)   NSObject <NSCoding> *object;

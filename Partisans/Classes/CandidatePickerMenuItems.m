@@ -51,16 +51,6 @@
 //@synthesize dossierMenuItems = m_dossierMenuItems;
 
 
-- (void)dealloc
-{
-    [m_gameEnvoy release];
-    [m_currentRound release];
-    [m_currentMission release];
-    [m_players release];
-    [m_candidates release];
-//    [m_dossierMenuItems release];
-    [super dealloc];
-}
 
 
 //- (DossierMenuItems *)dossierMenuItems
@@ -158,7 +148,6 @@
         NSMutableArray *list = [[NSMutableArray alloc] initWithArray:self.candidates];
         [list removeObject:playerEnvoy];
         self.candidates = [NSArray arrayWithArray:list];
-        [list release];
     }
     else
     {

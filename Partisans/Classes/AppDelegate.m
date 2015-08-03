@@ -35,24 +35,16 @@
 
 @synthesize navigationController = m_navigationController;
 
-- (void)dealloc
-{
-    [_window release];
-    [m_navigationController release];
-    [super dealloc];
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
     
     RootViewController *rootViewController = [[RootViewController alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
-    [rootViewController release];
     self.navigationController = navigationController;
-    [navigationController release];
     
     [self.window setRootViewController:self.navigationController];
     

@@ -37,9 +37,7 @@
 {
     self.imageView.image = nil;
     
-    [m_imageView release];
     
-    [super dealloc];
 }
 
 

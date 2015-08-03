@@ -36,12 +36,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.textField setDelegate:nil];
     
-    [m_view release];
-    [m_echoLabel release];
-    [m_textField release];
-    [m_placeholder release];
     
-    [super dealloc];
 }
 
 

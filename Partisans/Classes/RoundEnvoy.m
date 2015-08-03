@@ -58,17 +58,6 @@
 @synthesize voteEnvoys = m_voteEnvoys;
 
 
-- (void)dealloc
-{
-    [m_managedObjectID release];
-    [m_intramuralID release];
-    [m_gameID release];
-    [m_coordinatorID release];
-    [m_candidateIDs release];
-    [m_voteEnvoys release];
-    
-    [super dealloc];
-}
 
 
 - (PlayerEnvoy *)coordinator
@@ -91,10 +80,8 @@
         [candidateList addObject:[PlayerEnvoy envoyFromIntramuralID:candidateID]];
     }
     NSArray *returnValue = [NSArray arrayWithArray:candidateList];
-    [candidateList release];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerName" ascending:YES];
     returnValue = [returnValue sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    [sortDescriptor release];
     return returnValue;
 }
 
@@ -136,7 +123,6 @@
         }
     }
     self.candidateIDs = [NSArray arrayWithArray:candidateList];
-    [candidateList release];
 }
 
 
@@ -151,10 +137,8 @@
     {
         VoteEnvoy *voteEnvoy = [[VoteEnvoy alloc] initWithManagedObject:vote];
         [list addObject:voteEnvoy];
-        [voteEnvoy release];
     }
     self.voteEnvoys = [NSArray arrayWithArray:list];
-    [list release];
 }
 
 - (void)addVote:(VoteEnvoy *)voteEnvoy
@@ -342,7 +326,7 @@
 
 + (RoundEnvoy *)envoyFromManagedObject:(Round *)managedObject
 {
-    RoundEnvoy *envoy = [[[RoundEnvoy alloc] initWithManagedObject:managedObject] autorelease];
+    RoundEnvoy *envoy = [[RoundEnvoy alloc] initWithManagedObject:managedObject];
     return envoy;
 }
 

@@ -58,14 +58,6 @@ static NSString * const kDataManagerSQLiteName = @"Partisans.sqlite";
 }
 
 
-- (void)dealloc {
-    
-    [m_managedObjectModel release];
-    [m_mainObjectContext release];
-    [m_persistentStoreCoordinator release];
-    [m_importedIDsMap release];
-    [super dealloc];
-}
 
 
 
@@ -319,7 +311,6 @@ static NSString * const kDataManagerSQLiteName = @"Partisans.sqlite";
     [mapList setValue:localObjectID forKey:importedObjectString];
     
     [self sharedInstance].importedIDsMap = [NSDictionary dictionaryWithDictionary:mapList];
-    [mapList release];
 }
 
 

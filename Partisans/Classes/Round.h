@@ -25,13 +25,13 @@
 
 @interface Round : NSManagedObject
 
-@property (nonatomic, retain) NSString * intramuralID;
-@property (nonatomic, retain) NSNumber * roundNumber;
-@property (nonatomic, retain) Game *game;
-@property (nonatomic, retain) GamePlayer *leader;
-@property (nonatomic, retain) Mission *mission;
-@property (nonatomic, retain) NSSet *missionCandidates;
-@property (nonatomic, retain) NSSet *votes;
+@property (nonatomic, strong) NSString * intramuralID;
+@property (nonatomic, strong) NSNumber * roundNumber;
+@property (nonatomic, strong) Game *game;
+@property (nonatomic, strong) GamePlayer *leader;
+@property (nonatomic, strong) Mission *mission;
+@property (nonatomic, strong) NSSet *missionCandidates;
+@property (nonatomic, strong) NSSet *votes;
 @end
 
 @interface Round (CoreDataGeneratedAccessors)

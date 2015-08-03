@@ -123,20 +123,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [m_netPlayer setDelegate:nil];
     [m_serverBrowser setDelegate:nil];
     
-    [m_playerEnvoy release];
-    [m_netHost release];
-    [m_netPlayer release];
-    [m_gameEnvoy release];
-    [m_stash release];
-    [m_peerIDs release];
-    [m_playerDigest release];
-    [m_hostPeerID release];
-    [m_serverBrowser release];
-    [m_gameDirector release];
-    [m_imageCache release];
-    [m_playerCache release];
     
-    [super dealloc];
 }
 
 
@@ -161,7 +148,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     {
         cache = [[NSCache alloc] init];
         [self sharedInstance].imageCache = cache;
-        [cache release];
     }
     else
     {
@@ -178,13 +164,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     {
         cache = [[NSCache alloc] init];
         [self sharedInstance].imageCache = cache;
-        [cache release];
     }
     else
     {
         NSString *smallKey = [[NSString alloc] initWithFormat:@"%@-small", key];
         returnValue = [cache objectForKey:smallKey];
-        [smallKey release];
     }
     return returnValue;
 }
@@ -198,12 +182,10 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     {
         NSCache *newCache = [[NSCache alloc] init];
         [self sharedInstance].imageCache = newCache;
-        [newCache release];
         cache = [self sharedInstance].imageCache;
     }
     [cache setObject:image forKey:key];
     [cache setObject:smallerImage forKey:smallKey];
-    [smallKey release];
 }
 
 + (void)clearImageCache
@@ -224,7 +206,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     {
         cache = [[NSCache alloc] init];
         [self sharedInstance].playerCache = cache;
-        [cache release];
     }
     else
     {
@@ -272,7 +253,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
         [queue addOperation:op];
-        [op release];
         return;
     }
 }
@@ -286,7 +266,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
                                                                object:digest
                                                           responseKey:nil];
     [self.netHost sendCommandParcel:parcel];
-    [parcel release];
 }
 
 - (NSDictionary *)buildDigestFor:(NSString *)forPeerID
@@ -301,7 +280,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         }
     }
     NSDictionary *returnValue = [NSDictionary dictionaryWithDictionary:digest];
-    [digest release];
     return returnValue;
 }
 
@@ -316,7 +294,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         {
             JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:player.peerID from:self.playerEnvoy.peerID object:envoy];
             [self.netHost sendCommandParcel:parcel];
-            [parcel release];
         }
     }
 }
@@ -330,7 +307,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         {
             NSMutableArray *stash = [[NSMutableArray alloc] initWithCapacity:kPartisansMaxPlayers - 1];
             self.stash = stash;
-            [stash release];
         }
         [self.stash addObject:message];
         return;
@@ -388,7 +364,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         
         JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeResponse to:peerID from:hostID object:gameEnvoy responseKey:responseKey];
         [self.netHost sendCommandParcel:parcel];
-        [parcel release];
         
         
 //        // Then, once we've saved, send the game envoy to all players. All players need to know!
@@ -402,7 +377,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
-    [op release];
 }
 
 
@@ -433,13 +407,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:parcel.from from:self.playerEnvoy.peerID];
             message.responseKey = parcel.responseKey;
             [self.netHost sendCommandMessage:message];
-            [message release];
 //            [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
-    [op release];
 }
 
 
@@ -457,13 +429,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:parcel.from from:self.playerEnvoy.peerID];
             message.responseKey = parcel.responseKey;
             [self.netHost sendCommandMessage:message];
-            [message release];
             [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
-    [op release];
 }
 
 
@@ -493,13 +463,11 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             JSKCommandMessage *response = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeAcknowledge to:message.from from:self.playerEnvoy.peerID];
             response.responseKey = message.responseKey;
             [self.netHost sendCommandMessage:response];
-            [response release];
             [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
-    [op release];
 }
 
 
@@ -522,14 +490,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     [op setCompletionBlock:^(void) {
         JSKCommandParcel *gameParcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:self.playerEnvoy.peerID object:gameEnvoy];
         [SystemMessage sendParcelToPlayers:gameParcel];
-        [gameParcel release];
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kPartisansNotificationGameChanged object:nil];
         });
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
-    [op release];
 }
 
 
@@ -576,7 +542,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     
     JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeJoinGame to:toPeerID from:[SystemMessage playerEnvoy].peerID];
     [SystemMessage sendCommandMessage:msg shouldAwaitResponse:YES];
-    [msg release];
 }
 
 - (void)handleJoinGameResponse:(JSKCommandParcel *)response
@@ -612,7 +577,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     }];
     NSOperationQueue *queue = [SystemMessage mainQueue];
     [queue addOperation:op];
-    [op release];
 }
 
 
@@ -666,7 +630,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             // Note the use of the "to" field here, to indicate that we're interested in that player's info, not (necessarily) the recipient's.
             JSKCommandMessage *message = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:otherID from:playerEnvoy.peerID];
             [SystemMessage sendCommandMessage:message shouldAwaitResponse:YES];
-            [message release];
             wasNewDataRequested = YES;
         }
     }
@@ -722,7 +685,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
         [queue addOperation:op];
-        [op release];
     }
 }
 
@@ -853,7 +815,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             // Let's get their data.
             JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeGetInfo to:commandMessage.from from:self.playerEnvoy.peerID];
             [self.netHost sendCommandMessage:msg shouldAwaitResponse:YES];
-            [msg release];
             break;
         }
         case JSKCommandMessageTypeLeaveGame:
@@ -877,7 +838,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
                                                                      object:responseObject
                                                                 responseKey:commandMessage.responseKey];
         [netHost sendCommandParcel:response];
-        [response release];
     }
 }
 
@@ -938,7 +898,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
                                                                      object:responseObject
                                                                 responseKey:commandMessage.responseKey];
         [netPlayer sendCommandParcel:response shouldAwaitResponse:shouldAwaitResponse];
-        [response release];
     }
 }
 
@@ -977,7 +936,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
         [queue addOperation:op];
-        [op release];
         return;
     }
     
@@ -1019,7 +977,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
         [queue addOperation:op];
-        [op release];
         return;
     }
     
@@ -1059,7 +1016,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
         }];
         NSOperationQueue *queue = [SystemMessage mainQueue];
         [queue addOperation:op];
-        [op release];
         return;
     }
 }
@@ -1114,7 +1070,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             NetPlayer *netPlayer = [[NetPlayer alloc] initWithNetService:service];
             [netPlayer setDelegate:self];
             [self setNetPlayer:netPlayer];
-            [netPlayer release];
             [self.netPlayer start];
             break;
         }
@@ -1149,7 +1104,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     ServerBrowser *serverBrowser = [[ServerBrowser alloc] init];
     [serverBrowser setDelegate:sharedInstance];
     sharedInstance.serverBrowser = serverBrowser;
-    [serverBrowser release];
     [sharedInstance.serverBrowser start];
 }
 
@@ -1178,7 +1132,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
                                                                  from:sharedInstance.playerEnvoy.peerID
                                                                object:dictionary];
     [sharedInstance.netPlayer sendCommandParcel:parcel];
-    [parcel release];
 }
 
 + (void)askToJoinGame
@@ -1218,7 +1171,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             netHost.serviceName = [self serviceName];
             [netHost setDelegate:sharedInstance];
             [sharedInstance setNetHost:netHost];
-            [netHost release];
         }
         return netHost.hasStarted;
     }
@@ -1230,7 +1182,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
             NetPlayer *netPlayer = [[NetPlayer alloc] init];
             [netPlayer setDelegate:sharedInstance];
             [sharedInstance setNetPlayer:netPlayer];
-            [netPlayer release];
         }
         return netPlayer.hasStarted;
     }
@@ -1377,7 +1328,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:commandMessageType to:hostID from:[self playerEnvoy].peerID];
     NetPlayer *netPlayer = [self sharedInstance].netPlayer;
     [netPlayer sendCommandMessage:msg shouldAwaitResponse:shouldAwaitResponse];
-    [msg release];
 }
 
 + (void)sendParcelToPlayers:(JSKCommandParcel *)parcel
@@ -1454,7 +1404,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     }
     gameDirector = [[GameDirector alloc] init];
     [[self sharedInstance] setGameDirector:gameDirector];
-    [gameDirector release];
     
     return [self sharedInstance].gameDirector;
 }
@@ -1465,9 +1414,8 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 + (NSString *)buildRandomString
 {
     CFUUIDRef udid = CFUUIDCreate(NULL);
-    NSString *udidString = (NSString *) CFUUIDCreateString(NULL, udid);
+    NSString *udidString = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, udid));
     NSString *returnValue = [NSString stringWithString:udidString];
-    [udidString release];
     CFRelease(udid);
     return returnValue;
 }
@@ -1478,7 +1426,6 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setNumberStyle:NSNumberFormatterSpellOutStyle];
     NSString *returnValue = [formatter stringFromNumber:number];
-    [formatter release];
     return returnValue;
 }
 

@@ -28,10 +28,6 @@
     self.pickerLayout=ILColorPickerViewLayoutBottom;
 }
 
--(void)dealloc
-{
-    [super dealloc];
-}
 
 #pragma mark - Property Set/Get
 
@@ -42,7 +38,6 @@
     if (satPicker!=nil)
     {
         [satPicker removeFromSuperview];   
-        [satPicker release];
         satPicker=nil;
     }
     

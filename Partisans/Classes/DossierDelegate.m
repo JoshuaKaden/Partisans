@@ -25,11 +25,6 @@
 
 @synthesize playerEnvoy = m_playerEnvoy;
 
-- (void)dealloc
-{
-    [m_playerEnvoy release];
-    [super dealloc];
-}
 
 - (id)initWithPlayerEnvoy:(PlayerEnvoy *)playerEnvoy
 {

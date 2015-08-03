@@ -67,11 +67,7 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [m_menuItems release];
-    [m_rowCounts release];
-    [m_rightButtonItem release];
     
-    [super dealloc];
 }
 
 
@@ -131,7 +127,6 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     
     [self.view addSubview:tableView];
     self.tableView = tableView;
-    [tableView release];
     
     
     [self initializeRowCounts];
@@ -254,7 +249,6 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     NSUInteger sectionCount = [self.delegate menuViewControllerNumberOfSections:self];
     NSMutableArray *rowCounts = [[NSMutableArray alloc] initWithCapacity:sectionCount];
     self.rowCounts = rowCounts;
-    [rowCounts release];
     
     NSUInteger sectionIndex = 0;
     while (sectionIndex < sectionCount)
@@ -441,13 +435,12 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     }
     
 	UIActivityIndicatorView *indicator =
-    [[[UIActivityIndicatorView alloc]
-      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
-     autorelease];
+    [[UIActivityIndicatorView alloc]
+      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	indicator.frame = CGRectMake(0, 0, 24, 24);
 	[indicator startAnimating];
 	UIBarButtonItem *progress =
-    [[[UIBarButtonItem alloc] initWithCustomView:indicator] autorelease];
+    [[UIBarButtonItem alloc] initWithCustomView:indicator];
 	[self.navigationItem setRightBarButtonItem:progress animated:YES];
 }
 
@@ -478,7 +471,6 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:refreshButton];
-    [refreshButton release];
     
 //	UIBarButtonItem *refreshButton =
 //    [[[UIBarButtonItem alloc]
@@ -659,7 +651,6 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
         CFRelease(firstRowPath);
         
         cell.contentView.layer.mask = newSharpLayer;
-        [newSharpLayer release];
     }
     else if (indexPath.row == rowCount - 1)
     {
@@ -680,7 +671,6 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
         CFRelease(lastRowPath);
         
         cell.contentView.layer.mask = newSharpLayer;
-        [newSharpLayer release];
     }
 }
 
@@ -781,7 +771,7 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
 //		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
@@ -885,7 +875,6 @@ NSString * const JSKMenuViewControllerShouldRefresh = @"JSKMenuViewControllerSho
             }
             
             [self.navigationController pushViewController:targetViewController animated:YES];
-            [targetViewController release];
         }
     }
     

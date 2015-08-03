@@ -44,16 +44,6 @@
 @synthesize gameID = m_gameID;
 @synthesize hasAlertBeenShown = m_hasAlertBeenShown;
 
-- (void)dealloc
-{
-    [m_managedObjectID release];
-    [m_intramuralID release];
-    [m_importedObjectString release];
-    [m_playerID release];
-    [m_gameID release];
-    
-    [super dealloc];
-}
 
 
 - (id)initWithManagedObject:(GamePlayer *)managedObject
@@ -80,7 +70,7 @@
 
 + (GamePlayerEnvoy *)envoyFromManagedObject:(GamePlayer *)managedObject
 {
-    GamePlayerEnvoy *envoy = [[[GamePlayerEnvoy alloc] initWithManagedObject:managedObject] autorelease];
+    GamePlayerEnvoy *envoy = [[GamePlayerEnvoy alloc] initWithManagedObject:managedObject];
     return envoy;
 }
 

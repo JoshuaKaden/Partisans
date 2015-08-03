@@ -27,9 +27,9 @@ extern NSString * const JSKDataMinerDidSaveFailedNotification;
 
 @interface JSKDataMiner : NSObject
 
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, retain, readonly) NSManagedObjectContext *mainObjectContext;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, strong, readonly) NSManagedObjectContext *mainObjectContext;
+@property (nonatomic, strong, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 + (JSKDataMiner *)sharedInstance;
 

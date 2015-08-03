@@ -25,10 +25,10 @@
 
 @interface Vote : NSManagedObject
 
-@property (nonatomic, retain) NSString * intramuralID;
-@property (nonatomic, retain) NSNumber * isCast;
-@property (nonatomic, retain) NSNumber * isYea;
-@property (nonatomic, retain) GamePlayer *gamePlayer;
-@property (nonatomic, retain) Round *round;
+@property (nonatomic, strong) NSString * intramuralID;
+@property (nonatomic, strong) NSNumber * isCast;
+@property (nonatomic, strong) NSNumber * isYea;
+@property (nonatomic, strong) GamePlayer *gamePlayer;
+@property (nonatomic, strong) Round *round;
 
 @end

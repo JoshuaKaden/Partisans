@@ -52,20 +52,6 @@
 @synthesize modifiedDate = m_modifiedDate;
 
 
-- (void)dealloc
-{
-    [m_managedObjectID release];
-    [m_intramuralID release];
-    [m_importedObjectString release];
-    [m_playerName release];
-    [m_favoriteColor release];
-    [m_picture release];
-    [m_addedSightings release];
-    [m_peerID release];
-    [m_modifiedDate release];
-    
-    [super dealloc];
-}
 
 
 - (id)initWithManagedObject:(Player *)managedObject
@@ -87,7 +73,6 @@
         
         ImageEnvoy *imageEnvoy = [[ImageEnvoy alloc] initWithManagedObject:managedObject.picture];
         self.picture = imageEnvoy;
-        [imageEnvoy release];
         
         self.peerID = managedObject.peerID;
 
@@ -142,7 +127,7 @@
         return nil;
     }
     
-    PlayerEnvoy *newEnvoy = [[[PlayerEnvoy alloc] init] autorelease];
+    PlayerEnvoy *newEnvoy = [[PlayerEnvoy alloc] init];
     newEnvoy.peerID = peerID;
     newEnvoy.intramuralID = peerID;
     return newEnvoy;
@@ -192,7 +177,7 @@
 
 + (PlayerEnvoy *)envoyFromManagedObject:(Player *)managedObject
 {
-    PlayerEnvoy *envoy = [[[PlayerEnvoy alloc] initWithManagedObject:managedObject] autorelease];
+    PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:managedObject];
     return envoy;
 }
 
@@ -208,7 +193,7 @@
     if (players.count > 0)
     {
         Player *player = [players objectAtIndex:0];
-        envoy = [[[PlayerEnvoy alloc] initWithManagedObject:player] autorelease];
+        envoy = [[PlayerEnvoy alloc] initWithManagedObject:player];
     }
     else
     {
@@ -221,7 +206,7 @@
         }
         else
         {
-            envoy = [[[PlayerEnvoy alloc] init] autorelease];
+            envoy = [[PlayerEnvoy alloc] init];
             envoy.isNative = YES;
             envoy.isDefault = YES;
             envoy.favoriteColor = [UIColor grayColor];
@@ -240,20 +225,16 @@
     
     NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"playerName" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
-    [nameSort release];
     NSArray *players = [context fetchObjectArrayForEntityName:@"Player" usingSortDescriptors:sorts withPredicateFormat:@"isNative == %@", yesNumber];
-    [sorts release];
     
     NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:players.count];
     for (Player *player in players)
     {
         PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:player];
         [envoys addObject:envoy];
-        [envoy release];
     }
     
     NSArray *returnValue = [NSArray arrayWithArray:envoys];
-    [envoys release];
     
     return returnValue;
 }
@@ -265,20 +246,16 @@
     
     NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"playerName" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
-    [nameSort release];
     NSArray *players = [context fetchObjectArrayForEntityName:@"Player" usingSortDescriptors:sorts withPredicateFormat:@"isNative == %@", noNumber];
-    [sorts release];
     
     NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:players.count];
     for (Player *player in players)
     {
         PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:player];
         [envoys addObject:envoy];
-        [envoy release];
     }
     
     NSArray *returnValue = [NSArray arrayWithArray:envoys];
-    [envoys release];
     
     return returnValue;
 }

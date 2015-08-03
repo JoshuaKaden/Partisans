@@ -27,13 +27,6 @@
 @synthesize from = m_from;
 @synthesize responseKey = m_responseKey;
 
-- (void)dealloc
-{
-    [m_to release];
-    [m_from release];
-    [m_responseKey release];
-    [super dealloc];
-}
 
 
 

@@ -25,13 +25,13 @@
 
 @interface Image : NSManagedObject
 
-@property (nonatomic, retain) NSDate * dateSaved;
-@property (nonatomic, retain) NSData * imageData;
-@property (nonatomic, retain) NSDate * imageDate;
-@property (nonatomic, retain) NSNumber * imageLatitude;
-@property (nonatomic, retain) NSNumber * imageLongitude;
-@property (nonatomic, retain) NSNumber * imageSource;
-@property (nonatomic, retain) NSString * intramuralID;
-@property (nonatomic, retain) Player *player;
+@property (nonatomic, strong) NSDate * dateSaved;
+@property (nonatomic, strong) NSData * imageData;
+@property (nonatomic, strong) NSDate * imageDate;
+@property (nonatomic, strong) NSNumber * imageLatitude;
+@property (nonatomic, strong) NSNumber * imageLongitude;
+@property (nonatomic, strong) NSNumber * imageSource;
+@property (nonatomic, strong) NSString * intramuralID;
+@property (nonatomic, strong) Player *player;
 
 @end

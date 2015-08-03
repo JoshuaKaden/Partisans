@@ -43,11 +43,6 @@
 @synthesize isMessageOpen = m_isMessageOpen;
 
 
-- (void)dealloc
-{
-    [m_operatives release];
-    [super dealloc];
-}
 
 - (NSArray *)operatives
 {

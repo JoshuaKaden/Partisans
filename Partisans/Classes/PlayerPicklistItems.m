@@ -41,12 +41,6 @@
 @synthesize players = m_players;
 @synthesize menuViewController = m_menuViewController;
 
-- (void)dealloc
-{
-    [m_players release];
-    [m_menuViewController release];
-    [super dealloc];
-}
 
 - (NSArray *)players
 {
@@ -126,7 +120,7 @@
 
 - (UIBarButtonItem *)menuViewControllerRightButtonItem:(JSKMenuViewController *)menuViewController
 {
-    UIBarButtonItem *item = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPressed:)] autorelease];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPressed:)];
     self.menuViewController = menuViewController;
     return item;
 }
@@ -142,11 +136,9 @@
     PlayerViewController *vc = [[PlayerViewController alloc] init];
     [vc setPlayerEnvoy:playerEnvoy];
     vc.isAnAdd = YES;
-    [playerEnvoy release];
     
     [self.menuViewController.navigationController pushViewController:vc animated:YES];
     
-    [vc release];
 }
 
 @end

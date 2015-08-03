@@ -38,18 +38,6 @@
 @synthesize imageSource = m_imageSource;
 
  
-- (void)dealloc
-{
-    [m_managedObjectID release];
-    [m_intramuralID release];
-    [m_importedObjectString release];
-    
-    [m_dateSaved release];
-    [m_image release];
-    [m_imageDate release];
-    
-    [super dealloc];
-}
 
 
 - (id)initWithManagedObject:(Image *)managedObject
@@ -94,7 +82,7 @@
 
 + (ImageEnvoy *)envoyFromManagedObject:(Image *)managedObject
 {
-    ImageEnvoy *envoy = [[[ImageEnvoy alloc] initWithManagedObject:managedObject] autorelease];
+    ImageEnvoy *envoy = [[ImageEnvoy alloc] initWithManagedObject:managedObject];
     return envoy;
 }
 

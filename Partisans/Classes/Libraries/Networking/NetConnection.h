@@ -32,7 +32,7 @@
 
 @interface NetConnection : NSObject
 
-@property (nonatomic, assign) id<ConnectionDelegate> delegate;
+@property (nonatomic, weak) id<ConnectionDelegate> delegate;
 @property (nonatomic, strong) NSString *host;
 @property (nonatomic, strong) NSString *peerID;
 

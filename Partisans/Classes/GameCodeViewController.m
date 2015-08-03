@@ -80,18 +80,7 @@
 {
     self.editView.delegate = nil;
     
-    [m_gameCodeLabel release];
-    [m_gameCodeTitleLabel release];
-    [m_editButton release];
-    [m_cancelButton release];
-    [m_doneButton release];
-    [m_editView release];
-    [m_defaultBackButton release];
-    [m_saveButton release];
-    [m_spinButton release];
-    [m_OKButton release];
     
-    [super dealloc];
 }
 
 
@@ -240,7 +229,6 @@
 {
     NSString *gameCodeString = [[NSString alloc] initWithFormat:@"%d", code];
     [self.gameCodeLabel setText:gameCodeString];
-    [gameCodeString release];
 }
 
 
@@ -284,7 +272,6 @@
     editView.code = self.oldGameCode;
     [self.view addSubview:editView];
     self.editView = editView;
-    [editView release];
     
     [UIView animateWithDuration:0.2f
                      animations:^

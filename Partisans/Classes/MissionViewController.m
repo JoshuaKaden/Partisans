@@ -90,23 +90,7 @@
     [self.hostFinder setDelegate:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [m_codenameLabel release];
-    [m_performButton release];
-    [m_readyLabel release];
-    [m_readySwitch release];
-    [m_sabotageLabel release];
-    [m_sabotageSwitch release];
-    [m_privacyLabel release];
-    [m_privacySwitch release];
-    [m_gameEnvoy release];
-    [m_missionEnvoy release];
-    [m_hostPeerID release];
-    [m_hostFinder release];
-    [m_responseKey release];
-    [m_statusLabel release];
-    [m_spinner release];
     
-    [super dealloc];
 }
 
 
@@ -229,7 +213,6 @@
         HostFinder *hostFinder = [[HostFinder alloc] init];
         [hostFinder setDelegate:self];
         self.hostFinder = hostFinder;
-        [hostFinder release];
     }
     NSString *message = NSLocalizedString(@"Connecting...", @"Connecting...  --  message");
     [self.statusLabel setText:message];
@@ -257,7 +240,6 @@
         message.commandMessageType = JSKCommandMessageTypeFail;
     }
     [SystemMessage sendCommandMessage:message shouldAwaitResponse:YES];
-    [message release];
 }
 
 

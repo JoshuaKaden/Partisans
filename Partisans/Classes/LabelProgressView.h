@@ -26,7 +26,7 @@
 @property (nonatomic, strong) UIColor *dualProgressTintColor;
 @property (readonly) float progress;
 @property (readonly) float dualProgress;
-@property (readonly) NSString *labelText;
+@property (weak, readonly) NSString *labelText;
 @property (nonatomic, assign) BOOL isDual;
 @property (nonatomic, assign) BOOL shouldShowSpellOutText;
 

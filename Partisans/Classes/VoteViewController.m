@@ -78,19 +78,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.hostFinder setDelegate:nil];
     
-    [m_yeaSwitch release];
-    [m_naySwitch release];
-    [m_yeaLabel release];
-    [m_nayLabel release];
-    [m_voteButton release];
-    [m_spinner release];
-    [m_statusLabel release];
-    [m_hostFinder release];
-    [m_hostPeerID release];
-    [m_responseKey release];
-    [m_proceedButton release];
     
-    [super dealloc];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -241,7 +229,6 @@
     voteEnvoy.roundID = currentRound.intramuralID;
     voteEnvoy.playerID = [SystemMessage playerEnvoy].intramuralID;
     [currentRound addVote:voteEnvoy];
-    [voteEnvoy release];
     
     [gameEnvoy commitAndSave];
 }
@@ -266,7 +253,6 @@
         HostFinder *hostFinder = [[HostFinder alloc] init];
         [hostFinder setDelegate:self];
         self.hostFinder = hostFinder;
-        [hostFinder release];
     }
     NSString *message = NSLocalizedString(@"Connecting...", @"Connecting...  --  message");
     [self.statusLabel setText:message];
@@ -307,15 +293,13 @@
         CoordinatorVote *coordinatorVote = [[CoordinatorVote alloc] init];
         coordinatorVote.voteEnvoy = voteEnvoy;
         coordinatorVote.candidateIDs = [currentRound.candidates valueForKey:@"intramuralID"];
-        parcelObject = [coordinatorVote retain];
-        [coordinatorVote release];
+        parcelObject = coordinatorVote;
     }
     else
     {
-        parcelObject = [voteEnvoy retain];
+        parcelObject = voteEnvoy;
     }
     
-    [voteEnvoy release];
     
     
     NSString *hostPeerID = self.hostPeerID;
@@ -323,9 +307,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hostAcknowledgement:) name:kPartisansNotificationHostAcknowledgement object:nil];
     
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:hostPeerID from:playerEnvoy.peerID object:parcelObject responseKey:self.responseKey];
-    [parcelObject release];
     [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:YES];
-    [parcel release];
 }
 
 

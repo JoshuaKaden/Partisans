@@ -60,20 +60,6 @@
 @synthesize setupMenuItems = m_setupMenuItems;
 
 
-- (void)dealloc
-{
-    [m_setupButton release];
-    [m_scoreLabel1 release];
-    [m_scoreLabel2 release];
-    [m_titleLabel1 release];
-    [m_titleLabel2 release];
-    [m_summaryLabel1 release];
-    [m_summaryLabel2 release];
-    [m_proceedButton release];
-    [m_setupMenuItems release];
-    
-    [super dealloc];
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -114,11 +100,9 @@
     
     NSString *string = [[NSString alloc] initWithFormat:@"%d", successCount];
     self.scoreLabel1.text = string;
-    [string release];
     
     string = [[NSString alloc] initWithFormat:@"%d", failCount];
     self.scoreLabel2.text = string;
-    [string release];
     
     
     if (successCount == 1)
@@ -194,12 +178,10 @@
     {
         SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
         self.setupMenuItems = items;
-        [items release];
     }
     JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
     [vc setDelegate:self.setupMenuItems];
     [self.navigationController pushViewController:vc animated:YES];
-    [vc release];
 }
 
 - (IBAction)proceedButtonPressed:(id)sender

@@ -25,15 +25,15 @@
 
 @interface Game : NSManagedObject
 
-@property (nonatomic, retain) NSDate * endDate;
-@property (nonatomic, retain) NSString * intramuralID;
-@property (nonatomic, retain) NSDate * modifiedDate;
-@property (nonatomic, retain) NSNumber * numberOfPlayers;
-@property (nonatomic, retain) NSDate * startDate;
-@property (nonatomic, retain) NSNumber * gameCode;
-@property (nonatomic, retain) NSSet *gamePlayers;
-@property (nonatomic, retain) NSSet *missions;
-@property (nonatomic, retain) NSSet *rounds;
+@property (nonatomic, strong) NSDate * endDate;
+@property (nonatomic, strong) NSString * intramuralID;
+@property (nonatomic, strong) NSDate * modifiedDate;
+@property (nonatomic, strong) NSNumber * numberOfPlayers;
+@property (nonatomic, strong) NSDate * startDate;
+@property (nonatomic, strong) NSNumber * gameCode;
+@property (nonatomic, strong) NSSet *gamePlayers;
+@property (nonatomic, strong) NSSet *missions;
+@property (nonatomic, strong) NSSet *rounds;
 @end
 
 @interface Game (CoreDataGeneratedAccessors)

@@ -41,7 +41,7 @@
 @property (nonatomic, strong) DossierDelegate *dossierDelegate;
 @property (nonatomic, strong) UIAlertView *stopHostingAlertView;
 @property (nonatomic, strong) UIAlertView *leaveGameAlertView;
-@property (nonatomic, assign) JSKMenuViewController *menuViewController;
+@property (nonatomic, weak) JSKMenuViewController *menuViewController;
 @property (nonatomic, strong) RoundMenuItems *playerRoundMenuItems;
 @property (nonatomic, strong) NSTimer *pollingTimer;
 
@@ -78,15 +78,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.pollingTimer invalidate];
     
-    [m_awaitingApproval release];
-    [m_players release];
-    [m_dossierDelegate release];
-    [m_stopHostingAlertView release];
-    [m_leaveGameAlertView release];
-    [m_playerRoundMenuItems release];
-    [m_pollingTimer release];
     
-    [super dealloc];
 }
 
 
@@ -185,7 +177,6 @@
                                                   otherButtonTitles:
                                   @"Yes", nil];
         self.stopHostingAlertView = alertView;
-        [alertView release];
     }
     
     [self.stopHostingAlertView show];
@@ -210,7 +201,6 @@
                                               otherButtonTitles:
                               @"Yes", nil];
     self.leaveGameAlertView = alertView;
-    [alertView release];
     
     [self.leaveGameAlertView show];
 }
@@ -299,7 +289,6 @@
             [newEnvoy setGameCode:gameCode];
             [newEnvoy commitAndSave];
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
-            [newEnvoy release];
         }
     }
     [SystemMessage putPlayerOffline];
@@ -946,7 +935,6 @@
             PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
             DossierDelegate *delegate = [[DossierDelegate alloc] initWithPlayerEnvoy:playerEnvoy];
             self.dossierDelegate = delegate;
-            [delegate release];
             returnValue = self.dossierDelegate;
             break;
         }

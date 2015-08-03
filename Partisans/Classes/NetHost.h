@@ -38,7 +38,7 @@
 
 @interface NetHost : NSObject
 
-@property (nonatomic, assign) id <NetHostDelegate> delegate;
+@property (nonatomic, weak) id <NetHostDelegate> delegate;
 @property (readonly) BOOL hasStarted;
 @property (nonatomic, strong) NSString *serviceName;
 

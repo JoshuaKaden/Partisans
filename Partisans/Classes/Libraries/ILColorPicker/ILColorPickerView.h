@@ -45,7 +45,7 @@ typedef enum {
  * convenient control
  */
 @interface ILColorPickerView : ILView<ILSaturationBrightnessPickerViewDelegate> {
-    id<ILColorPickerViewDelegate> delegate;
+    id<ILColorPickerViewDelegate> __weak delegate;
     
     ILSaturationBrightnessPickerView *satPicker;
     ILHuePickerView *huePicker;
@@ -56,7 +56,7 @@ typedef enum {
 /**
  * Delegate
  */
-@property (assign,nonatomic) IBOutlet id<ILColorPickerViewDelegate> delegate;
+@property (weak,nonatomic) IBOutlet id<ILColorPickerViewDelegate> delegate;
 
 /**
  * The layout of the controls
@@ -66,6 +66,6 @@ typedef enum {
 /**
  * Gets/sets the current color
  */
-@property (assign,nonatomic) UIColor *color;
+@property (weak,nonatomic) UIColor *color;
 
 @end

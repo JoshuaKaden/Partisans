@@ -42,11 +42,6 @@
 @synthesize envoy = m_envoy;
 
 
-- (void)dealloc
-{
-    [m_envoy release];
-    [super dealloc];
-}
 
 
 - (id)initWithEnvoy:(PlayerEnvoy *)envoy
@@ -62,42 +57,41 @@
 
 - (void)main
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
     
     // Create context on background thread
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    [context setUndoManager:nil];
-    [context setPersistentStoreCoordinator:[JSKDataMiner sharedInstance].persistentStoreCoordinator];
-    
-    
-    // Register context with the notification center
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(mergeChanges:) name:NSManagedObjectContextDidSaveNotification object:context];
-    
-    
-    
-    
-    // Here is the actual work of the class.
-    GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-    [gameEnvoy removePlayer:self.envoy];
-    [gameEnvoy commitInContext:context];
-    
-    
-    
-    NSError *error = nil;
-    if (context && [context hasChanges])
-    {
-        if (![context save:&error]) {
-            debugLog(@"*** Error saving context: %@",[error localizedDescription]);
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [context setUndoManager:nil];
+        [context setPersistentStoreCoordinator:[JSKDataMiner sharedInstance].persistentStoreCoordinator];
+        
+        
+        // Register context with the notification center
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self selector:@selector(mergeChanges:) name:NSManagedObjectContextDidSaveNotification object:context];
+        
+        
+        
+        
+        // Here is the actual work of the class.
+        GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+        [gameEnvoy removePlayer:self.envoy];
+        [gameEnvoy commitInContext:context];
+        
+        
+        
+        NSError *error = nil;
+        if (context && [context hasChanges])
+        {
+            if (![context save:&error]) {
+                debugLog(@"*** Error saving context: %@",[error localizedDescription]);
+            }
         }
+        
+        
+        
+        
+        [notificationCenter removeObserver:self];
     }
-    
-    
-    
-    [context release];
-    
-    [notificationCenter removeObserver:self];
-    [pool drain];
 }
 
 

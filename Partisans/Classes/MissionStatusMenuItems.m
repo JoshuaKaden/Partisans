@@ -62,12 +62,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.pollingTimer invalidate];
     
-    [m_currentMission release];
-    [m_pollingTimer release];
-    [m_menuViewController release];
-    [m_dossierDelegate release];
     
-    [super dealloc];
 }
 
 
@@ -349,7 +344,6 @@
         PlayerEnvoy *playerEnvoy = [self.currentMission.teamMembers objectAtIndex:indexPath.row];
         DossierDelegate *delegate = [[DossierDelegate alloc] initWithPlayerEnvoy:playerEnvoy];
         self.dossierDelegate = delegate;
-        [delegate release];
         returnValue = self.dossierDelegate;
     }
     return returnValue;

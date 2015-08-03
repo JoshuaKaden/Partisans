@@ -44,11 +44,6 @@
 @synthesize envoys = m_envoys;
 
 
-- (void)dealloc
-{
-    [m_envoys release];
-    [super dealloc];
-}
 
 
 - (id)initWithEnvoys:(NSArray *)envoys
@@ -65,60 +60,59 @@
 
 - (void)main
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
     
     // Create context on background thread
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    [context setUndoManager:nil];
-    [context setPersistentStoreCoordinator:[JSKDataMiner sharedInstance].persistentStoreCoordinator];
-    
-    
-    // Register context with the notification center
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(mergeChanges:) name:NSManagedObjectContextDidSaveNotification object:context];
-    
-    
-    
-    
-    // Here is the actual work of the class.
-    
-    // Save the envoys.
-    for (NSObject *envoy in self.envoys)
-    {
-        if ([envoy isKindOfClass:[GamePrecis class]])
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [context setUndoManager:nil];
+        [context setPersistentStoreCoordinator:[JSKDataMiner sharedInstance].persistentStoreCoordinator];
+        
+        
+        // Register context with the notification center
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self selector:@selector(mergeChanges:) name:NSManagedObjectContextDidSaveNotification object:context];
+        
+        
+        
+        
+        // Here is the actual work of the class.
+        
+        // Save the envoys.
+        for (NSObject *envoy in self.envoys)
         {
-            GamePrecis *precis = (GamePrecis *)envoy;
-            GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
-            // Sanity check: Do the game IDs match?
-            if (![precis.intramuralID isEqualToString:gameEnvoy.intramuralID])
+            if ([envoy isKindOfClass:[GamePrecis class]])
             {
-                break;
+                GamePrecis *precis = (GamePrecis *)envoy;
+                GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
+                // Sanity check: Do the game IDs match?
+                if (![precis.intramuralID isEqualToString:gameEnvoy.intramuralID])
+                {
+                    break;
+                }
+                gameEnvoy.modifiedDate = precis.modifiedDate;
+                [gameEnvoy commitModifiedDate];
             }
-            gameEnvoy.modifiedDate = precis.modifiedDate;
-            [gameEnvoy commitModifiedDate];
+            else
+            {
+                [envoy performSelector:@selector(commitInContext:) withObject:context];
+            }
         }
-        else
+        
+        
+        
+        NSError *error = nil;
+        if (context && [context hasChanges])
         {
-            [envoy performSelector:@selector(commitInContext:) withObject:context];
+            if (![context save:&error]) {
+                debugLog(@"*** Error saving context: %@",[error localizedDescription]);
+            }
         }
+        
+        
+        
+        
+        [notificationCenter removeObserver:self];
     }
-    
-    
-    
-    NSError *error = nil;
-    if (context && [context hasChanges])
-    {
-        if (![context save:&error]) {
-            debugLog(@"*** Error saving context: %@",[error localizedDescription]);
-        }
-    }
-    
-    
-    
-    [context release];
-    
-    [notificationCenter removeObserver:self];
-    [pool drain];
 }
 
 

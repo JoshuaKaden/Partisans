@@ -47,12 +47,6 @@
 @synthesize satBrightMatteView = m_satBrightMatteView;
 @synthesize cancelBarButtonItem = m_canceBarButtonItem;
 
-- (void)dealloc
-{
-    [m_color release];
-    [m_canceBarButtonItem release];
-    [super dealloc];
-}
 
 - (id)initWithColor:(UIColor *)color
 {

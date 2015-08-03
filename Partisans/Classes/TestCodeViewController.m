@@ -33,11 +33,6 @@
 
 @synthesize editCodeView = m_editCodeView;
 
-- (void)dealloc
-{
-    [m_editCodeView release];
-    [super dealloc];
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

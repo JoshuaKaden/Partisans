@@ -25,17 +25,17 @@
 
 @interface Player : NSManagedObject
 
-@property (nonatomic, retain) id favoriteColor;
-@property (nonatomic, retain) NSString * intramuralID;
-@property (nonatomic, retain) NSNumber * isDefault;
-@property (nonatomic, retain) NSNumber * isDefaultPicture;
-@property (nonatomic, retain) NSNumber * isNative;
-@property (nonatomic, retain) NSDate * modifiedDate;
-@property (nonatomic, retain) NSString * peerID;
-@property (nonatomic, retain) NSString * playerName;
-@property (nonatomic, retain) GamePlayer *gamePlayer;
-@property (nonatomic, retain) Scorecard *operativeScorecard;
-@property (nonatomic, retain) Scorecard *partisanScorecard;
-@property (nonatomic, retain) Image *picture;
+@property (nonatomic, strong) id favoriteColor;
+@property (nonatomic, strong) NSString * intramuralID;
+@property (nonatomic, strong) NSNumber * isDefault;
+@property (nonatomic, strong) NSNumber * isDefaultPicture;
+@property (nonatomic, strong) NSNumber * isNative;
+@property (nonatomic, strong) NSDate * modifiedDate;
+@property (nonatomic, strong) NSString * peerID;
+@property (nonatomic, strong) NSString * playerName;
+@property (nonatomic, strong) GamePlayer *gamePlayer;
+@property (nonatomic, strong) Scorecard *operativeScorecard;
+@property (nonatomic, strong) Scorecard *partisanScorecard;
+@property (nonatomic, strong) Image *picture;
 
 @end

@@ -25,19 +25,19 @@
 
 @interface Mission : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * didSucceed;
-@property (nonatomic, retain) NSNumber * hasStarted;
-@property (nonatomic, retain) NSString * intramuralID;
-@property (nonatomic, retain) NSNumber * isComplete;
-@property (nonatomic, retain) NSString * missionName;
-@property (nonatomic, retain) NSNumber * missionNumber;
-@property (nonatomic, retain) NSNumber * teamCount;
-@property (nonatomic, retain) Game *game;
-@property (nonatomic, retain) NSSet *rounds;
-@property (nonatomic, retain) NSSet *teamMembers;
-@property (nonatomic, retain) NSSet *saboteurs;
-@property (nonatomic, retain) NSSet *contributeurs;
-@property (nonatomic, retain) GamePlayer *coordinator;
+@property (nonatomic, strong) NSNumber * didSucceed;
+@property (nonatomic, strong) NSNumber * hasStarted;
+@property (nonatomic, strong) NSString * intramuralID;
+@property (nonatomic, strong) NSNumber * isComplete;
+@property (nonatomic, strong) NSString * missionName;
+@property (nonatomic, strong) NSNumber * missionNumber;
+@property (nonatomic, strong) NSNumber * teamCount;
+@property (nonatomic, strong) Game *game;
+@property (nonatomic, strong) NSSet *rounds;
+@property (nonatomic, strong) NSSet *teamMembers;
+@property (nonatomic, strong) NSSet *saboteurs;
+@property (nonatomic, strong) NSSet *contributeurs;
+@property (nonatomic, strong) GamePlayer *coordinator;
 @end
 
 @interface Mission (CoreDataGeneratedAccessors)

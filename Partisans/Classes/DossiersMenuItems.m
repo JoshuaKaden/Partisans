@@ -29,12 +29,6 @@
 @synthesize dossierDelegate = m_dossierDelegate;
 
 
-- (void)dealloc
-{
-    [m_players release];
-    [m_dossierDelegate release];
-    [super dealloc];
-}
 
 
 
@@ -88,7 +82,6 @@
     PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
     DossierDelegate *delegate = [[DossierDelegate alloc] initWithPlayerEnvoy:playerEnvoy];
     self.dossierDelegate = delegate;
-    [delegate release];
     return self.dossierDelegate;
 }
 

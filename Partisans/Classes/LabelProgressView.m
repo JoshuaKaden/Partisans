@@ -45,14 +45,6 @@
 @synthesize shouldShowSpellOutText = m_shouldShowSpellOutText;
 
 
-- (void)dealloc
-{    
-    [m_progressView release];
-    [m_label release];
-    [m_spellOutLabel release];
-    [m_dualProgressView release];
-    [super dealloc];
-}
 
 
 
@@ -190,7 +182,6 @@
         [self.spellOutLabel setText:labelText];
     }
     
-    [formatter release];
 }
 
 /*

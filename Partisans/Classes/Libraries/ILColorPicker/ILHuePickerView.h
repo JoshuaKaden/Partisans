@@ -37,7 +37,7 @@ typedef enum {
  * Displays a gradient allowing the user to select a hue
  */
 @interface ILHuePickerView : ILView {
-    id<ILHuePickerViewDelegate> delegate;
+    id<ILHuePickerViewDelegate> __weak delegate;
     float hue;
     ILHuePickerViewOrientation pickerOrientation;
 }
@@ -45,7 +45,7 @@ typedef enum {
 /**
  * Delegate
  */
-@property (assign, nonatomic) IBOutlet id<ILHuePickerViewDelegate> delegate;
+@property (weak, nonatomic) IBOutlet id<ILHuePickerViewDelegate> delegate;
 
 /**
  * The current hue
@@ -55,7 +55,7 @@ typedef enum {
 /**
  * The current color
  */
-@property (assign, nonatomic) UIColor *color;
+@property (weak, nonatomic) UIColor *color;
 
 /**
  * Orientation

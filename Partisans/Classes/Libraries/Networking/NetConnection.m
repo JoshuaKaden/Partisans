@@ -40,7 +40,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 // Properties
 @property (nonatomic, assign) int port;
 @property (nonatomic, assign) CFSocketNativeHandle connectedSocketHandle;
-@property (nonatomic, retain) NSNetService *netService;
+@property (nonatomic, strong) NSNetService *netService;
 @property (nonatomic, strong) NSMutableData *outgoingDataBuffer;
 @property (nonatomic, strong) NSMutableData *incomingDataBuffer;
 @property (nonatomic, assign) CFReadStreamRef readStream;
@@ -107,14 +107,8 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 // cleanup
 - (void)dealloc
 {
-    self.netService = nil;
-    self.host = nil;
     self.delegate = nil;
-    [m_outgoingDataBuffer release];
-    [m_incomingDataBuffer release];
-    [m_peerID release];
     
-    [super dealloc];
 }
 
 
@@ -163,7 +157,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     if (self.host)
     {
         // Bind read/write streams to a new socket
-        CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (CFStringRef)self.host,
+        CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)self.host,
                                            self.port, &readStream, &writeStream);
         
         // Do the rest
@@ -184,7 +178,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
         if ( self.netService.hostName != nil )
         {
             CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault,
-                                               (CFStringRef)self.netService.hostName, self.netService.port, &readStream, &writeStream);
+                                               (__bridge CFStringRef)self.netService.hostName, self.netService.port, &readStream, &writeStream);
             return [self setupSocketStreamsRead:readStream write:writeStream];
         }
         
@@ -214,10 +208,8 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     // Create buffers
     NSMutableData *incomingDataBuffer = [[NSMutableData alloc] init];
     self.incomingDataBuffer = incomingDataBuffer;
-    [incomingDataBuffer release];
     NSMutableData *outgoingDataBuffer = [[NSMutableData alloc] init];
     self.outgoingDataBuffer = outgoingDataBuffer;
-    [outgoingDataBuffer release];
     
     // Indicate that we want socket to be closed whenever streams are closed
     CFReadStreamSetProperty(self.readStream, kCFStreamPropertyShouldCloseNativeSocket,
@@ -231,7 +223,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     kCFStreamEventEndEncountered | kCFStreamEventErrorOccurred;
     
     // Setup stream context - reference to 'self' will be passed to stream event handling callbacks
-    CFStreamClientContext ctx = {0, self, NULL, NULL, NULL};
+    CFStreamClientContext ctx = {0, (__bridge void *)(self), NULL, NULL, NULL};
     
     // Specify callbacks that will be handling stream events
     CFReadStreamSetClient(self.readStream, registeredEvents, readStreamEventHandler, &ctx);
@@ -316,7 +308,7 @@ void readStreamEventHandler(CFReadStreamRef stream, CFStreamEventType eventType,
                             void *info) {
     dispatch_async(dispatch_get_main_queue(), ^(void)
     {
-        NetConnection* connection = (NetConnection*)info;
+        NetConnection* connection = (__bridge NetConnection*)info;
         [connection readStreamHandleEvent:eventType];
     });
 }
@@ -429,7 +421,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 {
     dispatch_async(dispatch_get_main_queue(), ^(void)
     {
-        NetConnection* connection = (NetConnection*)info;
+        NetConnection* connection = (__bridge NetConnection*)info;
         [connection writeStreamHandleEvent:eventType];
     });
 }

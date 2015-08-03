@@ -31,7 +31,7 @@
 
 @interface EditCodeView : UIView
 
-@property (nonatomic, assign) id <EditCodeViewDelegate> delegate;
+@property (nonatomic, weak) id <EditCodeViewDelegate> delegate;
 @property (nonatomic, assign) NSUInteger code;
 
 - (void)updatePicker;

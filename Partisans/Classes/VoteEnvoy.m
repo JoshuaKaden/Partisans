@@ -40,15 +40,6 @@
 @synthesize playerID = m_playerID;
 
 
-- (void)dealloc
-{
-    [m_managedObjectID release];
-    [m_intramuralID release];
-    [m_roundID release];
-    [m_playerID release];
-    
-    [super dealloc];
-}
 
 
 #pragma mark - Envoy
@@ -75,7 +66,7 @@
 
 + (VoteEnvoy *)envoyFromManagedObject:(Vote *)managedObject
 {
-    VoteEnvoy *envoy = [[[VoteEnvoy alloc] initWithManagedObject:managedObject] autorelease];
+    VoteEnvoy *envoy = [[VoteEnvoy alloc] initWithManagedObject:managedObject];
     return envoy;
 }
 
