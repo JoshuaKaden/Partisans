@@ -227,7 +227,7 @@
 
 - (void)updateCodeLabel:(NSUInteger)code
 {
-    NSString *gameCodeString = [[NSString alloc] initWithFormat:@"%d", code];
+    NSString *gameCodeString = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)code];
     [self.gameCodeLabel setText:gameCodeString];
 }
 

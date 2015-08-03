@@ -134,13 +134,13 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
 
 
 // Initialize using an instance of NSNetService
-- (id)initWithNetService:(NSNetService*)netService
+- (id)initWithNetService:(NSNetService *)netService
 {
     [self clean];
     
     // Has it been resolved?
     if ( netService.hostName != nil ) {
-        return [self initWithHostAddress:netService.hostName andPort:netService.port];
+        return [self initWithHostAddress:netService.hostName andPort:(int)netService.port];
     }
     
     self.netService = netService;
@@ -178,7 +178,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
         if ( self.netService.hostName != nil )
         {
             CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault,
-                                               (__bridge CFStringRef)self.netService.hostName, self.netService.port, &readStream, &writeStream);
+                                               (__bridge CFStringRef)self.netService.hostName, (int)self.netService.port, &readStream, &writeStream);
             return [self setupSocketStreamsRead:readStream write:writeStream];
         }
         
@@ -288,7 +288,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     NSData* rawPacket = [NSKeyedArchiver archivedDataWithRootObject:packet];
     
     // Write header: lengh of raw packet
-    int packetLength = [rawPacket length];
+    int packetLength = (int)[rawPacket length];
     [self.outgoingDataBuffer appendBytes:&packetLength length:sizeof(int)];
     
     // Write body: encoded NSDictionary
@@ -516,7 +516,7 @@ void writeStreamEventHandler(CFWriteStreamRef stream, CFStreamEventType eventTyp
     
     // Save connection info
     self.host = self.netService.hostName;
-    self.port = self.netService.port;
+    self.port = (int)self.netService.port;
     
     // Don't need the service anymore
     self.netService = nil;

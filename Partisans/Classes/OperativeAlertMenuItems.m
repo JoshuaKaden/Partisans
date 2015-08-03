@@ -251,7 +251,7 @@
     {
         NSString *prefix = NSLocalizedString(@"They know there are", @"They know there are  --  label prefix");
         NSString *suffix = NSLocalizedString(@"of you.", @"of you.  --  label suffix");
-        return [NSString stringWithFormat:@"%@ %d %@", prefix, self.operatives.count + 1, suffix];
+        return [NSString stringWithFormat:@"%@ %lu %@", prefix, self.operatives.count + 1, suffix];
 //        NSString *numberString = [SystemMessage spellOutInteger:self.operatives.count + 1];
 //        return [NSString stringWithFormat:@"%@ %@ %@", prefix, numberString, suffix];
     }

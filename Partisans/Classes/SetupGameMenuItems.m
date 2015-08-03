@@ -614,10 +614,9 @@
                     }
                     break;
                     
-                case SetupGameMenuRowCode:
-                {
+                case SetupGameMenuRowCode: {
                     NSString *prefix = NSLocalizedString(@"The Game Code is", @"The Game Code is  --  menu label");
-                    returnValue = [NSString stringWithFormat:@"%@ %d.", prefix, gameEnvoy.gameCode];
+                    returnValue = [NSString stringWithFormat:@"%@ %@.", prefix, @(gameEnvoy.gameCode)];
                     break;
                 }
                     

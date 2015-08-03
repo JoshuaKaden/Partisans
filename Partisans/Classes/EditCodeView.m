@@ -132,16 +132,16 @@
 
 - (void)updatePicker
 {
-    NSString *labelText = [[NSString alloc] initWithFormat:@"%d", self.codeOne];
+    NSString *labelText = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self.codeOne];
     [self.labelOne setText:labelText];
     
-    labelText = [[NSString alloc] initWithFormat:@"%d", self.codeTwo];
+    labelText = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self.codeTwo];
     [self.labelTwo setText:labelText];
     
-    labelText = [[NSString alloc] initWithFormat:@"%d", self.codeThree];
+    labelText = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self.codeThree];
     [self.labelThree setText:labelText];
     
-    labelText = [[NSString alloc] initWithFormat:@"%d", self.codeFour];
+    labelText = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self.codeFour];
     [self.labelFour setText:labelText];
     
     [self.picker selectRow:self.codeOne - 1 inComponent:0 animated:YES];
