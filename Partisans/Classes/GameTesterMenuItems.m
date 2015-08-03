@@ -131,11 +131,10 @@
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController labelAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *returnValue = nil;
-    GameTesterMenuSection menuSection = indexPath.section;
+    GameTesterMenuSection menuSection = (GameTesterMenuSection)indexPath.section;
     switch (menuSection) {
-        case GameTesterMenuSectionAction:
-        {
-            GameTesterMenuRow menuRow = indexPath.row;
+        case GameTesterMenuSectionAction: {
+            GameTesterMenuRow menuRow = (GameTesterMenuRow)indexPath.row;
             switch (menuRow) {
                 case GameTesterMenuRowAddPlayers:
                     returnValue = @"Add Players";
@@ -150,8 +149,7 @@
         }
         case GameTesterMenuSectionPlayers:
         {
-            if (self.players.count > 0)
-            {
+            if (self.players.count > 0) {
                 PlayerEnvoy *playerEnvoy = [self.players objectAtIndex:indexPath.row];
                 returnValue = playerEnvoy.playerName;
             }
@@ -166,7 +164,7 @@
 - (UIImage *)menuViewController:(JSKMenuViewController *)menuViewController imageForIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *returnValue = nil;
-    GameTesterMenuSection menuSection = indexPath.section;
+    GameTesterMenuSection menuSection = (GameTesterMenuSection)indexPath.section;
     switch (menuSection) {
         case GameTesterMenuSectionAction:
             break;
@@ -197,12 +195,11 @@
 
 - (void)menuViewController:(JSKMenuViewController *)menuViewController didSelectRowAt:(NSIndexPath *)indexPath
 {
-    GameTesterMenuSection menuSection = indexPath.section;
-    if (!(menuSection == GameTesterMenuSectionAction))
-    {
+    GameTesterMenuSection menuSection = (GameTesterMenuSection)indexPath.section;
+    if (!(menuSection == GameTesterMenuSectionAction)) {
         return;
     }
-    GameTesterMenuRow menuRow = indexPath.row;
+    GameTesterMenuRow menuRow = (GameTesterMenuRow)indexPath.row;
     switch (menuRow) {
         case GameTesterMenuRowAddPlayers:
             [self addPlayers];

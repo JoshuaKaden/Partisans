@@ -119,7 +119,7 @@
     }
     
     NSString *prefix = NSLocalizedString(@"The Game Code is", @"The Game Code is  --  prefix");
-    NSString *message = [NSString stringWithFormat:@"%@ %ul.", prefix, self.gameCode];
+    NSString *message = [NSString stringWithFormat:@"%@ %lul.", prefix, (unsigned long)self.gameCode];
     [self addStatusMessage:message];
     
     message = NSLocalizedString(@"Tap to start scanning.", @"Tap to start scanning.  --  status message");
@@ -207,7 +207,7 @@
     [self.viewStack clearViews];
     
     NSString *prefix = NSLocalizedString(@"The Game Code is", @"The Game Code is  --  prefix");
-    NSString *message = [NSString stringWithFormat:@"%@ %d.", prefix, self.gameCode];
+    NSString *message = [NSString stringWithFormat:@"%@ %lu.", prefix, (unsigned long)self.gameCode];
     [self addStatusMessage:message];
     
     if (!self.gameJoiner)

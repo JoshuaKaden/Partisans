@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7721B8751B6FA4B1004D3BE0 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7721B8741B6FA4B1004D3BE0 /* Reachability.m */; };
 		9300C7D8175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */; };
 		9303BE5117467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
 		9303BE551746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
@@ -47,7 +48,6 @@
 		936510D41741597500F2AD06 /* JSKSystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CD1741597500F2AD06 /* JSKSystemMessage.m */; };
 		936510D51741597500F2AD06 /* JSKViewStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510CF1741597500F2AD06 /* JSKViewStack.m */; };
 		936510DC1741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */; };
-		936510DD1741598800F2AD06 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510DB1741598800F2AD06 /* Reachability.m */; };
 		936510E3174159C900F2AD06 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E0174159C900F2AD06 /* RootViewController.m */; };
 		936510E4174159C900F2AD06 /* SystemMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510E2174159C900F2AD06 /* SystemMessage.m */; };
 		936510EB17415A1000F2AD06 /* MainMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 936510EA17415A1000F2AD06 /* MainMenuItems.m */; };
@@ -132,6 +132,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7721B8731B6FA4B1004D3BE0 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		7721B8741B6FA4B1004D3BE0 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		775407A31B6EE8B9002AE2DA /* Partisans-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Partisans-Bridging-Header.h"; sourceTree = "<group>"; };
 		9300C7D6175BFCA00047AA15 /* GameTesterMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameTesterMenuItems.h; path = Classes/GameTesterMenuItems.h; sourceTree = "<group>"; };
 		9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameTesterMenuItems.m; path = Classes/GameTesterMenuItems.m; sourceTree = "<group>"; };
@@ -204,8 +206,6 @@
 		936510CF1741597500F2AD06 /* JSKViewStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSKViewStack.m; path = "Classes/Libraries/My Library/JSKViewStack.m"; sourceTree = "<group>"; };
 		936510D71741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+FetchAdditions.h"; sourceTree = "<group>"; };
 		936510D81741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+FetchAdditions.m"; sourceTree = "<group>"; };
-		936510DA1741598800F2AD06 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		936510DB1741598800F2AD06 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		936510DF174159C900F2AD06 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Classes/RootViewController.h; sourceTree = "<group>"; };
 		936510E0174159C900F2AD06 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = Classes/RootViewController.m; sourceTree = "<group>"; };
 		936510E1174159C900F2AD06 /* SystemMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemMessage.h; path = Classes/SystemMessage.h; sourceTree = "<group>"; };
@@ -600,8 +600,8 @@
 		936510D91741598800F2AD06 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
-				936510DA1741598800F2AD06 /* Reachability.h */,
-				936510DB1741598800F2AD06 /* Reachability.m */,
+				7721B8731B6FA4B1004D3BE0 /* Reachability.h */,
+				7721B8741B6FA4B1004D3BE0 /* Reachability.m */,
 			);
 			name = Reachability;
 			path = Classes/Libraries/Reachability;
@@ -919,6 +919,7 @@
 			files = (
 				9365109F1741578C00F2AD06 /* main.m in Sources */,
 				936510A31741578C00F2AD06 /* AppDelegate.m in Sources */,
+				7721B8751B6FA4B1004D3BE0 /* Reachability.m in Sources */,
 				936510BF1741596200F2AD06 /* ILColorPickerView.m in Sources */,
 				936510C01741596200F2AD06 /* ILHuePickerView.m in Sources */,
 				936510C11741596200F2AD06 /* ILSaturationBrightnessPickerView.m in Sources */,
@@ -930,7 +931,6 @@
 				936510D41741597500F2AD06 /* JSKSystemMessage.m in Sources */,
 				936510D51741597500F2AD06 /* JSKViewStack.m in Sources */,
 				936510DC1741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m in Sources */,
-				936510DD1741598800F2AD06 /* Reachability.m in Sources */,
 				936510E3174159C900F2AD06 /* RootViewController.m in Sources */,
 				936510E4174159C900F2AD06 /* SystemMessage.m in Sources */,
 				936510EB17415A1000F2AD06 /* MainMenuItems.m in Sources */,
@@ -1038,7 +1038,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1062,7 +1062,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1076,6 +1076,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
 				INFOPLIST_FILE = "Partisans/Partisans-Info.plist";
@@ -1083,6 +1084,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.chadfordsoftware.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Partisans/Partisans-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
@@ -1095,7 +1097,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
 				INFOPLIST_FILE = "Partisans/Partisans-Info.plist";
