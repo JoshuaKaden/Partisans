@@ -46,7 +46,6 @@ NSString * const JSKDataMinerDidSaveFailedNotification = @"JSKDataMinerDidSaveFa
 
 static NSString * const kDataManagerModelName = @"Partisans";
 static NSString * const kDataManagerSQLiteName = @"Partisans.sqlite";
-static NSString * const kDataManagerSQLiteBaseName = @"Partisans";
 
 
 + (JSKDataMiner *)sharedInstance {

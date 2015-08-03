@@ -132,6 +132,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		775407A31B6EE8B9002AE2DA /* Partisans-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Partisans-Bridging-Header.h"; sourceTree = "<group>"; };
 		9300C7D6175BFCA00047AA15 /* GameTesterMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameTesterMenuItems.h; path = Classes/GameTesterMenuItems.h; sourceTree = "<group>"; };
 		9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameTesterMenuItems.m; path = Classes/GameTesterMenuItems.m; sourceTree = "<group>"; };
 		9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JoinGameViewController.h; path = Classes/JoinGameViewController.h; sourceTree = "<group>"; };
@@ -359,6 +360,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		775407A21B6EE875002AE2DA /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		93040362174E7CF000ED169F /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +500,7 @@
 		936510B01741581D00F2AD06 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				775407A21B6EE875002AE2DA /* Categories */,
 				9365110117415AAE00F2AD06 /* Data Entities */,
 				936510EC17415A3300F2AD06 /* Editors & Pickers */,
 				93C10BB617440B9300B47095 /* Game */,
@@ -513,6 +522,7 @@
 				936510A21741578C00F2AD06 /* AppDelegate.m */,
 				936510E917415A1000F2AD06 /* MainMenuItems.h */,
 				936510EA17415A1000F2AD06 /* MainMenuItems.m */,
+				775407A31B6EE8B9002AE2DA /* Partisans-Bridging-Header.h */,
 				936510DF174159C900F2AD06 /* RootViewController.h */,
 				936510E0174159C900F2AD06 /* RootViewController.m */,
 				93BD6CE917B7DC5000078709 /* Splash */,
@@ -1062,12 +1072,16 @@
 		936510AD1741578C00F2AD06 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
 				INFOPLIST_FILE = "Partisans/Partisans-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Partisans/Partisans-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1075,15 +1089,18 @@
 		936510AE1741578C00F2AD06 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Partisans/Partisans-Prefix.pch";
 				INFOPLIST_FILE = "Partisans/Partisans-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Partisans/Partisans-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

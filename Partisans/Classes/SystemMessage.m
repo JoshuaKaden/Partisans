@@ -1490,40 +1490,13 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate
 {
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
-    NSDateComponents *firstDateParts = [gregorian components:unitFlags fromDate:firstDate];
-    NSDateComponents *secondDateParts = [gregorian components:unitFlags fromDate:secondDate];
-    [gregorian release];
-    
-    if ([firstDateParts day] == [secondDateParts day])
-    {
-        if ([firstDateParts month] == [secondDateParts month])
-        {
-            if ([firstDateParts year] == [secondDateParts year])
-            {
-                return YES;
-            }
-        }
-    }
-    
-    return NO;
+    return [firstDate isEqualToDate:secondDate];
 }
 
 
 + (NSInteger)secondsBetweenDates:(NSDate *)fromDate toDate:(NSDate *)toDate
 {
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    
-    NSUInteger unitFlags = NSSecondCalendarUnit;
-    
-    NSDateComponents *components = [gregorian components:unitFlags
-                                                fromDate:fromDate
-                                                  toDate:toDate
-                                                 options:0];
-    [gregorian release];
-    
-    return [components second];
+    return [toDate timeIntervalSinceDate:fromDate];
 }
 
 
@@ -1567,7 +1540,7 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
     CGColorSpaceRef colorSpaceInfo = CGImageGetColorSpace(imageRef);
     
     if (bitmapInfo == kCGImageAlphaNone) {
-        bitmapInfo = kCGImageAlphaNoneSkipLast;
+        bitmapInfo = (CGBitmapInfo)kCGImageAlphaNoneSkipLast;
     }
     
     CGContextRef bitmap;
