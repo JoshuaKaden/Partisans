@@ -334,11 +334,10 @@ static CGFloat kYSlices = 5.0f;
 {
     NSMutableArray *scrambledList = [[NSMutableArray alloc] initWithArray:self.tiles];
     NSUInteger count = [scrambledList count];
-    for (NSUInteger i = 0; i < count; i++)
-    {
+    for (NSUInteger i = 0; i < count; i++) {
         // Select a random element between i and end of array to swap with.
-        int nElements = count - i;
-        int n = (arc4random() % nElements) + i;
+        int nElements = (int)count - (int)i;
+        int n = (arc4random() % nElements) + (int)i;
         [scrambledList exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
     NSArray *scrambledTiles = [[NSArray alloc] initWithArray:scrambledList];

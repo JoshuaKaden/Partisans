@@ -572,8 +572,8 @@
     for (NSUInteger i = 0; i < count; i++)
     {
         // Select a random element between i and end of array to swap with.
-        int nElements = count - i;
-        int n = (arc4random() % nElements) + i;
+        int nElements = (int)count - (int)i;
+        int n = (arc4random() % nElements) + (int)i;
         [shuffledList exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
     NSArray *shuffled = [[NSArray alloc] initWithArray:shuffledList];

@@ -97,9 +97,8 @@
 - (NSInteger)menuViewController:(JSKMenuViewController *)menuViewController numberOfRowsInSection:(NSInteger)section
 {
     NSInteger returnValue = 0;
-    GameTesterMenuSection menuSection = section;
-    switch (menuSection)
-    {
+    GameTesterMenuSection menuSection = (GameTesterMenuSection)section;
+    switch (menuSection) {
         case GameTesterMenuSectionAction:
             returnValue = GameTesterMenuRow_MaxValue;
             break;
@@ -115,7 +114,7 @@
 - (NSString *)menuViewController:(JSKMenuViewController *)menuViewController titleForHeaderInSection:(NSInteger)section
 {
     NSString *returnValue = nil;
-    GameTesterMenuSection menuSection = section;
+    GameTesterMenuSection menuSection = (GameTesterMenuSection)section;
     switch (menuSection) {
         case GameTesterMenuSectionAction:
             returnValue = @"Action";

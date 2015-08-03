@@ -350,7 +350,7 @@
 }
 
 
-- (float)menuViewController:(JSKMenuViewController *)menuViewController heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (double)menuViewController:(JSKMenuViewController *)menuViewController heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == DecisionMenuSectionVotes)
     {

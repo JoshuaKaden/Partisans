@@ -1240,13 +1240,12 @@ NSString * const kPartisansNetServiceName = @"ThoroughlyRandomServiceNameForPart
 + (NSString *)serviceName
 {
     NSUInteger gameCode = [self sharedInstance].gameCode;
-    if (gameCode == 0)
-    {
+    if (gameCode == 0) {
         GameEnvoy *gameEnvoy = [self sharedInstance].gameEnvoy;
         gameCode = gameEnvoy.gameCode;
         [self sharedInstance].gameCode = gameCode;
     }
-    NSString *serviceName = [NSString stringWithFormat:@"%@%d", kPartisansNetServiceName, gameCode];
+    NSString *serviceName = [NSString stringWithFormat:@"%@%@", kPartisansNetServiceName, @(gameCode)];
     return serviceName;
 }
 
