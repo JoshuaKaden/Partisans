@@ -53,11 +53,6 @@
 
 @synthesize gameEnvoy = m_gameEnvoy;
 
-- (void)dealloc
-{
-    [m_gameEnvoy release];
-    [super dealloc];
-}
 
 - (GameEnvoy *)gameEnvoy
 {
@@ -87,7 +82,6 @@
     
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:[SystemMessage playerEnvoy].peerID object:gameEnvoy];
     [SystemMessage sendParcelToPlayers:parcel];
-    [parcel release];
 }
 
 - (void)startMission
@@ -246,7 +240,6 @@
         {
             [SystemMessage sendParcelToPlayers:parcel];
         }
-        [parcel release];
         return;
     }
     
@@ -269,7 +262,6 @@
     NSMutableArray *objectList = [[NSMutableArray alloc] initWithCapacity:5];
     GamePrecis *precis = [[GamePrecis alloc] initWithEnvoy:gameEnvoy];
     [objectList addObject:precis];
-    [precis release];
     if (previousRound)
     {
         [objectList addObject:previousRound];
@@ -281,7 +273,6 @@
     [objectList addObject:currentRound];
     [objectList addObject:currentMission];
     NSArray *objectArray = [NSArray arrayWithArray:objectList];
-    [objectList release];
     
     // Send the array of objects.
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:peerID from:hostID object:objectArray];
@@ -293,7 +284,6 @@
     {
         [SystemMessage sendParcelToPlayers:parcel];
     }
-    [parcel release];
 }
 
 
@@ -400,7 +390,6 @@
     missionEnvoyOne.missionNumber = missionIndex + 1;
     missionEnvoyOne.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyOne];
-    [missionEnvoyOne release];
     
     // Mission Two.
     missionIndex++;
@@ -409,7 +398,6 @@
     missionEnvoyTwo.missionNumber = missionIndex + 1;
     missionEnvoyTwo.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyTwo];
-    [missionEnvoyTwo release];
 
     // Mission Three.
     missionIndex++;
@@ -418,7 +406,6 @@
     missionEnvoyThree.missionNumber = missionIndex + 1;
     missionEnvoyThree.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyThree];
-    [missionEnvoyThree release];
     
     // Mission Four.
     missionIndex++;
@@ -427,7 +414,6 @@
     missionEnvoyFour.missionNumber = missionIndex + 1;
     missionEnvoyFour.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyFour];
-    [missionEnvoyFour release];
 
     // Mission Five.
     missionIndex++;
@@ -436,7 +422,6 @@
     missionEnvoyFive.missionNumber = missionIndex + 1;
     missionEnvoyFive.teamCount = [self calculateTeamCount:missionIndex + 1 playerCount:playerCount];
     [gameEnvoy addMission:missionEnvoyFive];
-    [missionEnvoyFive release];
 }
 
 - (NSUInteger)calculateTeamCount:(NSUInteger)missionNumber playerCount:(NSUInteger)playerCount
@@ -592,13 +577,10 @@
         [shuffledList exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
     NSArray *shuffled = [[NSArray alloc] initWithArray:shuffledList];
-    [shuffledList release];
     
     NSRange range = NSRangeFromString(@"{0,5}");
     NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndexesInRange:range];
     NSArray *returnValue = [shuffled objectsAtIndexes:indexSet];
-    [indexSet release];
-    [shuffled release];
     
     return returnValue;
 }
@@ -617,7 +599,6 @@
     roundEnvoy.missionNumber = currentMission.missionNumber;
     
     [gameEnvoy addRound:roundEnvoy];
-    [roundEnvoy release];
 }
 
 
@@ -662,9 +643,7 @@
         }
         NSMutableArray *playerList = [[NSMutableArray alloc] initWithArray:players];
         [playerList removeObjectsInArray:list];
-        [list release];
         candidates = [NSArray arrayWithArray:playerList];
-        [playerList release];
     }
     
     if (candidates)

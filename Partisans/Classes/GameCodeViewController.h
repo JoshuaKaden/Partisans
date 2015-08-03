@@ -30,6 +30,6 @@
 
 @interface GameCodeViewController : UIViewController
 
-@property (nonatomic, assign) id <GameCodeViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <GameCodeViewControllerDelegate> delegate;
 
 @end

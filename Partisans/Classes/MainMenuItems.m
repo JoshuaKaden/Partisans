@@ -61,17 +61,6 @@
 @synthesize aboutMenuItems = m_aboutMenuItems;
 
 
-- (void)dealloc
-{
-    [m_missionStatusMenuItems release];
-    [m_playGameMenuItems release];
-    [m_setupGameMenuItems release];
-    [m_gameOverMenuItems release];
-    [m_dossiersMenuItems release];
-    [m_aboutMenuItems release];
-    
-    [super dealloc];
-}
 
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
@@ -89,7 +78,6 @@
             GameOverMenuItems *items = [[GameOverMenuItems alloc] init];
             self.gameOverMenuItems = items;
             [vc setMenuItems:items];
-            [items release];
         }
         
         else if (gameEnvoy.startDate)
@@ -109,7 +97,6 @@
                     // Go to the Perform Mission screen.
                     MissionViewController *realVC = [[MissionViewController alloc] init];
                     [menuViewController invokePush:YES viewController:realVC];
-                    [realVC release];
                     shouldPushMenuVC = NO;
                 }
                 else
@@ -118,7 +105,6 @@
                     MissionStatusMenuItems *items = [[MissionStatusMenuItems alloc] init];
                     self.missionStatusMenuItems = items;
                     [vc setMenuItems:items];
-                    [items release];
                 }
             }
             
@@ -140,14 +126,12 @@
                     // Show the Round Screen.
                     RoundMenuItems *items = [[RoundMenuItems alloc] init];
                     [vc setMenuItems:items];
-                    [items release];
                 }
                 else
                 {
                     // Show the Score Screen.
                     ScoreViewController *realVC = [[ScoreViewController alloc] init];
                     [menuViewController invokePush:YES viewController:realVC];
-                    [realVC release];
                     shouldPushMenuVC = NO;
                 }
                 
@@ -156,7 +140,6 @@
             {
                 OperativeAlertMenuItems *items = [[OperativeAlertMenuItems alloc] init];
                 [vc setMenuItems:items];
-                [items release];
             }
         }
         
@@ -166,14 +149,12 @@
             SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
             self.setupGameMenuItems = items;
             [vc setMenuItems:items];
-            [items release];
         }
         
         if (shouldPushMenuVC)
         {
             [menuViewController invokePush:YES viewController:vc];
         }
-        [vc release];
     }
 }
 
@@ -353,7 +334,6 @@
                 {
                     SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
                     self.setupGameMenuItems = items;
-                    [items release];
                     return self.setupGameMenuItems;
                 }
             }
@@ -361,7 +341,6 @@
             {
                 PlayGameMenuItems *items = [[PlayGameMenuItems alloc] init];
                 self.playGameMenuItems = items;
-                [items release];
                 return self.playGameMenuItems;
             }
             break;
@@ -371,7 +350,6 @@
         {
             AboutMenuItems *items = [[AboutMenuItems alloc] init];
             self.aboutMenuItems = items;
-            [items release];
             return self.aboutMenuItems;
             break;
         }
@@ -380,7 +358,6 @@
         {
             DossiersMenuItems *items = [[DossiersMenuItems alloc] init];
             self.dossiersMenuItems = items;
-            [items release];
             return self.dossiersMenuItems;
             break;
         }

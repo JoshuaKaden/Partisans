@@ -36,11 +36,6 @@
 
 @synthesize setupGameMenuItems = m_setupGameMenuItems;
 
-- (void)dealloc
-{
-    [m_setupGameMenuItems release];
-    [super dealloc];
-}
 
 
 - (NSString *)menuViewControllerTitle:(JSKMenuViewController *)menuViewController
@@ -172,7 +167,6 @@
             SetupGameMenuItems *items = [[SetupGameMenuItems alloc] init];
             items.shouldHost = YES;
             self.setupGameMenuItems = items;
-            [items release];
             return self.setupGameMenuItems;
             break;
         }

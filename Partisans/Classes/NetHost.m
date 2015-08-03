@@ -56,14 +56,6 @@ const BOOL kNetHostIsDebugOn = NO;
 @synthesize serviceName = m_serviceName;
 
 
-- (void)dealloc
-{
-    [m_server release];
-    [m_clients release];
-    [m_stash release];
-    [m_serviceName release];
-    [super dealloc];
-}
 
 - (BOOL)start
 {
@@ -76,14 +68,12 @@ const BOOL kNetHostIsDebugOn = NO;
     {
         NSMutableSet *clients = [[NSMutableSet alloc] initWithCapacity:kPartisansMaxPlayers - 1];
         self.clients = clients;
-        [clients release];
     }
     
     Server *server = [[Server alloc] init];
     server.serviceName = self.serviceName;
     [server setDelegate:self];
     self.server = server;
-    [server release];
     
     if (![self.server start])
     {
@@ -119,9 +109,8 @@ const BOOL kNetHostIsDebugOn = NO;
 - (NSString *)buildRandomString
 {
     CFUUIDRef udid = CFUUIDCreate(NULL);
-    NSString *udidString = (NSString *) CFUUIDCreateString(NULL, udid);
+    NSString *udidString = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, udid));
     NSString *returnValue = [NSString stringWithString:udidString];
-    [udidString release];
     CFRelease(udid);
     return returnValue;
 }
@@ -198,7 +187,6 @@ const BOOL kNetHostIsDebugOn = NO;
                 NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:stash];
                 [list setValue:commandMessage forKey:responseKey];
                 self.stash = [NSDictionary dictionaryWithDictionary:list];
-                [list release];
             }
             else
             {
@@ -206,7 +194,6 @@ const BOOL kNetHostIsDebugOn = NO;
                 [list addEntriesFromDictionary:stash];
                 [list setValue:commandMessage forKey:responseKey];
                 self.stash = [NSDictionary dictionaryWithDictionary:list];
-                [list release];
             }
         }
     }
@@ -254,7 +241,6 @@ const BOOL kNetHostIsDebugOn = NO;
                 NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:stash];
                 [list setValue:commandParcel forKey:responseKey];
                 self.stash = [NSDictionary dictionaryWithDictionary:list];
-                [list release];
             }
             else
             {
@@ -262,7 +248,6 @@ const BOOL kNetHostIsDebugOn = NO;
                 [list addEntriesFromDictionary:stash];
                 [list setValue:commandParcel forKey:responseKey];
                 self.stash = [NSDictionary dictionaryWithDictionary:list];
-                [list release];
             }
         }
     }
@@ -277,7 +262,6 @@ const BOOL kNetHostIsDebugOn = NO;
     {
         JSKCommandMessage *newCommandMessage = [[JSKCommandMessage alloc] initWithType:commandMessageType to:connection.peerID from:myPeerID];
         [connection sendNetworkPacket:newCommandMessage];
-        [newCommandMessage release];
     }
 }
 
@@ -311,7 +295,6 @@ const BOOL kNetHostIsDebugOn = NO;
             NSMutableDictionary *list = [[NSMutableDictionary alloc] initWithDictionary:self.stash];
             [list setValue:nil forKey:commandParcel.responseKey];
             self.stash = [NSDictionary dictionaryWithDictionary:list];
-            [list release];
             
             return;
         }
@@ -335,7 +318,6 @@ const BOOL kNetHostIsDebugOn = NO;
         
         JSKCommandMessage *msg = [[JSKCommandMessage alloc] initWithType:JSKCommandMessageTypeIdentification to:peerID from:[self.delegate netHostPeerID:self]];
         [self sendCommandMessage:msg];
-        [msg release];
         return;
     }
     

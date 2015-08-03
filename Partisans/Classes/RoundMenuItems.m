@@ -75,18 +75,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.pollingTimer invalidate];
     
-    [m_gameEnvoy release];
-    [m_currentRound release];
-    [m_currentMission release];
-    [m_candidates release];
-    [m_candidatePickerMenuItems release];
-    [m_menuViewController release];
-    [m_responseKey release];
-    [m_decisionMenuItems release];
-    [m_pollingTimer release];
-    [m_dossierDelegate release];
     
-    [super dealloc];
 }
 
 - (CandidatePickerMenuItems *)candidatePickerMenuItems
@@ -95,7 +84,6 @@
     {
         CandidatePickerMenuItems *items = [[CandidatePickerMenuItems alloc] init];
         self.candidatePickerMenuItems = items;
-        [items release];
     }
     return m_candidatePickerMenuItems;
 }
@@ -607,7 +595,6 @@
         {
             CandidatePickerMenuItems *items = [[CandidatePickerMenuItems alloc] init];
             self.candidatePickerMenuItems = items;
-            [items release];
             returnValue = self.candidatePickerMenuItems;
         }
         else if ([self isReadyForVote])
@@ -615,7 +602,6 @@
             PlayerEnvoy *playerEnvoy = [self.candidates objectAtIndex:indexPath.row];
             DossierDelegate *delegate = [[DossierDelegate alloc] initWithPlayerEnvoy:playerEnvoy];
             self.dossierDelegate = delegate;
-            [delegate release];
             returnValue = self.dossierDelegate;
         }
     }
@@ -626,14 +612,12 @@
         {
             DecisionMenuItems *items = [[DecisionMenuItems alloc] init];
             self.decisionMenuItems = items;
-            [items release];
             returnValue = self.decisionMenuItems;
         }
         else if ([self isCoordinator] && ![self isReadyForVote])
         {
             CandidatePickerMenuItems *items = [[CandidatePickerMenuItems alloc] init];
             self.candidatePickerMenuItems = items;
-            [items release];
             returnValue = self.candidatePickerMenuItems;
         }
     }

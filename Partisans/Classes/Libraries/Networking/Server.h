@@ -36,7 +36,7 @@
 - (void)stop;
 
 // Delegate receives various notifications about the state of our server
-@property (nonatomic, assign) id <ServerDelegate> delegate;
+@property (nonatomic, weak) id <ServerDelegate> delegate;
 @property (nonatomic, strong) NSString *serviceName;
 
 @end

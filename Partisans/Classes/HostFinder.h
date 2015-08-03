@@ -36,7 +36,7 @@
 
 @interface HostFinder : NSObject
 
-@property (nonatomic, assign) id <HostFinderDelegate> delegate;
+@property (nonatomic, weak) id <HostFinderDelegate> delegate;
 @property (nonatomic, readonly) BOOL isConnected;
 @property (nonatomic, readonly) NSString *hostPeerID;
 @property (nonatomic, assign) double timerInterval;

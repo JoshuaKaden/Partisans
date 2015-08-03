@@ -21,7 +21,7 @@
 @interface SlickEditView : UIView
 
 @property (nonatomic, strong) NSString *textFieldText;
-@property (nonatomic, assign) id <SlickEditViewProtocol> delegate;
+@property (nonatomic, weak) id <SlickEditViewProtocol> delegate;
 @property (nonatomic, strong) NSString *placeholder;
 
 @end

@@ -49,9 +49,6 @@
 {
     [self.timer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [m_hostPeerID release];
-    [m_timer release];
-    [super dealloc];
 }
 
 - (BOOL)isConnected

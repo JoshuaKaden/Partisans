@@ -41,7 +41,7 @@
 
 @property (nonatomic, assign) uint16_t port;
 @property (nonatomic, assign) CFSocketRef listeningSocket;
-@property (nonatomic, retain) NSNetService *netService;
+@property (nonatomic, strong) NSNetService *netService;
 
 - (BOOL)createServer;
 - (void)terminateServer;
@@ -65,11 +65,7 @@
 // Cleanup
 - (void)dealloc
 {
-    self.netService = nil;
-    [m_netService release];
     self.delegate = nil;
-    [m_serviceName release];
-    [super dealloc];
 }
 
 
@@ -130,14 +126,13 @@
         [self.delegate handleNewConnection:connection];
     }
     
-    [connection release];
 }
 
 
 // This function will be used as a callback while creating our listening socket via 'CFSocketCreate'
 static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, CFDataRef address, const void *data, void *info)
 {
-    Server *server = (Server*)info;
+    Server *server = (__bridge Server*)info;
 
     // We can only process "connection accepted" calls here
     if ( type != kCFSocketAcceptCallBack )
@@ -166,7 +161,7 @@ static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, 
     //   CFAllocatorReleaseCallBack release;
     //   CFAllocatorCopyDescriptionCallBack copyDescription;
     //  };
-    CFSocketContext socketCtxt = {0, self, NULL, NULL, NULL};
+    CFSocketContext socketCtxt = {0, (__bridge void *)(self), NULL, NULL, NULL};
 
     self.listeningSocket = CFSocketCreate(
         kCFAllocatorDefault,
@@ -222,7 +217,7 @@ static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, 
 
     //// PART 3: Find out what port kernel assigned to our socket
     // We need it to advertise our service via Bonjour
-    NSData *socketAddressActualData = (NSData *)CFSocketCopyAddress(self.listeningSocket);
+    NSData *socketAddressActualData = (NSData *)CFBridgingRelease(CFSocketCopyAddress(self.listeningSocket));
 
     // Convert socket data into a usable structure
     struct sockaddr_in socketAddressActual;
@@ -237,7 +232,6 @@ static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, 
     CFRunLoopAddSource(currentRunLoop, runLoopSource, kCFRunLoopCommonModes);
     CFRelease(runLoopSource);
 
-    [socketAddressActualData release];
     
     return YES;
 }
@@ -264,7 +258,6 @@ static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, 
     // create new instance of netService
     NSNetService *netService = [[NSNetService alloc] initWithDomain:@"" type:@"_partisans._tcp." name:serviceName port:self.port];
     self.netService = netService;
-    [netService release];
     // 	self.netService = [[NSNetService alloc]
     //      initWithDomain:@"" type:@"_partisans._tcp."
     //      name:chatRoomName port:self.port];

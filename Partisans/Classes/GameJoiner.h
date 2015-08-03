@@ -32,7 +32,7 @@
 
 @interface GameJoiner : NSObject
 
-@property (nonatomic, assign) id <GameJoinerDelegate> delegate;
+@property (nonatomic, weak) id <GameJoinerDelegate> delegate;
 @property (readonly) BOOL isScanning;
 @property (readonly) BOOL hasJoinedGame;
 @property (nonatomic, assign) NSUInteger gameCode;

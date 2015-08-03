@@ -40,7 +40,7 @@
 
 @interface NetPlayer : NSObject
 
-@property (nonatomic, assign) id <NetPlayerDelegate> delegate;
+@property (nonatomic, weak) id <NetPlayerDelegate> delegate;
 @property (readonly) BOOL hasStarted;
 @property (nonatomic, readonly) NSString *hostPeerID;
 

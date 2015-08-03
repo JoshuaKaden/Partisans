@@ -61,20 +61,6 @@
 @synthesize saboteurIDs = m_saboteurIDs;
 @synthesize contributeurIDs = m_contributeurIDs;
 
-- (void)dealloc
-{
-    [m_managedObjectID release];
-    [m_intramuralID release];
-    [m_missionName release];
-    [m_gameID release];
-    [m_coordinator release];
-    [m_coordinatorID release];
-    [m_teamMemberIDs release];
-    [m_saboteurIDs release];
-    [m_contributeurIDs release];
-    
-    [super dealloc];
-}
 
 
 - (id)initWithManagedObject:(Mission *)managedObject
@@ -107,7 +93,7 @@
 
 + (MissionEnvoy *)envoyFromManagedObject:(Mission *)managedObject
 {
-    MissionEnvoy *envoy = [[[MissionEnvoy alloc] initWithManagedObject:managedObject] autorelease];
+    MissionEnvoy *envoy = [[MissionEnvoy alloc] initWithManagedObject:managedObject];
     return envoy;
 }
 
@@ -211,10 +197,8 @@
         [list addObject:[PlayerEnvoy envoyFromIntramuralID:intramuralID]];
     }
     NSArray *returnValue = [NSArray arrayWithArray:list];
-    [list release];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerName" ascending:YES];
     returnValue = [returnValue sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    [sortDescriptor release];
     return returnValue;
 }
 
@@ -232,7 +216,6 @@
         [list addObject:gamePlayer.player.intramuralID];
     }
     self.teamMemberIDs = [NSArray arrayWithArray:list];
-    [list release];
 }
 
 - (BOOL)isPlayerOnTeam:(PlayerEnvoy *)playerEnvoy
@@ -330,7 +313,6 @@
         [list addObject:[PlayerEnvoy envoyFromIntramuralID:intramuralID]];
     }
     NSArray *returnValue = [NSArray arrayWithArray:list];
-    [list release];
     return returnValue;
 }
 
@@ -348,7 +330,6 @@
         [list addObject:gamePlayer.player.intramuralID];
     }
     self.saboteurIDs = [NSArray arrayWithArray:list];
-    [list release];
 }
 
 
@@ -383,7 +364,6 @@
         [list addObject:[PlayerEnvoy envoyFromIntramuralID:intramuralID]];
     }
     NSArray *returnValue = [NSArray arrayWithArray:list];
-    [list release];
     return returnValue;
 }
 
@@ -401,7 +381,6 @@
         [list addObject:gamePlayer.player.intramuralID];
     }
     self.contributeurIDs = [NSArray arrayWithArray:list];
-    [list release];
 }
 
 

@@ -95,7 +95,7 @@ extern NSString * const JSKMenuViewControllerShouldRefresh;
 
 @interface JSKMenuViewController : UIViewController
 
-@property (nonatomic, assign) id <JSKMenuViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <JSKMenuViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSObject <JSKMenuViewControllerDelegate> *menuItems;
 
 - (void)refresh:(BOOL)animated;

@@ -63,22 +63,6 @@
 @synthesize hasScoreBeenShown = m_hasScoreBeenShown;
 
 
-- (void)dealloc
-{
-    [m_managedObjectID release];
-    [m_intramuralID release];
-    [m_importedObjectString release];
-    
-    [m_startDate release];
-    [m_endDate release];
-    [m_gamePlayerEnvoys release];
-    [m_modifiedDate release];
-    [m_deletedGamePlayerEnvoys release];
-    [m_missionEnvoys release];
-    [m_roundEnvoys release];
-    
-    [super dealloc];
-}
 
 
 - (id)initWithManagedObject:(Game *)managedObject
@@ -109,7 +93,7 @@
 
 + (GameEnvoy *)envoyFromManagedObject:(Game *)managedObject
 {
-    GameEnvoy *envoy = [[[GameEnvoy alloc] initWithManagedObject:managedObject] autorelease];
+    GameEnvoy *envoy = [[GameEnvoy alloc] initWithManagedObject:managedObject];
     return envoy;
 }
 
@@ -327,20 +311,16 @@
     NSSet *playerSet = game.gamePlayers;
     NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"player.playerName" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
-    [nameSort release];
     NSArray *gamePlayers = [playerSet sortedArrayUsingDescriptors:sorts];
-    [sorts release];
     
     NSMutableArray *envoyList = [[NSMutableArray alloc] initWithCapacity:gamePlayers.count];
     for (GamePlayer *gamePlayer in gamePlayers)
     {
         GamePlayerEnvoy *envoy = [[GamePlayerEnvoy alloc] initWithManagedObject:gamePlayer];
         [envoyList addObject:envoy];
-        [envoy release];
     }
     
     [self setGamePlayerEnvoys:[NSArray arrayWithArray:envoyList]];
-    [envoyList release];
 }
 
 
@@ -357,20 +337,16 @@
     NSSet *missionSet = game.missions;
     NSSortDescriptor *numberSort = [[NSSortDescriptor alloc] initWithKey:@"missionNumber" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:numberSort, nil];
-    [numberSort release];
     NSArray *missions = [missionSet sortedArrayUsingDescriptors:sorts];
-    [sorts release];
     
     NSMutableArray *envoyList = [[NSMutableArray alloc] initWithCapacity:missions.count];
     for (Mission *mission in missions)
     {
         MissionEnvoy *envoy = [[MissionEnvoy alloc] initWithManagedObject:mission];
         [envoyList addObject:envoy];
-        [envoy release];
     }
     
     [self setMissionEnvoys:[NSArray arrayWithArray:envoyList]];
-    [envoyList release];
 }
 
 
@@ -387,20 +363,16 @@
     NSSet *roundSet = game.rounds;
     NSSortDescriptor *numberSort = [[NSSortDescriptor alloc] initWithKey:@"roundNumber" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:numberSort, nil];
-    [numberSort release];
     NSArray *rounds = [roundSet sortedArrayUsingDescriptors:sorts];
-    [sorts release];
     
     NSMutableArray *envoyList = [[NSMutableArray alloc] initWithCapacity:rounds.count];
     for (Round *round in rounds)
     {
         RoundEnvoy *envoy = [[RoundEnvoy alloc] initWithManagedObject:round];
         [envoyList addObject:envoy];
-        [envoy release];
     }
     
     [self setRoundEnvoys:[NSArray arrayWithArray:envoyList]];
-    [envoyList release];
 }
 
 
@@ -417,20 +389,16 @@
     
     NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"player.playerName" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
-    [nameSort release];
     NSArray *players = [playerSet sortedArrayUsingDescriptors:sorts];
-    [sorts release];
     
     NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:players.count];
     for (GamePlayer *gamePlayer in players)
     {
         PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:gamePlayer.player];
         [envoys addObject:envoy];
-        [envoy release];
     }
     
     NSArray *returnValue = [NSArray arrayWithArray:envoys];
-    [envoys release];
     
     return returnValue;
 }
@@ -448,9 +416,7 @@
     
     NSSortDescriptor *nameSort = [[NSSortDescriptor alloc] initWithKey:@"player.playerName" ascending:YES];
     NSArray *sorts = [[NSArray alloc] initWithObjects:nameSort, nil];
-    [nameSort release];
     NSArray *players = [playerSet sortedArrayUsingDescriptors:sorts];
-    [sorts release];
     
     NSMutableArray *envoys = [[NSMutableArray alloc] initWithCapacity:players.count];
     for (GamePlayer *gamePlayer in players)
@@ -459,12 +425,10 @@
         {
             PlayerEnvoy *envoy = [[PlayerEnvoy alloc] initWithManagedObject:gamePlayer.player];
             [envoys addObject:envoy];
-            [envoy release];
         }
     }
     
     NSArray *returnValue = [NSArray arrayWithArray:envoys];
-    [envoys release];
     
     return returnValue;
 }
@@ -507,7 +471,6 @@
     gamePlayerEnvoy.gameID = self.intramuralID;
     gamePlayerEnvoy.isHost = YES;
     NSArray *gamePlayerEnvoys = [self.gamePlayerEnvoys arrayByAddingObject:gamePlayerEnvoy];
-    [gamePlayerEnvoy release];
     [self setGamePlayerEnvoys:gamePlayerEnvoys];
     self.numberOfPlayers = self.gamePlayerEnvoys.count;
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
@@ -550,7 +513,6 @@
     gamePlayerEnvoy.gameID = self.intramuralID;
     gamePlayerEnvoy.isHost = NO;
     NSArray *gamePlayerEnvoys = [self.gamePlayerEnvoys arrayByAddingObject:gamePlayerEnvoy];
-    [gamePlayerEnvoy release];
     [self setGamePlayerEnvoys:gamePlayerEnvoys];
     self.numberOfPlayers = self.gamePlayerEnvoys.count;
 //    NSManagedObjectContext *context = [JSKDataMiner mainObjectContext];
@@ -633,7 +595,6 @@
         NSMutableArray *deleted = [[NSMutableArray alloc] initWithArray:self.deletedGamePlayerEnvoys];
         [deleted addObject:theGamePlayerEnvoyThatWillBeRemoved];
         self.deletedGamePlayerEnvoys = [NSArray arrayWithArray:deleted];
-        [deleted release];
     }
     else
     {
@@ -644,7 +605,6 @@
     NSMutableArray *gamePlayerEnvoyList = [[NSMutableArray alloc] initWithArray:self.gamePlayerEnvoys];
     [gamePlayerEnvoyList removeObject:theGamePlayerEnvoyThatWillBeRemoved];
     self.gamePlayerEnvoys = [NSArray arrayWithArray:gamePlayerEnvoyList];
-    [gamePlayerEnvoyList release];
     self.numberOfPlayers = self.gamePlayerEnvoys.count;
     
     
@@ -1052,7 +1012,6 @@
             {
                 [context deleteObject:target];
             }
-            [hitList release];
         }
     }
     

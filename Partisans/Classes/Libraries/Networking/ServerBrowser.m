@@ -68,7 +68,6 @@
     {
         NSMutableArray *servers = [[NSMutableArray alloc] init];
         self.serverList = servers;
-        [servers release];
     }
   return self;
 }
@@ -79,10 +78,7 @@
 {
     self.netServiceBrowser.delegate = nil;
     
-    [m_serverList release];
-    [m_netServiceBrowser release];
     
-    [super dealloc];
 }
 
 
@@ -106,7 +102,6 @@
 
     NSNetServiceBrowser *netServiceBrowser = [[NSNetServiceBrowser alloc] init];
     self.netServiceBrowser = netServiceBrowser;
-    [netServiceBrowser release];
     if (!self.netServiceBrowser)
     {
         return NO;

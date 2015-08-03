@@ -55,8 +55,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.timer invalidate];
     
-    [m_timer release];
-    [super dealloc];
 }
 
 

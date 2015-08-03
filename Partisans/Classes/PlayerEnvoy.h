@@ -41,8 +41,8 @@
 @property (nonatomic, strong) NSString *peerID;
 @property (nonatomic, strong) NSDate *modifiedDate;
 
-@property (nonatomic, readonly) UIImage *image;
-@property (nonatomic, readonly) UIImage *smallImage;
+@property (weak, nonatomic, readonly) UIImage *image;
+@property (weak, nonatomic, readonly) UIImage *smallImage;
 
 // Search for and return the default player.
 + (PlayerEnvoy *)defaultEnvoy;

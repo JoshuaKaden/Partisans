@@ -28,14 +28,6 @@
 @synthesize responseKey = m_responseKey;
 @synthesize object = m_object;
 
-- (void)dealloc
-{
-    [m_to release];
-    [m_from release];
-    [m_object release];
-    [m_responseKey release];
-    [super dealloc];
-}
 
 
 

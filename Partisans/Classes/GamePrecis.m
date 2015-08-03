@@ -26,12 +26,6 @@
 @synthesize intramuralID = m_intramuralID;
 @synthesize modifiedDate = m_modifedDate;
 
-- (void)dealloc
-{
-    [m_intramuralID release];
-    [m_modifedDate release];
-    [super dealloc];
-}
 
 - (id)initWithEnvoy:(GameEnvoy *)envoy
 {

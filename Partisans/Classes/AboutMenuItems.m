@@ -31,7 +31,6 @@
     {
         NSURL *url = [[NSURL alloc] initWithString:@"http://partisans.kadenspace.com/"];
         [[UIApplication sharedApplication] openURL:url];
-        [url release];
     }
 }
 

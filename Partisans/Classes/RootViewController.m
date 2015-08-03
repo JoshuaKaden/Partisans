@@ -49,12 +49,6 @@
 #pragma mark - View lifecycle
 
 
-- (void)dealloc
-{
-    [m_backgroundImageView release];
-    
-    [super dealloc];
-}
 
 
 - (void)viewDidUnload
@@ -89,7 +83,6 @@
     {
         UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:image];
         self.backgroundImageView = backgroundImageView;
-        [backgroundImageView release];
         [self.view addSubview:self.backgroundImageView];
     }
 }
@@ -157,7 +150,6 @@
         systemMessage.hasSplashBeenShown = YES;
         SplashViewController *vc = [[SplashViewController alloc] init];
         [self.navigationController pushViewController:vc animated:NO];
-        [vc release];
         return;
     }
     
@@ -176,7 +168,6 @@
         vc.shouldHideBackButton = YES;
         vc.isAnAdd = YES;
         [self.navigationController pushViewController:vc animated:NO];
-        [vc release];
         return;
     }
     
@@ -184,9 +175,7 @@
     JSKMenuViewController *vc = [[JSKMenuViewController alloc] init];
     MainMenuItems *items = [[MainMenuItems alloc] init];
     [vc setMenuItems:items];
-    [items release];
     [self.navigationController pushViewController:vc animated:NO];
-    [vc release];
 }
 
 

@@ -42,11 +42,6 @@
 @synthesize envoy = m_envoy;
 
 
-- (void)dealloc
-{
-    [m_envoy release];
-    [super dealloc];
-}
 
 
 - (id)initWithEnvoy:(PlayerEnvoy *)envoy
@@ -62,47 +57,46 @@
 
 - (void)main
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
     
     // Create context on background thread
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    [context setUndoManager:nil];
-    [context setPersistentStoreCoordinator:[JSKDataMiner sharedInstance].persistentStoreCoordinator];
-    
-    
-    // Register context with the notification center
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(mergeChanges:) name:NSManagedObjectContextDidSaveNotification object:context];
-    
-    
-    
-    
-    // Here is the actual work of the class.
-    
-    [SystemMessage clearImageCache];
-    [SystemMessage clearPlayerCache];
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [context setUndoManager:nil];
+        [context setPersistentStoreCoordinator:[JSKDataMiner sharedInstance].persistentStoreCoordinator];
+        
+        
+        // Register context with the notification center
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self selector:@selector(mergeChanges:) name:NSManagedObjectContextDidSaveNotification object:context];
+        
+        
+        
+        
+        // Here is the actual work of the class.
+        
+        [SystemMessage clearImageCache];
+        [SystemMessage clearPlayerCache];
 //    [SystemMessage cacheImage:self.envoy.picture.image key:self.envoy.intramuralID];
-    
-    if ([self.envoy respondsToSelector:@selector(commitInContext:)]) {
-        [self.envoy performSelector:@selector(commitInContext:) withObject:context];
-    }
-    
-    
-    
-    NSError *error = nil;
-    if (context && [context hasChanges])
-    {
-        if (![context save:&error]) {
-            debugLog(@"*** Error saving context: %@",[error localizedDescription]);
+        
+        if ([self.envoy respondsToSelector:@selector(commitInContext:)]) {
+            [self.envoy performSelector:@selector(commitInContext:) withObject:context];
         }
+        
+        
+        
+        NSError *error = nil;
+        if (context && [context hasChanges])
+        {
+            if (![context save:&error]) {
+                debugLog(@"*** Error saving context: %@",[error localizedDescription]);
+            }
+        }
+        
+        
+        
+        
+        [notificationCenter removeObserver:self];
     }
-    
-    
-    
-    [context release];
-    
-    [notificationCenter removeObserver:self];
-    [pool drain];
 }
 
 

@@ -65,11 +65,7 @@
 {
     [m_gameJoiner setDelegate:nil];
     
-    [m_viewStack release];
-    [m_tapGesture release];
-    [m_gameJoiner release];
     
-    [super dealloc];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -99,14 +95,12 @@
     [viewStack setTextColor:[UIColor whiteColor]];
     
     self.viewStack = viewStack;
-    [viewStack release];
     
     [self.view addSubview:viewStack];
     
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     self.tapGesture = tapGesture;
-    [tapGesture release];
     
     [self.view addGestureRecognizer:self.tapGesture];
 }
@@ -168,7 +162,6 @@
         GameCodeViewController *vc = [[GameCodeViewController alloc] init];
         [vc setDelegate:self];
         [self.navigationController pushViewController:vc animated:YES];
-        [vc release];
         return;
     }
     
@@ -193,7 +186,6 @@
     [label setText:message];
     
     [self.viewStack addView:label];
-    [label release];
 }
 
 - (void)clearStatusMessages
@@ -224,7 +216,6 @@
         [gameJoiner setDelegate:self];
         gameJoiner.gameCode = self.gameCode;
         self.gameJoiner = gameJoiner;
-        [gameJoiner release];
     }
     
     [self.gameJoiner startScanning];

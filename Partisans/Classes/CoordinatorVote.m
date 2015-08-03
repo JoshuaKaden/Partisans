@@ -26,12 +26,6 @@
 @synthesize candidateIDs = m_candidateIDs;
 @synthesize voteEnvoy = m_voteEnvoy;
 
-- (void)dealloc
-{
-    [m_candidateIDs release];
-    [m_voteEnvoy release];
-    [super dealloc];
-}
 
 - (NSString *)description
 {

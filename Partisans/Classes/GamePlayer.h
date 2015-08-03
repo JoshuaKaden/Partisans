@@ -25,19 +25,19 @@
 
 @interface GamePlayer : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * hasAlertBeenShown;
-@property (nonatomic, retain) NSString * intramuralID;
-@property (nonatomic, retain) NSNumber * isHost;
-@property (nonatomic, retain) NSNumber * isOperative;
-@property (nonatomic, retain) NSSet *candidateForRounds;
-@property (nonatomic, retain) Game *game;
-@property (nonatomic, retain) NSSet *leaderForRounds;
-@property (nonatomic, retain) NSSet *missionVotes;
-@property (nonatomic, retain) Player *player;
-@property (nonatomic, retain) NSSet *teamMemberOn;
-@property (nonatomic, retain) NSSet *sabotaged;
-@property (nonatomic, retain) NSSet *contributed;
-@property (nonatomic, retain) NSSet *coordinated;
+@property (nonatomic, strong) NSNumber * hasAlertBeenShown;
+@property (nonatomic, strong) NSString * intramuralID;
+@property (nonatomic, strong) NSNumber * isHost;
+@property (nonatomic, strong) NSNumber * isOperative;
+@property (nonatomic, strong) NSSet *candidateForRounds;
+@property (nonatomic, strong) Game *game;
+@property (nonatomic, strong) NSSet *leaderForRounds;
+@property (nonatomic, strong) NSSet *missionVotes;
+@property (nonatomic, strong) Player *player;
+@property (nonatomic, strong) NSSet *teamMemberOn;
+@property (nonatomic, strong) NSSet *sabotaged;
+@property (nonatomic, strong) NSSet *contributed;
+@property (nonatomic, strong) NSSet *coordinated;
 @end
 
 @interface GamePlayer (CoreDataGeneratedAccessors)

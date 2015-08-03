@@ -42,12 +42,6 @@
 //@synthesize gameTesterMenuItems = m_gameTesterMenuItems;
 @synthesize aboutMenuItems = m_aboutMenuItems;
 
-- (void)dealloc
-{
-    [m_aboutMenuItems release];
-//    [m_gameTesterMenuItems release];
-    [super dealloc];
-}
 
 
 - (BOOL)menuViewControllerHidesRefreshButton:(JSKMenuViewController *)menuViewController
@@ -171,7 +165,6 @@
         {
             AboutMenuItems *items = [[AboutMenuItems alloc] init];
             self.aboutMenuItems = items;
-            [items release];
             return self.aboutMenuItems;
             break;
         }

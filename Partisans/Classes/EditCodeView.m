@@ -55,14 +55,7 @@
     [self.picker setDataSource:nil];
     [self.picker setDelegate:nil];
     
-    [m_view release];
-    [m_labelOne release];
-    [m_labelTwo release];
-    [m_labelThree release];
-    [m_labelFour release];
-    [m_picker release];
     
-    [super dealloc];
 }
 
 
@@ -141,19 +134,15 @@
 {
     NSString *labelText = [[NSString alloc] initWithFormat:@"%d", self.codeOne];
     [self.labelOne setText:labelText];
-    [labelText release];
     
     labelText = [[NSString alloc] initWithFormat:@"%d", self.codeTwo];
     [self.labelTwo setText:labelText];
-    [labelText release];
     
     labelText = [[NSString alloc] initWithFormat:@"%d", self.codeThree];
     [self.labelThree setText:labelText];
-    [labelText release];
     
     labelText = [[NSString alloc] initWithFormat:@"%d", self.codeFour];
     [self.labelFour setText:labelText];
-    [labelText release];
     
     [self.picker selectRow:self.codeOne - 1 inComponent:0 animated:YES];
     [self.picker selectRow:self.codeTwo inComponent:1 animated:YES];
@@ -176,7 +165,6 @@
     
     NSNumber *codeNumber = [[NSNumber alloc] initWithUnsignedInteger:code];
     NSString *gameCodeString = codeNumber.description;
-    [codeNumber release];
     
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     [formatter setNumberStyle:NSNumberFormatterNoStyle];
@@ -188,7 +176,6 @@
     [self setCodeThree:gameCodeDigit];
     gameCodeDigit = [[formatter numberFromString:[gameCodeString substringWithRange:NSMakeRange(3, 1)]] unsignedIntegerValue];
     [self setCodeFour:gameCodeDigit];
-    [formatter release];
 }
 
 
@@ -221,7 +208,6 @@
     }
     NSNumber *number = [[NSNumber alloc] initWithUnsignedInteger:digit];
     returnValue = [NSString stringWithFormat:@"%@", number.description];
-    [number release];
     return returnValue;
 }
 
@@ -258,7 +244,6 @@
         default:
             break;
     }
-    [number release];
     
     m_code = (self.codeOne * 1000) + (self.codeTwo * 100) + (self.codeThree * 10) + self.codeFour;
     

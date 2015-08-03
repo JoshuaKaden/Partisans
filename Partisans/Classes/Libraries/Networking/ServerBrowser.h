@@ -31,8 +31,8 @@
 
 @interface ServerBrowser : NSObject
 
-@property (nonatomic, readonly) NSArray *servers;
-@property (nonatomic, assign) id <ServerBrowserDelegate> delegate;
+@property (weak, nonatomic, readonly) NSArray *servers;
+@property (nonatomic, weak) id <ServerBrowserDelegate> delegate;
 @property (nonatomic, readonly) BOOL isBrowsing;
 
 // Start browsing for Bonjour services

@@ -50,15 +50,6 @@
 @synthesize font = m_font;
 
 
-- (void)dealloc
-{
-    [m_nameLabel release];
-    [m_headshotImageView release];
-    [m_serviceRecordViewStack release];
-    [m_font release];
-    
-    [super dealloc];
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -184,7 +175,6 @@
         }
         NSString *entry = [[NSString alloc] initWithFormat:@"%@ %@ %@", participatedPrefix, spellOut, suffix];
         [self addServiceRecordEntry:entry];
-        [entry release];
     }
     
     if (failedMissions > 0)
@@ -201,7 +191,6 @@
         }
         NSString *entry = [[NSString alloc] initWithFormat:@"%@ %@ %@", participatedPrefix, spellOut, suffix];
         [self addServiceRecordEntry:entry];
-        [entry release];
     }
     
     if (successfulMissionsCoordinated > 0)
@@ -218,7 +207,6 @@
         }
         NSString *entry = [[NSString alloc] initWithFormat:@"%@ %@ %@", coordinatedPrefix, spellOut, suffix];
         [self addServiceRecordEntry:entry];
-        [entry release];
     }
     
     if (failedMissionsCoordinated > 0)
@@ -235,7 +223,6 @@
         }
         NSString *entry = [[NSString alloc] initWithFormat:@"%@ %@ %@", coordinatedPrefix, spellOut, suffix];
         [self addServiceRecordEntry:entry];
-        [entry release];
     }
 }
 
@@ -253,7 +240,6 @@
     [label setFont:self.font];
 //    [label setFont:[UIFont systemFontOfSize:13.0f]];
     [self.serviceRecordViewStack addView:label];
-    [label release];
 }
 
 

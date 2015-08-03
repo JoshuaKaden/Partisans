@@ -89,18 +89,7 @@ static CGFloat kYSlices = 5.0f;
     [self.triggerView removeGestureRecognizer:self.triggerGesture];
     self.animation.delegate = nil;
     
-    [m_imageView release];
-    [m_image release];
-    [m_imageLayer release];
-    [m_timer release];
-    [m_tiles release];
-    [m_scrambledTiles release];
-    [m_triggerView release];
-    [m_triggerGesture release];
-    [m_closeButton release];
-    [m_animation release];
     
-    [super dealloc];
 }
 
 
@@ -204,7 +193,6 @@ static CGFloat kYSlices = 5.0f;
     [self assembleTiles:layer];
     
     self.imageLayer = layer;
-    [layer release];
     [self.imageView.layer addSublayer:self.imageLayer];
     
     self.imageView.image = nil;
@@ -220,7 +208,6 @@ static CGFloat kYSlices = 5.0f;
         animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
         animation.duration = 0.75f;
         self.animation = animation;
-        [animation release];
     }
     
     self.animation.fromValue = [layer valueForKey:@"position"];
@@ -237,14 +224,14 @@ static CGFloat kYSlices = 5.0f;
     
     NSMutableArray *valueList = [[NSMutableArray alloc] initWithCapacity:self.tiles.count];
     
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    for (CALayer *layer in self.imageLayer.sublayers)
-    {
-        CGPoint point = [self destinationForPoint:layer.position];
-        NSValue *value = [NSValue valueWithCGPoint:point];
-        [valueList addObject:value];
+    @autoreleasepool {
+        for (CALayer *layer in self.imageLayer.sublayers)
+        {
+            CGPoint point = [self destinationForPoint:layer.position];
+            NSValue *value = [NSValue valueWithCGPoint:point];
+            [valueList addObject:value];
+        }
     }
-    [pool drain];
     
     NSInteger index = 0;
     for (CALayer *layer in self.imageLayer.sublayers)
@@ -254,7 +241,6 @@ static CGFloat kYSlices = 5.0f;
         index++;
     }
     
-    [valueList release];
     
 //        CGPoint position = layer.position;
 //        CAAnimation *animation = [self animationForX:position.x Y:position.y];
@@ -313,31 +299,28 @@ static CGFloat kYSlices = 5.0f;
     NSMutableArray *layerList = [[NSMutableArray alloc] initWithCapacity:ceiling];
     for (int x = 0; x < kXSlices; x++)
     {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        @autoreleasepool {
         
-        for (int y = 0; y < kYSlices; y++)
-        {
-            CGRect frame = CGRectMake((width / kXSlices) * x,
-                                      (height / kYSlices) * y,
-                                      width / kXSlices,
-                                      height / kYSlices);
-            CALayer *layer = [[CALayer alloc] init];
-            layer.frame = frame;
-            
-            CGImageRef subimage = CGImageCreateWithImageInRect(self.drawnImage, frame);
-            layer.contents = (id)subimage;
-            CFRelease(subimage);
-            [layerList addObject:layer];
-            [layer release];
+            for (int y = 0; y < kYSlices; y++)
+            {
+                CGRect frame = CGRectMake((width / kXSlices) * x,
+                                          (height / kYSlices) * y,
+                                          width / kXSlices,
+                                          height / kYSlices);
+                CALayer *layer = [[CALayer alloc] init];
+                layer.frame = frame;
+                
+                CGImageRef subimage = CGImageCreateWithImageInRect(self.drawnImage, frame);
+                layer.contents = (__bridge id)subimage;
+                CFRelease(subimage);
+                [layerList addObject:layer];
+            }
+        
         }
-        
-        [pool drain];
     }
     
     NSArray *tiles = [[NSArray alloc] initWithArray:layerList];
-    [layerList release];
     self.tiles = tiles;
-    [tiles release];
     
     
     for (CALayer *layer in self.tiles)
@@ -359,9 +342,7 @@ static CGFloat kYSlices = 5.0f;
         [scrambledList exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
     NSArray *scrambledTiles = [[NSArray alloc] initWithArray:scrambledList];
-    [scrambledList release];
     self.scrambledTiles = scrambledTiles;
-    [scrambledTiles release];
 }
 
 - (CGPoint)destinationForPoint:(CGPoint)point
@@ -407,7 +388,6 @@ static CGFloat kYSlices = 5.0f;
 {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     self.triggerGesture = tapGesture;
-    [tapGesture release];
     
     UIView *view = [[UIView alloc] initWithFrame:self.imageView.frame];
     view.backgroundColor = [UIColor clearColor];
@@ -416,7 +396,6 @@ static CGFloat kYSlices = 5.0f;
     [view addGestureRecognizer:tapGesture];
     
     self.triggerView = view;
-    [view release];
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)recognizer

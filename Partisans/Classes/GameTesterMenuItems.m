@@ -39,11 +39,6 @@
 
 @synthesize players = m_players;
 
-- (void)dealloc
-{
-    [m_players release];
-    [super dealloc];
-}
 
 
 #pragma mark - Overridden accessors
