@@ -27,126 +27,65 @@
 #import "SplashViewController.h"
 #import "SystemMessage.h"
 
-
 @interface RootViewController ()
-
-@property (nonatomic, strong) UIImageView *backgroundImageView;
-
 - (void)commence;
 - (void)showFirstViewController;
-
 @end
-
-
 
 @implementation RootViewController
 
-
-@synthesize backgroundImageView = m_backgroundImageView;
-
-
-
 #pragma mark - View lifecycle
 
-
-
-
-- (void)viewDidUnload
+- (void)loadView
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    self.backgroundImageView = nil;
+    UIImage *image = [UIImage imageNamed:@"splash"];
+    self.view = [[UIImageView alloc] initWithImage:image];
 }
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
-    
     self.title = NSLocalizedString(@"Partisans", @"Partisans  --  title");
-    
-    // The background image.
-    UIImage *image = [UIImage imageNamed:@"splash"];
-    if (image)
-    {
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:image];
-        self.backgroundImageView = backgroundImageView;
-        [self.view addSubview:self.backgroundImageView];
-    }
 }
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    self.backgroundImageView.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-    
     [self commence];
 }
-
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
 }
 
-
-
-
 #pragma mark - Private
-
 
 - (void)commence
 {
     static BOOL hasCommenced = NO;
     
-    if (!hasCommenced)
-    {
+    if (!hasCommenced) {
         PlayerEnvoy *playerEnvoy = [PlayerEnvoy defaultEnvoy];
         [[SystemMessage sharedInstance] setPlayerEnvoy:playerEnvoy];
     }
     
     [self showFirstViewController];
     
-    if (hasCommenced)
-    {
+    if (hasCommenced) {
         return;
     }
     
     // Room here for...
     // Mystery code!
     
-    
     hasCommenced = YES;
 }
-
-
-
 
 - (void)showFirstViewController
 {
     SystemMessage *systemMessage = [SystemMessage sharedInstance];
-    if (!systemMessage.hasSplashBeenShown)
-    {
+    if (!systemMessage.hasSplashBeenShown) {
         systemMessage.hasSplashBeenShown = YES;
         SplashViewController *vc = [[SplashViewController alloc] init];
         [self.navigationController pushViewController:vc animated:NO];
@@ -155,15 +94,13 @@
     
     // If there are no default players, then have the user make one.
     PlayerEnvoy *playerEnvoy = [SystemMessage playerEnvoy];
-    if (!playerEnvoy)
-    {
+    if (!playerEnvoy) {
         playerEnvoy = [PlayerEnvoy defaultEnvoy];
-        [[SystemMessage sharedInstance] setPlayerEnvoy:playerEnvoy];
+        [systemMessage setPlayerEnvoy:playerEnvoy];
     }
     
     // If this is a new (unsaved) player, jump right to the edit screen.
-    if (![SystemMessage playerEnvoy].managedObjectID)
-    {
+    if (!playerEnvoy.managedObjectID) {
         PlayerViewController *vc = [[PlayerViewController alloc] init];
         vc.shouldHideBackButton = YES;
         vc.isAnAdd = YES;
@@ -177,6 +114,5 @@
     [vc setMenuItems:items];
     [self.navigationController pushViewController:vc animated:NO];
 }
-
 
 @end
