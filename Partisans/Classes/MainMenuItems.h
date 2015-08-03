@@ -21,7 +21,6 @@
 #import <Foundation/Foundation.h>
 #import "JSKMenuViewController.h"
 
-
 typedef enum
 {
     MainMenuRowPlayer,
@@ -31,8 +30,6 @@ typedef enum
     MainMenuRow_MaxValue
 } MainMenuRow;
 
-
 @interface MainMenuItems : NSObject <JSKMenuViewControllerDelegate>
 
 @end
-
