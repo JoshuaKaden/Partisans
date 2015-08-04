@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSKCommandMessageProtocol.h"
 
 
 typedef enum
@@ -47,12 +48,12 @@ typedef enum
 // My intent here is a small, generic object that can provide punctuation for other
 // objects when sending them to and fro between devices.
 
-@interface JSKCommandMessage : NSObject <NSCoding>
+@interface JSKCommandMessage : NSObject <NSCoding, JSKCommandMessageProtocol>
 
 @property (nonatomic, assign) JSKCommandMessageType commandMessageType;
 @property (nonatomic, strong) NSString *to;
 @property (nonatomic, strong) NSString *from;
-@property (weak, readonly, nonatomic) NSString *commandMessageTypeName;
+@property (nonatomic, readonly) NSString *commandMessageTypeName;
 @property (nonatomic, strong) NSString *responseKey;
 
 - (id)initWithType:(JSKCommandMessageType)commandMessageType to:(NSString *)to from:(NSString *)from;

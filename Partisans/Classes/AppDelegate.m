@@ -22,6 +22,7 @@
 
 #import "JSKDataMiner.h"
 #import "RootViewController.h"
+#import "NetworkManager.h"
 #import "SystemMessage.h"
 
 @interface AppDelegate ()
@@ -49,19 +50,19 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    [SystemMessage putPlayerOffline];
+    [NetworkManager putPlayerOffline];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    [SystemMessage putPlayerOffline];
+    [NetworkManager putPlayerOffline];
     [JSKDataMiner save];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     [JSKDataMiner save];
-    [SystemMessage putPlayerOffline];
+    [NetworkManager putPlayerOffline];
 }
 
 @end
