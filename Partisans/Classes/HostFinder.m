@@ -21,6 +21,7 @@
 #import "HostFinder.h"
 
 #import "GameEnvoy.h"
+#import "NetworkManager.h"
 #import "PlayerEnvoy.h"
 #import "SystemMessage.h"
 
@@ -53,7 +54,7 @@
 
 - (BOOL)isConnected
 {
-    self.isConnected = [SystemMessage isPlayerOnline];
+    self.isConnected = [NetworkManager isPlayerOnline];
     return m_isConnected;
 }
 
@@ -65,14 +66,14 @@
 
 - (void)connect
 {
-    if ([SystemMessage isPlayerOnline])
+    if ([NetworkManager isPlayerOnline])
     {
         return;
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hostReadyToCommunicate:) name:kPartisansNotificationHostReadyToCommunicate object:nil];
     
-    [SystemMessage putPlayerOnline];
+    [NetworkManager putPlayerOnline];
     
     if (!self.timer)
     {

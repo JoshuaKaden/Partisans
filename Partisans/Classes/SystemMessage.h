@@ -54,6 +54,14 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 + (GameEnvoy *)gameEnvoy;
 + (GameDirector *)gameDirector;
 
++ (BOOL)isHost;
++ (void)browseServers;
++ (void)stopBrowsingServers;
++ (void)requestGameUpdate;
++ (void)leaveGame;
++ (void)reloadGame:(GameEnvoy *)gameEnvoy;
++ (NSString *)serviceName;
+
 + (UIImage *)imageWithImage:(UIImage*)sourceImage scaledToSizeWithSameAspectRatio:(CGSize)targetSize;
 + (NSInteger)secondsBetweenDates:(NSDate *)fromDate toDate:(NSDate *)toDate;
 + (BOOL)isSameDay:(NSDate *)firstDate as:(NSDate *)secondDate;
@@ -70,22 +78,5 @@ extern NSString * const kPartisansNotificationHostReadyToCommunicate;
 + (PlayerEnvoy *)cachedPlayer:(NSString *)key;
 + (void)cachePlayer:(PlayerEnvoy *)playerEnvoy key:(NSString *)key;
 + (void)clearPlayerCache;
-
-+ (BOOL)isPlayerOnline;
-+ (void)putPlayerOnline;
-+ (void)putPlayerOffline;
-+ (NSString *)serviceName;
-+ (void)broadcastCommandMessage:(JSKCommandMessageType)commandMessageType;
-+ (void)sendCommandMessage:(JSKCommandMessage *)commandMessage;
-+ (void)sendCommandMessage:(JSKCommandMessage *)commandMessage shouldAwaitResponse:(BOOL)shouldAwaitResponse;
-+ (void)sendCommandParcel:(JSKCommandParcel *)parcel shouldAwaitResponse:(BOOL)shouldAwaitResponse;
-+ (void)sendToHost:(JSKCommandMessageType)commandMessageType shouldAwaitResponse:(BOOL)shouldAwaitResponse;
-+ (void)sendParcelToPlayers:(JSKCommandParcel *)parcel;
-+ (BOOL)isHost;
-+ (void)askToJoinGame;
-+ (void)browseServers;
-+ (void)stopBrowsingServers;
-+ (void)requestGameUpdate;
-+ (void)leaveGame;
 
 @end

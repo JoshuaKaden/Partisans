@@ -28,6 +28,7 @@
 #import "GamePlayerEnvoy.h"
 #import "ImageEnvoy.h"
 #import "MissionEnvoy.h"
+#import "NetworkManager.h"
 #import "PlayerEnvoy.h"
 #import "RoundMenuItems.h"
 #import "ProgressCell.h"
@@ -221,7 +222,7 @@
 //            [SystemMessage broadcastCommandMessage:JSKCommandMessageTypeLeaveGame];
             
             
-            [SystemMessage putPlayerOffline];
+            [NetworkManager putPlayerOffline];
             GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
             [gameEnvoy deleteGame];
             [[SystemMessage sharedInstance] setGameEnvoy:nil];
@@ -258,9 +259,9 @@
 
 - (void)leaveGame
 {
-    [SystemMessage sendToHost:JSKCommandMessageTypeLeaveGame shouldAwaitResponse:YES];
+    [NetworkManager sendToHost:JSKCommandMessageTypeLeaveGame shouldAwaitResponse:YES];
     
-    [SystemMessage putPlayerOffline];
+    [NetworkManager putPlayerOffline];
     GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
     [gameEnvoy deleteGame];
     [[SystemMessage sharedInstance] setGameEnvoy:nil];
@@ -291,8 +292,8 @@
             [[SystemMessage sharedInstance] setGameEnvoy:newEnvoy];
         }
     }
-    [SystemMessage putPlayerOffline];
-    [SystemMessage putPlayerOnline];
+    [NetworkManager putPlayerOffline];
+    [NetworkManager putPlayerOnline];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerUpdated:) name:kJSKNotificationPeerUpdated object:nil];
@@ -309,16 +310,16 @@
 - (void)menuViewControllerInvokedRefresh:(JSKMenuViewController *)menuViewController
 {
     self.players = nil;
-    if ([SystemMessage isPlayerOnline])
+    if ([NetworkManager isPlayerOnline])
     {
         if (![self isPlayerHost])
         {
-            [SystemMessage sendToHost:JSKCommandMessageTypeGetDigest shouldAwaitResponse:NO];
+            [NetworkManager sendToHost:JSKCommandMessageTypeGetDigest shouldAwaitResponse:NO];
         }
     }
     else
     {
-        [SystemMessage putPlayerOnline];
+        [NetworkManager putPlayerOnline];
     }
 }
 

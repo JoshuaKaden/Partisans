@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		77195CFE1B70E9CF00E11518 /* NetPlayerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 77195CFD1B70E9CF00E11518 /* NetPlayerHandler.m */; };
 		7721B8751B6FA4B1004D3BE0 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7721B8741B6FA4B1004D3BE0 /* Reachability.m */; };
+		7721B8781B6FA748004D3BE0 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7721B8771B6FA748004D3BE0 /* NetworkManager.m */; };
+		7795A2941B70211000382382 /* NetHostHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795A2931B70211000382382 /* NetHostHandler.m */; };
+		7795A29A1B70D48400382382 /* NetHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795A2991B70D48400382382 /* NetHandler.m */; };
 		9300C7D8175BFCA00047AA15 /* GameTesterMenuItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */; };
 		9303BE5117467CAE0065ADD2 /* JoinGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE5017467CAE0065ADD2 /* JoinGameViewController.m */; };
 		9303BE551746836A0065ADD2 /* GameJoiner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9303BE541746836A0065ADD2 /* GameJoiner.m */; };
@@ -132,9 +136,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		77195CFC1B70E9CF00E11518 /* NetPlayerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetPlayerHandler.h; path = Classes/NetPlayerHandler.h; sourceTree = "<group>"; };
+		77195CFD1B70E9CF00E11518 /* NetPlayerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetPlayerHandler.m; path = Classes/NetPlayerHandler.m; sourceTree = "<group>"; };
 		7721B8731B6FA4B1004D3BE0 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		7721B8741B6FA4B1004D3BE0 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		7721B8761B6FA748004D3BE0 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkManager.h; path = Classes/NetworkManager.h; sourceTree = "<group>"; };
+		7721B8771B6FA748004D3BE0 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkManager.m; path = Classes/NetworkManager.m; sourceTree = "<group>"; };
 		775407A31B6EE8B9002AE2DA /* Partisans-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Partisans-Bridging-Header.h"; sourceTree = "<group>"; };
+		7795A2921B70211000382382 /* NetHostHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetHostHandler.h; path = Classes/NetHostHandler.h; sourceTree = "<group>"; };
+		7795A2931B70211000382382 /* NetHostHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetHostHandler.m; path = Classes/NetHostHandler.m; sourceTree = "<group>"; };
+		7795A2971B70583400382382 /* JSKCommandMessageProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSKCommandMessageProtocol.h; path = "Classes/Libraries/My Library/JSKCommandMessageProtocol.h"; sourceTree = "<group>"; };
+		7795A2981B70D48400382382 /* NetHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetHandler.h; path = Classes/NetHandler.h; sourceTree = "<group>"; };
+		7795A2991B70D48400382382 /* NetHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetHandler.m; path = Classes/NetHandler.m; sourceTree = "<group>"; };
 		9300C7D6175BFCA00047AA15 /* GameTesterMenuItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameTesterMenuItems.h; path = Classes/GameTesterMenuItems.h; sourceTree = "<group>"; };
 		9300C7D7175BFCA00047AA15 /* GameTesterMenuItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameTesterMenuItems.m; path = Classes/GameTesterMenuItems.m; sourceTree = "<group>"; };
 		9303BE4F17467CAD0065ADD2 /* JoinGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JoinGameViewController.h; path = Classes/JoinGameViewController.h; sourceTree = "<group>"; };
@@ -388,10 +401,18 @@
 			children = (
 				9307B3D2177F8A41003CEC6F /* HostFinder.h */,
 				9307B3D3177F8A41003CEC6F /* HostFinder.m */,
+				7795A2981B70D48400382382 /* NetHandler.h */,
+				7795A2991B70D48400382382 /* NetHandler.m */,
 				936CDFBC1761276900C6A4EE /* NetHost.h */,
 				936CDFBD1761276900C6A4EE /* NetHost.m */,
+				7795A2921B70211000382382 /* NetHostHandler.h */,
+				7795A2931B70211000382382 /* NetHostHandler.m */,
 				936CDFC0176202E500C6A4EE /* NetPlayer.h */,
 				936CDFC1176202E500C6A4EE /* NetPlayer.m */,
+				77195CFC1B70E9CF00E11518 /* NetPlayerHandler.h */,
+				77195CFD1B70E9CF00E11518 /* NetPlayerHandler.m */,
+				7721B8761B6FA748004D3BE0 /* NetworkManager.h */,
+				7721B8771B6FA748004D3BE0 /* NetworkManager.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -550,6 +571,7 @@
 			children = (
 				936510C41741597500F2AD06 /* JSKCommandMessage.h */,
 				936510C51741597500F2AD06 /* JSKCommandMessage.m */,
+				7795A2971B70583400382382 /* JSKCommandMessageProtocol.h */,
 				9365111D17415D0A00F2AD06 /* JSKCommandParcel.h */,
 				9365111E17415D0A00F2AD06 /* JSKCommandParcel.m */,
 				936510C61741597500F2AD06 /* JSKDataMiner.h */,
@@ -932,6 +954,7 @@
 				936510D51741597500F2AD06 /* JSKViewStack.m in Sources */,
 				936510DC1741598800F2AD06 /* NSManagedObjectContext+FetchAdditions.m in Sources */,
 				936510E3174159C900F2AD06 /* RootViewController.m in Sources */,
+				7795A2941B70211000382382 /* NetHostHandler.m in Sources */,
 				936510E4174159C900F2AD06 /* SystemMessage.m in Sources */,
 				936510EB17415A1000F2AD06 /* MainMenuItems.m in Sources */,
 				936510F317415A4E00F2AD06 /* ColorPickerViewController.m in Sources */,
@@ -946,6 +969,7 @@
 				93C10B9D1744028300B47095 /* GameEnvoy.m in Sources */,
 				93C10BBA17440C4500B47095 /* PlayGameMenuItems.m in Sources */,
 				93C10BC8174439B300B47095 /* SetupGameMenuItems.m in Sources */,
+				77195CFE1B70E9CF00E11518 /* NetPlayerHandler.m in Sources */,
 				93FECAB1174521A40046529A /* LabelProgressView.m in Sources */,
 				93FECAB3174521A40046529A /* ProgressCell.m in Sources */,
 				9303BE5117467CAE0065ADD2 /* JoinGameViewController.m in Sources */,
@@ -964,7 +988,9 @@
 				936CDFC2176202E500C6A4EE /* NetPlayer.m in Sources */,
 				93BF3B531771CABF00B20A71 /* GameDirector.m in Sources */,
 				93BF3B571771CEA500B20A71 /* MissionEnvoy.m in Sources */,
+				7795A29A1B70D48400382382 /* NetHandler.m in Sources */,
 				9398A9C6177224EE00E5D31C /* Image.m in Sources */,
+				7721B8781B6FA748004D3BE0 /* NetworkManager.m in Sources */,
 				9398A9CA177224EE00E5D31C /* Player.m in Sources */,
 				9398A9D2177224EF00E5D31C /* Scorecard.m in Sources */,
 				939697E717732A110013B125 /* RoundEnvoy.m in Sources */,

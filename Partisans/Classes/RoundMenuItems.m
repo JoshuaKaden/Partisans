@@ -27,6 +27,7 @@
 #import "GameEnvoy.h"
 #import "ImageEnvoy.h"
 #import "MissionEnvoy.h"
+#import "NetworkManager.h"
 #import "PlayerEnvoy.h"
 #import "RoundEnvoy.h"
 #import "SystemMessage.h"
@@ -219,7 +220,7 @@
 
 - (void)menuViewControllerDidLoad:(JSKMenuViewController *)menuViewController
 {
-    [SystemMessage putPlayerOnline];
+    [NetworkManager putPlayerOnline];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameChanged:) name:kPartisansNotificationGameChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerUpdated:) name:kJSKNotificationPeerUpdated object:nil];

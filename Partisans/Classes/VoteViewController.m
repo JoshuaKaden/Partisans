@@ -24,6 +24,7 @@
 #import "GameEnvoy.h"
 #import "HostFinder.h"
 #import "JSKCommandParcel.h"
+#import "NetworkManager.h"
 #import "PlayerEnvoy.h"
 #import "RoundEnvoy.h"
 #import "SystemMessage.h"
@@ -240,7 +241,7 @@
     [self.spinner startAnimating];
     
     
-    if ([SystemMessage isPlayerOnline])
+    if ([NetworkManager isPlayerOnline])
     {
         GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
         self.hostPeerID = gameEnvoy.host.peerID;
@@ -307,7 +308,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hostAcknowledgement:) name:kPartisansNotificationHostAcknowledgement object:nil];
     
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:hostPeerID from:playerEnvoy.peerID object:parcelObject responseKey:self.responseKey];
-    [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:YES];
+    [NetworkManager sendCommandParcel:parcel shouldAwaitResponse:YES];
 }
 
 

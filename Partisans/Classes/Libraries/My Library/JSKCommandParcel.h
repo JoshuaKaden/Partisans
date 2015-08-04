@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSKCommandMessageProtocol.h"
 
 typedef enum
 {
@@ -31,11 +32,11 @@ typedef enum
 } JSKCommandParcelType;
 
 
-@interface JSKCommandParcel : NSObject <NSCoding>
+@interface JSKCommandParcel : NSObject <NSCoding, JSKCommandMessageProtocol>
 
 @property (nonatomic, assign)   JSKCommandParcelType commandParcelType;
 @property (nonatomic, strong)   NSString *responseKey;
-@property (weak, readonly, nonatomic) NSString *commandParcelTypeName;
+@property (nonatomic, readonly) NSString *commandParcelTypeName;
 @property (nonatomic, strong)   NSString *to;
 @property (nonatomic, strong)   NSString *from;
 @property (nonatomic, strong)   NSObject <NSCoding> *object;

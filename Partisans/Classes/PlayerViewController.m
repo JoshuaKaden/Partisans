@@ -25,6 +25,7 @@
 #import "ImageEnvoy.h"
 #import "JSKCommandParcel.h"
 #import "JSKMenuViewController.h"
+#import "NetworkManager.h"
 #import "PlayerEnvoy.h"
 #import "PlayerPicklistItems.h"
 #import "SlickEditView.h"
@@ -556,7 +557,7 @@
                                                                        to:nil
                                                                      from:self.playerEnvoy.peerID
                                                                    object:self.playerEnvoy];
-        [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:NO];
+        [NetworkManager sendCommandParcel:parcel shouldAwaitResponse:NO];
     }
 }
 

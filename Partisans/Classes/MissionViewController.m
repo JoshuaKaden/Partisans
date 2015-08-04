@@ -23,6 +23,7 @@
 #import "GameEnvoy.h"
 #import "HostFinder.h"
 #import "MissionEnvoy.h"
+#import "NetworkManager.h"
 #import "PlayerEnvoy.h"
 #import "SystemMessage.h"
 
@@ -200,7 +201,7 @@
     [self.spinner startAnimating];
     
     
-    if ([SystemMessage isPlayerOnline])
+    if ([NetworkManager isPlayerOnline])
     {
         GameEnvoy *gameEnvoy = [SystemMessage gameEnvoy];
         self.hostPeerID = gameEnvoy.host.peerID;
@@ -239,7 +240,7 @@
     {
         message.commandMessageType = JSKCommandMessageTypeFail;
     }
-    [SystemMessage sendCommandMessage:message shouldAwaitResponse:YES];
+    [NetworkManager sendCommandMessage:message shouldAwaitResponse:YES];
 }
 
 

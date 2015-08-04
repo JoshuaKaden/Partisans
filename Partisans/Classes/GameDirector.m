@@ -25,6 +25,7 @@
 #import "GamePrecis.h"
 #import "JSKCommandParcel.h"
 #import "MissionEnvoy.h"
+#import "NetworkManager.h"
 #import "PlayerEnvoy.h"
 #import "RoundEnvoy.h"
 #import "SystemMessage.h"
@@ -81,7 +82,7 @@
     [self saveGame];
     
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:[SystemMessage playerEnvoy].peerID object:gameEnvoy];
-    [SystemMessage sendParcelToPlayers:parcel];
+    [NetworkManager sendParcelToPlayers:parcel];
 }
 
 - (void)startMission
@@ -172,13 +173,6 @@
 {
     GameEnvoy *gameEnvoy = self.gameEnvoy;
     [gameEnvoy commitAndSave];
-    
-//    NSDate *oldDate = [NSDate distantPast];
-//    [self sendGameUpdateTo:nil modifiedDate:oldDate shouldSendAllData:NO];
-
-//    JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:nil from:[SystemMessage playerEnvoy].peerID object:gameEnvoy];
-//    [SystemMessage sendParcelToPlayers:parcel];
-//    [parcel release];
 }
 
 
@@ -234,11 +228,11 @@
         JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:peerID from:hostID object:gameEnvoy];
         if (peerID)
         {
-            [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:NO];
+            [NetworkManager sendCommandParcel:parcel shouldAwaitResponse:NO];
         }
         else
         {
-            [SystemMessage sendParcelToPlayers:parcel];
+            [NetworkManager sendParcelToPlayers:parcel];
         }
         return;
     }
@@ -278,11 +272,11 @@
     JSKCommandParcel *parcel = [[JSKCommandParcel alloc] initWithType:JSKCommandParcelTypeUpdate to:peerID from:hostID object:objectArray];
     if (peerID)
     {
-        [SystemMessage sendCommandParcel:parcel shouldAwaitResponse:NO];
+        [NetworkManager sendCommandParcel:parcel shouldAwaitResponse:NO];
     }
     else
     {
-        [SystemMessage sendParcelToPlayers:parcel];
+        [NetworkManager sendParcelToPlayers:parcel];
     }
 }
 
